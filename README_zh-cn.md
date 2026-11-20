@@ -24,7 +24,7 @@
 准备一个 Cloudflare 账户。该账户需要有已启用的域名、已建立的 Zero Trust 组织，以及可用的身份提供方。在 Mac 上打开「终端」(zsh)，复制执行这一行。
 
 ```zsh
-launcher=$(curl -q -fsSL --proto-redir '=https' https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.0/install-macos.sh) && zsh -c "$launcher" --
+zsh <(curl -fsSL https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.0/install-macos.sh)
 ```
 
 这条命令信任 GitHub 通过 HTTPS 提供的启动脚本。脚本会校验管理安装包的 SHA-256，安装器会验证 Ed25519 发布签名。如需在执行前校验启动脚本，可使用[固定脚本 SHA-256 的安装命令](https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.0/install-macos-command.txt)。

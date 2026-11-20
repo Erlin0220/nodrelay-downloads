@@ -24,7 +24,7 @@ Nodrelay connects your Personal DevSpace devices to one Cloudflare MCP Portal. D
 You need a Cloudflare account with an active domain, an existing Zero Trust organization, and a working identity provider. Paste this one-line command into Terminal on your Mac (zsh).
 
 ```zsh
-launcher=$(curl -q -fsSL --proto-redir '=https' https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.0/install-macos.sh) && zsh -c "$launcher" --
+zsh <(curl -fsSL https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.0/install-macos.sh)
 ```
 
 The command trusts the launcher downloaded from GitHub over HTTPS. The launcher checks the management archive’s SHA-256, and the installer verifies the Ed25519 release signature. To verify the launcher before running it, use the [command with the pinned launcher SHA-256](https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.0/install-macos-command.txt).
