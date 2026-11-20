@@ -8,7 +8,7 @@
 
 Nodrelay connects your Personal DevSpace devices to one Cloudflare MCP Portal. Deploy the management console in your Cloudflare account, enroll each device, and use an MCP client to work with the device you select. Workspaces and the Personal Runtime stay on each device.
 
-[Release v0.1.0](https://github.com/Erlin0220/nodrelay-downloads/releases/tag/v0.1.0) · [All releases](https://github.com/Erlin0220/nodrelay-downloads/releases) · [Report an issue](https://github.com/Erlin0220/nodrelay-downloads/issues)
+[Management installer v0.1.1](https://github.com/Erlin0220/nodrelay-downloads/releases/tag/v0.1.1) · [All releases](https://github.com/Erlin0220/nodrelay-downloads/releases) · [Report an issue](https://github.com/Erlin0220/nodrelay-downloads/issues)
 
 ## Features
 
@@ -24,18 +24,20 @@ Nodrelay connects your Personal DevSpace devices to one Cloudflare MCP Portal. D
 You need a Cloudflare account with an active domain, an existing Zero Trust organization, and a working identity provider. Paste this one-line command into Terminal on your Mac (zsh).
 
 ```zsh
-zsh <(curl -fsSL https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.0/install-macos.sh)
+zsh <(curl -fsSL https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.1/install-macos.sh)
 ```
 
-The command trusts the launcher downloaded from GitHub over HTTPS. The launcher checks the management archive’s SHA-256, and the installer verifies the Ed25519 release signature. To verify the launcher before running it, use the [command with the pinned launcher SHA-256](https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.0/install-macos-command.txt).
+The command trusts the launcher downloaded from GitHub over HTTPS. The launcher checks the management archive’s SHA-256, and the installer verifies the Ed25519 release signature. To verify the launcher before running it, use the [command with the pinned launcher SHA-256](https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.1/install-macos-command.txt).
 
-Sign in to Cloudflare, choose the account and active domain for the deployment, and follow the prompts. Open the management console address printed by the installer.
+Sign in to Cloudflare. The installer automatically uses a sole authorized account or active domain. When there are several, choose by number. If the selected account has no active domain, add or activate one in Cloudflare and run the installer again. The administrator email you enter controls access to the management console and can differ from your Cloudflare sign-in email.
 
 ### 2. Enroll a device
 
 Add the device in the management console and run its generated enrollment command in a terminal on that device as the local user who will run Nodrelay. The command downloads and verifies the matching package and enrolls the device with a one-time ticket. Keep the command private.
 
 For manual installation, download the archive and matching installer into the same directory, verify both against the signed checksums, and follow the [manual installation instructions](https://github.com/Erlin0220/nodrelay-downloads/releases/tag/v0.1.0#install-a-device).
+
+The v0.1.1 management installer uses the signed v0.1.0 device packages below.
 
 | Device platform | Archive | Installer |
 | --- | --- | --- |

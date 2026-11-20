@@ -8,7 +8,7 @@
 
 诺联将多台 Personal DevSpace 设备接入同一个 Cloudflare MCP Portal。你可以在自己的 Cloudflare 账户部署管理台，接入各台设备，再通过 MCP 客户端操作指定设备。工作区和 Personal Runtime 保留在各台设备上。
 
-[v0.1.0 发布页](https://github.com/Erlin0220/nodrelay-downloads/releases/tag/v0.1.0) · [所有版本](https://github.com/Erlin0220/nodrelay-downloads/releases) · [反馈问题](https://github.com/Erlin0220/nodrelay-downloads/issues)
+[v0.1.1 管理台安装版](https://github.com/Erlin0220/nodrelay-downloads/releases/tag/v0.1.1) · [所有版本](https://github.com/Erlin0220/nodrelay-downloads/releases) · [反馈问题](https://github.com/Erlin0220/nodrelay-downloads/issues)
 
 ## 特性
 
@@ -24,18 +24,20 @@
 准备一个 Cloudflare 账户。该账户需要有已启用的域名、已建立的 Zero Trust 组织，以及可用的身份提供方。在 Mac 上打开「终端」(zsh)，复制执行这一行。
 
 ```zsh
-zsh <(curl -fsSL https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.0/install-macos.sh)
+zsh <(curl -fsSL https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.1/install-macos.sh)
 ```
 
-这条命令信任 GitHub 通过 HTTPS 提供的启动脚本。脚本会校验管理安装包的 SHA-256，安装器会验证 Ed25519 发布签名。如需在执行前校验启动脚本，可使用[固定脚本 SHA-256 的安装命令](https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.0/install-macos-command.txt)。
+这条命令信任 GitHub 通过 HTTPS 提供的启动脚本。脚本会校验管理安装包的 SHA-256，安装器会验证 Ed25519 发布签名。如需在执行前校验启动脚本，可使用[固定脚本 SHA-256 的安装命令](https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.1/install-macos-command.txt)。
 
-按提示登录 Cloudflare，选择用于部署的账户和已启用域名。完成后，打开终端显示的管理台地址。
+登录 Cloudflare 后，安装器自动读取已授权账户和已激活域名。只有一个就自动选用，有多个就输入编号。所选账户没有可用域名时，先在 Cloudflare 添加或激活域名，再重新运行安装器。安装时填写的管理员邮箱用于登录诺联管理台，可以和 Cloudflare 登录邮箱不同。
 
 ### 2. 接入设备
 
 在管理台添加设备，再用准备运行诺联的本机账户登录目标设备，在终端执行管理台生成的命令。命令会下载并校验对应的安装包，并使用一次性票据接入设备。请妥善保管生成的命令。
 
 手动安装时，将归档和对应的安装脚本下载到同一目录，用签名校验清单核对两个文件，再按[发布页的手动安装说明](https://github.com/Erlin0220/nodrelay-downloads/releases/tag/v0.1.0#install-a-device)操作。
+
+v0.1.1 管理台沿用下列 v0.1.0 签名设备包。
 
 | 设备平台 | 安装包 | 安装脚本 |
 | --- | --- | --- |
