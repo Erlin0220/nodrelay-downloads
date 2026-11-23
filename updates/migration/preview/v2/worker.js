@@ -4693,6 +4693,28 @@ function key3(target) {
   return JSON.stringify([target.accountId, target.worker]);
 }
 __name(key3, "key");
+function upgradeStateError(code, message2, cause) {
+  return Object.assign(new Error(message2, cause ? { cause } : void 0), { code });
+}
+__name(upgradeStateError, "upgradeStateError");
+function ownership(state2) {
+  if (state2 === null) return "missing";
+  if (state2?.active === 0) return "expired";
+  if (state2?.active === 1 && state2.own === 0) return "other";
+  if (state2?.active === 1 && state2.own === 1) return "current";
+  return "unknown";
+}
+__name(ownership, "ownership");
+function diagnostic(error, stage, state2, mutation) {
+  error.diagnostic = {
+    stage,
+    ownership: ownership(state2),
+    ...Number.isSafeInteger(mutation?.meta?.changes) && { changes: mutation.meta.changes },
+    ...Array.isArray(mutation?.results) && { rows: mutation.results.length }
+  };
+  return error;
+}
+__name(diagnostic, "diagnostic");
 async function readUpgradeJournal(db, target) {
   const row = await db.prepare("SELECT record FROM management_upgrade_journal WHERE target = ?").bind(key3(target)).first();
   return row ? JSON.parse(row.record) : void 0;
@@ -4703,30 +4725,105 @@ function createUpgradeJournal(db) {
     async withLock(target, run) {
       const id2 = key3(target);
       const owner = base64url_exports.encode(crypto.getRandomValues(new Uint8Array(32)));
-      const lease = await db.prepare(`INSERT INTO fleet_leases (id, owner, expires_at) VALUES (1, ?, unixepoch() + ?)
-        ON CONFLICT(id) DO UPDATE SET owner = excluded.owner, expires_at = excluded.expires_at
-        WHERE fleet_leases.expires_at <= unixepoch() RETURNING owner`).bind(owner, duration).first();
-      if (!lease) throw new Error("\u5DF2\u6709\u7BA1\u7406\u64CD\u4F5C\u6B63\u5728\u6267\u884C\u3002\u8BF7\u5148\u7B49\u5F85\u5176\u7ED3\u679C\uFF0C\u4E0D\u8981\u91CD\u590D\u63D0\u4EA4\u3002");
-      const assertHeld = /* @__PURE__ */ __name(async () => {
-        const result = await db.prepare("UPDATE fleet_leases SET expires_at = unixepoch() + ? WHERE id = 1 AND owner = ? AND expires_at > unixepoch() RETURNING owner").bind(duration, owner).first();
-        if (!result) throw new Error("\u5347\u7EA7\u64CD\u4F5C\u5DF2\u5931\u53BB\u9501\u3002\u8BF7\u6838\u5BF9\u72B6\u6001\u540E\u518D\u8BD5\u3002");
-      }, "assertHeld");
+      const readLease = /* @__PURE__ */ __name(() => db.prepare(`SELECT (owner = ?) AS own, (expires_at > unixepoch()) AS active
+        FROM fleet_leases WHERE id = 1`).bind(owner).first(), "readLease");
+      const release = /* @__PURE__ */ __name(() => db.prepare("DELETE FROM fleet_leases WHERE id = 1 AND owner = ?").bind(owner).run(), "release");
+      let cleanup = true;
       try {
+        let claim;
+        let lease;
+        try {
+          claim = await db.prepare(`INSERT INTO fleet_leases (id, owner, expires_at) VALUES (1, ?, unixepoch() + ?)
+            ON CONFLICT(id) DO UPDATE SET owner = excluded.owner, expires_at = excluded.expires_at
+            WHERE fleet_leases.expires_at <= unixepoch()`).bind(owner, duration).run();
+          lease = await readLease();
+        } catch (error) {
+          throw diagnostic(
+            upgradeStateError("management_lock_unconfirmed", "\u672A\u80FD\u6838\u5B9E\u4E91\u7AEF\u7BA1\u7406\u9501\u3002\u672A\u7EE7\u7EED\u5347\u7EA7\u3002", error),
+            "acquire",
+            lease,
+            claim
+          );
+        }
+        if (ownership(lease) !== "current") {
+          if (ownership(lease) === "other") {
+            cleanup = false;
+            throw diagnostic(
+              upgradeStateError("management_lock_busy", "\u53E6\u4E00\u4E2A\u7BA1\u7406\u64CD\u4F5C\u6301\u6709\u4E91\u7AEF\u9501\u3002\u8BF7\u7B49\u5B83\u7ED3\u675F\uFF0C\u518D\u91CD\u8BD5\u3002"),
+              "acquire",
+              lease,
+              claim
+            );
+          }
+          throw diagnostic(
+            upgradeStateError("management_lock_unconfirmed", "\u672A\u80FD\u6838\u5B9E\u4E91\u7AEF\u7BA1\u7406\u9501\u3002\u672A\u7EE7\u7EED\u5347\u7EA7\u3002"),
+            "acquire",
+            lease,
+            claim
+          );
+        }
+        const assertHeld = /* @__PURE__ */ __name(async () => {
+          let state2;
+          let mutation;
+          try {
+            mutation = await db.prepare("UPDATE fleet_leases SET expires_at = unixepoch() + ? WHERE id = 1 AND owner = ? AND expires_at > unixepoch()").bind(duration, owner).run();
+            state2 = await readLease();
+          } catch (error) {
+            throw diagnostic(
+              upgradeStateError("management_lock_lost", "\u65E0\u6CD5\u6838\u5B9E\u4E91\u7AEF\u7BA1\u7406\u9501\u4ECD\u5C5E\u4E8E\u672C\u6B21\u64CD\u4F5C\u3002\u672A\u7EE7\u7EED\u5347\u7EA7\u3002", error),
+              "renew",
+              state2,
+              mutation
+            );
+          }
+          if (ownership(state2) !== "current") {
+            throw diagnostic(
+              upgradeStateError("management_lock_lost", "\u5347\u7EA7\u64CD\u4F5C\u5DF2\u5931\u53BB\u9501\u3002\u8BF7\u6838\u5BF9\u72B6\u6001\u540E\u518D\u8BD5\u3002"),
+              "renew",
+              state2,
+              mutation
+            );
+          }
+        }, "assertHeld");
         return await run({
           assertHeld,
           read: /* @__PURE__ */ __name(() => readUpgradeJournal(db, target), "read"),
           async write(record4) {
             const data = JSON.stringify(record4);
             if (typeof data !== "string" || data.length > 4096) throw new Error("Invalid upgrade journal record");
-            const written = await db.prepare(`INSERT INTO management_upgrade_journal (target, record)
-              SELECT ?, ? WHERE EXISTS (SELECT 1 FROM fleet_leases WHERE id = 1 AND owner = ? AND expires_at > unixepoch())
-              ON CONFLICT(target) DO UPDATE SET record = excluded.record RETURNING target`).bind(id2, data, owner).first();
-            if (!written) throw new Error("\u5347\u7EA7\u64CD\u4F5C\u5DF2\u5931\u53BB\u9501\u3002\u672A\u66F4\u6539\u5347\u7EA7\u8BB0\u5F55\u3002");
+            let verified;
+            let mutation;
+            try {
+              mutation = await db.prepare(`INSERT INTO management_upgrade_journal (target, record)
+                SELECT ?, ? WHERE EXISTS (SELECT 1 FROM fleet_leases WHERE id = 1 AND owner = ? AND expires_at > unixepoch())
+                ON CONFLICT(target) DO UPDATE SET record = excluded.record`).bind(id2, data, owner).run();
+              verified = await db.prepare(`SELECT (record = ?) AS matched FROM management_upgrade_journal
+                WHERE target = ? AND EXISTS (SELECT 1 FROM fleet_leases WHERE id = 1 AND owner = ? AND expires_at > unixepoch())`).bind(data, id2, owner).first();
+            } catch (error) {
+              throw diagnostic(
+                upgradeStateError("management_journal_unconfirmed", "\u672A\u80FD\u6838\u5B9E\u5347\u7EA7\u8BB0\u5F55\u3002\u8BF7\u5148\u6838\u5BF9\u5F53\u524D\u72B6\u6001\uFF0C\u4E0D\u8981\u91CD\u590D\u63D0\u4EA4\u3002", error),
+                "journal_write",
+                void 0,
+                mutation
+              );
+            }
+            if (verified?.matched !== 1) {
+              throw diagnostic(
+                upgradeStateError("management_journal_unconfirmed", "\u672A\u80FD\u6838\u5B9E\u5347\u7EA7\u8BB0\u5F55\u3002\u8BF7\u5148\u6838\u5BF9\u5F53\u524D\u72B6\u6001\uFF0C\u4E0D\u8981\u91CD\u590D\u63D0\u4EA4\u3002"),
+                "journal_write",
+                void 0,
+                mutation
+              );
+            }
           }
         });
       } finally {
-        await db.prepare("DELETE FROM fleet_leases WHERE id = 1 AND owner = ?").bind(owner).run().catch(() => {
-        });
+        if (cleanup) {
+          try {
+            await release();
+          } catch {
+          }
+        }
       }
     }
   };

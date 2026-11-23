@@ -2,12 +2,12 @@
   "schema": 2,
   "product": "nodrelay-management",
   "channel": "preview",
-  "version": "0.1.5-preview.17",
+  "version": "0.1.5-preview.18",
   "minimumVersion": "0.1.5-preview.15",
-  "issuedAt": "2026-11-23T09:39:51.039Z",
-  "expiresAt": "2026-12-23T09:39:51.039Z",
+  "issuedAt": "2026-11-23T10:17:34.913Z",
+  "expiresAt": "2026-12-23T10:17:34.913Z",
   "workerBundle": "worker.js",
-  "workerSha256": "c9d4c023dd99c692a99fac6824ddab67b62432fed6a239367b533995b14dda02",
+  "workerSha256": "1442bdc02e7d42466c32d14e8e73a5ac9f4d7b1aaf97c2af69ce6a4bfb5acd99",
   "feedMigration": {
     "from": "https://raw.githubusercontent.com/Erlin0220/nodrelay-downloads/refs/heads/macos-preview/updates/",
     "to": "https://raw.githubusercontent.com/Erlin0220/nodrelay/refs/heads/updates/"
