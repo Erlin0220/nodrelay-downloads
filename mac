@@ -6,9 +6,9 @@ umask 077
 d=$(mktemp -d "${TMPDIR:-/tmp}/nodrelay-download.XXXXXXXX")
 trap 'rm -rf -- "$d"' EXIT
 echo "诺联 Nodrelay · 正在下载安装包…" >&2
-curl --disable -fsSL --max-redirs 5 --connect-timeout 15 --max-time 300 --proto '=https' --proto-redir '=https' 'https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.22-installer.2/nodrelay-management-0.1.5-preview.22-macos.tgz' -o "$d/setup.tgz"
+curl --disable -fsSL --max-redirs 5 --connect-timeout 15 --max-time 300 --proto '=https' --proto-redir '=https' 'https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.22-installer.3/nodrelay-management-0.1.5-preview.22-macos.tgz' -o "$d/setup.tgz"
 actual=$(shasum -a 256 "$d/setup.tgz")
-[ "${actual%% *}" = '2881c80d4cd869ae9e4487d49d743ba86c0a70252e18eb37bf0d5461a0f29beb' ] || { echo "Nodrelay download checksum mismatch." >&2; exit 1; }
+[ "${actual%% *}" = 'b2a0e8a4354adbbf55cfc719c9a9226beacbe2bf35a2b83951a3aac058a10bac' ] || { echo "Nodrelay download checksum mismatch." >&2; exit 1; }
 tar -xzf "$d/setup.tgz" -C "$d"
 sh "$d/packaging/setup-macos.sh" "$d/management-release.json" "$d/publisher.pub.pem" "$@"
 }
