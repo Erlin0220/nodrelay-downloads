@@ -2,10 +2,10 @@
   "schema": 1,
   "product": "nodrelay-management",
   "channel": "preview",
-  "version": "0.1.5-preview.14",
-  "minimumVersion": "0.1.5-preview.13",
-  "issuedAt": "2026-11-23T02:07:14.089Z",
-  "expiresAt": "2026-12-23T02:07:14.089Z",
+  "version": "0.1.5-preview.15",
+  "minimumVersion": "0.1.5-preview.14",
+  "issuedAt": "2026-11-23T02:46:25.422Z",
+  "expiresAt": "2026-12-23T02:46:25.422Z",
   "workerBundle": "worker.js",
-  "workerSha256": "478e59bbee4e24d144c5c28228e896c88ff0eba0e82997b02dcc6b4814034131"
+  "workerSha256": "504d7f07037e2ebfd5a460f444b36b2dcf6e2e7a7bbc7cab7345e23b81424d80"
 }
