@@ -7851,7 +7851,7 @@ function publicInstallCommand(origin, platform, code) {
   }
   const entry = origin + installPath(platform) + "?i";
   if (platform === "windows") {
-    return `powershell -NoP -Command ". ([scriptblock]::Create((irm '${entry}' -MaximumRedirection 0 -TimeoutSec 30 -ea Stop))); Install-Nodrelay '${code}'"`;
+    return `powershell -NoP -c "iex(irm '${entry}' -MaximumRedirection 0 -TimeoutSec 30 -ea Stop); Install-Nodrelay '${code}'"`;
   }
   return `s=$(curl -qfSL -m30 --max-redirs 0 '${entry}') && sh -c "\${s:?}" -- ${code}`;
 }
@@ -7872,6 +7872,7 @@ try {
   }
   const shell = platform === "linux" ? "bash" : "zsh";
   return `#!/bin/sh
+nodrelay_start() {
 set -eu
 f=$(mktemp)
 trap 'rm -f -- "$f"' EXIT
@@ -7880,6 +7881,8 @@ curl -qfsSL --connect-timeout 15 --proto '=https' --proto-redir '=https' -o "$f"
 if command -v sha256sum >/dev/null; then h=$(sha256sum < "$f"); else h=$(shasum -a 256 < "$f"); fi
 [ "\${h%% *}" = f04bcc2db0dc2efa5cc77df8b61378317e9ac8a8bc3a94067de99866cdd68d88 ] || { echo 'Installer checksum mismatch' >&2; exit 1; }
 ${shell} "$f" -e '${origin}' -t "$1"
+}
+nodrelay_start "$@"
 `;
 }
 __name(deviceInstallEntry, "deviceInstallEntry");
@@ -10384,7 +10387,8 @@ function enrollmentContext(env) {
       const commands = Object.fromEntries(Object.entries(releases2).map(([os, release]) => [os, publicInstallCommand(origin, release.platform, code)]));
       const systems = Object.keys(commands);
       const platform = systems.includes("macos") ? "macos" : systems[0];
-      return { command: commands[platform], commands, deviceId: deviceId2, platform, durable: true };
+      const terminalCommands = Object.fromEntries(systems.filter((os) => os === "macos" || os === "linux").map((os) => [os, `${os === "macos" ? "zsh" : "bash"} <(curl -fsS '${origin}/device/install/${os}?i') ${code}`]));
+      return { command: commands[platform], commands, terminalCommands, deviceId: deviceId2, platform, durable: true };
     }
   };
 }
@@ -11328,7 +11332,7 @@ var consoleEnrollmentScript = String.raw`
     const systems = Array.isArray(result.systems) && result.systems.length ? result.systems
       : [{ id: '', label: result.platform, command: result.command, instructions: result.instructions }];
     const show = system => {
-      command.textContent = system.command;
+      command.textContent = system.terminalCommand ?? system.command;
       command.scrollTop = 0;
       commandDetails.open = false;
       document.querySelector('#device-command-target').textContent = deviceName + ' · ' + system.label;
@@ -13424,16 +13428,17 @@ var durableInstructions = "\u4EC5\u5728\u76EE\u6807\u8BBE\u5907\u8FD0\u884C\uFF0
 var runOnDevice = {
   macos: "\u5728\u8981\u63A5\u5165\u7684 Mac \u4E0A\u6253\u5F00\u300C\u7EC8\u7AEF\u300D\uFF0C\u7C98\u8D34\u547D\u4EE4\u5E76\u6309\u56DE\u8F66\u3002",
   windows: "\u5728\u8981\u63A5\u5165\u7684 Windows \u7535\u8111\u4E0A\u6253\u5F00 PowerShell\uFF0C\u7C98\u8D34\u547D\u4EE4\u5E76\u6309\u56DE\u8F66\u3002",
-  linux: "\u5728\u8981\u63A5\u5165\u7684 Linux \u8BBE\u5907\u4E0A\u6253\u5F00\u7EC8\u7AEF\uFF0C\u7C98\u8D34\u547D\u4EE4\u5E76\u6309\u56DE\u8F66\u3002"
+  linux: "\u5728\u76EE\u6807 Linux \u8BBE\u5907\u7684 Bash \u7EC8\u7AEF\u8FD0\u884C\u3002"
 };
 function durableCommand(result, intentId) {
   const systems = Object.entries(result.commands ?? { [result.platform]: result.command }).map(([id2, command]) => ({
     id: id2,
     label: label2[id2] ?? id2,
     command,
+    terminalCommand: result.terminalCommands?.[id2],
     instructions: runOnDevice[id2.split("-")[0]]
   }));
-  const { commands, ...rest } = result;
+  const { commands, terminalCommands, ...rest } = result;
   return { ...rest, intentId, platform: label2[result.platform], system: result.platform, systems, instructions: durableInstructions };
 }
 __name(durableCommand, "durableCommand");
