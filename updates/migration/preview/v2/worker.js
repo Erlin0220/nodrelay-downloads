@@ -276,7 +276,7 @@ async function resolveEnrollmentBootstrap(request, { origin, lookupApproved, ren
 }
 __name(resolveEnrollmentBootstrap, "resolveEnrollmentBootstrap");
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/lib/buffer_utils.js
+// ../node_modules/jose/dist/webapi/lib/buffer_utils.js
 var encoder2 = new TextEncoder();
 var decoder = new TextDecoder();
 var strictDecoder = new TextDecoder("utf-8", { fatal: true });
@@ -331,7 +331,7 @@ function decodeBase64(encoded, url = false) {
 }
 __name(decodeBase64, "decodeBase64");
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/util/errors.js
+// ../node_modules/jose/dist/webapi/util/errors.js
 var JOSEError = class extends Error {
   static {
     __name(this, "JOSEError");
@@ -446,7 +446,7 @@ var JWSSignatureVerificationFailed = class extends JOSEError {
   }
 };
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/util/base64url.js
+// ../node_modules/jose/dist/webapi/util/base64url.js
 var base64url_exports = {};
 __export(base64url_exports, {
   decode: () => decode,
@@ -466,7 +466,7 @@ function encode2(input) {
 }
 __name(encode2, "encode");
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/lib/validate.js
+// ../node_modules/jose/dist/webapi/lib/validate.js
 function isObject(input) {
   if (typeof input != "object" || input === null || Object.prototype.toString.call(input) !== "[object Object]")
     return false;
@@ -555,7 +555,7 @@ function validateB64(protectedHeader, extensions) {
 }
 __name(validateB64, "validateB64");
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/lib/key.js
+// ../node_modules/jose/dist/webapi/lib/key.js
 var tag = /* @__PURE__ */ __name((key4) => key4[Symbol.toStringTag], "tag");
 var jwkMatchesOp = /* @__PURE__ */ __name((entry, key4, usage2) => {
   const { alg } = entry;
@@ -696,7 +696,7 @@ async function rawKey(key4, expected, usage2, extractable = false) {
 }
 __name(rawKey, "rawKey");
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/lib/key_descriptor.js
+// ../node_modules/jose/dist/webapi/lib/key_descriptor.js
 function table(entries) {
   const out = { __proto__: null };
   for (const alg in entries)
@@ -705,7 +705,7 @@ function table(entries) {
 }
 __name(table, "table");
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/lib/jws_algorithms.js
+// ../node_modules/jose/dist/webapi/lib/jws_algorithms.js
 var sig = [["verify"], ["sign"]];
 function hmac(bits) {
   const subtle = { name: "HMAC", hash: `SHA-${bits}` };
@@ -781,7 +781,7 @@ function jwsAlgorithm(alg) {
 }
 __name(jwsAlgorithm, "jwsAlgorithm");
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/lib/jws_verify.js
+// ../node_modules/jose/dist/webapi/lib/jws_verify.js
 function prepareVerify(options) {
   return [options && validateAlgorithms("algorithms", options.algorithms), options?.crit];
 }
@@ -841,7 +841,7 @@ async function verifyCompact(jws, shared, key4) {
 }
 __name(verifyCompact, "verifyCompact");
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/lib/jwt_claims_set.js
+// ../node_modules/jose/dist/webapi/lib/jwt_claims_set.js
 var epoch = /* @__PURE__ */ __name((date) => Math.floor(date.getTime() / 1e3), "epoch");
 var multipliers = {
   s: 1,
@@ -934,7 +934,7 @@ function validateClaimsSet(protectedHeader, claimsSetBytes, options = {}) {
 }
 __name(validateClaimsSet, "validateClaimsSet");
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/jwt/verify.js
+// ../node_modules/jose/dist/webapi/jwt/verify.js
 async function jwtVerify(jwt, key4, options) {
   const [verified, b64] = await verifyCompact(jwt, prepareVerify(options), key4);
   if (!b64)
@@ -944,7 +944,7 @@ async function jwtVerify(jwt, key4, options) {
 }
 __name(jwtVerify, "jwtVerify");
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/jwks/local.js
+// ../node_modules/jose/dist/webapi/jwks/local.js
 function isUsableJWK(jwk, entry, alg, kid) {
   const { kty, key_ops: keyOps, ext, kid: jwkKid, alg: jwkAlg, use, crv } = jwk;
   return (ext === void 0 || typeof ext == "boolean") && (keyOps === void 0 || Array.isArray(keyOps) && keyOps.every((operation, index) => typeof operation == "string" && keyOps.indexOf(operation) === index) && keyOps.includes("verify")) && entry.kty.includes(kty) && (kid === void 0 || typeof kid == "string" && kid === jwkKid) && (jwkAlg === void 0 ? kty !== "AKP" : alg === jwkAlg) && (use === void 0 || use === "sig") && (!entry.crv || crv === entry.crv);
@@ -1002,7 +1002,7 @@ function createLocalJWKSet(jwks) {
 }
 __name(createLocalJWKSet, "createLocalJWKSet");
 
-// ../../../../workspace/scratch/0af5300786ff/nodrelay-cloud-review/node_modules/jose/dist/webapi/jwks/remote.js
+// ../node_modules/jose/dist/webapi/jwks/remote.js
 function isCloudflareWorkers() {
   return typeof WebSocketPair < "u" || typeof navigator < "u" && true || typeof EdgeRuntime < "u" && EdgeRuntime === "vercel";
 }
@@ -3100,7 +3100,16 @@ var consoleUpgradeScript = String.raw`
       const result = await post('/admin/upgrade/reconcile', { operationId });
       if (result.operationId && result.operationId !== operationId) throw new Error('核对结果不属于本次升级。请先查看升级记录。');
       if (result.status === 'baseline_active_upload_unconfirmed') {
-        upgradeStatus.textContent = 'Cloudflare 流量仍指向旧版，上传结果无法确认。本次核对没有重新上传或切换。请保留记录，不要重新提交。';
+        const after = Number.isSafeInteger(result.retryAfter) ? new Date(result.retryAfter).toLocaleTimeString() : '';
+        upgradeStatus.textContent = 'Cloudflare 流量仍指向旧版，上传结果无法确认。本次核对没有重新上传或切换。' +
+          (after ? '如果到 ' + after + ' 仍没有出现这次上传的版本，再核对一次即可关闭记录并重新升级。' : '请保留记录，不要重新提交。');
+        return;
+      }
+      if (result.status === 'upload_abandoned') {
+        // The journal now reads as settled: reopening the dialog offers the release again.
+        upgradeStatus.textContent = '已确认上次上传没有到达 Cloudflare，记录已关闭。关闭此窗口后重新打开，即可重新升级。';
+        pendingUpgrade = undefined;
+        hideUpgradeAction(reconcileUpgrade);
         return;
       }
       if (result.status === 'baseline_active_candidate_staged') {
@@ -4608,33 +4617,50 @@ function createCloudflareUpgradeAdapter(api, target, { baseline = false, enrollm
     },
     async uploadVersion(input, options) {
       assertTarget(input);
-      if (!keysOnly(options, [
-        "bundle",
-        "module",
-        "bindingsInherit",
-        "bindings",
-        "compatibilityDate",
-        "compatibilityFlags",
-        "usageModel",
-        "operationId"
-      ]) || options.module !== "worker.js" || options.bindingsInherit !== "strict" || !matches4(operationUuid, options.operationId) || !(options.bundle instanceof Uint8Array) || options.bundle.length < 1 || options.bundle.length > maxWorkerBytes || !matches4(/^\d{4}-\d{2}-\d{2}$/, options.compatibilityDate) || !Array.isArray(options.compatibilityFlags) || options.compatibilityFlags.some((flag) => !matches4(/^[a-z0-9_]{1,100}$/, flag)) || new Set(options.compatibilityFlags).size !== options.compatibilityFlags.length || !usage.has(options.usageModel)) {
-        reject("Invalid staged Cloudflare Worker upload input");
+      let metadata;
+      try {
+        if (!keysOnly(options, [
+          "bundle",
+          "module",
+          "bindingsInherit",
+          "bindings",
+          "compatibilityDate",
+          "compatibilityFlags",
+          "usageModel",
+          "operationId"
+        ]) || options.module !== "worker.js" || options.bindingsInherit !== "strict" || !matches4(operationUuid, options.operationId) || !(options.bundle instanceof Uint8Array) || options.bundle.length < 1 || options.bundle.length > maxWorkerBytes || !matches4(/^\d{4}-\d{2}-\d{2}$/, options.compatibilityDate) || !Array.isArray(options.compatibilityFlags) || options.compatibilityFlags.some((flag) => !matches4(/^[a-z0-9_]{1,100}$/, flag)) || new Set(options.compatibilityFlags).size !== options.compatibilityFlags.length || !usage.has(options.usageModel)) {
+          reject("Invalid staged Cloudflare Worker upload input");
+        }
+        metadata = JSON.stringify({
+          main_module: "worker.js",
+          compatibility_date: options.compatibilityDate,
+          compatibility_flags: options.compatibilityFlags,
+          usage_model: options.usageModel,
+          bindings: rolloutBindings(options.bindings, baseline === true, enrollment === true),
+          annotations: { "workers/tag": options.operationId }
+        });
+      } catch (error) {
+        throw Object.assign(error, { notSent: true });
       }
       const body = new FormData();
-      body.set("metadata", new Blob([JSON.stringify({
-        main_module: "worker.js",
-        compatibility_date: options.compatibilityDate,
-        compatibility_flags: options.compatibilityFlags,
-        usage_model: options.usageModel,
-        bindings: rolloutBindings(options.bindings, baseline === true, enrollment === true),
-        annotations: { "workers/tag": options.operationId }
-      })], { type: "application/json" }));
+      body.set("metadata", new Blob([metadata], { type: "application/json" }));
       body.set("worker.js", new Blob([options.bundle.slice()], { type: "application/javascript+module" }), "worker.js");
       const receipt = await api.post(script + "/versions?bindings_inherit=strict", body);
       if (!matches4(uuid, receipt?.id) || !etag(receipt.resources?.script?.etag) || receipt.exports_reconciliation !== void 0) {
         reject("Cloudflare did not confirm a code-only staged Worker version");
       }
       return { id: receipt.id, etag: receipt.resources.script.etag };
+    },
+    // Versions this Worker has that carry an upgrade operation's tag. Every
+    // upload sets the tag, so this shows whether an unconfirmed upload landed.
+    async taggedVersions(input, tag2) {
+      assertTarget(input);
+      if (!matches4(operationUuid, tag2)) reject("Invalid Cloudflare upgrade operation tag");
+      const listed = await api.get(script + "/versions", { page: 1, per_page: 20 });
+      if (!Array.isArray(listed?.items) || listed.items.some((item) => !matches4(uuid, item?.id))) {
+        reject("Cloudflare did not list the Worker versions");
+      }
+      return listed.items.filter((item) => item.annotations?.["workers/tag"] === tag2).map((item) => item.id);
     },
     async deployVersion(input, options) {
       assertTarget(input);
@@ -4779,6 +4805,25 @@ __name(inspectEnrollmentUpgradeReadiness, "inspectEnrollmentUpgradeReadiness");
 // ../cloud/upgrade-operation.mjs
 var uuid2 = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
 var operationUuid2 = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/;
+var uploadSettleMs = 15 * 60 * 1e3;
+function uploadFailure(error) {
+  if (error?.notSent === true) return { kind: "not_sent", reason: String(error.message).slice(0, 160) };
+  if (error instanceof CloudflareError) {
+    const codes = (Array.isArray(error.codes) ? error.codes : []).filter(Number.isInteger).slice(0, 5);
+    const refused = error.status >= 400 && error.status < 500 && ![408, 409, 429].includes(error.status);
+    return { kind: refused ? "refused" : "unknown", status: error.status, codes };
+  }
+  if (error instanceof CloudflareRequestTimeoutError) return { kind: "timeout" };
+  return { kind: "unknown" };
+}
+__name(uploadFailure, "uploadFailure");
+function failureText(failure) {
+  if (failure.kind === "not_sent") return `the upload was not sent: ${failure.reason}`;
+  if (failure.kind === "timeout") return "the request timed out";
+  if (Number.isInteger(failure.status)) return `Cloudflare answered HTTP ${failure.status}${failure.codes.length ? ", codes " + failure.codes.join(", ") : ""}`;
+  return "the reply was lost";
+}
+__name(failureText, "failureText");
 var UpgradeOperationError = class extends Error {
   static {
     __name(this, "UpgradeOperationError");
@@ -4858,7 +4903,7 @@ async function runUpgradeOperation({ expected, artifact, operationId, api, journ
       }
       return { status: "previously_confirmed", version: release.version, versionId: previous.candidateVersion };
     }
-    if (previous && previous.phase !== "confirmed") {
+    if (previous && !["confirmed", "abandoned"].includes(previous.phase)) {
       throw new UpgradeOperationError("reconciliation_required", "An earlier upgrade is unsettled. Check Cloudflare before submitting another upgrade");
     }
     const baseline = await api.readDeployment(target);
@@ -4924,7 +4969,8 @@ async function runUpgradeOperation({ expected, artifact, operationId, api, journ
       await txn.assertHeld();
     }, "assertStable");
     await assertStable(target.activeVersion);
-    await txn.write({ ...record4, phase: "uploading" });
+    const uploading = { ...record4, phase: "uploading", uploadStartedAt: now4 };
+    await txn.write(uploading);
     let uploaded;
     try {
       uploaded = await api.uploadVersion(target, {
@@ -4937,8 +4983,14 @@ async function runUpgradeOperation({ expected, artifact, operationId, api, journ
         usageModel: runtime.usageModel,
         operationId
       });
-    } catch {
-      throw new UpgradeOperationError("upload_unconfirmed", "Cloudflare staging was not confirmed. No rollout was attempted; check Cloudflare before retrying");
+    } catch (error) {
+      const failure = uploadFailure(error);
+      await txn.write({ ...uploading, uploadFailure: failure }).catch(() => {
+      });
+      throw Object.assign(new UpgradeOperationError(
+        "upload_unconfirmed",
+        `Cloudflare staging was not confirmed (${failureText(failure)}). No rollout was attempted; check Cloudflare before retrying`
+      ), { failure });
     }
     if (!uploaded || typeof uploaded.id !== "string" || !uuid2.test(uploaded.id) || uploaded.id === target.activeVersion || !validEtag(uploaded.etag)) {
       throw new UpgradeOperationError("upload_unconfirmed", "Cloudflare did not identify the staged version. No rollout was attempted");
@@ -4976,11 +5028,14 @@ async function runUpgradeOperation({ expected, artifact, operationId, api, journ
   });
 }
 __name(runUpgradeOperation, "runUpgradeOperation");
-async function confirmRecordedDeployment({ expected, operationId, api, journal }) {
+async function confirmRecordedDeployment({ expected, operationId, api, journal, now: now4 = Date.now }) {
   const target = pinnedTarget(expected, operationId);
   return journal.withLock(target, async (txn) => {
     const record4 = await txn.read();
     const phase = record4?.phase;
+    if (phase === "abandoned" && record4.operationId === operationId) {
+      return { status: "upload_abandoned", version: record4.releaseVersion, operationId };
+    }
     if (record4?.operationId !== operationId || !["uploading", "staged", "deploying", "confirmed"].includes(phase) || !uuid2.test(record4.baseVersion ?? "") || record4.baseVersion !== target.activeVersion || (phase === "uploading" ? record4.candidateVersion !== void 0 || record4.candidateEtag !== void 0 : !uuid2.test(record4.candidateVersion ?? "") || record4.candidateVersion === record4.baseVersion || !validEtag(record4.candidateEtag))) {
       throw new UpgradeOperationError("reconciliation_required", "There is no exact recorded version to reconcile");
     }
@@ -4996,7 +5051,28 @@ async function confirmRecordedDeployment({ expected, operationId, api, journal }
       requireDeployment(deployment3, record4.baseVersion, deployment3.latestVersion);
       requireDeployment(await api.readDeployment(target), record4.baseVersion, deployment3.latestVersion);
       await txn.assertHeld();
-      return { status: "baseline_active_upload_unconfirmed", version: record4.releaseVersion, operationId };
+      const unconfirmed = /* @__PURE__ */ __name((extra) => ({ status: "baseline_active_upload_unconfirmed", version: record4.releaseVersion, operationId, ...extra }), "unconfirmed");
+      if (typeof api.taggedVersions !== "function") return unconfirmed();
+      const tagged = await api.taggedVersions(target, operationId);
+      if (tagged.length > 1) throw new UpgradeOperationError("candidate_unproven", "Cloudflare lists several versions for one upgrade");
+      if (tagged.length === 1) {
+        const landed = await api.readVersion(target, tagged[0]);
+        if (landed?.id !== tagged[0] || landed.id === record4.baseVersion || !validEtag(landed.etag)) {
+          throw new UpgradeOperationError("candidate_unproven", "Cloudflare did not identify the uploaded version");
+        }
+        await txn.write({ ...record4, phase: "staged", candidateVersion: landed.id, candidateEtag: landed.etag });
+        return { status: "baseline_active_candidate_staged", version: record4.releaseVersion, operationId };
+      }
+      if (deployment3.latestVersion !== record4.baseVersion) return unconfirmed();
+      const clock = now4();
+      const since = Number.isSafeInteger(record4.uploadStartedAt) ? record4.uploadStartedAt : Number.isSafeInteger(record4.uploadCheckedAt) ? record4.uploadCheckedAt : void 0;
+      const definite = ["refused", "not_sent"].includes(record4.uploadFailure?.kind);
+      if (definite || since !== void 0 && clock - since >= uploadSettleMs) {
+        await txn.write({ ...record4, phase: "abandoned", abandonedAt: clock });
+        return { status: "upload_abandoned", version: record4.releaseVersion, operationId };
+      }
+      if (since === void 0) await txn.write({ ...record4, uploadCheckedAt: clock });
+      return unconfirmed({ retryAfter: (since ?? clock) + uploadSettleMs });
     }
     const [deployment2, original, candidate] = await Promise.all([
       api.readDeployment(target),
@@ -5049,7 +5125,7 @@ var uuid3 = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
 var id = /^[a-f0-9]{32}$/;
 var sha2562 = /^[a-f0-9]{64}$/;
 var worker = /^fleet-[a-z][a-z0-9-]{2,15}-[a-f0-9]{12}$/;
-var phases = /* @__PURE__ */ new Set(["uploading", "staged", "deploying", "confirmed"]);
+var phases = /* @__PURE__ */ new Set(["uploading", "staged", "deploying", "confirmed", "abandoned"]);
 var matches5 = /* @__PURE__ */ __name((pattern, value) => typeof value === "string" && pattern.test(value), "matches");
 var errors = {
   unavailable: [503, "\u6B64\u7BA1\u7406\u53F0\u672A\u542F\u7528\u53EF\u4FE1\u5347\u7EA7\u914D\u7F6E\u3002"],
@@ -5114,7 +5190,7 @@ function readConfig(env) {
 __name(readConfig, "readConfig");
 function safeRecord(row) {
   if (row === void 0) return { phase: "idle" };
-  if (!phases.has(row?.phase) || !matches5(operationUuid3, row.operationId) || !matches5(versionPattern4, row.releaseVersion) || !matches5(sha2562, row.releaseSha256) || !matches5(uuid3, row.baseVersion) || row.phase !== "uploading" && !matches5(uuid3, row.candidateVersion)) {
+  if (!phases.has(row?.phase) || !matches5(operationUuid3, row.operationId) || !matches5(versionPattern4, row.releaseVersion) || !matches5(sha2562, row.releaseSha256) || !matches5(uuid3, row.baseVersion) || !["uploading", "abandoned"].includes(row.phase) && !matches5(uuid3, row.candidateVersion)) {
     throw new UpgradeAdminError("status_unavailable");
   }
   if (row.manifestSha256 !== void 0 && !matches5(sha2562, row.manifestSha256)) throw new UpgradeAdminError("status_unavailable");
@@ -5214,7 +5290,8 @@ function createUpgradeAdmin(env, {
           expected: { ...config.target, currentVersion: config.currentVersion, activeVersion: record4.baseVersion },
           operationId: stored.operationId,
           api: (await ownerAdapter()).api,
-          journal: createJournal(env.TICKETS)
+          journal: createJournal(env.TICKETS),
+          now: clock
         });
       } catch (error) {
         throw mapError(error);
@@ -5233,7 +5310,7 @@ function createUpgradeAdmin(env, {
       if (previous.phase === "confirmed" && previous.operationId === operationId) {
         return { status: "previously_confirmed", version: version2, operationId };
       }
-      if (previous.phase !== "idle" && previous.phase !== "confirmed") throw new UpgradeAdminError("reconciliation_required");
+      if (!["idle", "confirmed", "abandoned"].includes(previous.phase)) throw new UpgradeAdminError("reconciliation_required");
       const { release, artifact, manifestSha256: verifiedDigest } = await artifacts();
       if (release.version !== version2 || (verifiedDigest ? verifiedDigest !== manifestSha256 : manifestSha256 !== void 0 || release.workerSha256 !== releaseSha256)) throw new UpgradeAdminError("release_changed");
       try {
