@@ -7846,16 +7846,43 @@ function shortInstallCommand(origin, platform, version3, ticket, deviceId2, { pi
 __name(shortInstallCommand, "shortInstallCommand");
 function publicInstallCommand(origin, platform, code) {
   const url = new URL(origin);
-  if (url.protocol !== "https:" || url.origin !== origin || !/^https:\/\/[a-z0-9.-]+(?::\d{1,5})?$/.test(origin) || typeof code !== "string" || !tokenPattern.test(code)) throw new Error("Device install command requires a canonical HTTPS origin and code");
-  if (platform === "windows") {
-    const file = "(Get-Variable nrEntry -ValueOnly).FullName";
-    return `powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "New-TemporaryFile -OutVariable nrEntry -ErrorAction Stop | Out-Null; try { Write-Host '\u6B63\u5728\u4E0B\u8F7D\u5E76\u6821\u9A8C\u8BBE\u5907\u5B89\u88C5\u5165\u53E3\u2026'; iwr '${publicInstallerBase}install.ps1' -UseBasicParsing -OutFile ${file} -ErrorAction Stop; if ((Get-FileHash -LiteralPath ${file} -Algorithm SHA256 -ErrorAction Stop).Hash -ne '9a791d987fbbb660ddce3d73ee1ac0c21d076fcdd8dd0b6ffd7156a7dbc1a7ad') { throw 'Installer checksum mismatch' }; & ([scriptblock]::Create((Get-Content -LiteralPath ${file} -Raw -Encoding UTF8 -ErrorAction Stop))) '-e' '${origin}' '-t' '${code}' } finally { Remove-Item -LiteralPath ${file} }"`;
+  if (url.protocol !== "https:" || url.origin !== origin || !/^https:\/\/[a-z0-9.-]+(?::\d{1,5})?$/.test(origin) || !Object.hasOwn(operatingSystems, platform) || typeof code !== "string" || !tokenPattern.test(code)) {
+    throw new Error("Device install command requires a canonical HTTPS origin, platform and code");
   }
-  const shell = platform === "linux" ? "bash" : "zsh";
-  const checksum = 'if command -v sha256sum >/dev/null; then h=$(sha256sum < "$f"); else h=$(shasum -a 256 < "$f"); fi';
-  return `${shell} -c 'set -e; f=$(mktemp); cleanup() { rm -f -- "$f"; }; trap cleanup EXIT; echo "\u6B63\u5728\u4E0B\u8F7D\u5E76\u6821\u9A8C\u8BBE\u5907\u5B89\u88C5\u5165\u53E3\u2026" >&2; curl -qfsSL --connect-timeout 15 --proto "=https" --proto-redir "=https" -o "$f" ${publicInstallerBase}install.sh; ${checksum}; [ "\${h%% *}" = f04bcc2db0dc2efa5cc77df8b61378317e9ac8a8bc3a94067de99866cdd68d88 ] || { echo "Installer checksum mismatch" >&2; exit 1; }; ${shell} "$f" "$@"' -- -e ${origin} -t ${code}`;
+  const entry = origin + installPath(platform) + "?i";
+  if (platform === "windows") {
+    return `powershell -NoP -Command ". ([scriptblock]::Create((irm '${entry}' -MaximumRedirection 0 -TimeoutSec 30 -ea Stop))); Install-Nodrelay '${code}'"`;
+  }
+  return `s=$(curl -qfSL -m30 --max-redirs 0 '${entry}') && sh -c "\${s:?}" -- ${code}`;
 }
 __name(publicInstallCommand, "publicInstallCommand");
+function deviceInstallEntry(origin, platform) {
+  if (platform === "windows") {
+    return `function Install-Nodrelay([string]$Code) {
+$ErrorActionPreference = 'Stop'
+$file = (New-TemporaryFile).FullName
+try {
+  Write-Host '\u6B63\u5728\u4E0B\u8F7D\u5E76\u6821\u9A8C\u8BBE\u5907\u5B89\u88C5\u5165\u53E3\u2026'
+  iwr '${publicInstallerBase}install.ps1' -UseBasicParsing -OutFile $file -ErrorAction Stop
+  if ((Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash -ne '9a791d987fbbb660ddce3d73ee1ac0c21d076fcdd8dd0b6ffd7156a7dbc1a7ad') { throw 'Installer checksum mismatch' }
+  & ([scriptblock]::Create((Get-Content -LiteralPath $file -Raw -Encoding UTF8))) '-e' '${origin}' '-t' $Code
+} finally { Remove-Item -LiteralPath $file }
+}
+`;
+  }
+  const shell = platform === "linux" ? "bash" : "zsh";
+  return `#!/bin/sh
+set -eu
+f=$(mktemp)
+trap 'rm -f -- "$f"' EXIT
+echo '\u6B63\u5728\u4E0B\u8F7D\u5E76\u6821\u9A8C\u8BBE\u5907\u5B89\u88C5\u5165\u53E3\u2026' >&2
+curl -qfsSL --connect-timeout 15 --proto '=https' --proto-redir '=https' -o "$f" '${publicInstallerBase}install.sh'
+if command -v sha256sum >/dev/null; then h=$(sha256sum < "$f"); else h=$(shasum -a 256 < "$f"); fi
+[ "\${h%% *}" = f04bcc2db0dc2efa5cc77df8b61378317e9ac8a8bc3a94067de99866cdd68d88 ] || { echo 'Installer checksum mismatch' >&2; exit 1; }
+${shell} "$f" -e '${origin}' -t "$1"
+`;
+}
+__name(deviceInstallEntry, "deviceInstallEntry");
 function bootstrapInstaller(origin, platform, { assets: assets2 }, { enrollmentIntent = false, deviceId: deviceId2 } = {}) {
   if (deviceId2 !== void 0 && (!enrollmentIntent || typeof deviceId2 !== "string" || !devicePattern.test(deviceId2))) {
     throw new Error("A bound installer needs an enrollment intent and a valid device ID");
@@ -24635,6 +24662,9 @@ function createWorker({ verifyAdmin = accessAdmin, deviceProvider, upgradeProvid
       if (env.FLEET_SPEC && !managed) return json({ error: "Managed deployment bindings missing" }, 503);
       const installPlatform = managed && Object.keys(operatingSystems).find((platform) => pathname === installPath(platform));
       if (installPlatform) {
+        if (request.method === "GET" && url.search === "?i" && enrollmentIsEnabled(env)) {
+          return assetResponse("text/plain", deviceInstallEntry(env.APP_ORIGIN, installPlatform));
+        }
         if (request.method === "POST") {
           if (!enrollmentIsEnabled(env)) return json({ error: "Installer unavailable" }, 404);
           if (request.headers.get("Content-Type")?.split(";", 1)[0].trim().toLowerCase() !== "application/json") {
