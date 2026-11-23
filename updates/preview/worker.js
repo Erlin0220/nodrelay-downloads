@@ -38,7 +38,7 @@ __name(hostedInstallers, "hostedInstallers");
 
 // ../cloud/install-command.mjs
 var sh = /* @__PURE__ */ __name((value) => "'" + value.replaceAll("'", "'\\''") + "'", "sh");
-var curlOptions = "--disable --fail --silent --show-error --location --max-redirs 5 --proto '=https' --proto-redir '=https'";
+var curlOptions = "--disable --fail --silent --show-error --location --max-redirs 5 --connect-timeout 15 --max-time 300 --proto '=https' --proto-redir '=https'";
 var ps = /* @__PURE__ */ __name((value) => "'" + value.replaceAll("'", "''") + "'", "ps");
 var shellHash = 'if command -v sha256sum >/dev/null; then digest=$(sha256sum "$d/fleet.tgz"); else digest=$(shasum -a 256 "$d/fleet.tgz"); fi';
 var requireShellHash = /* @__PURE__ */ __name((expected) => `[ "\${digest%% *}" = ${expected} ] || { printf '%s\\n' 'Installer hash mismatch' >&2; exit 1; }`, "requireShellHash");
@@ -46,6 +46,7 @@ var unpackShell = 'mkdir "$d/bundle"; tar -xzf "$d/fleet.tgz" -C "$d/bundle"';
 var temporaryDirectory = `umask 077; d=$(mktemp -d); trap 'rm -rf "$d"' EXIT`;
 var runWindows = "& (Join-Path $bundle 'bin/node.exe') (Join-Path $bundle 'fleet/src/install-device.mjs') $bundle";
 var requireWindowsSuccess = "if ($LASTEXITCODE -ne 0) { throw 'Device installation failed' }";
+var windowsCleanup = "for ($attempt = 0; $attempt -lt 5; $attempt++) { try { if (-not (Test-Path -LiteralPath $d -ErrorAction Stop)) { break }; Remove-Item -LiteralPath $d -Recurse -Force -ErrorAction Stop; break } catch { if ($attempt -eq 4) { Write-Warning 'Nodrelay could not remove its temporary installer files.' -WarningAction Continue } else { Start-Sleep -Milliseconds (200 * ($attempt + 1)) } } }";
 function shortInstallCommand(origin, platform, version2, ticket, deviceId, { pinnedUrl } = {}) {
   const url = new URL(installPath(platform), origin);
   if (url.protocol !== "https:") throw new Error("Device bootstrap requires HTTPS");
@@ -87,7 +88,7 @@ ${enrollmentIntent ? `  $env:DEVSPACE_FLEET_ENROLLMENT_PROTOCOL = 'intent-v1'
   ${requireWindowsSuccess}
 } finally {
   Remove-Item Env:DEVSPACE_FLEET_TICKET, Env:DEVSPACE_FLEET_MANAGER, Env:DEVSPACE_FLEET_DEVICE -ErrorAction SilentlyContinue${enrollmentIntent ? "\n  Remove-Item Env:DEVSPACE_FLEET_ENROLLMENT_PROTOCOL, Env:DEVSPACE_FLEET_ASSET_SHA256 -ErrorAction SilentlyContinue" : ""}
-  Remove-Item -LiteralPath $d -Recurse -Force
+  ${windowsCleanup}
 }
 `;
   }
@@ -134,7 +135,7 @@ function installCommand(origin, platform, asset, ticket, deviceId) {
       "$ErrorActionPreference='Stop'",
       "$d=Join-Path ([IO.Path]::GetTempPath()) ('devspace-fleet-'+[Guid]::NewGuid())",
       "New-Item -ItemType Directory $d | Out-Null",
-      `try { ${install.join("; ")} } finally { Remove-Item Env:DEVSPACE_FLEET_TICKET -ErrorAction SilentlyContinue; Remove-Item Env:DEVSPACE_FLEET_MANAGER -ErrorAction SilentlyContinue; Remove-Item Env:DEVSPACE_FLEET_DEVICE -ErrorAction SilentlyContinue; Remove-Item -LiteralPath $d -Recurse -Force }`
+      `try { ${install.join("; ")} } finally { Remove-Item Env:DEVSPACE_FLEET_TICKET -ErrorAction SilentlyContinue; Remove-Item Env:DEVSPACE_FLEET_MANAGER -ErrorAction SilentlyContinue; Remove-Item Env:DEVSPACE_FLEET_DEVICE -ErrorAction SilentlyContinue; ${windowsCleanup} }`
     ].join("; ");
   }
   return [
@@ -1258,6 +1259,12 @@ async function getEnrollmentIntent(db, id2) {
     FROM enrollment_intents WHERE id = ?`).bind(id2).first());
 }
 __name(getEnrollmentIntent, "getEnrollmentIntent");
+async function readBoundEnrollmentState(db, deviceId, id2) {
+  if (!matches2(uuidPattern, id2) || !matches2(devicePattern, deviceId)) return;
+  const row = await db.prepare("SELECT state FROM enrollment_intents WHERE id = ? AND device_id = ?").bind(id2, deviceId).first();
+  return row?.state;
+}
+__name(readBoundEnrollmentState, "readBoundEnrollmentState");
 async function revealEnrollmentIntent(db, secret, id2) {
   if (!matches2(uuidPattern, id2)) return;
   const row = await db.prepare(`SELECT * FROM enrollment_intents
@@ -1306,18 +1313,29 @@ __name(revokeEnrollmentIntent, "revokeEnrollmentIntent");
 var uuidPattern2 = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
 var valid = /* @__PURE__ */ __name((pattern, value) => typeof value === "string" && pattern.test(value), "valid");
 var fieldsAre = /* @__PURE__ */ __name((value, fields) => value !== null && typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === fields.length && fields.every((field) => Object.hasOwn(value, field)), "fieldsAre");
+var enrollmentErrors = {
+  invalid_target: [400, "\u8BBE\u5907\u6216\u5B89\u88C5\u547D\u4EE4\u6807\u8BC6\u65E0\u6548\uFF0C\u8BF7\u5237\u65B0\u8BBE\u5907\u5217\u8868\u3002"],
+  invalid_device: [400, "\u8BBE\u5907\u540D\u79F0\u6216\u7CFB\u7EDF\u9009\u9879\u65E0\u6548\uFF0C\u8BF7\u68C0\u67E5\u540E\u91CD\u8BD5\u3002"],
+  installer_unavailable: [400, "\u5F53\u524D\u7248\u672C\u6CA1\u6709\u6B64\u7CFB\u7EDF\u7684\u5B89\u88C5\u5305\uFF0C\u8BF7\u9009\u62E9\u8BBE\u5907\u5B9E\u9645\u4F7F\u7528\u7684\u53D7\u652F\u6301\u7CFB\u7EDF\u3002"],
+  browser_confirmation: [400, "\u6D4F\u89C8\u5668\u6743\u9650\u4E0E\u6240\u9009\u5B89\u88C5\u5305\u4E0D\u5339\u914D\uFF0C\u8BF7\u91CD\u65B0\u9009\u62E9\u7CFB\u7EDF\u5E76\u6838\u5BF9\u6743\u9650\u3002"],
+  device_in_use: [409, "\u8FD9\u4E2A\u8BBE\u5907\u540D\u79F0\u5DF2\u6709\u63A5\u5165\u8BB0\u5F55\uFF0C\u8BF7\u67E5\u770B\u8BBE\u5907\u5217\u8868\u6216\u6362\u4E00\u4E2A\u540D\u79F0\u3002"],
+  command_missing: [404, "\u5B89\u88C5\u547D\u4EE4\u5DF2\u9886\u53D6\u3001\u5DF2\u64A4\u9500\u6216\u4E0D\u5B58\u5728\uFF0C\u8BF7\u5237\u65B0\u8BBE\u5907\u5217\u8868\u3002"],
+  command_changed: [409, "\u5B89\u88C5\u547D\u4EE4\u72B6\u6001\u5DF2\u53D8\u5316\uFF0C\u8BF7\u5237\u65B0\u8BBE\u5907\u5217\u8868\u540E\u518D\u64CD\u4F5C\u3002"]
+};
 var EnrollmentAdminError = class extends Error {
   static {
     __name(this, "EnrollmentAdminError");
   }
-  constructor(message2, status) {
+  constructor(code) {
+    const [status, message2] = enrollmentErrors[code];
     super(message2);
+    this.code = code;
     this.status = status;
   }
 };
 function validTarget(input) {
   if (!fieldsAre(input, ["deviceId", "intentId"]) || !valid(devicePattern, input.deviceId) || !valid(uuidPattern2, input.intentId)) {
-    throw new EnrollmentAdminError("Invalid enrollment target", 400);
+    throw new EnrollmentAdminError("invalid_target");
   }
 }
 __name(validTarget, "validTarget");
@@ -1325,43 +1343,39 @@ function createEnrollmentAdmin({ db, secret, releases, withDeviceFence }) {
   if (!db?.prepare || typeof withDeviceFence !== "function" || !releases || typeof releases !== "object" || Array.isArray(releases)) {
     throw new Error("Enrollment database, trusted release catalog and shared device fence are required");
   }
-  const frozenSource = structuredClone(releases);
-  const installers = Object.assign(/* @__PURE__ */ Object.create(null), frozenSource, hostedInstallers(frozenSource));
+  const installers = hostedInstallers(structuredClone(releases));
   const existingLegacy = /* @__PURE__ */ __name(async (deviceId) => db.prepare(`SELECT
     EXISTS(SELECT 1 FROM fleet_devices WHERE id = ?) OR
     EXISTS(SELECT 1 FROM enrollment_tickets WHERE device_id = ? AND expires_at > ?) AS conflict`).bind(deviceId, deviceId, Math.floor(Date.now() / 1e3)).first(), "existingLegacy");
   const requireNoLegacy = /* @__PURE__ */ __name(async (deviceId) => {
     const result = await existingLegacy(deviceId);
-    if (result?.conflict !== 0) throw new EnrollmentAdminError("Device ID already belongs to a legacy enrollment or device", 409);
+    if (result?.conflict !== 0) throw new EnrollmentAdminError("device_in_use");
   }, "requireNoLegacy");
   const checkedIntent = /* @__PURE__ */ __name(async ({ deviceId, intentId }) => {
     const intent = await getEnrollmentIntent(db, intentId);
     if (!intent || intent.deviceId !== deviceId || intent.state !== "pending") {
-      throw new EnrollmentAdminError("Pending enrollment intent not found for this device", 404);
+      throw new EnrollmentAdminError("command_missing");
     }
     return intent;
   }, "checkedIntent");
   return Object.freeze({
     async create(input) {
       if (!fieldsAre(input, ["deviceId", "platform", "confirmBrowser"]) || !valid(devicePattern, input.deviceId) || typeof input.platform !== "string" || typeof input.confirmBrowser !== "boolean") {
-        throw new EnrollmentAdminError("Expected device ID, platform and browser confirmation", 400);
+        throw new EnrollmentAdminError("invalid_device");
       }
       const { deviceId, platform, confirmBrowser } = input;
-      const [os, arch, extra] = platform.split("-");
-      if (extra !== void 0 || !Object.hasOwn(operatingSystems, os) || arch !== void 0 && !operatingSystems[os].architectures.includes(arch) || !Object.hasOwn(installers, platform)) {
-        throw new EnrollmentAdminError("No approved installer for this platform", 400);
-      }
+      if (!Object.hasOwn(installers, platform)) throw new EnrollmentAdminError("installer_unavailable");
       const release = installers[platform];
-      if (confirmBrowser !== (release?.browser === true)) throw new EnrollmentAdminError("Browser confirmation does not match the selected release", 400);
+      if (confirmBrowser !== (release?.browser === true)) throw new EnrollmentAdminError("browser_confirmation");
       return withDeviceFence(async (assertFence) => {
         await assertFence();
         await requireNoLegacy(deviceId);
         const reserved = await db.prepare(`SELECT id FROM enrollment_intents
           WHERE device_id = ? AND state IN ('pending', 'claimed') LIMIT 1`).bind(deviceId).first();
-        if (reserved) throw new EnrollmentAdminError("Device already has a pending or claimed enrollment intent", 409);
+        if (reserved) throw new EnrollmentAdminError("device_in_use");
         await assertFence();
         const intent = await issueEnrollmentIntent(db, secret, { deviceId, platform, release, confirmBrowser });
-        if (!intent) throw new EnrollmentAdminError("Could not reserve this enrollment intent", 409);
+        if (!intent) throw new EnrollmentAdminError("device_in_use");
         return intent;
       });
     },
@@ -1374,7 +1388,7 @@ function createEnrollmentAdmin({ db, secret, releases, withDeviceFence }) {
         await requireNoLegacy(deviceId);
         await assertFence();
         const revealed = await revealEnrollmentIntent(db, secret, intentId);
-        if (!revealed) throw new EnrollmentAdminError("Enrollment intent no longer pending", 409);
+        if (!revealed) throw new EnrollmentAdminError("command_changed");
         return revealed;
       });
     },
@@ -1386,7 +1400,7 @@ function createEnrollmentAdmin({ db, secret, releases, withDeviceFence }) {
         await checkedIntent({ deviceId, intentId });
         await assertFence();
         const revoked = await revokeEnrollmentIntent(db, intentId);
-        if (!revoked) throw new EnrollmentAdminError("Enrollment intent no longer pending", 409);
+        if (!revoked) throw new EnrollmentAdminError("command_changed");
         return revoked;
       });
     }
@@ -1545,7 +1559,10 @@ function cloudflareApi(token, { request = fetch, beforeRequest, requestTimeoutMs
         const response2 = await send("GET", path, void 0, { ...query, page: page2, per_page: pageSize });
         if (!Array.isArray(response2.result)) throw new Error("Unexpected Cloudflare list response");
         items.push(...response2.result);
-        if (response2.result_info?.total_pages <= page2 || response2.result.length < pageSize) return items;
+        const totalPages = response2.result_info?.total_pages;
+        if (Number.isSafeInteger(totalPages) && totalPages >= 0) {
+          if (page2 >= totalPages) return items;
+        } else if (response2.result.length < (response2.result_info?.per_page ?? pageSize)) return items;
       }
       throw new Error("Cloudflare list exceeded the reconciliation limit");
     },
@@ -2491,7 +2508,7 @@ function enrollmentContext(env) {
 __name(enrollmentContext, "enrollmentContext");
 
 // ../cloud/management-client.mjs
-var consoleScript = String.raw`
+var consoleBeforeUpgrade = String.raw`
   const theme = document.querySelector('#theme');
   const themeMenu = document.querySelector('#theme-menu');
   const themeOptions = [...themeMenu.querySelectorAll('[data-theme-option]')];
@@ -2579,7 +2596,7 @@ var consoleScript = String.raw`
     listRequest?.abort();
     const controller = new AbortController();
     listRequest = controller;
-    retryList.disabled = true;
+    retryList.setAttribute('aria-disabled', 'true');
     try {
       const response = await fetch('/', { cache: 'no-store', redirect: 'error',
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(8000)]) });
@@ -2597,6 +2614,7 @@ var consoleScript = String.raw`
         if (count) filter.querySelector('.count').textContent = count.textContent;
       }
       listFeedback.textContent = '';
+      if (document.activeElement === retryList) search.focus();
       retryList.hidden = true;
       updateRows();
       if (action && document.activeElement === document.body) {
@@ -2610,10 +2628,13 @@ var consoleScript = String.raw`
         retryList.hidden = false;
       }
     } finally {
-      if (listRequest === controller) retryList.disabled = false;
+      if (listRequest === controller) {
+        listRequest = undefined;
+        retryList.removeAttribute('aria-disabled');
+      }
     }
   }
-  retryList.addEventListener('click', refreshDeviceList);
+  retryList.addEventListener('click', () => { if (!listRequest) void refreshDeviceList(); });
   search.addEventListener('input', updateRows);
   for (const filter of filters) {
     filter.addEventListener('click', () => {
@@ -2657,7 +2678,8 @@ var consoleScript = String.raw`
 
   updateRows();
   copy.disabled = !address.textContent.startsWith('https://');
-
+`;
+var consoleUpgradeScript = String.raw`
   async function requestJson(path, options = {}) {
     const signal = options.signal ?? AbortSignal.timeout(options.method === 'POST' ? 45000 : 12000);
     let response, data;
@@ -2690,9 +2712,15 @@ var consoleScript = String.raw`
   const upgradeStatus = document.querySelector('#upgrade-status');
   const confirmUpgrade = document.querySelector('#confirm-upgrade');
   const reconcileUpgrade = document.querySelector('#reconcile-upgrade');
+  const closeUpgrade = document.querySelector('#close-upgrade-button');
+  function hideUpgradeAction(action) {
+    if (upgradeDialog.open && document.activeElement === action) closeUpgrade.focus();
+    action.hidden = true;
+  }
   let pendingUpgrade;
   let releaseCheck;
-  let upgrading = false;
+  let upgradeStatusRequest;
+  let upgrading;
   const activePhases = new Set(['uploading', 'staged', 'deploying']);
   const phaseText = { uploading: '上传结果尚未确认。', staged: '已记录候选版本，切换结果尚未确认。',
     deploying: '版本切换结果尚未确认。' };
@@ -2724,18 +2752,35 @@ var consoleScript = String.raw`
   }
   void readReleaseCheck();
   upgrade.addEventListener('click', async () => {
+    if (upgradeDialog.open) return;
+    upgradeStatusRequest?.abort();
+    const controller = new AbortController();
+    upgradeStatusRequest = controller;
+    const isCurrent = () => upgradeDialog.open && upgradeStatusRequest === controller;
     const target = releaseCheck?.nextVersion;
     upgradeDescription.textContent = target
       ? 'v' + releaseCheck.currentVersion + ' → v' + target + '。域名、登录、数据库和已连接设备不变。' +
         (releaseCheck.includesEnrollment ? ' 本次会更新新设备的接入方式，旧命令仍按原版本运行。' : '') : '正在读取升级记录。';
     upgradeStatus.textContent = '正在读取升级记录…';
     confirmUpgrade.hidden = true;
+    if (upgrading) {
+      // Let the in-flight POST finish and render its result. An overlapping
+      // GET could overwrite that result or lose the retry button.
+      const checking = upgrading === 'reconcile';
+      reconcileUpgrade.hidden = !checking;
+      upgradeStatus.textContent = checking ? '正在向 Cloudflare 核对实际生效的版本…'
+        : '正在等待 Cloudflare 响应，请勿重复提交。';
+      upgradeDialog.showModal();
+      return;
+    }
     reconcileUpgrade.hidden = true;
     pendingUpgrade = undefined;
     upgradeDialog.showModal();
     try {
-      const { phase, operationId, version, currentVersion } = await requestJson('/admin/upgrade/status');
-      if (!upgradeDialog.open) return;
+      const { phase, operationId, version, currentVersion } = await requestJson('/admin/upgrade/status', {
+        signal: AbortSignal.any([controller.signal, AbortSignal.timeout(12000)]),
+      });
+      if (!isCurrent()) return;
       if (activePhases.has(phase)) {
         if (operationId && !upgrading) {
           pendingUpgrade = operationId;
@@ -2745,16 +2790,20 @@ var consoleScript = String.raw`
       } else {
         upgradeStatus.textContent = upgrading ? '正在等待 Cloudflare 响应。'
           : phase === 'confirmed' ? historicalUpgradeText(version, currentVersion) : '';
-        confirmUpgrade.hidden = !target || upgrading;
+        if (target && target === currentVersion) {
+          releaseCheck = undefined;
+          upgradeDescription.textContent = '此页面已由 v' + currentVersion + ' 响应，无需重复提交该版本。';
+        }
+        confirmUpgrade.hidden = !releaseCheck?.nextVersion || Boolean(upgrading);
       }
     } catch {
-      upgradeStatus.textContent = '暂时无法读取升级记录，请稍后重新打开。';
+      if (isCurrent()) upgradeStatus.textContent = '暂时无法读取升级记录，请稍后重新打开。';
     }
   });
   reconcileUpgrade.addEventListener('click', async () => {
-    if (!pendingUpgrade || upgrading) return;
-    upgrading = true;
-    reconcileUpgrade.disabled = true;
+    if (!upgradeDialog.open || reconcileUpgrade.hidden || !pendingUpgrade || upgrading) return;
+    upgrading = 'reconcile';
+    reconcileUpgrade.setAttribute('aria-disabled', 'true');
     upgradeStatus.textContent = '正在向 Cloudflare 核对实际生效的版本…';
     try {
       const result = await post('/admin/upgrade/reconcile', { operationId: pendingUpgrade });
@@ -2766,25 +2815,30 @@ var consoleScript = String.raw`
         upgradeStatus.textContent = '候选版本已核对，Cloudflare 流量仍指向旧版。本次核对没有切换。请保留记录，不要重新提交。';
         return;
       }
+      if (result.status === 'baseline_active_rollout_unconfirmed') {
+        upgradeStatus.textContent = '核对时 Cloudflare 流量仍全部指向旧版，候选版本已上传，但上次切换的结果仍未确认。请稍后再核对，不要重复提交。';
+        return;
+      }
       if (!['deployment_confirmed', 'previously_confirmed'].includes(result.status)) throw new Error('尚未确认已切换。');
       upgradeStatus.textContent = cutoverText(result);
       pendingUpgrade = undefined;
       releaseCheck = undefined;
-      reconcileUpgrade.hidden = true;
+      hideUpgradeAction(reconcileUpgrade);
     } catch (error) { upgradeStatus.textContent = error.message; }
-    finally { upgrading = false; reconcileUpgrade.disabled = false; }
+    finally { upgrading = undefined; reconcileUpgrade.removeAttribute('aria-disabled'); }
   });
   confirmUpgrade.addEventListener('click', async () => {
     const version = releaseCheck?.nextVersion;
     const digest = releaseCheck?.manifestSha256
       ? { manifestSha256: releaseCheck.manifestSha256 } : releaseCheck?.releaseSha256 && { releaseSha256: releaseCheck.releaseSha256 };
-    if (!version || !digest || upgrading) return;
-    upgrading = true;
-    confirmUpgrade.hidden = true;
+    if (!upgradeDialog.open || confirmUpgrade.hidden || !version || !digest || upgrading) return;
+    const operationId = crypto.randomUUID();
+    upgrading = 'start';
+    hideUpgradeAction(confirmUpgrade);
     upgradeStatus.textContent = '正在验签、上传并切换版本。可以关闭此窗口，稍后查看结果。';
     upgrade.textContent = '查看升级状态';
     try {
-      const result = await post('/admin/upgrade/start', { version, ...digest, operationId: crypto.randomUUID() });
+      const result = await post('/admin/upgrade/start', { version, ...digest, operationId });
       if (!['deployment_confirmed', 'previously_confirmed'].includes(result.status)) {
         throw new Error('发布结果未确认。请先核对升级状态。');
       }
@@ -2793,13 +2847,20 @@ var consoleScript = String.raw`
     } catch (error) {
       upgradeStatus.textContent = error.message;
       const state = await requestJson('/admin/upgrade/status').catch(() => null);
-      if (upgradeDialog.open && activePhases.has(state?.phase) && state.operationId) {
+      if (state?.phase === 'confirmed' && state.operationId === operationId && state.version === version) {
+        releaseCheck = undefined;
+        if (upgradeDialog.open) {
+          upgradeDescription.textContent = '已找到本次升级记录，无需重复提交。';
+          upgradeStatus.textContent = historicalUpgradeText(state.version, state.currentVersion);
+        }
+      } else if (upgradeDialog.open && activePhases.has(state?.phase) && state.operationId) {
         pendingUpgrade = state.operationId;
         reconcileUpgrade.hidden = false;
       }
-    } finally { upgrading = false; }
+    } finally { upgrading = undefined; }
   });
-
+`;
+var consoleAfterUpgrade = String.raw`
   const callbackPath = '/admin/client-callbacks';
   const callbackDialog = document.querySelector('#callback-dialog');
   const callbackTitle = document.querySelector('#callback-title');
@@ -2988,6 +3049,8 @@ var consoleScript = String.raw`
     }
   });
 
+`;
+var consoleEnrollmentScript = String.raw`
   const addDialog = document.querySelector('#add-dialog');
   const addTitle = document.querySelector('#add-title');
   const addForm = document.querySelector('#add-device-form');
@@ -3009,17 +3072,37 @@ var consoleScript = String.raw`
   const expiryLabel = document.querySelector('#device-command-expiration');
   const enrollmentFeedback = document.querySelector('#device-enrollment-progress');
 
+  function hideCommand(hideText = true) {
+    if (addDialog.open && (document.activeElement === copyCommand || (hideText && document.activeElement === command))) {
+      enrollmentFeedback.focus();
+    }
+    copyCommand.disabled = true;
+    command.hidden = hideText;
+  }
+
+  function showCommandPanel() {
+    commandResult.hidden = false;
+    enrollmentFeedback.focus();
+    addForm.hidden = true;
+  }
+
   function renderExpiry() {
     if (!enrollment || !addDialog.open || document.hidden) return;
     if (enrollment.durable) {
       expiryLabel.textContent = enrollment.claimed || enrollment.done ? '' : '未领取的命令不会过期，可从设备行撤销。';
-      copyCommand.disabled = Boolean(enrollment.claimed || enrollment.done);
+      if (!enrollment.verified || enrollment.claimed || enrollment.done) hideCommand();
+      else {
+        copyCommand.disabled = false;
+        command.hidden = false;
+      }
       return;
     }
     const seconds = Math.max(0, Math.ceil((enrollment.expires - performance.now()) / 1000));
     expiryLabel.textContent = seconds === 0 ? '命令已过期，不能再发起安装。'
       : '命令还可使用 ' + Math.floor(seconds / 60) + ' 分 ' + String(seconds % 60).padStart(2, '0') + ' 秒';
-    copyCommand.disabled = !seconds || enrollment.done;
+    const unavailable = !seconds || enrollment.done;
+    if (unavailable && document.activeElement === copyCommand) enrollmentFeedback.focus();
+    copyCommand.disabled = unavailable;
     if (seconds && !enrollment.done) expiryTimer = setTimeout(renderExpiry, 1000);
   }
 
@@ -3028,12 +3111,16 @@ var consoleScript = String.raw`
     clearTimeout(pollTimer);
     pendingPoll?.abort();
     pendingPoll = undefined;
+    if (enrollment?.durable) {
+      enrollment.verified = false;
+      hideCommand();
+    }
   }
 
   async function checkEnrollment() {
     const current = enrollment;
     if (!current || current.done || !addDialog.open || document.hidden || pendingPoll) return;
-    if (performance.now() >= current.stopAt) {
+    if (!current.durable && performance.now() >= current.stopAt) {
       enrollmentFeedback.textContent = '已停止自动检查。若设备仍在安装，可关闭窗口后点「查看状态」。';
       return;
     }
@@ -3041,27 +3128,31 @@ var consoleScript = String.raw`
     pendingPoll = controller;
     try {
       const query = new URLSearchParams({ deviceId: current.deviceId });
+      if (current.durable) query.set('intentId', current.intentId);
       const data = await requestJson('/admin/devices/enrollment?' + query, {
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(6000)]),
       });
       if (pendingPoll !== controller || enrollment !== current || !addDialog.open || document.hidden) return;
-      if (data.registration === 'active' || data.registration === 'disabled') {
+      if (['active', 'disabled', 'revoked'].includes(data.registration)) {
         current.done = true;
         clearTimeout(expiryTimer);
         command.textContent = '';
         expiryLabel.textContent = '';
-        copyCommand.disabled = true;
+        commandFeedback.hidden = true;
         enrollmentFeedback.textContent = data.registration === 'active'
           ? '设备已接入 Portal。需要确认工具是否可用，可在设备列表查看状态。'
-          : '这台设备的接入已停用。';
+          : data.registration === 'revoked' ? '这条安装命令已撤销。' : '这台设备的接入已停用。';
+        hideCommand(current.durable);
       } else if (data.registration === 'installing') {
         current.claimed = true;
         command.textContent = '';
-        copyCommand.disabled = true;
         commandFeedback.hidden = true;
         expiryLabel.textContent = '';
         enrollmentFeedback.textContent = '目标设备已经领取命令，正在安装。';
+        hideCommand(current.durable);
       } else if (data.registration === 'pending') {
+        current.verified = true;
+        if (current.durable) renderExpiry();
         enrollmentFeedback.textContent = '正在等待设备接入。在目标设备运行命令后，这里会自动更新。';
       } else {
         throw new Error('Unknown registration status');
@@ -3069,11 +3160,15 @@ var consoleScript = String.raw`
     } catch {
       if (pendingPoll !== controller || enrollment !== current || !addDialog.open || document.hidden) return;
       enrollmentFeedback.textContent = '暂时查不到接入状态，会自动重试。';
+      if (current.durable) {
+        current.verified = false;
+        hideCommand();
+      }
     } finally {
       if (pendingPoll === controller) {
         pendingPoll = undefined;
         if (enrollment === current && !current.done && addDialog.open && !document.hidden) {
-          pollTimer = setTimeout(checkEnrollment, 10000);
+          pollTimer = setTimeout(checkEnrollment, current.durable && performance.now() >= current.stopAt ? 30000 : 10000);
         }
       }
     }
@@ -3127,20 +3222,20 @@ var consoleScript = String.raw`
   function showDeviceCommand(result) {
     issued = true;
     command.textContent = result.command;
+    command.hidden = false;
     document.querySelector('#device-command-target').textContent = result.deviceId + ' · ' + result.platform;
     document.querySelector('#command-instructions').textContent = result.instructions;
     addFeedback.hidden = true;
-    addForm.hidden = true;
-    commandResult.hidden = false;
     const expires = result.durable ? undefined
       : performance.now() + Math.max(0, result.expiresAt - result.serverTime) * 1000;
-    enrollment = { deviceId: result.deviceId, expires, durable: result.durable === true,
+    enrollment = { deviceId: result.deviceId, intentId: result.intentId, expires, durable: result.durable === true,
       stopAt: (expires ?? performance.now() + 600000) + 300000 };
     enrollmentFeedback.textContent = '正在等待设备接入。';
     renderExpiry();
     checkEnrollment();
     addTitle.textContent = '设备连接指令';
-    command.focus();
+    if (commandResult.hidden) showCommandPanel();
+    if (!result.durable && !command.hidden) command.focus();
   }
   addForm.addEventListener('submit', async event => {
     event.preventDefault();
@@ -3168,12 +3263,14 @@ var consoleScript = String.raw`
     const current = enrollment;
     if (!current || copyCommand.disabled) return;
     const copied = await copyNodeContents(command);
-    if (current !== enrollment || current.done || !addDialog.open) return;
+    if (current !== enrollment || current.done || current.claimed || copyCommand.disabled || !addDialog.open) return;
     copyCommand.querySelector('span').textContent = copied ? '已复制' : '按快捷键复制';
     commandFeedback.textContent = copied ? '已复制完整指令。' : '已选中完整指令，请使用系统复制快捷键。';
     commandFeedback.hidden = false;
   });
 
+`;
+var consoleDeviceDetails = String.raw`
   const detail = document.querySelector('#device-dialog');
   const detailTitle = document.querySelector('#device-dialog-title');
   const summary = document.querySelector('#device-summary');
@@ -3217,13 +3314,15 @@ var consoleScript = String.raw`
       if (issuing || addDialog.open) return;
       resetAddDialog();
       addTitle.textContent = '设备连接指令';
-      addDialog.showModal();
       issuing = true;
       issue.disabled = true;
       for (const control of addClose) control.disabled = true;
       addForm.hidden = true;
       commandResult.hidden = false;
+      hideCommand();
       enrollmentFeedback.textContent = '正在读取已保存设备的安装命令…';
+      addDialog.showModal();
+      enrollmentFeedback.focus();
       try {
         showDeviceCommand(await post('/admin/enrollment-intents', {
           deviceId: row.dataset.device, intentId: row.dataset.intent, action: 'reveal',
@@ -3315,6 +3414,7 @@ var consoleScript = String.raw`
     }
   });
 `;
+var consoleScript = consoleBeforeUpgrade + consoleUpgradeScript + consoleAfterUpgrade + consoleEnrollmentScript + consoleDeviceDetails;
 
 // ../cloud/management-view.mjs
 var consoleStyles = String.raw`
@@ -3358,7 +3458,7 @@ var consoleStyles = String.raw`
   .button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 0 12px; min-height: 34px; white-space: nowrap; }
   .primary { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 590; min-height: 36px; padding-inline: 12px 14px; }
   .primary:hover { background: var(--blue-hover); border-color: var(--blue-hover); }
-  button:disabled { cursor: default; opacity: .58; }
+  button:disabled, button[aria-disabled="true"] { cursor: default; opacity: .58; }
 
   .topbar { min-height: 54px; padding: 7px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--bar); border-bottom: 1px solid var(--rule); }
   .brand { display: inline-flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 650; }
@@ -3531,7 +3631,7 @@ var logoBase64 = "iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAAXNSR0IArs4c6Q
 var consoleLogo = Uint8Array.from(atob(logoBase64), (char) => char.charCodeAt(0));
 var consoleLogoUrl = "data:image/png;base64," + logoBase64;
 var _a;
-var consoleTemplate = String.raw(_a || (_a = __template(['<!doctype html>\n<html lang="zh-CN">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>\u8BBE\u5907\u7BA1\u7406 \xB7 Nodrelay</title>\n<style nonce="@@NONCE@@">', '</style>\n<link rel="icon" type="image/png" href="', '">\n</head>\n<body>\n<svg class="sr-only" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">\n  <symbol id="moon" viewBox="0 0 24 24"><path d="M21 13.1A9.1 9.1 0 0 1 10.9 3a9.2 9.2 0 1 0 10.1 10.1Z"></path></symbol>\n  <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M19 5l-1.5 1.5m-11 11L5 19"></path></symbol>\n  <symbol id="monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M12 17v4m-4 0h8"></path></symbol>\n  <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></symbol>\n  <symbol id="plus" viewBox="0 0 24 24"><path d="M3 12h18M12 3v18"></path></symbol>\n  <symbol id="copy" viewBox="0 0 24 24"><path d="M7 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v2"></path><rect x="8" y="8" width="13" height="13" rx="2"></rect></symbol>\n  <symbol id="link" viewBox="0 0 24 24"><path d="M10 13.6a4 4 0 0 0 5.7 0l3.4-3.4a4 4 0 0 0-5.7-5.7l-1.7 1.7m2.3 4.2a4 4 0 0 0-5.7 0l-3.4 3.4a4 4 0 0 0 5.7 5.7l1.7-1.7"></path></symbol>\n  <symbol id="search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="m16 16 5 5"></path></symbol>\n  <symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></symbol>\n  <symbol id="risk" viewBox="0 0 24 24"><path d="M12 8v5m0 3h.01M10.3 4.5l-8 14A1.7 1.7 0 0 0 3.8 21h16.4a1.7 1.7 0 0 0 1.5-2.5l-8-14a1.9 1.9 0 0 0-3.4 0Z"></path></symbol>\n</svg>\n<header class="topbar">\n  <div class="brand"><img src="', '" width="35" height="35" alt="">Nodrelay\n    <span id="brand-version" class="brand-version" hidden></span>\n    <button id="open-upgrade" type="button" class="button upgrade-launch" aria-haspopup="dialog" hidden>\u5347\u7EA7</button>\n  </div>\n  <div class="theme">\n    <button id="theme" type="button" class="theme-trigger" aria-label="\u5916\u89C2\u4E3B\u9898\uFF1A\u8DDF\u968F\u7CFB\u7EDF" title="\u5916\u89C2\u4E3B\u9898\uFF1A\u8DDF\u968F\u7CFB\u7EDF"\n      aria-haspopup="menu" aria-expanded="false" aria-controls="theme-menu">\n      <svg class="icon" aria-hidden="true"><use id="theme-icon" href="#monitor"></use></svg>\n    </button>\n    <div class="theme-menu" id="theme-menu" role="menu" aria-label="\u5916\u89C2\u4E3B\u9898" hidden>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="light" aria-checked="false">\u6D45\u8272<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="dark" aria-checked="false">\u6DF1\u8272<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="system" aria-checked="true">\u8DDF\u968F\u7CFB\u7EDF<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n    </div>\n  </div>\n</header>\n<main>\n  <div class="page-intro">\n    <div class="heading">\n      <h1>\u8BBE\u5907\u7BA1\u7406</h1>\n      <p>\u67E5\u770B\u8BBE\u5907\u63A5\u5165\u72B6\u6001\uFF0C\u7BA1\u7406 MCP Portal \u7684\u8FDC\u7A0B\u8BBF\u95EE\u3002</p>\n    </div>\n    <section class="portal" aria-label="MCP Portal">\n      <strong>MCP Portal</strong>\n      <div class="portal-value">\n        <code id="address" tabindex="-1">@@PORTAL@@</code>\n        <button class="button" type="button" id="copy-address"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5730\u5740</span></button>\n      </div>\n      <span class="sr-only" id="copy-feedback" role="status"></span>\n    </section>\n  </div>\n\n  <div class="portal-tools">\n    <button class="button" type="button" id="open-callbacks" aria-haspopup="dialog"><svg class="icon" aria-hidden="true"><use href="#link"></use></svg>\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</button>\n  </div>\n\n  <section class="devices" aria-labelledby="devices-title">\n    <div class="registry-heading">\n      <h2 id="devices-title">\u8BBE\u5907\u5217\u8868</h2>\n      <button class="button primary" type="button" id="add"@@ADD_DISABLED@@><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u8BBE\u5907</button>\n    </div>\n    <div class="toolbar">\n      <div class="filters" role="group" aria-label="\u6309\u63A5\u5165\u72B6\u6001\u7B5B\u9009">\n        <button type="button" data-filter="all" aria-pressed="true">\u5168\u90E8 <span class="count">@@COUNT_ALL@@</span></button>\n        <button type="button" data-filter="active" aria-pressed="false">\u5DF2\u6CE8\u518C <span class="count">@@COUNT_ACTIVE@@</span></button>\n        <button type="button" data-filter="pending" aria-pressed="false">\u5F85\u63A5\u5165 <span class="count">@@COUNT_PENDING@@</span></button>\n        <button type="button" data-filter="disabled" aria-pressed="false">\u505C\u7528 <span class="count">@@COUNT_DISABLED@@</span></button>\n      </div>\n      <label class="search">\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <span class="sr-only">\u641C\u7D22\u8BBE\u5907 ID</span>\n        <input type="search" id="device-search" placeholder="\u641C\u7D22\u8BBE\u5907 ID" autocomplete="off">\n      </label>\n    </div>\n    <div class="table-wrap">\n      <table role="table" aria-labelledby="devices-title">\n        <colgroup><col class="identity-col"><col class="state-col"><col></colgroup>\n        <thead role="rowgroup"><tr role="row"><th scope="col">\u8BBE\u5907\u4E0E\u7CFB\u7EDF</th><th scope="col">\u63A5\u5165\u72B6\u6001</th><th scope="col">\u64CD\u4F5C</th></tr></thead>\n        <tbody role="rowgroup">@@ROWS@@</tbody>\n      </table>\n      <div class="empty" id="empty" hidden>\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <strong role="status">\u672A\u627E\u5230\u5339\u914D\u7684\u8BBE\u5907</strong>\n        <p>\u8BD5\u8BD5\u5176\u4ED6\u8BBE\u5907 ID\uFF0C\u6216\u6E05\u9664\u7B5B\u9009\u3002</p>\n        <button class="button" type="button" id="clear-filters">\u6E05\u9664\u7B5B\u9009</button>\n      </div>\n    </div>\n    <p class="note" role="status" id="device-list-feedback"></p>\n    <button id="retry-device-list" class="button" type="button" hidden>\u91CD\u8BD5\u5237\u65B0\u5217\u8868</button>\n    <p class="note">\u6CE8\u518C\u72B6\u6001\u4E0D\u4EE3\u8868\u8BBE\u5907\u5B9E\u65F6\u5728\u7EBF\u3002\u8BF7\u901A\u8FC7\u300C\u67E5\u770B\u72B6\u6001\u300D\u68C0\u67E5 Tunnel \u4E0E MCP \u5DE5\u5177\u76EE\u5F55\u3002</p>\n  </section>\n</main>\n\n<dialog id="add-dialog" aria-labelledby="add-title">\n  <header class="dialog-head">\n    <h2 id="add-title">\u6DFB\u52A0\u8BBE\u5907</h2>\n    <button type="submit" form="close-add" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <form id="add-device-form" method="post" action="/admin/devices">\n    <div class="dialog-body">\n      <fieldset class="platform-tabs">\n        <legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend>@@PLATFORMS@@</fieldset>\n      <label>\u8BBE\u5907 ID <input name="deviceId" required autofocus pattern="[a-z][a-z0-9-]{0,23}" maxlength="24" placeholder="\u4F8B\u5982 mac-mini" autocomplete="off" aria-describedby="id-hint"></label>\n      <p class="field-hint" id="id-hint">\u5C0F\u5199\u5B57\u6BCD\u5F00\u5934\uFF0C\u6700\u591A 24 \u4E2A\u5B57\u7B26\uFF0C\u53EF\u542B\u6570\u5B57\u548C\u8FDE\u5B57\u7B26\u3002</p>\n      <label id="browser-consent" hidden><span><input id="confirm-browser" name="browserConsent" type="checkbox" value="1" aria-describedby="browser-consent-hint" disabled> \u4E3A\u6B64\u8BBE\u5907\u542F\u7528\u6D4F\u89C8\u5668\u5DE5\u5177</span>\n        <span class="field-hint" id="browser-consent-hint">\u5B89\u88C5\u524D\u9700\u5728\u76EE\u6807\u8BBE\u5907\u914D\u7F6E\u6D4F\u89C8\u5668\u4E13\u7528\u540E\u7AEF\u3002</span></label>\n      <p class="feedback" id="add-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button" type="submit" form="close-add">\u53D6\u6D88</button><button class="button primary" type="submit" id="issue-command">@@ADD_ACTION@@</button></div>\n  </form>\n  <section class="dialog-body device-command" id="device-command-result" aria-labelledby="device-command-label" hidden>\n    <p><strong id="device-command-target"></strong> \xB7 <span id="command-instructions"></span></p>\n    <h3 id="device-command-label">\u6307\u4EE4</h3>\n    <pre id="device-command" tabindex="0" aria-labelledby="device-command-label"></pre>\n    <button class="button primary" type="button" id="copy-device-command"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236</span></button>\n    <p id="device-command-feedback" role="status" hidden></p>\n    <p id="device-command-expiration" class="field-hint"></p>\n    <p id="device-enrollment-progress" class="feedback" role="status"></p>\n  </section>\n  <form id="close-add" method="dialog"></form>\n</dialog>\n\n<dialog id="device-dialog" aria-labelledby="device-dialog-title">\n  <span class="risk-mark" id="risk-mark" hidden><svg class="icon" aria-hidden="true"><use href="#risk"></use></svg></span>\n  <header class="dialog-head">\n    <h2 id="device-dialog-title"></h2>\n    <button type="submit" form="close-detail" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="device-summary"></p>\n    <dl class="detail" id="device-details">\n      <dt>\u6700\u540E\u68C0\u67E5</dt><dd id="checked-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u6CE8\u518C</dt><dd id="registration-detail"></dd>\n      <dt>Cloudflare Tunnel</dt><dd id="tunnel-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u5F00\u53D1\u5DE5\u5177\u76EE\u5F55</dt><dd id="mcp-detail">\u672A\u67E5\u8BE2</dd>\n      <dt id="browser-label" hidden>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd id="browser-detail" hidden></dd>\n      <dt id="release-label" hidden>\u5B89\u88C5\u5305\u7248\u672C</dt><dd id="release-detail" hidden></dd>\n      <dt id="revocation-label" hidden>\u64A4\u9500</dt><dd id="revocation-detail" hidden></dd>\n      <dt id="server-label" hidden>Portal \u670D\u52A1 ID</dt><dd id="server-detail" hidden></dd>\n    </dl>\n    <p class="feedback" id="device-feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-detail" method="dialog">\n    <button class="button" id="detail-dismiss">\u5173\u95ED</button>\n    <button class="button danger" id="detail-confirm" type="button" disabled hidden></button>\n  </form>\n</dialog>\n\n<dialog id="callback-dialog" aria-labelledby="callback-title">\n  <header class="dialog-head">\n    <h2 id="callback-title">\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</h2>\n    <button type="submit" form="close-callbacks" class="dialog-close" aria-label="\u5173\u95ED\u56DE\u8C03\u914D\u7F6E"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div id="callback-overview">\n    <div class="dialog-body callback-body">\n      <div class="callback-current">\n        <div><strong>\u5B9E\u9645\u914D\u7F6E</strong><p id="callback-summary">\u6B63\u5728\u8BFB\u53D6 Portal \u4E2D\u7684\u914D\u7F6E\u2026</p></div>\n        <span class="callback-tag" id="callback-state">\u8BFB\u53D6\u4E2D</span>\n      </div>\n      <p id="callback-feedback" role="status" tabindex="-1" hidden></p>\n      <button id="retry-callback-read" class="button" type="button" hidden>\u91CD\u8BD5\u8BFB\u53D6\u56DE\u8C03\u8BBE\u7F6E</button>\n      <section class="callback-section" id="callback-configured" aria-labelledby="callback-configured-title" hidden>\n        <h3 id="callback-configured-title">\u5DF2\u8BBE\u56DE\u8C03\u5730\u5740</h3>\n        <p>\u7531 Portal \u8FD4\u56DE\uFF0C\u53EF\u4F9B OAuth \u5BA2\u6237\u7AEF\u6CE8\u518C\u4F7F\u7528\u3002</p>\n        <ul id="callback-configured-list" class="callback-clients"></ul>\n      </section>\n      <section class="callback-section" id="callback-presets" aria-labelledby="callback-presets-title">\n        <h3 id="callback-presets-title">\u9884\u7F6E\u56DE\u8C03\u89C4\u5219</h3>\n        <p>\u6309\u5BA2\u6237\u7AEF\u6838\u5BF9\u9884\u7F6E\u89C4\u5219\u548C Portal \u7684\u914D\u7F6E\u72B6\u6001\u3002</p>\n        <ul class="callback-clients">\n          <li class="callback-client" data-preset-name="ChatGPT">\n            <strong class="callback-identity">ChatGPT</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u56FA\u5B9A\u56DE\u8C03\uFF08\u9002\u7528\u65F6\uFF09</span><code data-callback-address>https://chatgpt.com/connector_platform_oauth_redirect</code></div>\n              <div class="callback-uri"><span>\u6309\u8FDE\u63A5\u5206\u914D \xB7 \u6A21\u677F</span><code data-callback-address="https://chatgpt.com/connector/oauth/*">https://chatgpt.com/connector/oauth/{callback_id}</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="Claude">\n            <strong class="callback-identity">Claude</strong>\n            <div class="callback-uri"><span>\u81EA\u5B9A\u4E49\u8FDE\u63A5\u5668</span><code data-callback-address>https://claude.ai/api/mcp/auth_callback</code></div>\n          </li>\n          <li class="callback-client" data-preset-name="Cursor">\n            <strong class="callback-identity">Cursor</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875\u4E0E Agents</span><code data-callback-address>https://www.cursor.com/agents/mcp/oauth/callback</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://localhost:8787/callback</code></div>\n              <div class="callback-uri"><span>\u539F\u751F\u534F\u8BAE</span><code data-callback-address>cursor://anysphere.cursor-mcp/oauth/callback</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="VS Code">\n            <strong class="callback-identity">VS Code</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875</span><code data-callback-address>https://vscode.dev/redirect</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://127.0.0.1:33418/</code></div>\n            </div>\n          </li>\n          <li class="callback-client">\n            <div class="callback-identity"><strong>WorkBuddy</strong><span class="callback-tag" id="workbuddy-state" data-tone="pending">\u5F85\u914D\u7F6E</span></div>\n            <div class="callback-unset"><p>\u6CA1\u6709\u5DF2\u9A8C\u8BC1\u7684\u901A\u7528\u5730\u5740\uFF0C\u8BF7\u586B\u5199\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u51C6\u786E\u56DE\u8C03\u3002</p><button class="button" type="button" id="add-workbuddy" data-client="WorkBuddy" disabled>\u586B\u5199 WorkBuddy \u56DE\u8C03</button></div>\n          </li>\n        </ul>\n      </section>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="submit" form="close-callbacks">\u5173\u95ED</button>\n      <button class="button primary" type="button" id="add-client" disabled><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u5176\u4ED6\u5BA2\u6237\u7AEF</button>\n    </div>\n  </div>\n  <form id="callback-form" novalidate hidden>\n    <div class="dialog-body callback-body">\n      <p>\u8F93\u5165\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u51C6\u786E\u5730\u5740\u3002\u4FDD\u5B58\u540E\uFF0C\u6B64 Portal \u53EF\u63A5\u53D7\u4F7F\u7528\u8BE5\u56DE\u8C03\u5730\u5740\u7684 OAuth \u5BA2\u6237\u7AEF\u6CE8\u518C\u3002</p>\n      <label for="callback-name">\u5BA2\u6237\u7AEF\u540D\u79F0</label>\n      <input id="callback-name" name="clientName" type="text" autocomplete="off" maxlength="64" required aria-describedby="callback-name-error">\n      <p id="callback-name-error" class="field-error" role="alert" hidden></p>\n      <label for="callback-url">\u56DE\u8C03\u5730\u5740</label>\n      <input id="callback-url" name="redirectUri" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="2048" placeholder="https://client.example/oauth/callback" required aria-describedby="callback-url-hint callback-url-error">\n      <p id="callback-url-hint" class="field-hint">\u586B\u5199\u5B8C\u6574\u56DE\u8C03 URL\uFF0C\u4E0D\u8981\u7C98\u8D34\u6388\u6743\u7801\u6216\u5BC6\u94A5\u3002</p>\n      <p id="callback-url-error" class="field-error" role="alert" hidden></p>\n      <p id="callback-save-error" class="field-error" role="alert" hidden></p>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="button" id="cancel-callback">\u53D6\u6D88</button>\n      <button class="button primary" id="save-callback" type="submit">\u4FDD\u5B58</button>\n    </div>\n  </form>\n  <form id="close-callbacks" method="dialog"></form>\n</dialog>\n\n<dialog id="upgrade-dialog" aria-labelledby="upgrade-title" aria-describedby="upgrade-description">\n  <header class="dialog-head"><h2 id="upgrade-title">\u5347\u7EA7\u8BFA\u8054\u7BA1\u7406\u53F0</h2>\n    <button type="submit" form="close-upgrade" class="dialog-close" aria-label="\u5173\u95ED\u5347\u7EA7"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="upgrade-description"></p>\n    <p id="upgrade-status" class="feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-upgrade" method="dialog">\n    <button class="button" type="submit">\u5173\u95ED</button>\n    <button class="button" id="reconcile-upgrade" type="button" hidden>\u6838\u5BF9\u5B9E\u9645\u72B6\u6001</button>\n    <button class="button primary" id="confirm-upgrade" type="button" hidden>\u786E\u8BA4\u5347\u7EA7</button>\n  </form>\n</dialog>\n<script nonce="@@NONCE@@">@@SCRIPT@@<\/script>\n</body>\n</html>\n'], ['<!doctype html>\n<html lang="zh-CN">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>\u8BBE\u5907\u7BA1\u7406 \xB7 Nodrelay</title>\n<style nonce="@@NONCE@@">', '</style>\n<link rel="icon" type="image/png" href="', '">\n</head>\n<body>\n<svg class="sr-only" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">\n  <symbol id="moon" viewBox="0 0 24 24"><path d="M21 13.1A9.1 9.1 0 0 1 10.9 3a9.2 9.2 0 1 0 10.1 10.1Z"></path></symbol>\n  <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M19 5l-1.5 1.5m-11 11L5 19"></path></symbol>\n  <symbol id="monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M12 17v4m-4 0h8"></path></symbol>\n  <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></symbol>\n  <symbol id="plus" viewBox="0 0 24 24"><path d="M3 12h18M12 3v18"></path></symbol>\n  <symbol id="copy" viewBox="0 0 24 24"><path d="M7 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v2"></path><rect x="8" y="8" width="13" height="13" rx="2"></rect></symbol>\n  <symbol id="link" viewBox="0 0 24 24"><path d="M10 13.6a4 4 0 0 0 5.7 0l3.4-3.4a4 4 0 0 0-5.7-5.7l-1.7 1.7m2.3 4.2a4 4 0 0 0-5.7 0l-3.4 3.4a4 4 0 0 0 5.7 5.7l1.7-1.7"></path></symbol>\n  <symbol id="search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="m16 16 5 5"></path></symbol>\n  <symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></symbol>\n  <symbol id="risk" viewBox="0 0 24 24"><path d="M12 8v5m0 3h.01M10.3 4.5l-8 14A1.7 1.7 0 0 0 3.8 21h16.4a1.7 1.7 0 0 0 1.5-2.5l-8-14a1.9 1.9 0 0 0-3.4 0Z"></path></symbol>\n</svg>\n<header class="topbar">\n  <div class="brand"><img src="', '" width="35" height="35" alt="">Nodrelay\n    <span id="brand-version" class="brand-version" hidden></span>\n    <button id="open-upgrade" type="button" class="button upgrade-launch" aria-haspopup="dialog" hidden>\u5347\u7EA7</button>\n  </div>\n  <div class="theme">\n    <button id="theme" type="button" class="theme-trigger" aria-label="\u5916\u89C2\u4E3B\u9898\uFF1A\u8DDF\u968F\u7CFB\u7EDF" title="\u5916\u89C2\u4E3B\u9898\uFF1A\u8DDF\u968F\u7CFB\u7EDF"\n      aria-haspopup="menu" aria-expanded="false" aria-controls="theme-menu">\n      <svg class="icon" aria-hidden="true"><use id="theme-icon" href="#monitor"></use></svg>\n    </button>\n    <div class="theme-menu" id="theme-menu" role="menu" aria-label="\u5916\u89C2\u4E3B\u9898" hidden>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="light" aria-checked="false">\u6D45\u8272<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="dark" aria-checked="false">\u6DF1\u8272<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="system" aria-checked="true">\u8DDF\u968F\u7CFB\u7EDF<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n    </div>\n  </div>\n</header>\n<main>\n  <div class="page-intro">\n    <div class="heading">\n      <h1>\u8BBE\u5907\u7BA1\u7406</h1>\n      <p>\u67E5\u770B\u8BBE\u5907\u63A5\u5165\u72B6\u6001\uFF0C\u7BA1\u7406 MCP Portal \u7684\u8FDC\u7A0B\u8BBF\u95EE\u3002</p>\n    </div>\n    <section class="portal" aria-label="MCP Portal">\n      <strong>MCP Portal</strong>\n      <div class="portal-value">\n        <code id="address" tabindex="-1">@@PORTAL@@</code>\n        <button class="button" type="button" id="copy-address"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5730\u5740</span></button>\n      </div>\n      <span class="sr-only" id="copy-feedback" role="status"></span>\n    </section>\n  </div>\n\n  <div class="portal-tools">\n    <button class="button" type="button" id="open-callbacks" aria-haspopup="dialog"><svg class="icon" aria-hidden="true"><use href="#link"></use></svg>\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</button>\n  </div>\n\n  <section class="devices" aria-labelledby="devices-title">\n    <div class="registry-heading">\n      <h2 id="devices-title">\u8BBE\u5907\u5217\u8868</h2>\n      <button class="button primary" type="button" id="add"@@ADD_DISABLED@@><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u8BBE\u5907</button>\n    </div>\n    <div class="toolbar">\n      <div class="filters" role="group" aria-label="\u6309\u63A5\u5165\u72B6\u6001\u7B5B\u9009">\n        <button type="button" data-filter="all" aria-pressed="true">\u5168\u90E8 <span class="count">@@COUNT_ALL@@</span></button>\n        <button type="button" data-filter="active" aria-pressed="false">\u5DF2\u6CE8\u518C <span class="count">@@COUNT_ACTIVE@@</span></button>\n        <button type="button" data-filter="pending" aria-pressed="false">\u5F85\u63A5\u5165 <span class="count">@@COUNT_PENDING@@</span></button>\n        <button type="button" data-filter="disabled" aria-pressed="false">\u505C\u7528 <span class="count">@@COUNT_DISABLED@@</span></button>\n      </div>\n      <label class="search">\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <span class="sr-only">\u641C\u7D22\u8BBE\u5907 ID</span>\n        <input type="search" id="device-search" placeholder="\u641C\u7D22\u8BBE\u5907 ID" autocomplete="off">\n      </label>\n    </div>\n    <div class="table-wrap">\n      <table role="table" aria-labelledby="devices-title">\n        <colgroup><col class="identity-col"><col class="state-col"><col></colgroup>\n        <thead role="rowgroup"><tr role="row"><th scope="col">\u8BBE\u5907\u4E0E\u7CFB\u7EDF</th><th scope="col">\u63A5\u5165\u72B6\u6001</th><th scope="col">\u64CD\u4F5C</th></tr></thead>\n        <tbody role="rowgroup">@@ROWS@@</tbody>\n      </table>\n      <div class="empty" id="empty" hidden>\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <strong role="status">\u672A\u627E\u5230\u5339\u914D\u7684\u8BBE\u5907</strong>\n        <p>\u8BD5\u8BD5\u5176\u4ED6\u8BBE\u5907 ID\uFF0C\u6216\u6E05\u9664\u7B5B\u9009\u3002</p>\n        <button class="button" type="button" id="clear-filters">\u6E05\u9664\u7B5B\u9009</button>\n      </div>\n    </div>\n    <p class="note" role="status" id="device-list-feedback"></p>\n    <button id="retry-device-list" class="button" type="button" hidden>\u91CD\u8BD5\u5237\u65B0\u5217\u8868</button>\n    <p class="note">\u6CE8\u518C\u72B6\u6001\u4E0D\u4EE3\u8868\u8BBE\u5907\u5B9E\u65F6\u5728\u7EBF\u3002\u8BF7\u901A\u8FC7\u300C\u67E5\u770B\u72B6\u6001\u300D\u68C0\u67E5 Tunnel \u4E0E MCP \u5DE5\u5177\u76EE\u5F55\u3002</p>\n  </section>\n</main>\n\n<dialog id="add-dialog" aria-labelledby="add-title">\n  <header class="dialog-head">\n    <h2 id="add-title">\u6DFB\u52A0\u8BBE\u5907</h2>\n    <button type="submit" form="close-add" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <form id="add-device-form" method="post" action="/admin/devices">\n    <div class="dialog-body">\n      <fieldset class="platform-tabs">\n        <legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend>@@PLATFORMS@@</fieldset>\n      <label>\u8BBE\u5907 ID <input name="deviceId" required autofocus pattern="[a-z][a-z0-9\\-]{0,23}" maxlength="24" placeholder="\u4F8B\u5982 mac-mini" autocomplete="off" aria-describedby="id-hint"></label>\n      <p class="field-hint" id="id-hint">\u5C0F\u5199\u5B57\u6BCD\u5F00\u5934\uFF0C\u6700\u591A 24 \u4E2A\u5B57\u7B26\uFF0C\u53EF\u542B\u6570\u5B57\u548C\u8FDE\u5B57\u7B26\u3002</p>\n      <label id="browser-consent" hidden><span><input id="confirm-browser" name="browserConsent" type="checkbox" value="1" aria-describedby="browser-consent-hint" disabled> \u4E3A\u6B64\u8BBE\u5907\u542F\u7528\u6D4F\u89C8\u5668\u5DE5\u5177</span>\n        <span class="field-hint" id="browser-consent-hint">\u5B89\u88C5\u524D\u9700\u5728\u76EE\u6807\u8BBE\u5907\u914D\u7F6E\u6D4F\u89C8\u5668\u4E13\u7528\u540E\u7AEF\u3002</span></label>\n      <p class="feedback" id="add-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button" type="submit" form="close-add">\u53D6\u6D88</button><button class="button primary" type="submit" id="issue-command">@@ADD_ACTION@@</button></div>\n  </form>\n  <section class="dialog-body device-command" id="device-command-result" aria-labelledby="device-command-label" hidden>\n    <p><strong id="device-command-target"></strong> \xB7 <span id="command-instructions"></span></p>\n    <h3 id="device-command-label">\u6307\u4EE4</h3>\n    <pre id="device-command" tabindex="0" aria-labelledby="device-command-label"></pre>\n    <button class="button primary" type="button" id="copy-device-command"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236</span></button>\n    <p id="device-command-feedback" role="status" hidden></p>\n    <p id="device-command-expiration" class="field-hint"></p>\n    <p id="device-enrollment-progress" class="feedback" role="status"></p>\n  </section>\n  <form id="close-add" method="dialog"></form>\n</dialog>\n\n<dialog id="device-dialog" aria-labelledby="device-dialog-title">\n  <span class="risk-mark" id="risk-mark" hidden><svg class="icon" aria-hidden="true"><use href="#risk"></use></svg></span>\n  <header class="dialog-head">\n    <h2 id="device-dialog-title"></h2>\n    <button type="submit" form="close-detail" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="device-summary"></p>\n    <dl class="detail" id="device-details">\n      <dt>\u6700\u540E\u68C0\u67E5</dt><dd id="checked-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u6CE8\u518C</dt><dd id="registration-detail"></dd>\n      <dt>Cloudflare Tunnel</dt><dd id="tunnel-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u5F00\u53D1\u5DE5\u5177\u76EE\u5F55</dt><dd id="mcp-detail">\u672A\u67E5\u8BE2</dd>\n      <dt id="browser-label" hidden>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd id="browser-detail" hidden></dd>\n      <dt id="release-label" hidden>\u5B89\u88C5\u5305\u7248\u672C</dt><dd id="release-detail" hidden></dd>\n      <dt id="revocation-label" hidden>\u64A4\u9500</dt><dd id="revocation-detail" hidden></dd>\n      <dt id="server-label" hidden>Portal \u670D\u52A1 ID</dt><dd id="server-detail" hidden></dd>\n    </dl>\n    <p class="feedback" id="device-feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-detail" method="dialog">\n    <button class="button" id="detail-dismiss">\u5173\u95ED</button>\n    <button class="button danger" id="detail-confirm" type="button" disabled hidden></button>\n  </form>\n</dialog>\n\n<dialog id="callback-dialog" aria-labelledby="callback-title">\n  <header class="dialog-head">\n    <h2 id="callback-title">\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</h2>\n    <button type="submit" form="close-callbacks" class="dialog-close" aria-label="\u5173\u95ED\u56DE\u8C03\u914D\u7F6E"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div id="callback-overview">\n    <div class="dialog-body callback-body">\n      <div class="callback-current">\n        <div><strong>\u5B9E\u9645\u914D\u7F6E</strong><p id="callback-summary">\u6B63\u5728\u8BFB\u53D6 Portal \u4E2D\u7684\u914D\u7F6E\u2026</p></div>\n        <span class="callback-tag" id="callback-state">\u8BFB\u53D6\u4E2D</span>\n      </div>\n      <p id="callback-feedback" role="status" tabindex="-1" hidden></p>\n      <button id="retry-callback-read" class="button" type="button" hidden>\u91CD\u8BD5\u8BFB\u53D6\u56DE\u8C03\u8BBE\u7F6E</button>\n      <section class="callback-section" id="callback-configured" aria-labelledby="callback-configured-title" hidden>\n        <h3 id="callback-configured-title">\u5DF2\u8BBE\u56DE\u8C03\u5730\u5740</h3>\n        <p>\u7531 Portal \u8FD4\u56DE\uFF0C\u53EF\u4F9B OAuth \u5BA2\u6237\u7AEF\u6CE8\u518C\u4F7F\u7528\u3002</p>\n        <ul id="callback-configured-list" class="callback-clients"></ul>\n      </section>\n      <section class="callback-section" id="callback-presets" aria-labelledby="callback-presets-title">\n        <h3 id="callback-presets-title">\u9884\u7F6E\u56DE\u8C03\u89C4\u5219</h3>\n        <p>\u6309\u5BA2\u6237\u7AEF\u6838\u5BF9\u9884\u7F6E\u89C4\u5219\u548C Portal \u7684\u914D\u7F6E\u72B6\u6001\u3002</p>\n        <ul class="callback-clients">\n          <li class="callback-client" data-preset-name="ChatGPT">\n            <strong class="callback-identity">ChatGPT</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u56FA\u5B9A\u56DE\u8C03\uFF08\u9002\u7528\u65F6\uFF09</span><code data-callback-address>https://chatgpt.com/connector_platform_oauth_redirect</code></div>\n              <div class="callback-uri"><span>\u6309\u8FDE\u63A5\u5206\u914D \xB7 \u6A21\u677F</span><code data-callback-address="https://chatgpt.com/connector/oauth/*">https://chatgpt.com/connector/oauth/{callback_id}</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="Claude">\n            <strong class="callback-identity">Claude</strong>\n            <div class="callback-uri"><span>\u81EA\u5B9A\u4E49\u8FDE\u63A5\u5668</span><code data-callback-address>https://claude.ai/api/mcp/auth_callback</code></div>\n          </li>\n          <li class="callback-client" data-preset-name="Cursor">\n            <strong class="callback-identity">Cursor</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875\u4E0E Agents</span><code data-callback-address>https://www.cursor.com/agents/mcp/oauth/callback</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://localhost:8787/callback</code></div>\n              <div class="callback-uri"><span>\u539F\u751F\u534F\u8BAE</span><code data-callback-address>cursor://anysphere.cursor-mcp/oauth/callback</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="VS Code">\n            <strong class="callback-identity">VS Code</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875</span><code data-callback-address>https://vscode.dev/redirect</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://127.0.0.1:33418/</code></div>\n            </div>\n          </li>\n          <li class="callback-client">\n            <div class="callback-identity"><strong>WorkBuddy</strong><span class="callback-tag" id="workbuddy-state" data-tone="pending">\u5F85\u914D\u7F6E</span></div>\n            <div class="callback-unset"><p>\u6CA1\u6709\u5DF2\u9A8C\u8BC1\u7684\u901A\u7528\u5730\u5740\uFF0C\u8BF7\u586B\u5199\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u51C6\u786E\u56DE\u8C03\u3002</p><button class="button" type="button" id="add-workbuddy" data-client="WorkBuddy" disabled>\u586B\u5199 WorkBuddy \u56DE\u8C03</button></div>\n          </li>\n        </ul>\n      </section>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="submit" form="close-callbacks">\u5173\u95ED</button>\n      <button class="button primary" type="button" id="add-client" disabled><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u5176\u4ED6\u5BA2\u6237\u7AEF</button>\n    </div>\n  </div>\n  <form id="callback-form" novalidate hidden>\n    <div class="dialog-body callback-body">\n      <p>\u8F93\u5165\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u51C6\u786E\u5730\u5740\u3002\u4FDD\u5B58\u540E\uFF0C\u6B64 Portal \u53EF\u63A5\u53D7\u4F7F\u7528\u8BE5\u56DE\u8C03\u5730\u5740\u7684 OAuth \u5BA2\u6237\u7AEF\u6CE8\u518C\u3002</p>\n      <label for="callback-name">\u5BA2\u6237\u7AEF\u540D\u79F0</label>\n      <input id="callback-name" name="clientName" type="text" autocomplete="off" maxlength="64" required aria-describedby="callback-name-error">\n      <p id="callback-name-error" class="field-error" role="alert" hidden></p>\n      <label for="callback-url">\u56DE\u8C03\u5730\u5740</label>\n      <input id="callback-url" name="redirectUri" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="2048" placeholder="https://client.example/oauth/callback" required aria-describedby="callback-url-hint callback-url-error">\n      <p id="callback-url-hint" class="field-hint">\u586B\u5199\u5B8C\u6574\u56DE\u8C03 URL\uFF0C\u4E0D\u8981\u7C98\u8D34\u6388\u6743\u7801\u6216\u5BC6\u94A5\u3002</p>\n      <p id="callback-url-error" class="field-error" role="alert" hidden></p>\n      <p id="callback-save-error" class="field-error" role="alert" hidden></p>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="button" id="cancel-callback">\u53D6\u6D88</button>\n      <button class="button primary" id="save-callback" type="submit">\u4FDD\u5B58</button>\n    </div>\n  </form>\n  <form id="close-callbacks" method="dialog"></form>\n</dialog>\n\n<dialog id="upgrade-dialog" aria-labelledby="upgrade-title" aria-describedby="upgrade-description">\n  <header class="dialog-head"><h2 id="upgrade-title">\u5347\u7EA7\u8BFA\u8054\u7BA1\u7406\u53F0</h2>\n    <button type="submit" form="close-upgrade" class="dialog-close" aria-label="\u5173\u95ED\u5347\u7EA7"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="upgrade-description"></p>\n    <p id="upgrade-status" class="feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-upgrade" method="dialog">\n    <button class="button" type="submit">\u5173\u95ED</button>\n    <button class="button" id="reconcile-upgrade" type="button" hidden>\u6838\u5BF9\u5B9E\u9645\u72B6\u6001</button>\n    <button class="button primary" id="confirm-upgrade" type="button" hidden>\u786E\u8BA4\u5347\u7EA7</button>\n  </form>\n</dialog>\n<script nonce="@@NONCE@@">@@SCRIPT@@<\/script>\n</body>\n</html>\n'])), consoleStyles, consoleLogoUrl, consoleLogoUrl);
+var consoleTemplate = String.raw(_a || (_a = __template(['<!doctype html>\n<html lang="zh-CN">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>\u8BBE\u5907\u7BA1\u7406 \xB7 Nodrelay</title>\n<style nonce="@@NONCE@@">', '</style>\n<link rel="icon" type="image/png" href="', '">\n</head>\n<body>\n<svg class="sr-only" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">\n  <symbol id="moon" viewBox="0 0 24 24"><path d="M21 13.1A9.1 9.1 0 0 1 10.9 3a9.2 9.2 0 1 0 10.1 10.1Z"></path></symbol>\n  <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M19 5l-1.5 1.5m-11 11L5 19"></path></symbol>\n  <symbol id="monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M12 17v4m-4 0h8"></path></symbol>\n  <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></symbol>\n  <symbol id="plus" viewBox="0 0 24 24"><path d="M3 12h18M12 3v18"></path></symbol>\n  <symbol id="copy" viewBox="0 0 24 24"><path d="M7 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v2"></path><rect x="8" y="8" width="13" height="13" rx="2"></rect></symbol>\n  <symbol id="link" viewBox="0 0 24 24"><path d="M10 13.6a4 4 0 0 0 5.7 0l3.4-3.4a4 4 0 0 0-5.7-5.7l-1.7 1.7m2.3 4.2a4 4 0 0 0-5.7 0l-3.4 3.4a4 4 0 0 0 5.7 5.7l1.7-1.7"></path></symbol>\n  <symbol id="search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="m16 16 5 5"></path></symbol>\n  <symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></symbol>\n  <symbol id="risk" viewBox="0 0 24 24"><path d="M12 8v5m0 3h.01M10.3 4.5l-8 14A1.7 1.7 0 0 0 3.8 21h16.4a1.7 1.7 0 0 0 1.5-2.5l-8-14a1.9 1.9 0 0 0-3.4 0Z"></path></symbol>\n</svg>\n<header class="topbar">\n  <div class="brand"><img src="', '" width="35" height="35" alt="">Nodrelay\n    <span id="brand-version" class="brand-version" hidden></span>\n    <button id="open-upgrade" type="button" class="button upgrade-launch" aria-haspopup="dialog" hidden>\u5347\u7EA7</button>\n  </div>\n  <div class="theme">\n    <button id="theme" type="button" class="theme-trigger" aria-label="\u5916\u89C2\u4E3B\u9898\uFF1A\u8DDF\u968F\u7CFB\u7EDF" title="\u5916\u89C2\u4E3B\u9898\uFF1A\u8DDF\u968F\u7CFB\u7EDF"\n      aria-haspopup="menu" aria-expanded="false" aria-controls="theme-menu">\n      <svg class="icon" aria-hidden="true"><use id="theme-icon" href="#monitor"></use></svg>\n    </button>\n    <div class="theme-menu" id="theme-menu" role="menu" aria-label="\u5916\u89C2\u4E3B\u9898" hidden>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="light" aria-checked="false">\u6D45\u8272<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="dark" aria-checked="false">\u6DF1\u8272<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="system" aria-checked="true">\u8DDF\u968F\u7CFB\u7EDF<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n    </div>\n  </div>\n</header>\n<main>\n  <div class="page-intro">\n    <div class="heading">\n      <h1>\u8BBE\u5907\u7BA1\u7406</h1>\n      <p>\u67E5\u770B\u8BBE\u5907\u63A5\u5165\u72B6\u6001\uFF0C\u7BA1\u7406 MCP Portal \u7684\u8FDC\u7A0B\u8BBF\u95EE\u3002</p>\n    </div>\n    <section class="portal" aria-label="MCP Portal">\n      <strong>MCP Portal</strong>\n      <div class="portal-value">\n        <code id="address" tabindex="-1">@@PORTAL@@</code>\n        <button class="button" type="button" id="copy-address"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5730\u5740</span></button>\n      </div>\n      <span class="sr-only" id="copy-feedback" role="status"></span>\n    </section>\n  </div>\n\n  <div class="portal-tools">\n    <button class="button" type="button" id="open-callbacks" aria-haspopup="dialog"><svg class="icon" aria-hidden="true"><use href="#link"></use></svg>\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</button>\n  </div>\n\n  <section class="devices" aria-labelledby="devices-title">\n    <div class="registry-heading">\n      <h2 id="devices-title">\u8BBE\u5907\u5217\u8868</h2>\n      <button class="button primary" type="button" id="add"@@ADD_DISABLED@@><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u8BBE\u5907</button>\n    </div>\n    <div class="toolbar">\n      <div class="filters" role="group" aria-label="\u6309\u63A5\u5165\u72B6\u6001\u7B5B\u9009">\n        <button type="button" data-filter="all" aria-pressed="true">\u5168\u90E8 <span class="count">@@COUNT_ALL@@</span></button>\n        <button type="button" data-filter="active" aria-pressed="false">\u5DF2\u6CE8\u518C <span class="count">@@COUNT_ACTIVE@@</span></button>\n        <button type="button" data-filter="pending" aria-pressed="false">\u5F85\u63A5\u5165 <span class="count">@@COUNT_PENDING@@</span></button>\n        <button type="button" data-filter="disabled" aria-pressed="false">\u505C\u7528 <span class="count">@@COUNT_DISABLED@@</span></button>\n      </div>\n      <label class="search">\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <span class="sr-only">\u641C\u7D22\u8BBE\u5907 ID</span>\n        <input type="search" id="device-search" placeholder="\u641C\u7D22\u8BBE\u5907 ID" autocomplete="off">\n      </label>\n    </div>\n    <div class="table-wrap">\n      <table role="table" aria-labelledby="devices-title">\n        <colgroup><col class="identity-col"><col class="state-col"><col></colgroup>\n        <thead role="rowgroup"><tr role="row"><th scope="col">\u8BBE\u5907\u4E0E\u7CFB\u7EDF</th><th scope="col">\u63A5\u5165\u72B6\u6001</th><th scope="col">\u64CD\u4F5C</th></tr></thead>\n        <tbody role="rowgroup">@@ROWS@@</tbody>\n      </table>\n      <div class="empty" id="empty" hidden>\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <strong role="status">\u672A\u627E\u5230\u5339\u914D\u7684\u8BBE\u5907</strong>\n        <p>\u8BD5\u8BD5\u5176\u4ED6\u8BBE\u5907 ID\uFF0C\u6216\u6E05\u9664\u7B5B\u9009\u3002</p>\n        <button class="button" type="button" id="clear-filters">\u6E05\u9664\u7B5B\u9009</button>\n      </div>\n    </div>\n    <p class="note" role="status" id="device-list-feedback"></p>\n    <button id="retry-device-list" class="button" type="button" hidden>\u91CD\u8BD5\u5237\u65B0\u5217\u8868</button>\n    <p class="note">\u6CE8\u518C\u72B6\u6001\u4E0D\u4EE3\u8868\u8BBE\u5907\u5B9E\u65F6\u5728\u7EBF\u3002\u8BF7\u901A\u8FC7\u300C\u67E5\u770B\u72B6\u6001\u300D\u68C0\u67E5 Tunnel \u4E0E MCP \u5DE5\u5177\u76EE\u5F55\u3002</p>\n  </section>\n</main>\n\n<dialog id="add-dialog" aria-labelledby="add-title">\n  <header class="dialog-head">\n    <h2 id="add-title">\u6DFB\u52A0\u8BBE\u5907</h2>\n    <button type="submit" form="close-add" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <form id="add-device-form" method="post" action="/admin/devices">\n    <div class="dialog-body">\n      <fieldset class="platform-tabs">\n        <legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend>@@PLATFORMS@@</fieldset>\n      <label>\u8BBE\u5907 ID <input name="deviceId" required autofocus pattern="[a-z][a-z0-9-]{0,23}" maxlength="24" placeholder="\u4F8B\u5982 mac-mini" autocomplete="off" aria-describedby="id-hint"></label>\n      <p class="field-hint" id="id-hint">\u5C0F\u5199\u5B57\u6BCD\u5F00\u5934\uFF0C\u6700\u591A 24 \u4E2A\u5B57\u7B26\uFF0C\u53EF\u542B\u6570\u5B57\u548C\u8FDE\u5B57\u7B26\u3002</p>\n      <label id="browser-consent" hidden><span><input id="confirm-browser" name="browserConsent" type="checkbox" value="1" aria-describedby="browser-consent-hint" disabled> \u4E3A\u6B64\u8BBE\u5907\u542F\u7528\u6D4F\u89C8\u5668\u5DE5\u5177</span>\n        <span class="field-hint" id="browser-consent-hint">\u5B89\u88C5\u524D\u9700\u5728\u76EE\u6807\u8BBE\u5907\u914D\u7F6E\u6D4F\u89C8\u5668\u4E13\u7528\u540E\u7AEF\u3002</span></label>\n      <p class="feedback" id="add-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button" type="submit" form="close-add">\u53D6\u6D88</button><button class="button primary" type="submit" id="issue-command">@@ADD_ACTION@@</button></div>\n  </form>\n  <section class="dialog-body device-command" id="device-command-result" aria-labelledby="device-command-label" hidden>\n    <p><strong id="device-command-target"></strong> \xB7 <span id="command-instructions"></span></p>\n    <h3 id="device-command-label">\u6307\u4EE4</h3>\n    <pre id="device-command" tabindex="0" aria-labelledby="device-command-label"></pre>\n    <button class="button primary" type="button" id="copy-device-command"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236</span></button>\n    <p id="device-command-feedback" role="status" hidden></p>\n    <p id="device-command-expiration" class="field-hint"></p>\n    <p id="device-enrollment-progress" class="feedback" role="status" tabindex="-1"></p>\n  </section>\n  <form id="close-add" method="dialog"></form>\n</dialog>\n\n<dialog id="device-dialog" aria-labelledby="device-dialog-title">\n  <span class="risk-mark" id="risk-mark" hidden><svg class="icon" aria-hidden="true"><use href="#risk"></use></svg></span>\n  <header class="dialog-head">\n    <h2 id="device-dialog-title"></h2>\n    <button type="submit" form="close-detail" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="device-summary"></p>\n    <dl class="detail" id="device-details">\n      <dt>\u6700\u540E\u68C0\u67E5</dt><dd id="checked-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u6CE8\u518C</dt><dd id="registration-detail"></dd>\n      <dt>Cloudflare Tunnel</dt><dd id="tunnel-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u5F00\u53D1\u5DE5\u5177\u76EE\u5F55</dt><dd id="mcp-detail">\u672A\u67E5\u8BE2</dd>\n      <dt id="browser-label" hidden>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd id="browser-detail" hidden></dd>\n      <dt id="release-label" hidden>\u5B89\u88C5\u5305\u7248\u672C</dt><dd id="release-detail" hidden></dd>\n      <dt id="revocation-label" hidden>\u64A4\u9500</dt><dd id="revocation-detail" hidden></dd>\n      <dt id="server-label" hidden>Portal \u670D\u52A1 ID</dt><dd id="server-detail" hidden></dd>\n    </dl>\n    <p class="feedback" id="device-feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-detail" method="dialog">\n    <button class="button" id="detail-dismiss">\u5173\u95ED</button>\n    <button class="button danger" id="detail-confirm" type="button" disabled hidden></button>\n  </form>\n</dialog>\n\n<dialog id="callback-dialog" aria-labelledby="callback-title">\n  <header class="dialog-head">\n    <h2 id="callback-title">\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</h2>\n    <button type="submit" form="close-callbacks" class="dialog-close" aria-label="\u5173\u95ED\u56DE\u8C03\u914D\u7F6E"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div id="callback-overview">\n    <div class="dialog-body callback-body">\n      <div class="callback-current">\n        <div><strong>\u5B9E\u9645\u914D\u7F6E</strong><p id="callback-summary">\u6B63\u5728\u8BFB\u53D6 Portal \u4E2D\u7684\u914D\u7F6E\u2026</p></div>\n        <span class="callback-tag" id="callback-state">\u8BFB\u53D6\u4E2D</span>\n      </div>\n      <p id="callback-feedback" role="status" tabindex="-1" hidden></p>\n      <button id="retry-callback-read" class="button" type="button" hidden>\u91CD\u8BD5\u8BFB\u53D6\u56DE\u8C03\u8BBE\u7F6E</button>\n      <section class="callback-section" id="callback-configured" aria-labelledby="callback-configured-title" hidden>\n        <h3 id="callback-configured-title">\u5DF2\u8BBE\u56DE\u8C03\u5730\u5740</h3>\n        <p>\u7531 Portal \u8FD4\u56DE\uFF0C\u53EF\u4F9B OAuth \u5BA2\u6237\u7AEF\u6CE8\u518C\u4F7F\u7528\u3002</p>\n        <ul id="callback-configured-list" class="callback-clients"></ul>\n      </section>\n      <section class="callback-section" id="callback-presets" aria-labelledby="callback-presets-title">\n        <h3 id="callback-presets-title">\u9884\u7F6E\u56DE\u8C03\u89C4\u5219</h3>\n        <p>\u6309\u5BA2\u6237\u7AEF\u6838\u5BF9\u9884\u7F6E\u89C4\u5219\u548C Portal \u7684\u914D\u7F6E\u72B6\u6001\u3002</p>\n        <ul class="callback-clients">\n          <li class="callback-client" data-preset-name="ChatGPT">\n            <strong class="callback-identity">ChatGPT</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u56FA\u5B9A\u56DE\u8C03\uFF08\u9002\u7528\u65F6\uFF09</span><code data-callback-address>https://chatgpt.com/connector_platform_oauth_redirect</code></div>\n              <div class="callback-uri"><span>\u6309\u8FDE\u63A5\u5206\u914D \xB7 \u6A21\u677F</span><code data-callback-address="https://chatgpt.com/connector/oauth/*">https://chatgpt.com/connector/oauth/{callback_id}</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="Claude">\n            <strong class="callback-identity">Claude</strong>\n            <div class="callback-uri"><span>\u81EA\u5B9A\u4E49\u8FDE\u63A5\u5668</span><code data-callback-address>https://claude.ai/api/mcp/auth_callback</code></div>\n          </li>\n          <li class="callback-client" data-preset-name="Cursor">\n            <strong class="callback-identity">Cursor</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875\u4E0E Agents</span><code data-callback-address>https://www.cursor.com/agents/mcp/oauth/callback</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://localhost:8787/callback</code></div>\n              <div class="callback-uri"><span>\u539F\u751F\u534F\u8BAE</span><code data-callback-address>cursor://anysphere.cursor-mcp/oauth/callback</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="VS Code">\n            <strong class="callback-identity">VS Code</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875</span><code data-callback-address>https://vscode.dev/redirect</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://127.0.0.1:33418/</code></div>\n            </div>\n          </li>\n          <li class="callback-client">\n            <div class="callback-identity"><strong>WorkBuddy</strong><span class="callback-tag" id="workbuddy-state" data-tone="pending">\u5F85\u914D\u7F6E</span></div>\n            <div class="callback-unset"><p>\u6CA1\u6709\u5DF2\u9A8C\u8BC1\u7684\u901A\u7528\u5730\u5740\uFF0C\u8BF7\u586B\u5199\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u51C6\u786E\u56DE\u8C03\u3002</p><button class="button" type="button" id="add-workbuddy" data-client="WorkBuddy" disabled>\u586B\u5199 WorkBuddy \u56DE\u8C03</button></div>\n          </li>\n        </ul>\n      </section>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="submit" form="close-callbacks">\u5173\u95ED</button>\n      <button class="button primary" type="button" id="add-client" disabled><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u5176\u4ED6\u5BA2\u6237\u7AEF</button>\n    </div>\n  </div>\n  <form id="callback-form" novalidate hidden>\n    <div class="dialog-body callback-body">\n      <p>\u8F93\u5165\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u51C6\u786E\u5730\u5740\u3002\u4FDD\u5B58\u540E\uFF0C\u6B64 Portal \u53EF\u63A5\u53D7\u4F7F\u7528\u8BE5\u56DE\u8C03\u5730\u5740\u7684 OAuth \u5BA2\u6237\u7AEF\u6CE8\u518C\u3002</p>\n      <label for="callback-name">\u5BA2\u6237\u7AEF\u540D\u79F0</label>\n      <input id="callback-name" name="clientName" type="text" autocomplete="off" maxlength="64" required aria-describedby="callback-name-error">\n      <p id="callback-name-error" class="field-error" role="alert" hidden></p>\n      <label for="callback-url">\u56DE\u8C03\u5730\u5740</label>\n      <input id="callback-url" name="redirectUri" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="2048" placeholder="https://client.example/oauth/callback" required aria-describedby="callback-url-hint callback-url-error">\n      <p id="callback-url-hint" class="field-hint">\u586B\u5199\u5B8C\u6574\u56DE\u8C03 URL\uFF0C\u4E0D\u8981\u7C98\u8D34\u6388\u6743\u7801\u6216\u5BC6\u94A5\u3002</p>\n      <p id="callback-url-error" class="field-error" role="alert" hidden></p>\n      <p id="callback-save-error" class="field-error" role="alert" hidden></p>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="button" id="cancel-callback">\u53D6\u6D88</button>\n      <button class="button primary" id="save-callback" type="submit">\u4FDD\u5B58</button>\n    </div>\n  </form>\n  <form id="close-callbacks" method="dialog"></form>\n</dialog>\n\n<dialog id="upgrade-dialog" aria-labelledby="upgrade-title" aria-describedby="upgrade-description">\n  <header class="dialog-head"><h2 id="upgrade-title">\u5347\u7EA7\u8BFA\u8054\u7BA1\u7406\u53F0</h2>\n    <button type="submit" form="close-upgrade" class="dialog-close" aria-label="\u5173\u95ED\u5347\u7EA7"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="upgrade-description"></p>\n    <p id="upgrade-status" class="feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-upgrade" method="dialog">\n    <button class="button" id="close-upgrade-button" type="submit">\u5173\u95ED</button>\n    <button class="button primary" id="reconcile-upgrade" type="button" hidden>\u6838\u5BF9\u5B9E\u9645\u72B6\u6001</button>\n    <button class="button primary" id="confirm-upgrade" type="button" hidden>\u786E\u8BA4\u5347\u7EA7</button>\n  </form>\n</dialog>\n<script nonce="@@NONCE@@">@@SCRIPT@@<\/script>\n</body>\n</html>\n'], ['<!doctype html>\n<html lang="zh-CN">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>\u8BBE\u5907\u7BA1\u7406 \xB7 Nodrelay</title>\n<style nonce="@@NONCE@@">', '</style>\n<link rel="icon" type="image/png" href="', '">\n</head>\n<body>\n<svg class="sr-only" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">\n  <symbol id="moon" viewBox="0 0 24 24"><path d="M21 13.1A9.1 9.1 0 0 1 10.9 3a9.2 9.2 0 1 0 10.1 10.1Z"></path></symbol>\n  <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M19 5l-1.5 1.5m-11 11L5 19"></path></symbol>\n  <symbol id="monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M12 17v4m-4 0h8"></path></symbol>\n  <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></symbol>\n  <symbol id="plus" viewBox="0 0 24 24"><path d="M3 12h18M12 3v18"></path></symbol>\n  <symbol id="copy" viewBox="0 0 24 24"><path d="M7 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v2"></path><rect x="8" y="8" width="13" height="13" rx="2"></rect></symbol>\n  <symbol id="link" viewBox="0 0 24 24"><path d="M10 13.6a4 4 0 0 0 5.7 0l3.4-3.4a4 4 0 0 0-5.7-5.7l-1.7 1.7m2.3 4.2a4 4 0 0 0-5.7 0l-3.4 3.4a4 4 0 0 0 5.7 5.7l1.7-1.7"></path></symbol>\n  <symbol id="search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="m16 16 5 5"></path></symbol>\n  <symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></symbol>\n  <symbol id="risk" viewBox="0 0 24 24"><path d="M12 8v5m0 3h.01M10.3 4.5l-8 14A1.7 1.7 0 0 0 3.8 21h16.4a1.7 1.7 0 0 0 1.5-2.5l-8-14a1.9 1.9 0 0 0-3.4 0Z"></path></symbol>\n</svg>\n<header class="topbar">\n  <div class="brand"><img src="', '" width="35" height="35" alt="">Nodrelay\n    <span id="brand-version" class="brand-version" hidden></span>\n    <button id="open-upgrade" type="button" class="button upgrade-launch" aria-haspopup="dialog" hidden>\u5347\u7EA7</button>\n  </div>\n  <div class="theme">\n    <button id="theme" type="button" class="theme-trigger" aria-label="\u5916\u89C2\u4E3B\u9898\uFF1A\u8DDF\u968F\u7CFB\u7EDF" title="\u5916\u89C2\u4E3B\u9898\uFF1A\u8DDF\u968F\u7CFB\u7EDF"\n      aria-haspopup="menu" aria-expanded="false" aria-controls="theme-menu">\n      <svg class="icon" aria-hidden="true"><use id="theme-icon" href="#monitor"></use></svg>\n    </button>\n    <div class="theme-menu" id="theme-menu" role="menu" aria-label="\u5916\u89C2\u4E3B\u9898" hidden>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="light" aria-checked="false">\u6D45\u8272<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="dark" aria-checked="false">\u6DF1\u8272<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n      <button type="button" role="menuitemradio" tabindex="-1" data-theme-option="system" aria-checked="true">\u8DDF\u968F\u7CFB\u7EDF<svg class="icon" aria-hidden="true"><use href="#check"></use></svg></button>\n    </div>\n  </div>\n</header>\n<main>\n  <div class="page-intro">\n    <div class="heading">\n      <h1>\u8BBE\u5907\u7BA1\u7406</h1>\n      <p>\u67E5\u770B\u8BBE\u5907\u63A5\u5165\u72B6\u6001\uFF0C\u7BA1\u7406 MCP Portal \u7684\u8FDC\u7A0B\u8BBF\u95EE\u3002</p>\n    </div>\n    <section class="portal" aria-label="MCP Portal">\n      <strong>MCP Portal</strong>\n      <div class="portal-value">\n        <code id="address" tabindex="-1">@@PORTAL@@</code>\n        <button class="button" type="button" id="copy-address"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5730\u5740</span></button>\n      </div>\n      <span class="sr-only" id="copy-feedback" role="status"></span>\n    </section>\n  </div>\n\n  <div class="portal-tools">\n    <button class="button" type="button" id="open-callbacks" aria-haspopup="dialog"><svg class="icon" aria-hidden="true"><use href="#link"></use></svg>\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</button>\n  </div>\n\n  <section class="devices" aria-labelledby="devices-title">\n    <div class="registry-heading">\n      <h2 id="devices-title">\u8BBE\u5907\u5217\u8868</h2>\n      <button class="button primary" type="button" id="add"@@ADD_DISABLED@@><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u8BBE\u5907</button>\n    </div>\n    <div class="toolbar">\n      <div class="filters" role="group" aria-label="\u6309\u63A5\u5165\u72B6\u6001\u7B5B\u9009">\n        <button type="button" data-filter="all" aria-pressed="true">\u5168\u90E8 <span class="count">@@COUNT_ALL@@</span></button>\n        <button type="button" data-filter="active" aria-pressed="false">\u5DF2\u6CE8\u518C <span class="count">@@COUNT_ACTIVE@@</span></button>\n        <button type="button" data-filter="pending" aria-pressed="false">\u5F85\u63A5\u5165 <span class="count">@@COUNT_PENDING@@</span></button>\n        <button type="button" data-filter="disabled" aria-pressed="false">\u505C\u7528 <span class="count">@@COUNT_DISABLED@@</span></button>\n      </div>\n      <label class="search">\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <span class="sr-only">\u641C\u7D22\u8BBE\u5907 ID</span>\n        <input type="search" id="device-search" placeholder="\u641C\u7D22\u8BBE\u5907 ID" autocomplete="off">\n      </label>\n    </div>\n    <div class="table-wrap">\n      <table role="table" aria-labelledby="devices-title">\n        <colgroup><col class="identity-col"><col class="state-col"><col></colgroup>\n        <thead role="rowgroup"><tr role="row"><th scope="col">\u8BBE\u5907\u4E0E\u7CFB\u7EDF</th><th scope="col">\u63A5\u5165\u72B6\u6001</th><th scope="col">\u64CD\u4F5C</th></tr></thead>\n        <tbody role="rowgroup">@@ROWS@@</tbody>\n      </table>\n      <div class="empty" id="empty" hidden>\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <strong role="status">\u672A\u627E\u5230\u5339\u914D\u7684\u8BBE\u5907</strong>\n        <p>\u8BD5\u8BD5\u5176\u4ED6\u8BBE\u5907 ID\uFF0C\u6216\u6E05\u9664\u7B5B\u9009\u3002</p>\n        <button class="button" type="button" id="clear-filters">\u6E05\u9664\u7B5B\u9009</button>\n      </div>\n    </div>\n    <p class="note" role="status" id="device-list-feedback"></p>\n    <button id="retry-device-list" class="button" type="button" hidden>\u91CD\u8BD5\u5237\u65B0\u5217\u8868</button>\n    <p class="note">\u6CE8\u518C\u72B6\u6001\u4E0D\u4EE3\u8868\u8BBE\u5907\u5B9E\u65F6\u5728\u7EBF\u3002\u8BF7\u901A\u8FC7\u300C\u67E5\u770B\u72B6\u6001\u300D\u68C0\u67E5 Tunnel \u4E0E MCP \u5DE5\u5177\u76EE\u5F55\u3002</p>\n  </section>\n</main>\n\n<dialog id="add-dialog" aria-labelledby="add-title">\n  <header class="dialog-head">\n    <h2 id="add-title">\u6DFB\u52A0\u8BBE\u5907</h2>\n    <button type="submit" form="close-add" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <form id="add-device-form" method="post" action="/admin/devices">\n    <div class="dialog-body">\n      <fieldset class="platform-tabs">\n        <legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend>@@PLATFORMS@@</fieldset>\n      <label>\u8BBE\u5907 ID <input name="deviceId" required autofocus pattern="[a-z][a-z0-9\\-]{0,23}" maxlength="24" placeholder="\u4F8B\u5982 mac-mini" autocomplete="off" aria-describedby="id-hint"></label>\n      <p class="field-hint" id="id-hint">\u5C0F\u5199\u5B57\u6BCD\u5F00\u5934\uFF0C\u6700\u591A 24 \u4E2A\u5B57\u7B26\uFF0C\u53EF\u542B\u6570\u5B57\u548C\u8FDE\u5B57\u7B26\u3002</p>\n      <label id="browser-consent" hidden><span><input id="confirm-browser" name="browserConsent" type="checkbox" value="1" aria-describedby="browser-consent-hint" disabled> \u4E3A\u6B64\u8BBE\u5907\u542F\u7528\u6D4F\u89C8\u5668\u5DE5\u5177</span>\n        <span class="field-hint" id="browser-consent-hint">\u5B89\u88C5\u524D\u9700\u5728\u76EE\u6807\u8BBE\u5907\u914D\u7F6E\u6D4F\u89C8\u5668\u4E13\u7528\u540E\u7AEF\u3002</span></label>\n      <p class="feedback" id="add-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button" type="submit" form="close-add">\u53D6\u6D88</button><button class="button primary" type="submit" id="issue-command">@@ADD_ACTION@@</button></div>\n  </form>\n  <section class="dialog-body device-command" id="device-command-result" aria-labelledby="device-command-label" hidden>\n    <p><strong id="device-command-target"></strong> \xB7 <span id="command-instructions"></span></p>\n    <h3 id="device-command-label">\u6307\u4EE4</h3>\n    <pre id="device-command" tabindex="0" aria-labelledby="device-command-label"></pre>\n    <button class="button primary" type="button" id="copy-device-command"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236</span></button>\n    <p id="device-command-feedback" role="status" hidden></p>\n    <p id="device-command-expiration" class="field-hint"></p>\n    <p id="device-enrollment-progress" class="feedback" role="status" tabindex="-1"></p>\n  </section>\n  <form id="close-add" method="dialog"></form>\n</dialog>\n\n<dialog id="device-dialog" aria-labelledby="device-dialog-title">\n  <span class="risk-mark" id="risk-mark" hidden><svg class="icon" aria-hidden="true"><use href="#risk"></use></svg></span>\n  <header class="dialog-head">\n    <h2 id="device-dialog-title"></h2>\n    <button type="submit" form="close-detail" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="device-summary"></p>\n    <dl class="detail" id="device-details">\n      <dt>\u6700\u540E\u68C0\u67E5</dt><dd id="checked-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u6CE8\u518C</dt><dd id="registration-detail"></dd>\n      <dt>Cloudflare Tunnel</dt><dd id="tunnel-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u5F00\u53D1\u5DE5\u5177\u76EE\u5F55</dt><dd id="mcp-detail">\u672A\u67E5\u8BE2</dd>\n      <dt id="browser-label" hidden>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd id="browser-detail" hidden></dd>\n      <dt id="release-label" hidden>\u5B89\u88C5\u5305\u7248\u672C</dt><dd id="release-detail" hidden></dd>\n      <dt id="revocation-label" hidden>\u64A4\u9500</dt><dd id="revocation-detail" hidden></dd>\n      <dt id="server-label" hidden>Portal \u670D\u52A1 ID</dt><dd id="server-detail" hidden></dd>\n    </dl>\n    <p class="feedback" id="device-feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-detail" method="dialog">\n    <button class="button" id="detail-dismiss">\u5173\u95ED</button>\n    <button class="button danger" id="detail-confirm" type="button" disabled hidden></button>\n  </form>\n</dialog>\n\n<dialog id="callback-dialog" aria-labelledby="callback-title">\n  <header class="dialog-head">\n    <h2 id="callback-title">\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</h2>\n    <button type="submit" form="close-callbacks" class="dialog-close" aria-label="\u5173\u95ED\u56DE\u8C03\u914D\u7F6E"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div id="callback-overview">\n    <div class="dialog-body callback-body">\n      <div class="callback-current">\n        <div><strong>\u5B9E\u9645\u914D\u7F6E</strong><p id="callback-summary">\u6B63\u5728\u8BFB\u53D6 Portal \u4E2D\u7684\u914D\u7F6E\u2026</p></div>\n        <span class="callback-tag" id="callback-state">\u8BFB\u53D6\u4E2D</span>\n      </div>\n      <p id="callback-feedback" role="status" tabindex="-1" hidden></p>\n      <button id="retry-callback-read" class="button" type="button" hidden>\u91CD\u8BD5\u8BFB\u53D6\u56DE\u8C03\u8BBE\u7F6E</button>\n      <section class="callback-section" id="callback-configured" aria-labelledby="callback-configured-title" hidden>\n        <h3 id="callback-configured-title">\u5DF2\u8BBE\u56DE\u8C03\u5730\u5740</h3>\n        <p>\u7531 Portal \u8FD4\u56DE\uFF0C\u53EF\u4F9B OAuth \u5BA2\u6237\u7AEF\u6CE8\u518C\u4F7F\u7528\u3002</p>\n        <ul id="callback-configured-list" class="callback-clients"></ul>\n      </section>\n      <section class="callback-section" id="callback-presets" aria-labelledby="callback-presets-title">\n        <h3 id="callback-presets-title">\u9884\u7F6E\u56DE\u8C03\u89C4\u5219</h3>\n        <p>\u6309\u5BA2\u6237\u7AEF\u6838\u5BF9\u9884\u7F6E\u89C4\u5219\u548C Portal \u7684\u914D\u7F6E\u72B6\u6001\u3002</p>\n        <ul class="callback-clients">\n          <li class="callback-client" data-preset-name="ChatGPT">\n            <strong class="callback-identity">ChatGPT</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u56FA\u5B9A\u56DE\u8C03\uFF08\u9002\u7528\u65F6\uFF09</span><code data-callback-address>https://chatgpt.com/connector_platform_oauth_redirect</code></div>\n              <div class="callback-uri"><span>\u6309\u8FDE\u63A5\u5206\u914D \xB7 \u6A21\u677F</span><code data-callback-address="https://chatgpt.com/connector/oauth/*">https://chatgpt.com/connector/oauth/{callback_id}</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="Claude">\n            <strong class="callback-identity">Claude</strong>\n            <div class="callback-uri"><span>\u81EA\u5B9A\u4E49\u8FDE\u63A5\u5668</span><code data-callback-address>https://claude.ai/api/mcp/auth_callback</code></div>\n          </li>\n          <li class="callback-client" data-preset-name="Cursor">\n            <strong class="callback-identity">Cursor</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875\u4E0E Agents</span><code data-callback-address>https://www.cursor.com/agents/mcp/oauth/callback</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://localhost:8787/callback</code></div>\n              <div class="callback-uri"><span>\u539F\u751F\u534F\u8BAE</span><code data-callback-address>cursor://anysphere.cursor-mcp/oauth/callback</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="VS Code">\n            <strong class="callback-identity">VS Code</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875</span><code data-callback-address>https://vscode.dev/redirect</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://127.0.0.1:33418/</code></div>\n            </div>\n          </li>\n          <li class="callback-client">\n            <div class="callback-identity"><strong>WorkBuddy</strong><span class="callback-tag" id="workbuddy-state" data-tone="pending">\u5F85\u914D\u7F6E</span></div>\n            <div class="callback-unset"><p>\u6CA1\u6709\u5DF2\u9A8C\u8BC1\u7684\u901A\u7528\u5730\u5740\uFF0C\u8BF7\u586B\u5199\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u51C6\u786E\u56DE\u8C03\u3002</p><button class="button" type="button" id="add-workbuddy" data-client="WorkBuddy" disabled>\u586B\u5199 WorkBuddy \u56DE\u8C03</button></div>\n          </li>\n        </ul>\n      </section>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="submit" form="close-callbacks">\u5173\u95ED</button>\n      <button class="button primary" type="button" id="add-client" disabled><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u5176\u4ED6\u5BA2\u6237\u7AEF</button>\n    </div>\n  </div>\n  <form id="callback-form" novalidate hidden>\n    <div class="dialog-body callback-body">\n      <p>\u8F93\u5165\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u51C6\u786E\u5730\u5740\u3002\u4FDD\u5B58\u540E\uFF0C\u6B64 Portal \u53EF\u63A5\u53D7\u4F7F\u7528\u8BE5\u56DE\u8C03\u5730\u5740\u7684 OAuth \u5BA2\u6237\u7AEF\u6CE8\u518C\u3002</p>\n      <label for="callback-name">\u5BA2\u6237\u7AEF\u540D\u79F0</label>\n      <input id="callback-name" name="clientName" type="text" autocomplete="off" maxlength="64" required aria-describedby="callback-name-error">\n      <p id="callback-name-error" class="field-error" role="alert" hidden></p>\n      <label for="callback-url">\u56DE\u8C03\u5730\u5740</label>\n      <input id="callback-url" name="redirectUri" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="2048" placeholder="https://client.example/oauth/callback" required aria-describedby="callback-url-hint callback-url-error">\n      <p id="callback-url-hint" class="field-hint">\u586B\u5199\u5B8C\u6574\u56DE\u8C03 URL\uFF0C\u4E0D\u8981\u7C98\u8D34\u6388\u6743\u7801\u6216\u5BC6\u94A5\u3002</p>\n      <p id="callback-url-error" class="field-error" role="alert" hidden></p>\n      <p id="callback-save-error" class="field-error" role="alert" hidden></p>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="button" id="cancel-callback">\u53D6\u6D88</button>\n      <button class="button primary" id="save-callback" type="submit">\u4FDD\u5B58</button>\n    </div>\n  </form>\n  <form id="close-callbacks" method="dialog"></form>\n</dialog>\n\n<dialog id="upgrade-dialog" aria-labelledby="upgrade-title" aria-describedby="upgrade-description">\n  <header class="dialog-head"><h2 id="upgrade-title">\u5347\u7EA7\u8BFA\u8054\u7BA1\u7406\u53F0</h2>\n    <button type="submit" form="close-upgrade" class="dialog-close" aria-label="\u5173\u95ED\u5347\u7EA7"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="upgrade-description"></p>\n    <p id="upgrade-status" class="feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-upgrade" method="dialog">\n    <button class="button" id="close-upgrade-button" type="submit">\u5173\u95ED</button>\n    <button class="button primary" id="reconcile-upgrade" type="button" hidden>\u6838\u5BF9\u5B9E\u9645\u72B6\u6001</button>\n    <button class="button primary" id="confirm-upgrade" type="button" hidden>\u786E\u8BA4\u5347\u7EA7</button>\n  </form>\n</dialog>\n<script nonce="@@NONCE@@">@@SCRIPT@@<\/script>\n</body>\n</html>\n'])), consoleStyles, consoleLogoUrl, consoleLogoUrl);
 
 // ../cloud/upgrade-enrollment-release.mjs
 var protocol = "intent-v1";
@@ -3784,7 +3884,7 @@ __name(validateUpgradeBindings, "validateUpgradeBindings");
 var maxBytes = { manifest: 64 * 1024, signature: 64, worker: 8 * 1024 * 1024 };
 var downloadRequest = /* @__PURE__ */ __name((url, request, signal) => request(url.href, {
   method: "GET",
-  redirect: "error",
+  redirect: "manual",
   cache: "no-store",
   credentials: "omit",
   signal,
@@ -3835,34 +3935,40 @@ async function loadVerifiedUpgradeArtifacts({
   if (!directory || directory.protocol !== "https:" || directory.username || directory.password || directory.search || directory.hash || !directory.pathname.endsWith("/") || !["stable", "preview"].includes(channel) || format !== 1 && format !== 2 && format !== "auto") {
     throw new Error("Invalid trusted Nodrelay upgrade feed configuration");
   }
-  const signal = AbortSignal.timeout(15e3);
+  const transfer = new AbortController();
+  const signal = AbortSignal.any([AbortSignal.timeout(15e3), transfer.signal]);
   const path = /* @__PURE__ */ __name((mode, filename) => new URL(channel + (mode === 2 ? "/v2/" : "/") + filename, directory), "path");
-  let received;
-  if (format === "auto") {
-    const v2 = await downloadRequest(path(2, "manifest.json"), request, signal);
-    if (v2.status === 404) {
-      await v2.body?.cancel();
-      format = 1;
-    } else {
-      if (v2.status !== 200) {
+  try {
+    let received;
+    if (format === "auto") {
+      const v2 = await downloadRequest(path(2, "manifest.json"), request, signal);
+      if (v2.status === 404) {
         await v2.body?.cancel();
-        throw new Error("The Nodrelay v2 upgrade feed cannot be verified");
+        format = 1;
+      } else {
+        if (v2.status !== 200) {
+          await v2.body?.cancel();
+          throw new Error("The Nodrelay v2 upgrade feed cannot be verified");
+        }
+        format = 2;
+        received = v2;
       }
-      format = 2;
-      received = v2;
     }
+    const [manifest, signature, bundle] = await Promise.all([
+      download(path(format, "manifest.json"), maxBytes.manifest, request, signal, received),
+      download(path(format, "manifest.json.sig"), maxBytes.signature, request, signal),
+      download(path(format, "worker.js"), maxBytes.worker, request, signal)
+    ]);
+    const verified = await verifyUpgradeRelease({ manifest, signature, bundle, publicKey, channel, currentVersion, now: now4, allowCurrent, format });
+    return {
+      release: verified.release,
+      ...format === 2 && { manifestSha256: verified.manifestSha256 },
+      artifact: { manifest, signature, bundle: verified.bundle, publicKey, channel, ...format === 2 && { format } }
+    };
+  } catch (error) {
+    transfer.abort();
+    throw error;
   }
-  const [manifest, signature, bundle] = await Promise.all([
-    download(path(format, "manifest.json"), maxBytes.manifest, request, signal, received),
-    download(path(format, "manifest.json.sig"), maxBytes.signature, request, signal),
-    download(path(format, "worker.js"), maxBytes.worker, request, signal)
-  ]);
-  const verified = await verifyUpgradeRelease({ manifest, signature, bundle, publicKey, channel, currentVersion, now: now4, allowCurrent, format });
-  return {
-    release: verified.release,
-    ...format === 2 && { manifestSha256: verified.manifestSha256 },
-    artifact: { manifest, signature, bundle: verified.bundle, publicKey, channel, ...format === 2 && { format } }
-  };
 }
 __name(loadVerifiedUpgradeArtifacts, "loadVerifiedUpgradeArtifacts");
 
@@ -4160,8 +4266,12 @@ async function verifySchema(db) {
     const { results } = await db.prepare(query).bind(table2).all();
     if (results?.length !== names.length || !names.every((name, index2) => results[index2].name === name) || results[0].pk !== 1) throw new Error("Device enrollment requires the expected D1 table schema");
   }
-  const index = await db.prepare("SELECT name FROM pragma_index_list('enrollment_intents') WHERE name = 'enrollment_intents_pending_device' AND [unique] = 1 AND partial = 1").first();
-  if (!index) throw new Error("Device enrollment requires the existing pending-device index");
+  const index = await db.prepare(`SELECT m.sql FROM sqlite_master m
+    JOIN pragma_index_list('enrollment_intents') i ON i.name = m.name
+    WHERE m.type = 'index' AND m.tbl_name = 'enrollment_intents'
+      AND i.name = 'enrollment_intents_pending_device' AND i.[unique] = 1 AND i.partial = 1`).first();
+  const expectedIndex = /^CREATE\s+UNIQUE\s+INDEX\s+(?:IF\s+NOT\s+EXISTS\s+)?enrollment_intents_pending_device\s+ON\s+enrollment_intents\s*\(\s*device_id\s*\)\s+WHERE\s+state\s*=\s*'pending'\s*;?$/;
+  if (!expectedIndex.test(index?.sql ?? "")) throw new Error("Device enrollment requires the expected pending-device index");
 }
 __name(verifySchema, "verifySchema");
 async function inspectEnrollmentUpgradeReadiness({ api, db, spec }) {
@@ -4395,12 +4505,13 @@ async function confirmRecordedDeployment({ expected, operationId, api, journal }
       await txn.assertHeld();
       return { status: "baseline_active_upload_unconfirmed", version: record4.releaseVersion, operationId };
     }
-    const active = phase === "staged" ? record4.baseVersion : record4.candidateVersion;
     const [deployment2, original, candidate] = await Promise.all([
       api.readDeployment(target),
       api.readVersion(target, record4.baseVersion),
       api.readVersion(target, record4.candidateVersion)
     ]);
+    const rolloutStillUnconfirmed = phase === "deploying" && deployment2?.deployments?.[0]?.version_id === record4.baseVersion;
+    const active = phase === "staged" || rolloutStillUnconfirmed ? record4.baseVersion : record4.candidateVersion;
     requireDeployment(deployment2, active, record4.candidateVersion);
     if (original?.id !== record4.baseVersion || !validEtag(original.etag) || candidate?.id !== record4.candidateVersion || candidate.etag !== record4.candidateEtag) {
       throw new UpgradeOperationError("candidate_unproven", "Cloudflare version identity cannot confirm the recorded deployment");
@@ -4427,6 +4538,7 @@ async function confirmRecordedDeployment({ expected, operationId, api, journal }
     requireDeployment(await api.readDeployment(target), active, record4.candidateVersion);
     await txn.assertHeld();
     if (phase === "staged") return { status: "baseline_active_candidate_staged", version: record4.releaseVersion, operationId };
+    if (rolloutStillUnconfirmed) return { status: "baseline_active_rollout_unconfirmed", version: record4.releaseVersion, operationId };
     await txn.write({ ...record4, phase: "confirmed" });
     return { status: "deployment_confirmed", version: record4.releaseVersion, operationId };
   });
@@ -4767,6 +4879,22 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
       if (url.pathname === "/admin/upgrade/status") return json2(await upgradeProvider(env).status());
       if (url.pathname === "/admin/devices/enrollment") {
         const id2 = url.searchParams.get("deviceId");
+        const intentId = url.searchParams.get("intentId");
+        if (intentId !== null) {
+          if (url.searchParams.getAll("intentId").length !== 1 || url.searchParams.getAll("deviceId").length !== 1) {
+            return json2({ error: "Invalid enrollment query" }, 400);
+          }
+          const state2 = enrollmentIsEnabled(env) ? await readBoundEnrollmentState(env.TICKETS, id2, intentId) : void 0;
+          if (state2 === "pending" || state2 === "revoked") return json2({ registration: state2 });
+          if (state2 !== "claimed") return json2({ error: "Device command unavailable" }, 404);
+          let registered;
+          try {
+            registered = (await devices.enrollmentStatus(id2)).registration;
+          } catch (error) {
+            if (error.status !== 404) throw error;
+          }
+          return json2({ registration: ["active", "disabled"].includes(registered) ? registered : "installing" });
+        }
         let status;
         try {
           status = await devices.enrollmentStatus(id2);
@@ -4814,6 +4942,10 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
     if (url.pathname.startsWith("/admin/upgrade/") && fields.length !== Object.keys(input).length) {
       return json2({ error: "\u5347\u7EA7\u8BF7\u6C42\u5305\u542B\u91CD\u590D\u5B57\u6BB5\uFF0C\u8BF7\u91CD\u65B0\u68C0\u67E5\u7248\u672C\u3002" }, 400);
     }
+    if (fields.length !== Object.keys(input).length && (url.pathname === "/admin/enrollment-intents" || url.pathname === "/admin/devices" && enrollmentIsEnabled(env))) {
+      const error = "\u63A5\u5165\u8BF7\u6C42\u5305\u542B\u91CD\u590D\u5B57\u6BB5\uFF0C\u8BF7\u8FD4\u56DE\u8BBE\u5907\u5217\u8868\u540E\u91CD\u8BD5\u3002";
+      return wantsJson ? json2({ error, code: "duplicate_fields" }, 400) : html2(document("\u8BBE\u5907\u64CD\u4F5C\u5931\u8D25", `<p>${escapeHtml(error)}</p>${back}`), 400);
+    }
     if (url.pathname === "/admin/upgrade/reconcile") return json2(await upgradeProvider(env).reconcile(input));
     if (url.pathname === "/admin/upgrade/start") {
       const operation = upgradeProvider(env).start(input);
@@ -4830,7 +4962,7 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
       const target = { deviceId: input.deviceId, intentId: input.intentId };
       if (input.action === "reveal") {
         const result = await intents.command(url.origin, target);
-        return json2({ ...result, platform: label2[result.platform], instructions: "\u8BF7\u5728\u76EE\u6807\u8BBE\u5907\u8FD0\u884C\u3002\u9996\u6B21\u9886\u53D6\u6216\u4E3B\u52A8\u64A4\u9500\u540E\u5931\u6548\uFF0C\u8BF7\u52FF\u8F6C\u53D1\u3002" });
+        return json2({ ...result, intentId: target.intentId, platform: label2[result.platform], instructions: "\u8BF7\u5728\u76EE\u6807\u8BBE\u5907\u8FD0\u884C\u3002\u9996\u6B21\u9886\u53D6\u6216\u4E3B\u52A8\u64A4\u9500\u540E\u5931\u6548\uFF0C\u8BF7\u52FF\u8F6C\u53D1\u3002" });
       }
       if (input.action === "revoke") {
         await intents.admin.revoke(target);
@@ -4896,7 +5028,9 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
     if (url.pathname === activatePath) {
       return error instanceof DeviceError ? json2({ error: error.message }, error.status) : json2({ error: "Device activation failed" }, 503);
     }
-    if (error instanceof EnrollmentAdminError) return json2({ error: error.status === 409 ? "\u6B64\u8BBE\u5907\u5DF2\u6709\u63A5\u5165\u8BB0\u5F55\uFF0C\u8BF7\u5148\u67E5\u770B\u8BBE\u5907\u72B6\u6001\u3002" : "\u8FD9\u6761\u63A5\u5165\u547D\u4EE4\u4E0D\u53EF\u7528\uFF0C\u8BF7\u68C0\u67E5\u8BBE\u5907\u548C\u5B89\u88C5\u5305\u3002" }, error.status);
+    if (error instanceof EnrollmentAdminError) {
+      return wantsJson ? json2({ error: error.message, code: error.code }, error.status) : html2(document("\u8BBE\u5907\u64CD\u4F5C\u5931\u8D25", `<p>${escapeHtml(error.message)}</p>${back}`), error.status);
+    }
     if (error instanceof UpgradeAdminError) return json2({ error: error.message, code: error.code }, error.status);
     if (url.pathname.startsWith("/admin/upgrade/")) return json2({ error: "\u65E0\u6CD5\u786E\u8BA4\u5347\u7EA7\u72B6\u6001\u3002\u8BF7\u5148\u6838\u5BF9\uFF0C\u4E0D\u8981\u91CD\u590D\u63D0\u4EA4\u3002" }, 503);
     const expected = error instanceof DeviceError || error instanceof PortalCallbackError;
@@ -5006,11 +5140,19 @@ function createWorker({ verifyAdmin = accessAdmin, deviceProvider, upgradeProvid
             return json({ error: "Approved installer unavailable" }, 404);
           }
         }
-        const group = hostedInstallers(JSON.parse(env.RELEASE_CATALOG))[installPlatform];
-        if (request.method !== "GET" || !group || url.searchParams.get("version") !== group.version) {
+        const [version2] = url.searchParams.getAll("version");
+        if (request.method !== "GET" || !version2 || [...url.searchParams].length !== 1) {
           return json({ error: "Installer version unavailable. Generate a new connection command." }, 404);
         }
-        return assetResponse("text/plain", bootstrapInstaller(url.origin, installPlatform, group));
+        try {
+          const group = hostedInstallers(JSON.parse(env.RELEASE_CATALOG))[installPlatform];
+          if (!group || version2 !== group.version) {
+            return json({ error: "Installer version unavailable. Generate a new connection command." }, 404);
+          }
+          return assetResponse("text/plain", bootstrapInstaller(url.origin, installPlatform, group));
+        } catch {
+          return json({ error: "Installer catalog temporarily unavailable. Contact the management console administrator." }, 503);
+        }
       }
       const redeem = pathname === (managed ? enrollPath : "/enroll");
       const activate = managed && pathname === activatePath;
