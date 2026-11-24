@@ -9735,6 +9735,9 @@ function localServicePolicy(db, devices) {
   async function rpc2(device, args, signal) {
     const reply = await devices.gatewayRequest(device, "development", "tools/call", { name: localRpc, arguments: args }, signal);
     if (args.action === "call") return reply;
+    if (args.action === "catalog" && reply.isError && typeof reply.structuredContent?.launchError === "string") {
+      throw new LocalServiceUnavailable(reply.structuredContent.launchError);
+    }
     if (reply.isError || !reply.structuredContent) throw new Error(args.action === "inventory" ? "\u8BBE\u5907\u672A\u54CD\u5E94\u672C\u673A MCP \u53D1\u73B0\uFF0C\u8BF7\u68C0\u67E5\u8FDE\u63A5\u548C\u5BA2\u6237\u7AEF\u7248\u672C\u3002" : "\u65E0\u6CD5\u8BFB\u53D6\u5DE5\u5177\u76EE\u5F55\uFF0C\u8BF7\u68C0\u67E5\u672C\u673A\u670D\u52A1\u6216\u6388\u6743\u3002");
     return reply.structuredContent;
   }
@@ -9795,7 +9798,8 @@ function localServicePolicy(db, devices) {
     async cliList(device, signal) {
       try {
         const result = await rpc2(device, { action: "cli-list" }, signal);
-        if (Array.isArray(result.commands)) return result;
+        if (result.cliCatalog === 1) return result;
+        return { commands: [], complete: false, warnings: ["\u5BA2\u6237\u7AEF\u5347\u7EA7\u540E\u5373\u53EF\u67E5\u770B CLI\u3002"] };
       } catch {
         signal?.throwIfAborted();
       }
@@ -9804,11 +9808,12 @@ function localServicePolicy(db, devices) {
     async installed(device, terms, signal) {
       try {
         const result = await rpc2(device, { action: "installed-search", terms }, signal);
-        if (Array.isArray(result.matches)) return result;
+        if (result.cliCatalog === 1) return result;
+        return { matches: [], indexing: false, warnings: ["\u5BA2\u6237\u7AEF\u5347\u7EA7\u540E\u5373\u53EF\u641C\u7D22 CLI\u3002"] };
       } catch {
         signal?.throwIfAborted();
       }
-      return { matches: [], indexing: false, warnings: ["\u672C\u673A CLI / Skill \u76EE\u5F55\u4E0D\u53EF\u7528\uFF0C\u8BF7\u68C0\u67E5\u8BBE\u5907\u8FDE\u63A5\u53CA\u5BA2\u6237\u7AEF\u7248\u672C\u3002"] };
+      return { matches: [], indexing: false, warnings: ["\u672C\u673A CLI \u76EE\u5F55\u4E0D\u53EF\u7528\uFF0C\u8BF7\u68C0\u67E5\u8BBE\u5907\u8FDE\u63A5\u53CA\u5BA2\u6237\u7AEF\u7248\u672C\u3002"] };
     },
     // The owner's catalogue preview is separate from the ChatGPT grant.
     async previewTools(device, id2, signal) {
@@ -12112,8 +12117,7 @@ var desktopStyles = `
   .device-tool-tabs small { font:550 12px ui-monospace,monospace; border-radius:6px; padding:3px 6px; background:var(--selected); }
   .cli-search { display:flex; gap:8px; margin:18px 0; align-items:center; }
   .cli-search .search { flex:1; min-width:0; max-width:34em; }
-  .cli-scope { display:flex; align-items:center; justify-content:space-between; margin:18px 2px 10px; font-size:14px; }
-  .cli-scope a { color:var(--active); }
+  .cli-scope { display:block; margin:18px 2px 10px; font-size:14px; }
   .cli-list { margin:0; background:var(--surface); border:1px solid var(--line); border-radius:10px; }
   .cli-list div { display:grid; grid-template-columns:minmax(9em,1fr) 3fr; align-items:baseline; gap:12px; padding:12px 16px; }
   .cli-list div+div { border-top:1px solid var(--line); }
@@ -12127,8 +12131,12 @@ var desktopStyles = `
   .service-meta,.service-foot,.service-head { display:flex; align-items:center; justify-content:space-between; gap:8px; }
   .service-meta { color:var(--secondary); font-size:12px; flex-wrap:wrap; }
   .service-source code,.sheet-source { font:11px/1.4 ui-monospace,monospace; color:var(--secondary); }
-  .service-signal::before { content:""; display:inline-block; vertical-align:middle; width:6px; height:6px; margin-right:5px; border-radius:50%; background:var(--secondary); }
-  .service-signal[data-ready=true]::before { background:var(--active); }
+  .service-signal { display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border-radius:999px; font-weight:600; background:color-mix(in srgb,currentColor 9%,var(--surface)); }
+  .service-signal::before { content:""; width:7px; height:7px; border-radius:50%; background:currentColor; }
+  .service-signal[data-status="\u5DF2\u53D1\u73B0"] { color:light-dark(#1464ae,#80c6ff); }
+  .service-signal[data-status="\u53EF\u7528"] { color:light-dark(#087344,#68e3a3); }
+  .service-signal:is([data-status="\u68C0\u6D4B\u4E2D"],[data-status="\u5019\u9009"],[data-status="\u672A\u80FD\u786E\u8BA4"]) { color:light-dark(#865401,#ffce71); }
+  .service-signal:is([data-status="\u672A\u5C31\u7EEA"],[data-status="\u672A\u8FDE\u63A5"]) { color:light-dark(#af3639,#ffa09c); }
   .service-card h2 { margin:22px 0 20px; font-size:20px; overflow-wrap:anywhere; display:flex; align-items:center; gap:13px; }
   .service-card .monogram { width:44px; height:44px; border-radius:12px; font-size:22px; }
   .upgrade-steps { padding:0; list-style:none; counter-reset:upgrade; margin:12px 0; }
@@ -14606,17 +14614,13 @@ async function show(url, push, fresh = false) {
     }
   }
   const {commands,complete,indexing,warnings} = snapshot;
-  const text = (url.searchParams.get('q') ?? '').trim(), all = url.searchParams.get('scope') === 'all';
+  const text = (url.searchParams.get('q') ?? '').trim();
   const needle = text.toLowerCase();
-  const matches = commands.filter(c => needle ? c.name.toLowerCase().includes(needle) || c.path.toLowerCase().includes(needle) : all || c.recommended);
+  const matches = commands.filter(c => c.name.toLowerCase().includes(needle) || c.path.toLowerCase().includes(needle));
   const clean = new URL(url); clean.searchParams.delete('q');
-  const alternate = new URL(clean);
-  if (all) alternate.searchParams.delete('scope'); else alternate.searchParams.set('scope','all');
   query.value = text;
-  form.elements.scope.disabled = !all;
   const clear = form.querySelector('a'); clear.hidden = !text; clear.href = clean;
-  scope.querySelector('strong').textContent = text ? '\u641C\u7D22\u7ED3\u679C' : all ? '\u5168\u90E8 CLI' : '\u63A8\u8350 CLI';
-  const link = scope.querySelector('a'); link.hidden = Boolean(text) || !commands.length; link.href = alternate; link.textContent = all ? '\u53EA\u770B\u63A8\u8350' : '\u67E5\u770B\u5168\u90E8';
+  scope.textContent = text ? '\u641C\u7D22\u7ED3\u679C' : '\u5DF2\u8BC6\u522B\u7684 CLI';
   const dl = document.createElement('dl'); dl.className = 'cli-list';
   for (const c of matches) {
     const row = document.createElement('div'), name = document.createElement('dt'), path = document.createElement('dd');
@@ -14626,7 +14630,7 @@ async function show(url, push, fresh = false) {
   if (matches.length) results.append(dl);
   else if (complete) {
     const empty = document.createElement('p'); empty.className='empty';
-    empty.textContent = text ? '\u6CA1\u6709\u5339\u914D\u7684 CLI' : commands.length ? '\u6682\u65E0\u63A8\u8350 CLI' : '\u672A\u53D1\u73B0\u672C\u673A CLI'; results.append(empty);
+    empty.textContent = text ? '\u6CA1\u6709\u5339\u914D\u7684 CLI' : '\u672A\u53D1\u73B0\u672C\u673A CLI'; results.append(empty);
   }
   note.textContent = [indexing ? '\u6B63\u5728\u8BC6\u522B CLI\u2026' : '',...warnings].filter(Boolean).join(' ');
   document.querySelector('#cli-total').textContent = complete ? matches.length : '\u2014';
@@ -14639,7 +14643,7 @@ form.addEventListener('submit', e => {
   if (query.value.trim()) url.searchParams.set('q',query.value.trim()); else url.searchParams.delete('q');
   void show(url,true);
 });
-for (const link of [form.querySelector('a'),scope.querySelector('a'),refresh]) link.addEventListener('click', e => {
+for (const link of [form.querySelector('a'),refresh]) link.addEventListener('click', e => {
   if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
   e.preventDefault(); void show(new URL(link.href),true,link === refresh);
 });
@@ -14682,9 +14686,15 @@ async function readCatalog(detail, manual = false) {
   try {
     const response = await fetch('/admin/local-mcp/tools', { method: 'POST', redirect: 'error', signal: controller.signal,
       body: new URLSearchParams({ deviceId: list.dataset.device, id }) });
-    if (!response.ok) throw new Error();
-    const { tools } = await response.json();
+    const result = await response.json();
     if (expanded !== detail || !sheet.open) return;
+    if (!response.ok) {
+      if (result.code !== 'local_launch_failed') throw new Error();
+      heading.textContent = '\u5DE5\u5177\u76EE\u5F55';
+      catalog.textContent = result.error;
+      return;
+    }
+    const { tools } = result;
     heading.textContent = '\u5DE5\u5177\u76EE\u5F55 \xB7 ' + tools.length;
     if (!tools.length) { catalog.textContent = '\u6B64\u670D\u52A1\u6CA1\u6709\u63D0\u4F9B\u5DE5\u5177\u3002'; return; }
     const names = document.createElement('dl');
@@ -14960,15 +14970,13 @@ async function manage(request, env, url2, { limitedBody: limitedBody2, html: htm
         const query = cli ? (url2.searchParams.get("q") ?? "").trim() : "";
         const base = "?deviceId=" + encodeURIComponent(id2);
         const cliUrl = base + "&amp;view=cli";
-        const allCli = url2.searchParams.get("scope") === "all";
-        const scopeUrl = cliUrl + (allCli ? "&amp;scope=all" : "");
         const nonce = crypto.randomUUID();
         const name = escapeHtml(device.displayName ?? id2);
         const upgradeState = !wantsJson && upgradeProvider(env).status().catch(() => ({ phase: "unknown" }));
         const render = /* @__PURE__ */ __name(async (body, total) => {
           const upgrade = await upgradeState;
           return html2(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${name} \xB7 \u672C\u673A\u5DE5\u5177 \xB7 Nodrelay</title><style nonce="${nonce}">${consoleStyles}</style><script nonce="${nonce}">${restoreConsoleTheme}<\/script></head>
-          <body>${consoleShell("devices", name, ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`)}<main class="service-page"><div class="device-context">${name}</div><div class="page-intro"><h1>\u672C\u673A\u5DE5\u5177</h1><a class="button" id="scan-again" href="${cli ? scopeUrl + (query ? "&amp;q=" + encodeURIComponent(query) : "") : base}">${cli ? "\u5237\u65B0" : "\u91CD\u65B0\u68C0\u6D4B"}</a></div>
+          <body>${consoleShell("devices", name, ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`)}<main class="service-page"><div class="device-context">${name}</div><div class="page-intro"><h1>\u672C\u673A\u5DE5\u5177</h1><a class="button" id="scan-again" href="${cli ? cliUrl + (query ? "&amp;q=" + encodeURIComponent(query) : "") : base}">${cli ? "\u5237\u65B0" : "\u91CD\u65B0\u68C0\u6D4B"}</a></div>
           <nav class="device-tool-tabs" aria-label="\u672C\u673A\u5DE5\u5177\u5206\u7C7B"><a href="${base}"${cli ? "" : ' aria-current="page"'}>MCP \u670D\u52A1${cli ? "" : ' <small id="service-total">' + total + "</small>"}</a><a href="${cliUrl}"${cli ? ' aria-current="page"' : ""}>CLI${cli ? ' <small id="cli-total">' + total + "</small>" : ""}</a></nav>
           ${body}${upgradeDialog}<script nonce="${nonce}">${consoleUpgradeScript}<\/script><script src="/admin/local-${cli ? "cli" : "mcp"}.js" defer><\/script></body></html>`, 200, nonce);
         }, "render");
@@ -14977,21 +14985,20 @@ async function manage(request, env, url2, { limitedBody: limitedBody2, html: htm
           commands.sort((a, b) => a.name.localeCompare(b.name));
           if (wantsJson) return json2({ commands, complete: complete2, indexing, warnings: warnings2 });
           const needle = query.toLowerCase();
-          const matches6 = commands.filter((c) => needle ? c.name.toLowerCase().includes(needle) || c.path.toLowerCase().includes(needle) : allCli || c.recommended);
+          const matches6 = commands.filter((c) => c.name.toLowerCase().includes(needle) || c.path.toLowerCase().includes(needle));
           return await render(`<section aria-label="\u547D\u4EE4\u884C\u5DE5\u5177"><form class="cli-search" method="get">
             <input type="hidden" name="deviceId" value="${escapeHtml(id2)}"><input type="hidden" name="view" value="cli">
-            <input type="hidden" name="scope" value="all"${allCli ? "" : " disabled"}>
-            <label class="search"><input type="search" name="q" value="${escapeHtml(query)}" placeholder="\u641C\u7D22\u5168\u90E8 CLI \u7684\u540D\u79F0\u6216\u8DEF\u5F84" aria-label="\u641C\u7D22\u5168\u90E8 CLI \u7684\u540D\u79F0\u6216\u8DEF\u5F84"></label>
-            <button class="button">\u641C\u7D22</button><a class="button quiet" href="${scopeUrl}"${query ? "" : " hidden"}>\u6E05\u9664</a></form>
-            <div class="cli-scope"><strong>${query ? "\u641C\u7D22\u7ED3\u679C" : allCli ? "\u5168\u90E8 CLI" : "\u63A8\u8350 CLI"}</strong><a href="${allCli ? cliUrl : cliUrl + "&amp;scope=all"}"${!query && commands.length ? "" : " hidden"}>${allCli ? "\u53EA\u770B\u63A8\u8350" : "\u67E5\u770B\u5168\u90E8"}</a></div>
+            <label class="search"><input type="search" name="q" value="${escapeHtml(query)}" placeholder="\u641C\u7D22 CLI \u540D\u79F0\u6216\u8DEF\u5F84" aria-label="\u641C\u7D22 CLI \u540D\u79F0\u6216\u8DEF\u5F84"></label>
+            <button class="button">\u641C\u7D22</button><a class="button quiet" href="${cliUrl}"${query ? "" : " hidden"}>\u6E05\u9664</a></form>
+            <strong class="cli-scope">${query ? "\u641C\u7D22\u7ED3\u679C" : "\u5DF2\u8BC6\u522B\u7684 CLI"}</strong>
             <p class="scan-note" role="status" id="cli-feedback">${[indexing ? "\u6B63\u5728\u8BC6\u522B CLI\u2026" : "", ...warnings2].filter(Boolean).map(escapeHtml).join(" ")}</p><div id="cli-results">
-            ${matches6.length ? '<dl class="cli-list">' + matches6.map((c) => "<div><dt>" + escapeHtml(c.name) + "</dt><dd>" + escapeHtml(c.path) + "</dd></div>").join("") + "</dl>" : complete2 ? '<p class="empty">' + (query ? "\u6CA1\u6709\u5339\u914D\u7684 CLI" : commands.length ? "\u6682\u65E0\u63A8\u8350 CLI" : "\u672A\u53D1\u73B0\u672C\u673A CLI") + "</p>" : ""}</div></section></main></div>`, complete2 ? matches6.length : "\u2014");
+            ${matches6.length ? '<dl class="cli-list">' + matches6.map((c) => "<div><dt>" + escapeHtml(c.name) + "</dt><dd>" + escapeHtml(c.path) + "</dd></div>").join("") + "</dl>" : complete2 ? '<p class="empty">' + (query ? "\u6CA1\u6709\u5339\u914D\u7684 CLI" : "\u672A\u53D1\u73B0\u672C\u673A CLI") + "</p>" : ""}</div></section></main></div>`, complete2 ? matches6.length : "\u2014");
         }
         const { services, warnings, complete, pending } = await local.inventory(id2, request.signal);
         const rows = services.sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id)).map((s) => {
           const [status, count] = s.status.split(" \xB7 ");
           const unavailable = s.unavailable || ["\u672A\u8FDE\u63A5", "\u672A\u53D1\u73B0", "\u68C0\u6D4B\u4E2D", "\u672A\u80FD\u786E\u8BA4"].includes(status);
-          return `<article class="service-card"${s.marketItem ? ' id="market-' + escapeHtml(s.marketItem) + '" tabindex="-1"' : ""}><div class="service-meta"><span class="service-source">${escapeHtml(s.source)} <code>${escapeHtml(s.transport)}</code></span><span class="service-signal" data-ready="${status === "\u53EF\u7528"}" title="${escapeHtml(s.status)}">${escapeHtml(status)}</span></div>
+          return `<article class="service-card"${s.marketItem ? ' id="market-' + escapeHtml(s.marketItem) + '" tabindex="-1"' : ""}><div class="service-meta"><span class="service-source">${escapeHtml(s.source)} <code>${escapeHtml(s.transport)}</code></span><span class="service-signal" data-status="${escapeHtml(status)}" title="${escapeHtml(s.status)}">${escapeHtml(status)}</span></div>
           <h2>${monogram(s.name, s.id)}<button class="service-title" type="button" aria-controls="service-sheet" aria-haspopup="dialog"${unavailable ? " disabled" : ""}>${escapeHtml(s.name)}</button></h2><div class="service-foot"><button type="button" class="tools-link" data-catalog="${escapeHtml(s.id)}" aria-label="\u67E5\u770B ${escapeHtml(s.name)} \u7684\u5DE5\u5177" aria-controls="service-sheet" aria-haspopup="dialog"${unavailable ? " disabled" : ""}>${unavailable ? "\u5DE5\u5177\u4E0D\u53EF\u7528" : escapeHtml(count ?? "\u67E5\u770B\u5DE5\u5177") + " \u203A"}</button>
           <form method="post" action="/admin/local-mcp"><input type="hidden" name="deviceId" value="${escapeHtml(id2)}"><input type="hidden" name="id" value="${escapeHtml(s.id)}">
           <span role="status"></span><button class="switch" role="switch" aria-checked="${s.enabled}" aria-label="\u6388\u6743\u4F7F\u7528 ${escapeHtml(s.name)}" name="enabled" value="${s.enabled ? "0" : "1"}"${unavailable && !s.enabled ? " disabled" : ""}></button></form></div></article>`;
@@ -15227,6 +15234,9 @@ async function manage(request, env, url2, { limitedBody: limitedBody2, html: htm
     }
     if (error2 instanceof EnrollmentAdminError) {
       return wantsJson ? json2({ error: error2.message, code: error2.code }, error2.status) : html2(consolePage("\u8BBE\u5907\u64CD\u4F5C\u5931\u8D25", `<p>${escapeHtml(error2.message)}</p>${back}`), error2.status);
+    }
+    if (url2.pathname === "/admin/local-mcp/tools" && error2 instanceof LocalServiceUnavailable) {
+      return json2({ code: "local_launch_failed", error: error2.message }, 503);
     }
     if (error2 instanceof UpgradeAdminError) return json2({ error: error2.message, code: error2.code }, error2.status);
     if (url2.pathname.startsWith("/admin/upgrade/")) return json2({ error: "\u65E0\u6CD5\u786E\u8BA4\u5347\u7EA7\u72B6\u6001\u3002\u8BF7\u5148\u6838\u5BF9\uFF0C\u4E0D\u8981\u91CD\u590D\u63D0\u4EA4\u3002" }, 503);
@@ -26068,7 +26078,7 @@ var tools = [
   {
     name: "device_tools",
     title: "\u67E5\u627E\u5DE5\u5177",
-    description: "Find capabilities by purpose on the selected device. For local apps, browser tasks, CLIs or Skills use source=installed first; supply the user\u2019s keyword and English synonyms in keywords. A skill result points to its current SKILL.md: read it on the same device before using the existing terminal. CLI/Skill entries are guidance, not call_device_tool targets. For MCP schemas use profile, serviceId or source=mcp.",
+    description: "Find tools by purpose on the selected device. For local apps, browser tasks or CLIs use source=installed first; supply the user\u2019s keyword and English synonyms in keywords. It lists documented CLIs and confirmed application or package entry points. Read the attached guide when present, then use the authorized terminal on the same device. CLI entries are not call_device_tool targets. For MCP schemas use profile, serviceId or source=mcp.",
     inputSchema: schema3({
       deviceId,
       query: { type: "string" },
@@ -26110,7 +26120,7 @@ async function gatewayMcp(request, devices, local) {
           deviceId: args.deviceId,
           workspace: "Reuse workspaceId on this device or open_workspace on an authorized project.",
           ...result.workspacePath && { workspacePath: result.workspacePath },
-          ...match.kind === "skill" ? { tool: "read", path: match.path, then: "Follow this guide in the same workspace. Use exec_command for its CLI, not a generic REPL." } : { tool: "exec_command", executable: match.path }
+          ...match.guides?.length ? { tool: "read", path: match.guides[0].path, executable: match.path, then: "Follow the matching guide in the same workspace. Use exec_command for this CLI, not a generic REPL." } : { tool: "exec_command", executable: match.path }
         } }))
       })) : void 0;
       if (args.source === "installed") return data(await indexed);
