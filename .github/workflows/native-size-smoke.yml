@@ -1,7 +1,7 @@
-name: Verify preview.35 native downloads
+name: Verify preview.36 native downloads
 on:
   push:
-    branches: ['codex/verify-preview.35']
+    branches: ['codex/verify-preview.36']
 permissions: {}
 jobs:
   smoke:
@@ -10,11 +10,11 @@ jobs:
       matrix:
         include:
           - os: windows-2025
-            asset: devspace-fleet-0.1.5-preview.35-windows-x64.zip
-            digest: 6791e3ce21f9017d6b04e15d2b5135ee3ad5a799b50efb19edb838161a927fbb
+            asset: devspace-fleet-0.1.5-preview.36-windows-x64.zip
+            digest: b39d978e669d377b6f08777cee180d73c9831b1f3b82209591f5de93cdf05a44
           - os: ubuntu-22.04
-            asset: devspace-fleet-0.1.5-preview.35-linux-x64.tgz
-            digest: 20812252fcc1014829e7d557c8fa4704f1d2a09134e0e043aa644738ac947dfe
+            asset: devspace-fleet-0.1.5-preview.36-linux-x64.tgz
+            digest: 6a3658ce9c53d8604661801d0f01c428182674cf963f9b0205a642b27597f32e
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check public archive and native runtime
@@ -26,7 +26,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           $PSNativeCommandUseErrorActionPreference = $true
-          $url = "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.35-devices/$env:ASSET"
+          $url = "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.36-devices/$env:ASSET"
           curl --fail --silent --show-error --location --output $env:ASSET $url
           if ((Get-FileHash -Algorithm SHA256 $env:ASSET).Hash -ne $env:DIGEST) { throw 'Archive checksum mismatch' }
           mkdir payload
@@ -53,9 +53,9 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $installer = 'install-devspace-fleet-0.1.5-preview.35-windows-x64.ps1'
-          curl --fail --silent --show-error --location --output $installer "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.35-devices/$installer"
-          if ((Get-FileHash $installer).Hash -ne '1fb761ff4df014b64710c857f7d3dd647c80308e0c117ff6f68bbf77646f0945') { throw 'Installer digest mismatch' }
+          $installer = 'install-devspace-fleet-0.1.5-preview.36-windows-x64.ps1'
+          curl --fail --silent --show-error --location --output $installer "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.36-devices/$installer"
+          if ((Get-FileHash $installer).Hash -ne '7958f593d7f0b55b7ab43b533d65b69eb7ac00e0caa3f8793eddb70adae46ce2') { throw 'Installer digest mismatch' }
           $env:TEST_INSTALLER = (Resolve-Path $installer).Path
           $env:USERPROFILE = (New-Item -Type Directory -Path (Join-Path $env:RUNNER_TEMP 'empty test profile')).FullName
           $code = @'
@@ -63,8 +63,13 @@ jobs:
           function Read-Host($Prompt) { if ($Prompt -like 'Management*') { return 'https://qa.invalid' }; return 'qa-device' }
           & $env:TEST_INSTALLER -Repair
           '@
-          $PSNativeCommandUseErrorActionPreference = $false
-          $output = (& powershell.exe -NoProfile -NonInteractive -EncodedCommand ([Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($code))) 2>&1 | Out-String)
-          if ($LASTEXITCODE -eq 0 -or $output -notmatch 'Same-version repair requires' -or $output -notmatch '解压完成') { throw $output }
+          $code | Set-Content -Encoding utf8BOM qa-repair.ps1
+          @'
+          const {spawnSync}=require('node:child_process');
+          const result=spawnSync('powershell.exe',['-NoProfile','-NonInteractive','-OutputFormat','Text','-File','qa-repair.ps1'],{encoding:'utf8'});
+          const output=result.stdout+'\n'+result.stderr;console.log(output);
+          if(result.status===0 || !output.includes('Same-version repair requires') || !output.includes('解压完成')) process.exit(1);
+          '@ | & ./payload/bin/node.exe -
+          if ($LASTEXITCODE -ne 0) { throw 'The signed installer did not reach repair preflight' }
           if (Get-ChildItem -Force $env:USERPROFILE -Filter '.nodrelay-install-*') { throw 'Leaked extraction directory' }
           Write-Host 'Verified installer extracted the signed package and stopped before enrollment in an empty profile.'
