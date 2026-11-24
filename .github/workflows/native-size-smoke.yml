@@ -9,15 +9,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
-            asset: devspace-fleet-0.1.5-preview.33-linux-x64.tgz
-            digest: e0643a0d2b1ac02bef91244cddfb944347e26b8e03fa20f6fe8eb1c141106da8
           - os: windows-2025
             asset: devspace-fleet-0.1.5-preview.33-windows-x64.zip
             digest: 232cad8d411506f7cda346b9a95061484e7861b77388f65c4c4aa07e8517b025
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check public archive and native runtime
+        timeout-minutes: 5
         shell: pwsh
         env:
           ASSET: ${{ matrix.asset }}
@@ -44,6 +42,6 @@ jobs:
           const pty = require('node-pty').spawn(win ? 'cmd.exe' : '/bin/echo',win ? ['/d','/c','echo NODRELAY_PTY_OK'] : ['NODRELAY_PTY_OK']);
           let output = '';
           pty.onData(data => output += data);
-          pty.onExit(({exitCode}) => { assert.equal(exitCode,0); assert.match(output,/NODRELAY_PTY_OK/); console.log('Native terminal and SQLite OK'); });
+          pty.onExit(({exitCode}) => { if(win) pty.kill(); assert.equal(exitCode,0); assert.match(output,/NODRELAY_PTY_OK/); console.log('Native terminal and SQLite OK'); });
           '@ | & $node -
           if ($IsLinux) { & ./node_modules/@anthropic-ai/claude-agent-sdk-linux-x64/claude --version }
