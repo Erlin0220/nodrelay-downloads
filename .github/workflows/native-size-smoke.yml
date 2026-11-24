@@ -60,6 +60,7 @@ jobs:
           $env:USERPROFILE = (New-Item -Type Directory -Path (Join-Path $env:RUNNER_TEMP 'empty test profile')).FullName
           $code = @'
           [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
+          $env:PSModulePath = [IO.Path]::Combine($PSHOME, 'Modules')
           function Read-Host($Prompt) { if ($Prompt -like 'Management*') { return 'https://qa.invalid' }; return 'qa-device' }
           & $env:TEST_INSTALLER -Repair
           '@
