@@ -9761,6 +9761,15 @@ function localServicePolicy(db, devices) {
   }
   __name(inventory, "inventory");
   return {
+    async installed(device, terms, signal) {
+      try {
+        const result = await rpc(device, { action: "installed-search", terms }, signal);
+        if (Array.isArray(result.matches)) return result;
+      } catch {
+        signal?.throwIfAborted();
+      }
+      return { matches: [], indexing: false, warnings: ["\u672C\u673A CLI / Skill \u76EE\u5F55\u4E0D\u53EF\u7528\uFF0C\u8BF7\u68C0\u67E5\u8BBE\u5907\u8FDE\u63A5\u53CA\u5BA2\u6237\u7AEF\u7248\u672C\u3002"] };
+    },
     // The owner's catalogue preview is separate from the ChatGPT grant.
     async previewTools(device, id2, signal) {
       try {
@@ -10874,14 +10883,21 @@ var consoleUpgradeScript = String.raw`
   }
   function markUpgradeRecovery(recorded = false) {
     offeredRelease = undefined;
+    upgrade.hidden = false;
     upgrade.setAttribute('data-mode', 'recovery');
     upgrade.setAttribute('aria-label', '查看升级状态');
     upgrade.setAttribute('title', recorded ? '有未完成的升级，查看状态' : '升级结果尚未确认，查看状态');
   }
   function showUpgradeDialog() {
-    upgradeView = { foreground: !document.hidden };
+    upgradeView = { foreground: !document.hidden, fromLogo: document.activeElement === upgrade };
     upgradeDialog.showModal();
   }
+  upgradeDialog.onclose = () => {
+    if (!upgradeDialog.open && upgrade.hidden && upgradeView.fromLogo) {
+      const check = document.querySelector('#check-update');
+      (check && !check.closest('[hidden]') ? check : document.querySelector('.rail a[aria-current]')).focus();
+    }
+  };
   document.addEventListener('visibilitychange', () => {
     if (document.hidden && upgradeView) upgradeView.foreground = false;
     if (!document.hidden && headerWaitingForVisibility) {
@@ -10911,7 +10927,8 @@ var consoleUpgradeScript = String.raw`
     timer = setTimeout(read, 1000);
     return () => { clearTimeout(timer); controller.abort(); };
   }
-  async function reloadConfirmedUpgrade(result, operationId, version, view) {
+  async function finishConfirmedUpgrade(result, operationId, version, view) {
+    showUpgradeHeader();
     if (result.status !== 'deployment_confirmed' || result.operationId !== operationId ||
         result.version !== version || !currentUpgradeView(view)) return;
     upgradeStatus.textContent = 'Cloudflare 已确认切换流量。正在检查新版本是否已能访问…';
@@ -10939,6 +10956,7 @@ var consoleUpgradeScript = String.raw`
     const recovery = activePhases.has(status?.phase);
     const available = Boolean(feed?.nextVersion && feed.nextVersion !== version);
     offeredRelease = !recovery && available ? feed : undefined;
+    upgrade.hidden = !recovery && !available;
     upgrade.setAttribute('data-mode', recovery ? 'recovery' : available ? 'upgrade' : 'idle');
     upgrade.setAttribute('aria-label', recovery ? '查看升级状态' : available ? '一键升级到 v' + feed.nextVersion : '升级');
     upgrade.setAttribute('title', recovery ? '有未完成的升级，查看状态' : available ? '一键升级到 v' + feed.nextVersion : '检查管理台更新');
@@ -11059,7 +11077,7 @@ var consoleUpgradeScript = String.raw`
       pendingUpgrade = undefined;
       releaseCheck = undefined;
       hideUpgradeAction(reconcileUpgrade);
-      await reloadConfirmedUpgrade(result, operationId, result.version, view);
+      await finishConfirmedUpgrade(result, operationId, result.version, view);
     } catch (error) { upgradeStatus.textContent = error.message; }
     finally { upgrading = undefined; reconcileUpgrade.removeAttribute('aria-disabled'); }
   });
@@ -11087,7 +11105,7 @@ var consoleUpgradeScript = String.raw`
       }
       upgradeStatus.textContent = cutoverText(result);
       releaseCheck = undefined;
-      await reloadConfirmedUpgrade(result, operationId, version, view);
+      await finishConfirmedUpgrade(result, operationId, version, view);
     } catch (error) {
       stopProgress();
       upgradeStatus.textContent = error.message;
@@ -11955,21 +11973,42 @@ var desktopStyles = `
   #device-command-systems input:checked + span { border:0; border-bottom:2px solid #a2d7b2; border-radius:0; color:white; background:#25352c; }
   #device-command-systems:not([hidden]) + #command-content { margin-top:0; }
   #device-command-systems:not([hidden]) + #command-content textarea { border-radius:0 0 8px 8px; }
-  .service-grid { display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr)); margin-top:16px; }
-  .service-card { padding:17px; border:1px solid var(--line); border-radius:11px; background:var(--surface); }
+  .workspace main.service-page { width:min(1060px,calc(100% - 80px)); margin-top:48px; }
+  .device-context { color:var(--secondary); font-size:13px; margin-bottom:9px; }
+  #service-total { display:inline-block; vertical-align:middle; font:550 13px ui-monospace,monospace; letter-spacing:0; border-radius:6px; padding:4px 7px; background:var(--inset); }
+  .service-grid { display:grid; gap:14px; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:16px; }
+  .service-card { padding:16px 18px 0; min-width:0; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
   .service-meta,.service-foot,.service-head { display:flex; align-items:center; justify-content:space-between; gap:8px; }
   .service-meta { color:var(--secondary); font-size:12px; flex-wrap:wrap; }
-  .service-card h2 { margin:19px 0; overflow-wrap:anywhere; }
-  .service-card h2 { display:flex; align-items:center; gap:11px; }
-  .service-card h2 svg { flex:none; width:36px; height:36px; padding:8px; background:var(--selected); color:var(--active); border-radius:9px; }
+  .service-source code,.sheet-source { font:11px/1.4 ui-monospace,monospace; color:var(--secondary); }
+  .service-signal::before { content:""; display:inline-block; vertical-align:middle; width:6px; height:6px; margin-right:5px; border-radius:50%; background:var(--secondary); }
+  .service-signal[data-ready=true]::before { background:var(--active); }
+  .service-card h2 { margin:22px 0 20px; font-size:20px; overflow-wrap:anywhere; display:flex; align-items:center; gap:13px; }
+  .service-card h2 svg,.sheet-tile svg { flex:none; width:44px; height:44px; padding:10px; background:var(--selected); color:var(--active); border-radius:12px; }
   .upgrade-steps { padding:0; list-style:none; counter-reset:upgrade; margin:12px 0; }
   #upgrade-versions[hidden] ~ .upgrade-steps { display:none; }
   .upgrade-steps li { display:flex; align-items:center; gap:12px; padding:6px 0; color:var(--secondary); }
   .upgrade-steps li::before { counter-increment:upgrade; content:counter(upgrade); border-radius:50%; padding:3px 8px; font:600 13px/18px ui-monospace,monospace; background:var(--inset); }
   #upgrade-dialog[data-step="1"] li:nth-child(1)::before,#upgrade-dialog[data-step="2"] li:nth-child(2)::before,#upgrade-dialog[data-step="3"] li:nth-child(3)::before { background:var(--blue); color:white; }
-  .service-foot { border-top:1px solid var(--rule); padding-top:11px; }
-  .tools-link { border:0; background:transparent; color:var(--active); padding:4px 0; }
-  .service-card .tool-detail { border-top:1px solid var(--rule); margin-top:10px; padding-top:10px; overflow-wrap:anywhere; }
+  .service-foot { border-top:1px solid var(--rule); min-height:48px; }
+  .tools-link { border:0; background:transparent; color:var(--active); padding:6px 0; font-size:13px; font-weight:600; }
+  #service-sheet { inset:0 0 0 auto; margin:0; padding:0; width:min(450px,100%); max-width:100%; height:100dvh; max-height:100dvh; border:0; border-radius:0; box-shadow:-16px 0 60px #121d251c; overflow:hidden; }
+  #service-sheet[open] { display:flex; flex-direction:column; }
+  body:has(#service-sheet[open]) { overflow:hidden; }
+  #service-sheet::backdrop { background:#18242b42; }
+  #service-sheet header { flex:none; display:flex; align-items:center; justify-content:space-between; padding:16px 24px; border-bottom:1px solid var(--line); }
+  .sheet-close { display:grid; place-items:center; border:0; background:transparent; width:30px; height:30px; padding:0; }
+  .sheet-scroll { overflow:auto; overscroll-behavior:contain; overflow-wrap:anywhere; }
+  .sheet-identity { display:flex; align-items:center; gap:16px; padding:30px 24px; }
+  .sheet-identity h2 { font-size:25px; margin:0; letter-spacing:-1px; }
+  .sheet-tile svg { display:block; width:58px; height:58px; padding:12px; }
+  .sheet-catalog { padding:22px 24px; border-top:1px solid var(--line); }
+  .sheet-catalog h3 { font-size:14px; margin:0 0 12px; }
+  .sheet-catalog .tool-detail dt { font-size:14px; }
+  .sheet-catalog .tool-detail dd { font-size:13px; }
+  @media(max-width:1160px){.workspace main.service-page{width:calc(100% - 48px)}.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:760px){.workspace main.service-page{width:calc(100% - 32px);margin-top:24px}}
+  @media(max-width:560px){.service-grid{grid-template-columns:1fr;gap:10px}.service-card{padding:14px 16px 0}.service-card h2{margin:11px 0 14px}.service-foot{min-height:42px}}
   @media(max-width:1050px) and (min-width:761px){.rail{width:194px}.workspace{margin-left:194px}}
   @media(max-width:1050px){.platform-col{display:none}}
   @media(max-width:760px){
@@ -12263,7 +12302,7 @@ var sections = {
 };
 function consoleShell(section, detail = "", upgradeAttributes = "") {
   const [name, href] = sections[section];
-  return `<aside class="rail"><div class="brand"><img src="${consoleLogoUrl}" alt="">Nodrelay<button id="open-upgrade" type="button" class="button upgrade-launch" aria-label="\u5347\u7EA7" aria-haspopup="dialog" aria-controls="upgrade-dialog" title="\u68C0\u67E5\u7BA1\u7406\u53F0\u66F4\u65B0"${upgradeAttributes}><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16V8m-4 4 4-4 4 4"/></svg></button></div><nav aria-label="\u4E3B\u5BFC\u822A">${Object.entries(sections).map(([key4, [title, link, path]]) => `<a href="${link}"${key4 === section ? ' aria-current="page"' : ""}><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="${path}"/></svg>${title}</a>`).join("")}</nav></aside><div class="workspace"><header class="crumb">\u7BA1\u7406\u53F0 <span aria-hidden="true">/</span> ${detail ? `<a href="${href}">${name}</a> <span aria-hidden="true">/</span> ${detail}` : name}</header>`;
+  return `<aside class="rail"><div class="brand"><img src="${consoleLogoUrl}" alt="">Nodrelay<button hidden id="open-upgrade" type="button" class="button upgrade-launch" aria-label="\u5347\u7EA7" aria-haspopup="dialog" aria-controls="upgrade-dialog"${upgradeAttributes}><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16V8m-4 4 4-4 4 4"/></svg></button></div><nav aria-label="\u4E3B\u5BFC\u822A">${Object.entries(sections).map(([key4, [title, link, path]]) => `<a href="${link}"${key4 === section ? ' aria-current="page"' : ""}><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="${path}"/></svg>${title}</a>`).join("")}</nav></aside><div class="workspace"><header class="crumb">\u7BA1\u7406\u53F0 <span aria-hidden="true">/</span> ${detail ? `<a href="${href}">${name}</a> <span aria-hidden="true">/</span> ${detail}` : name}</header>`;
 }
 __name(consoleShell, "consoleShell");
 var upgradeDialog = `<dialog id="upgrade-dialog" aria-labelledby="upgrade-title" aria-describedby="upgrade-description">
@@ -13858,42 +13897,46 @@ __name(consolePage, "consolePage");
 var assets = {
   "/admin/local-mcp.js": ["text/javascript", `
 const list = document.querySelector('#local-list');
+const sheet = document.querySelector('#service-sheet');
+const catalog = sheet.querySelector('.tool-detail');
+const heading = sheet.querySelector('h3');
 let expanded;
-function collapse() {
-  if (!expanded) return;
+sheet.querySelector('.sheet-close').onclick = () => sheet.close();
+sheet.onclick = event => { if (event.target === sheet && event.clientX < sheet.getBoundingClientRect().left) sheet.close(); };
+sheet.addEventListener('close', () => {
+  if (sheet.open || !expanded) return;
   expanded.controller.abort();
-  expanded.row.remove();
-  expanded.button.setAttribute('aria-expanded', 'false');
+  const opener = list.querySelector('[data-catalog="' + CSS.escape(expanded.id) + '"]:not(:disabled)');
+  (expanded.fromTitle && opener ? opener.closest('article').querySelector('.service-title') : opener ?? document.querySelector('#scan-again')).focus({preventScroll:true});
   expanded = undefined;
-}
+});
 list.addEventListener('click', event => {
   const title = event.target.closest('.service-title');
   const button = title ? title.closest('article').querySelector('[data-catalog]') : event.target.closest('[data-catalog]');
   if (!button) return;
-  if (expanded?.button === button) return collapse();
-  collapse();
-  const row = document.createElement('div');
-  row.className = 'tool-detail';
-  const cell = row;
-  cell.id = button.getAttribute('aria-controls');
-  cell.setAttribute('aria-live', 'polite');
-  cell.textContent = '\u6B63\u5728\u8BFB\u53D6\u5DE5\u5177\u2026';
-  button.closest('article').append(row);
-  button.setAttribute('aria-expanded', 'true');
-  const controller = new AbortController();
-  expanded = { button, row, cell, controller };
+  const card = button.closest('article');
+  sheet.querySelector('.sheet-tile').replaceChildren(card.querySelector('h2 svg').cloneNode(true));
+  sheet.querySelector('h2').textContent = card.querySelector('.service-title').textContent;
+  sheet.querySelector('.sheet-source').textContent = card.querySelector('.service-source').textContent;
+  heading.textContent = '\u5DE5\u5177\u76EE\u5F55';
+  catalog.textContent = '\u6B63\u5728\u8BFB\u53D6\u5DE5\u5177\u2026';
+  sheet.querySelector('.sheet-scroll').scrollTop = 0;
+  expanded = { id: button.dataset.catalog, fromTitle: Boolean(title), controller: new AbortController() };
+  sheet.showModal();
   void readCatalog(expanded);
 });
 async function readCatalog(detail, manual = false) {
   if (detail.loading) { if (manual) detail.refreshQueued = true; return; }
   detail.loading = true;
-  const { button, cell, controller } = detail;
+  const { id, controller } = detail;
   try {
     const response = await fetch('/admin/local-mcp/tools', { method: 'POST', redirect: 'error', signal: controller.signal,
-      body: new URLSearchParams({ deviceId: list.dataset.device, id: button.dataset.catalog }) });
+      body: new URLSearchParams({ deviceId: list.dataset.device, id }) });
     if (!response.ok) throw new Error();
     const { tools } = await response.json();
-    if (!tools.length) { cell.textContent = '\u6B64\u670D\u52A1\u6CA1\u6709\u63D0\u4F9B\u5DE5\u5177\u3002'; return; }
+    if (expanded !== detail || !sheet.open) return;
+    heading.textContent = '\u5DE5\u5177\u76EE\u5F55 \xB7 ' + tools.length;
+    if (!tools.length) { catalog.textContent = '\u6B64\u670D\u52A1\u6CA1\u6709\u63D0\u4F9B\u5DE5\u5177\u3002'; return; }
     const names = document.createElement('dl');
     for (const tool of tools) {
       const name = document.createElement('dt');
@@ -13905,9 +13948,12 @@ async function readCatalog(detail, manual = false) {
         names.append(description);
       }
     }
-    cell.replaceChildren(names);
+    catalog.replaceChildren(names);
   } catch {
-    if (!controller.signal.aborted) cell.textContent = '\u672A\u80FD\u8BFB\u53D6\u5DE5\u5177\u3002\u8BF7\u68C0\u67E5\u670D\u52A1\u8FDE\u63A5\u540E\u91CD\u65B0\u5C55\u5F00\u3002';
+    if (!controller.signal.aborted && expanded === detail && sheet.open) {
+      heading.textContent = '\u5DE5\u5177\u76EE\u5F55';
+      catalog.textContent = '\u672A\u80FD\u8BFB\u53D6\u5DE5\u5177\u3002\u8BF7\u68C0\u67E5\u670D\u52A1\u8FDE\u63A5\u540E\u91CD\u65B0\u6253\u5F00\u3002';
+    }
   } finally {
     detail.loading = false;
     if (detail.refreshQueued && expanded === detail) {
@@ -13916,7 +13962,7 @@ async function readCatalog(detail, manual = false) {
     }
   }
 }
-window.addEventListener('pagehide', collapse);
+window.addEventListener('pagehide', () => { if (sheet.open) { expanded.controller.abort(); sheet.close(); } });
 try { const preference = localStorage.getItem('nodrelay-theme'); if (['dark','light'].includes(preference)) document.documentElement.dataset.theme = preference; } catch {}
 let timer, reading, submitting = false;
 function schedule() {
@@ -13938,17 +13984,15 @@ async function refresh(manual = false) {
       const focused = focus.closest('form')?.elements.id.value;
       const catalogFocus = focus.dataset.catalog;
       const titleFocus = focus.closest('.service-title')?.closest('article').querySelector('[data-catalog]').dataset.catalog;
-      const nextButton = expanded && next.querySelector('[data-catalog="' + CSS.escape(expanded.button.dataset.catalog) + '"]:not(:disabled)');
-      if (nextButton) {
-        expanded.button = nextButton;
-        nextButton.setAttribute('aria-expanded','true');
-        nextButton.closest('article').append(expanded.row);
-        void readCatalog(expanded, manual);
-      } else collapse();
       list.replaceChildren(...next.childNodes);
       if (focused) Array.from(list.querySelectorAll('form')).find(f => f.elements.id.value === focused)?.querySelector('button').focus();
       if (catalogFocus) list.querySelector('[data-catalog="' + CSS.escape(catalogFocus) + '"]')?.focus();
       if (titleFocus) list.querySelector('[data-catalog="' + CSS.escape(titleFocus) + '"]')?.closest('article').querySelector('.service-title').focus();
+    }
+    document.querySelector('#service-total').textContent = next.dataset.total;
+    if (sheet.open) {
+      if (list.querySelector('[data-catalog="' + CSS.escape(expanded.id) + '"]:not(:disabled)')) void readCatalog(expanded, manual);
+      else sheet.close();
     }
     document.querySelector('#scan-message').textContent = '';
   } catch {
@@ -14097,19 +14141,19 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
         const rows = services.sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id)).map((s) => {
           const [status, count] = s.status.split(" \xB7 ");
           const unavailable = s.unavailable || ["\u672A\u8FDE\u63A5", "\u672A\u53D1\u73B0", "\u68C0\u6D4B\u4E2D", "\u672A\u80FD\u786E\u8BA4"].includes(status);
-          return `<article class="service-card"><div class="service-meta"><span>${escapeHtml(s.source)} \xB7 ${escapeHtml(s.transport)}</span><span title="${escapeHtml(s.status)}">${escapeHtml(status)}</span></div>
-          <h2><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 7 9-5 9 5v10l-9 5-9-5zm0 0 9 5 9-5m-9 5v10"/></svg><button class="service-title" type="button" aria-controls="tools-${escapeHtml(s.id)}"${unavailable ? " disabled" : ""}>${escapeHtml(s.name)}</button></h2><div class="service-foot"><button type="button" class="tools-link" data-catalog="${escapeHtml(s.id)}" aria-label="\u67E5\u770B ${escapeHtml(s.name)} \u7684\u5DE5\u5177" aria-controls="tools-${escapeHtml(s.id)}" aria-expanded="false"${unavailable ? " disabled" : ""}>${unavailable ? "\u5DE5\u5177\u4E0D\u53EF\u7528" : escapeHtml(count ?? "\u67E5\u770B\u5DE5\u5177") + " \u203A"}</button>
+          return `<article class="service-card"><div class="service-meta"><span class="service-source">${escapeHtml(s.source)} <code>${escapeHtml(s.transport)}</code></span><span class="service-signal" data-ready="${status === "\u53EF\u7528"}" title="${escapeHtml(s.status)}">${escapeHtml(status)}</span></div>
+          <h2><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 7 9-5 9 5v10l-9 5-9-5zm0 0 9 5 9-5m-9 5v10"/></svg><button class="service-title" type="button" aria-controls="service-sheet" aria-haspopup="dialog"${unavailable ? " disabled" : ""}>${escapeHtml(s.name)}</button></h2><div class="service-foot"><button type="button" class="tools-link" data-catalog="${escapeHtml(s.id)}" aria-label="\u67E5\u770B ${escapeHtml(s.name)} \u7684\u5DE5\u5177" aria-controls="service-sheet" aria-haspopup="dialog"${unavailable ? " disabled" : ""}>${unavailable ? "\u5DE5\u5177\u4E0D\u53EF\u7528" : escapeHtml(count ?? "\u67E5\u770B\u5DE5\u5177") + " \u203A"}</button>
           <form method="post" action="/admin/local-mcp"><input type="hidden" name="deviceId" value="${escapeHtml(id2)}"><input type="hidden" name="id" value="${escapeHtml(s.id)}">
           <button class="switch" role="switch" aria-checked="${s.enabled}" aria-label="\u6388\u6743\u4F7F\u7528 ${escapeHtml(s.name)}" name="enabled" value="${s.enabled ? "0" : "1"}"${s.unavailable && !s.enabled ? " disabled" : ""}></button></form></div></article>`;
         }).join("");
         const nonce = crypto.randomUUID();
         const name = escapeHtml(device.displayName ?? id2);
         return html2(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${name} \xB7 \u672C\u673A MCP \xB7 Nodrelay</title><style nonce="${nonce}">${consoleStyles}</style><script nonce="${nonce}">${restoreConsoleTheme}<\/script></head>
-          <body>${consoleShell("devices", name, ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`)}<main><div class="page-intro"><div><h1>\u672C\u673A MCP \u670D\u52A1</h1><p>${name}</p></div><a class="button" id="scan-again" href="?deviceId=${encodeURIComponent(id2)}">\u91CD\u65B0\u68C0\u6D4B</a></div>
+          <body>${consoleShell("devices", name, ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`)}<main class="service-page"><div class="device-context">${name}</div><div class="page-intro"><h1>\u672C\u673A MCP \u670D\u52A1 <small id="service-total">${complete ? services.length : "\u2014"}</small></h1><a class="button" id="scan-again" href="?deviceId=${encodeURIComponent(id2)}">\u91CD\u65B0\u68C0\u6D4B</a></div>
           <section>
-          <p id="scan-message" class="scan-note" role="status"></p><div id="local-list" data-device="${escapeHtml(id2)}">${warnings.map((w) => '<p class="scan-note" role="status">' + escapeHtml(w) + "</p>").join("")}
+          <p id="scan-message" class="scan-note" role="status"></p><div id="local-list" data-device="${escapeHtml(id2)}" data-total="${complete ? services.length : "\u2014"}">${warnings.map((w) => '<p class="scan-note" role="status">' + escapeHtml(w) + "</p>").join("")}
           <div class="service-grid">${rows || (complete ? '<p class="empty">\u672A\u53D1\u73B0\u672C\u673A MCP \u670D\u52A1</p>' : "")}</div></div></section>
-          </main></div>${upgradeDialog}<script nonce="${nonce}">${consoleUpgradeScript}<\/script><script src="/admin/local-mcp.js" defer><\/script></body></html>`, 200, nonce);
+          </main></div><dialog id="service-sheet" aria-labelledby="sheet-name"><header><strong>\u670D\u52A1\u8BE6\u60C5</strong><button class="sheet-close" aria-label="\u5173\u95ED\u8BE6\u60C5" autofocus><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></svg></button></header><div class="sheet-scroll"><div class="sheet-identity"><span class="sheet-tile"></span><div><h2 id="sheet-name"></h2><span class="sheet-source"></span></div></div><section class="sheet-catalog"><h3>\u5DE5\u5177\u76EE\u5F55</h3><div class="tool-detail" aria-live="polite"></div></section></div></dialog>${upgradeDialog}<script nonce="${nonce}">${consoleUpgradeScript}<\/script><script src="/admin/local-mcp.js" defer><\/script></body></html>`, 200, nonce);
       }
       if (url.pathname === "/admin/client-callbacks") return json2(await devices.clientCallbacks());
       if (url.pathname === "/admin/upgrade/check") return json2(await upgradeProvider(env).check());
@@ -25166,12 +25210,14 @@ var tools = [
   {
     name: "device_tools",
     title: "\u67E5\u627E\u5DE5\u5177",
-    description: "Find tools on this device by keyword or service. Returns serviceId, name and argument schema.",
+    description: "Find capabilities by purpose on the selected device. For local apps, browser tasks, CLIs or Skills use source=installed first; supply the user\u2019s keyword and English synonyms in keywords. A skill result points to its current SKILL.md: read it on the same device before using the existing terminal. CLI/Skill entries are guidance, not call_device_tool targets. For MCP schemas use profile, serviceId or source=mcp.",
     inputSchema: schema2({
       deviceId,
       query: { type: "string" },
       profile: { type: "string", enum: kinds },
-      serviceId: { type: "string" }
+      serviceId: { type: "string" },
+      source: { type: "string", enum: ["installed", "mcp"] },
+      keywords: { type: "array", items: { type: "string" }, description: "Alternative search terms for installed capabilities." }
     }, ["deviceId"]),
     annotations: { readOnlyHint: true }
   },
@@ -25187,7 +25233,7 @@ async function gatewayMcp(request, devices, local) {
   if (request.method !== "POST") return new Response(null, { status: 405, headers: { Allow: "POST" } });
   const server = new Server({ name: "nodrelay", title: gatewayTitle, version: "1.0.0" }, {
     capabilities: { tools: {} },
-    instructions: "Resolve the requested device with list_devices. Use device_tools for its argument schemas. Keep each workspace and process on the same device."
+    instructions: "Resolve the requested device with list_devices. For an app or local task, first search device_tools with source=installed and Chinese + English task terms, even if no dedicated tool is visible. Use the matching device-local guide, then the existing authorized workspace/terminal. For MCP tools get the schema from device_tools. Keep each workspace and process on the same device."
   });
   server.setRequestHandler(ListToolsRequestSchema, () => ({ tools }));
   server.setRequestHandler(CallToolRequestSchema, async ({ params }) => {
@@ -25196,8 +25242,12 @@ async function gatewayMcp(request, devices, local) {
     const invalid2 = /* @__PURE__ */ __name(() => new McpError(ErrorCode.InvalidParams, "Choose a device and tool from device_tools."), "invalid");
     if (!args || typeof args.deviceId !== "string") throw invalid2();
     if (params.name === "device_tools") {
-      if (args.profile !== void 0 && !kinds.includes(args.profile) || args.query !== void 0 && typeof args.query !== "string" || args.serviceId !== void 0 && typeof args.serviceId !== "string") throw invalid2();
+      if (args.profile !== void 0 && !kinds.includes(args.profile) || args.query !== void 0 && typeof args.query !== "string" || args.serviceId !== void 0 && typeof args.serviceId !== "string" || args.source !== void 0 && !["installed", "mcp"].includes(args.source) || args.keywords !== void 0 && (!Array.isArray(args.keywords) || !args.keywords.every((q) => typeof q === "string"))) throw invalid2();
       const query = (args.query ?? "").toLowerCase();
+      const terms = [query, ...args.keywords ?? []].filter((q) => q.trim());
+      if (args.source === "installed" && (!terms.length || args.serviceId || args.profile)) throw invalid2();
+      const indexed = args.source !== "mcp" && terms.length && !args.serviceId && !args.profile ? local.installed(args.deviceId, terms, request.signal) : void 0;
+      if (args.source === "installed") return data(await indexed);
       const builtins = args.profile ? [args.profile] : kinds;
       const sources = builtins.filter((id2) => !args.serviceId || id2 === args.serviceId);
       const groups = await Promise.all([...sources.map(async (id2) => {
@@ -25209,6 +25259,12 @@ async function gatewayMcp(request, devices, local) {
           return [{ serviceId: id2, error: "\u5DE5\u5177\u76EE\u5F55\u6682\u4E0D\u53EF\u7528" }];
         }
       }), !args.profile && !kinds.includes(args.serviceId) ? local.search(args.deviceId, query, args.serviceId, request.signal).catch(() => [{ error: "\u672C\u673A MCP \u76EE\u5F55\u6682\u4E0D\u53EF\u7528" }]) : []]);
+      if (indexed) {
+        const { matches: matches6, indexing, warnings } = await indexed;
+        groups.push(matches6);
+        if (indexing) groups.push([{ source: "installed", indexing: true }]);
+        groups.push(warnings.map((error2) => ({ source: "installed", error: error2 })));
+      }
       return data(groups.flat());
     }
     if (!args.arguments || typeof args.arguments !== "object" || Array.isArray(args.arguments)) throw invalid2();
