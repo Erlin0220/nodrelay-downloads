@@ -2,31 +2,31 @@
   "schema": 2,
   "product": "nodrelay-management",
   "channel": "preview",
-  "version": "0.1.5-preview.26",
+  "version": "0.1.5-preview.27",
   "minimumVersion": "0.1.5-preview.23",
-  "issuedAt": "2026-11-24T05:42:43.678Z",
-  "expiresAt": "2026-12-24T05:42:43.678Z",
+  "issuedAt": "2026-11-24T06:51:36.932Z",
+  "expiresAt": "2026-12-24T06:51:36.932Z",
   "workerBundle": "worker.js",
-  "workerSha256": "0a96030161d653811b1d937795276922641ce20ad2ec5f012d781773505e9076",
+  "workerSha256": "4956471e860fd272084c19cf1af375d2b378057b8c7be4dd8d11f988db2febb6",
   "enrollment": {
     "protocol": "intent-v1",
     "releases": {
       "macos-arm64": {
-        "url": "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.25-devices/devspace-fleet-0.1.5-preview.25-macos-arm64.tgz",
-        "sha256": "8adf83949942a7b1407dbd0e6adeac1670d6cba07f1c043fa60ba66205cc1084",
-        "version": "0.1.5-preview.25",
+        "url": "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.27-devices/devspace-fleet-0.1.5-preview.27-macos-arm64.tgz",
+        "sha256": "5bc85e3088fca1d607ec7db544ae9b4941d074270b50596ccaf27a2da014dd9a",
+        "version": "0.1.5-preview.27",
         "browser": false
       },
       "windows-x64": {
-        "url": "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.25-devices/devspace-fleet-0.1.5-preview.25-windows-x64.zip",
-        "sha256": "3391aa6d24bf3bc5e49e725ab20887bd37215a990d99f5f88cfb61106b9d2464",
-        "version": "0.1.5-preview.25",
+        "url": "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.27-devices/devspace-fleet-0.1.5-preview.27-windows-x64.zip",
+        "sha256": "89a401e388ab4d6dc87eefd9fdcd3ddf413ccc71bf2216e464bfdf1e6897bc45",
+        "version": "0.1.5-preview.27",
         "browser": false
       },
       "linux-x64": {
-        "url": "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.25-devices/devspace-fleet-0.1.5-preview.25-linux-x64.tgz",
-        "sha256": "b190a378eafa781e9bb08d7dfe6a0ca74c1da88eeb4af813b81c7f7ed7b9e74e",
-        "version": "0.1.5-preview.25",
+        "url": "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.27-devices/devspace-fleet-0.1.5-preview.27-linux-x64.tgz",
+        "sha256": "a0c81836646fc67302a7ce3ed5f09dd206e6c1936588942a75094c2630d24ba0",
+        "version": "0.1.5-preview.27",
         "browser": false
       }
     }
