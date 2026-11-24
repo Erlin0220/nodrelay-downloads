@@ -1,8 +1,119 @@
 {
   "catalog": {
     "schema": 1,
-    "revision": 3,
+    "revision": 4,
     "items": [
+      {
+        "id": "codegraph",
+        "name": "CodeGraph",
+        "kind": "应用",
+        "cli": "codegraph",
+        "repo": "colbymchenry/codegraph",
+        "version": "1.6.4",
+        "description": "在本地索引代码库，查找符号、调用链和变更影响。",
+        "features": [
+          "在项目目录用 codegraph init 建立索引",
+          "用 codegraph explore 查看源码和调用关系"
+        ],
+        "assets": {
+          "darwin-arm64": {
+            "format": "cli-bundle",
+            "file": "codegraph-darwin-arm64.tar.gz",
+            "sha256": "daa9142732eefed5b6d187aa82a2ca9c4f3ebce10d394fb79cf6c45b367618cc"
+          },
+          "darwin-x64": {
+            "format": "cli-bundle",
+            "file": "codegraph-darwin-x64.tar.gz",
+            "sha256": "f16a56e5df375a1652ed717ce8bd0fb466725e64b52a53dc0070d6e8c281363c"
+          },
+          "linux-arm64": {
+            "format": "cli-bundle",
+            "file": "codegraph-linux-arm64.tar.gz",
+            "sha256": "e9cd2bebb29ce6aa83b4489755f76a36f3e22658beac5ebef023b874be7cfce1"
+          },
+          "linux-x64": {
+            "format": "cli-bundle",
+            "file": "codegraph-linux-x64.tar.gz",
+            "sha256": "8477f3841cba6ac8c45847d42eb5254f1f2d7fbc3045baf333e1cbe92267022d"
+          },
+          "win32-arm64": {
+            "format": "cli-bundle",
+            "file": "codegraph-win32-arm64.zip",
+            "sha256": "be5546b17934a2d57a5e1843da13960a7b84ac85ea51d7cd19c84d8d7759edd0"
+          },
+          "win32-x64": {
+            "format": "cli-bundle",
+            "file": "codegraph-win32-x64.zip",
+            "sha256": "44bc9b5a386b535e2eb8970e9ba8e13e0dd931a357b4adfba8147207e680d5da"
+          }
+        }
+      },
+      {
+        "id": "spec-kit",
+        "name": "Spec Kit",
+        "kind": "应用",
+        "cli": "specify",
+        "repo": "github/spec-kit",
+        "version": "1.4.4",
+        "description": "用 GitHub 的 Specify CLI 为项目初始化规格、计划和任务工作流。",
+        "features": [
+          "安装需要 uv，使用独立 Python 环境",
+          "用 specify init 为指定项目配置开发工作流"
+        ],
+        "assets": {
+          "any": {
+            "format": "cli-wheel",
+            "file": "specify_cli-1.4.4-py3-none-any.whl",
+            "sha256": "40c49c305d1754ca5f132731a1cb12115f6329fda2aca54db416197368ad8639",
+            "pypiPath": "e8/50/33f9b4379f9fe124bade61132c0d4e387ead4fa87d800e39b5cf5d5c65a4"
+          }
+        }
+      },
+      {
+        "id": "open-code-review",
+        "name": "Open Code Review",
+        "kind": "应用",
+        "cli": "ocr",
+        "repo": "alibaba/open-code-review",
+        "version": "1.14.3",
+        "description": "在 Git 项目中审查工作区、提交或分支差异，给出行级反馈。",
+        "features": [
+          "用 ocr review 审查 Git 变更",
+          "首次审查前需自行配置模型服务"
+        ],
+        "assets": {
+          "darwin-arm64": {
+            "format": "cli-binary",
+            "file": "opencodereview-darwin-arm64",
+            "sha256": "76c78dcc108a7c46249fef6ea572ae3b188a93bfa35a0b149bd49a0dad221d35"
+          },
+          "darwin-x64": {
+            "format": "cli-binary",
+            "file": "opencodereview-darwin-amd64",
+            "sha256": "4559ca97a316fecc50b8acbdd0955d48941840daaa501dcd573e8026f6a8eb3f"
+          },
+          "linux-arm64": {
+            "format": "cli-binary",
+            "file": "opencodereview-linux-arm64",
+            "sha256": "873b2c2e0ece1a9db19104f6e2b2a8caebbb2c6db0f09d8978c43d50a215d8e6"
+          },
+          "linux-x64": {
+            "format": "cli-binary",
+            "file": "opencodereview-linux-amd64",
+            "sha256": "17ee32cdf0af6c006a199d758defb6c2abe05ec5b4d164df3a703c0208d5155e"
+          },
+          "win32-arm64": {
+            "format": "cli-binary",
+            "file": "opencodereview-windows-arm64.exe",
+            "sha256": "5d0e0dd77086df1828a5a1e563722d6d61d337e3d39ed45e484aa87c67d1b578"
+          },
+          "win32-x64": {
+            "format": "cli-binary",
+            "file": "opencodereview-windows-amd64.exe",
+            "sha256": "5531c50080feec9bc2b966c83e1498a3b910ac23bd907651c0cfe4e7f7463631"
+          }
+        }
+      },
       {
         "id": "shardbrowser",
         "name": "ShardBrowser",
@@ -30,5 +141,5 @@
     ],
     "withdrawn": []
   },
-  "signature": "jqH/BrojB1rzbVRxezuceiziaWjiA9KJWP5JDXYsEAIuNjE8Ex9GeBZe/ud0BWeO81Q4FISqlV+3mDf42kSPBQ=="
+  "signature": "H9DGWbzzqtLvviUdHmzrPlUA1pCTHA8h5nQlXpZ1bZwAPlRm6kB2Ds2Yn+qq8Rzg34eKH17lnPc7jKwDO/CrAQ=="
 }
