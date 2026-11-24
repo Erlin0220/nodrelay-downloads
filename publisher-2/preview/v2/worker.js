@@ -7827,9 +7827,49 @@ var shellHash = 'if command -v sha256sum >/dev/null; then digest=$(sha256sum "$d
 var requireShellHash = /* @__PURE__ */ __name((expected) => `[ "\${digest%% *}" = ${expected} ] || { printf '%s\\n' 'Installer hash mismatch' >&2; exit 1; }`, "requireShellHash");
 var unpackShell = 'mkdir "$d/bundle"; tar -xzf "$d/fleet.tgz" -C "$d/bundle"';
 var temporaryDirectory = `umask 077; stage=$(mktemp -d); trap 'rm -rf "$stage"' EXIT; d=$(CDPATH= cd -- "$stage" && pwd -P)`;
-var runWindows = "& (Join-Path $bundle 'bin/node.exe') (Join-Path $bundle 'fleet/src/install-device.mjs') $bundle";
+var windowsArchiveLock = "$zipLock = [IO.File]::OpenRead($f)";
+var windowsArchiveUnlock = "if ($zipLock) { $zipLock.Dispose() }";
+var unpackWindows = `$tarPath = if ($env:PROCESSOR_ARCHITEW6432 -eq 'AMD64') { 'Sysnative/tar.exe' } else { 'System32/tar.exe' };
+$tar = Join-Path $env:SystemRoot $tarPath;
+$entry = 'fleet/src/install-device.mjs';
+$inputPath = $bundle;
+$stageArgs = @();
+if (Test-Path -LiteralPath $tar -PathType Leaf) {
+  New-Item -ItemType Directory -Path $bundle | Out-Null;
+  Add-Type -AssemblyName System.IO.Compression;
+  Add-Type -AssemblyName System.IO.Compression.FileSystem;
+  $zip = [IO.Compression.ZipArchive]::new($zipLock, [IO.Compression.ZipArchiveMode]::Read, $true);
+  $bootstrap = 'fleet/src/windows-archive-install.mjs';
+  try {
+    $fast = $zip.GetEntry($bootstrap) -or $zip.GetEntry('./' + $bootstrap);
+    if ($fast) {
+      Write-Host '\u6821\u9A8C\u901A\u8FC7 \xB7 \u6B63\u5728\u51C6\u5907\u5B89\u88C5\u5668';
+      foreach ($name in @('bin/node.exe', 'fleet/src/private-directory.mjs', $bootstrap)) {
+        $item = $zip.GetEntry($name);
+        if (!$item) { $item = $zip.GetEntry('./' + $name) };
+        if (!$item) { throw '\u5B89\u88C5\u5305\u7F3A\u5C11\u542F\u52A8\u6587\u4EF6\uFF0C\u672A\u542F\u52A8\u5B89\u88C5\u5668\u3002' };
+        $dest = Join-Path $bundle $name;
+        [void][IO.Directory]::CreateDirectory([IO.Path]::GetDirectoryName($dest));
+        [IO.Compression.ZipFileExtensions]::ExtractToFile($item, $dest);
+      };
+      $entry = $bootstrap;
+      $inputPath = $f;
+      $stageParent = (New-Item -ItemType Directory -Path (Join-Path $env:USERPROFILE ('.nodrelay-install-' + [Guid]::NewGuid()))).FullName;
+      $stageArgs = @($stageParent);
+    }
+  } finally { $zip.Dispose() };
+  if (!$fast) {
+    Write-Host '\u6821\u9A8C\u901A\u8FC7 \xB7 \u6B63\u5728\u89E3\u538B\u5B89\u88C5\u5305';
+    & $tar -xf $f -C $bundle;
+    if ($LASTEXITCODE -ne 0) { throw '\u5B89\u88C5\u5305\u89E3\u538B\u5931\u8D25\uFF0C\u672A\u542F\u52A8\u5B89\u88C5\u5668\u3002' }
+  }
+} else {
+  Write-Host '\u6821\u9A8C\u901A\u8FC7 \xB7 \u6B63\u5728\u89E3\u538B\u5B89\u88C5\u5305\uFF08PowerShell\uFF09';
+  Expand-Archive -LiteralPath $f -DestinationPath $bundle
+}`;
+var runWindows = "& (Join-Path $bundle 'bin/node.exe') (Join-Path $bundle $entry) $inputPath @stageArgs";
 var requireWindowsSuccess = "if ($LASTEXITCODE -ne 0) { throw 'Device installation failed' }";
-var windowsCleanup = "for ($attempt = 0; $attempt -lt 5; $attempt++) { try { if (-not (Test-Path -LiteralPath $d -ErrorAction Stop)) { break }; Remove-Item -LiteralPath $d -Recurse -Force -ErrorAction Stop; break } catch { if ($attempt -eq 4) { Write-Warning 'Nodrelay could not remove its temporary installer files.' -WarningAction Continue } else { Start-Sleep -Milliseconds (200 * ($attempt + 1)) } } }";
+var windowsCleanup = "foreach ($path in @($stageParent, $d)) { if (!$path) { continue }; for ($attempt = 0; $attempt -lt 5; $attempt++) { try { if (-not (Test-Path -LiteralPath $path -ErrorAction Stop)) { break }; Remove-Item -LiteralPath $path -Recurse -Force -ErrorAction Stop; break } catch { if ($attempt -eq 4) { Write-Warning ('\u672A\u80FD\u6E05\u7406\u4E34\u65F6\u5B89\u88C5\u76EE\u5F55\uFF1A' + $path) -WarningAction Continue } else { Start-Sleep -Milliseconds (200 * ($attempt + 1)) } } } }";
 function shortInstallCommand(origin, platform, version3, ticket, deviceId2, { pinnedUrl } = {}) {
   const url2 = new URL(installPath(platform), origin);
   if (url2.protocol !== "https:") throw new Error("Device bootstrap requires HTTPS");
@@ -7898,19 +7938,22 @@ $ErrorActionPreference = 'Stop'
 if ($env:PROCESSOR_ARCHITEW6432 -eq 'ARM64' -or ($env:PROCESSOR_ARCHITEW6432 -ne 'AMD64' -and $env:PROCESSOR_ARCHITECTURE -ne 'AMD64')) { throw 'This release supports x64 Windows' }
 $d = Join-Path ([IO.Path]::GetTempPath()) ('nodrelay-' + [Guid]::NewGuid())
 New-Item -ItemType Directory $d | Out-Null
+$zipLock = $null
+$stageParent = $null
 try {
   $f = Join-Path $d 'fleet.zip'
   $curlPath = if ($env:PROCESSOR_ARCHITEW6432 -eq 'AMD64') { 'Sysnative/curl.exe' } else { 'System32/curl.exe' }
   $curl = Join-Path $env:SystemRoot $curlPath
   if (-not (Test-Path -LiteralPath $curl -PathType Leaf)) { throw 'Windows system curl.exe is required' }
   Write-Host "\u4E0B\u8F7D\u8BBE\u5907\u5B89\u88C5\u5305 \xB7 $Device (Windows x64)"
+  $downloadTime = [Diagnostics.Stopwatch]::StartNew()
   & $curl ${curlOptions} --no-silent --output $f --url ${ps(asset.url)}
   if ($LASTEXITCODE -ne 0) { throw 'Installer download failed' }
-  Write-Host '\u4E0B\u8F7D\u5B8C\u6210 \xB7 \u6B63\u5728\u6838\u5BF9 SHA-256'
+  Write-Host ('\u4E0B\u8F7D\u5B8C\u6210 \xB7 {0:N1} \u79D2 \xB7 \u6B63\u5728\u6838\u5BF9 SHA-256' -f $downloadTime.Elapsed.TotalSeconds)
+  ${windowsArchiveLock}
   if ((Get-FileHash -Algorithm SHA256 -LiteralPath $f).Hash.ToLowerInvariant() -ne ${ps(asset.sha256)}) { throw 'Installer hash mismatch' }
   $bundle = Join-Path $d 'bundle'
-  Write-Host '\u6821\u9A8C\u901A\u8FC7 \xB7 \u6B63\u5728\u89E3\u538B\u5B89\u88C5\u5305'
-  Expand-Archive -LiteralPath $f -DestinationPath $bundle
+  ${unpackWindows}
   $env:DEVSPACE_FLEET_MANAGER = ${ps(origin)}
   $env:DEVSPACE_FLEET_TICKET = $Ticket
   $env:DEVSPACE_FLEET_DEVICE = $Device
@@ -7920,6 +7963,7 @@ ${enrollmentIntent ? `  $env:DEVSPACE_FLEET_ENROLLMENT_PROTOCOL = 'intent-v1'
 ` : ""}  ${runWindows}
   ${requireWindowsSuccess}
 } finally {
+  ${windowsArchiveUnlock}
   Remove-Item Env:DEVSPACE_FLEET_TICKET, Env:DEVSPACE_FLEET_MANAGER, Env:DEVSPACE_FLEET_DEVICE -ErrorAction SilentlyContinue${enrollmentIntent ? "\n  Remove-Item Env:DEVSPACE_FLEET_ENROLLMENT_PROTOCOL, Env:DEVSPACE_FLEET_ASSET_SHA256 -ErrorAction SilentlyContinue" : ""}
   ${enrollmentIntent ? "Remove-Item Env:DEVSPACE_FLEET_PORT_PROTOCOL -ErrorAction SilentlyContinue" : ""}
   ${windowsCleanup}
@@ -7973,9 +8017,10 @@ function installCommand(origin, platform, asset, ticket, deviceId2) {
     const install = [
       "$f=Join-Path $d 'fleet.zip'",
       ...acquire,
+      windowsArchiveLock,
       `if ((Get-FileHash -Algorithm SHA256 -LiteralPath $f).Hash.ToLowerInvariant() -ne ${ps(asset.sha256)}) { throw 'Installer hash mismatch' }`,
       "$bundle=Join-Path $d 'bundle'",
-      "Expand-Archive -LiteralPath $f -DestinationPath $bundle",
+      unpackWindows.replace(/\n\s*/g, " "),
       `$env:DEVSPACE_FLEET_MANAGER=${ps(origin)}; $env:DEVSPACE_FLEET_TICKET=${ps(ticket)}; $env:DEVSPACE_FLEET_DEVICE=${ps(deviceId2)}`,
       runWindows,
       requireWindowsSuccess
@@ -7984,7 +8029,9 @@ function installCommand(origin, platform, asset, ticket, deviceId2) {
       "$ErrorActionPreference='Stop'",
       "$d=Join-Path ([IO.Path]::GetTempPath()) ('devspace-fleet-'+[Guid]::NewGuid())",
       "New-Item -ItemType Directory $d | Out-Null",
-      `try { ${install.join("; ")} } finally { Remove-Item Env:DEVSPACE_FLEET_TICKET -ErrorAction SilentlyContinue; Remove-Item Env:DEVSPACE_FLEET_MANAGER -ErrorAction SilentlyContinue; Remove-Item Env:DEVSPACE_FLEET_DEVICE -ErrorAction SilentlyContinue; ${windowsCleanup} }`
+      "$zipLock=$null",
+      "$stageParent=$null",
+      `try { ${install.join("; ")} } finally { ${windowsArchiveUnlock}; Remove-Item Env:DEVSPACE_FLEET_TICKET -ErrorAction SilentlyContinue; Remove-Item Env:DEVSPACE_FLEET_MANAGER -ErrorAction SilentlyContinue; Remove-Item Env:DEVSPACE_FLEET_DEVICE -ErrorAction SilentlyContinue; ${windowsCleanup} }`
     ].join("; ");
   }
   return [
