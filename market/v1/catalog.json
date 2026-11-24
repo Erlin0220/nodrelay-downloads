@@ -1,7 +1,7 @@
 {
   "catalog": {
     "schema": 1,
-    "revision": 2,
+    "revision": 3,
     "items": [
       {
         "id": "shardbrowser",
@@ -26,69 +26,9 @@
             "sha256": "235eb0139822bedb79309eb31933edd13545ded725ece14832ed798cbe78ca51"
           }
         }
-      },
-      {
-        "id": "calculator",
-        "name": "计算器",
-        "kind": "MCP",
-        "repo": "cyanheads/calculator-mcp-server",
-        "version": "0.6.0",
-        "registry": "io.github.cyanheads/calculator-mcp-server",
-        "description": "计算表达式、换算单位和处理日期。",
-        "features": [
-          "计算表达式并返回精确结果",
-          "化简表达式、求导和换算单位"
-        ],
-        "assets": {
-          "any": {
-            "format": "node-mcpb",
-            "file": "calculator-mcp-server.mcpb",
-            "entry": "dist/index.js",
-            "sha256": "b507b408f08c61ea5d5235c3b28bb0dd5e74b0793f7e0563a9c73046d62f1a6e"
-          }
-        }
-      },
-      {
-        "id": "time",
-        "name": "时间与时区",
-        "kind": "MCP",
-        "repo": "TheoBrigitte/mcp-time",
-        "version": "0.4.0",
-        "description": "查询时间、转换时区和解析日期。",
-        "features": [
-          "查询本地时间或指定时区的时间",
-          "比较日期、换算时区和计算相对时间"
-        ],
-        "assets": {
-          "darwin-arm64": {
-            "format": "stdio-binary",
-            "file": "mcp-time.darwin-arm64",
-            "sha256": "4e8cae536f57aaeffbd39b8a9af4d613d9c1613648c3ac4857ba30453e6d193e"
-          },
-          "darwin-x64": {
-            "format": "stdio-binary",
-            "file": "mcp-time.darwin-amd64",
-            "sha256": "1ed4818b828b5ede2d05bde9fdd49359316a9265dcad543facee4a67f22d6ae2"
-          },
-          "linux-x64": {
-            "format": "stdio-binary",
-            "file": "mcp-time.linux-amd64",
-            "sha256": "9f5cbbc016139beacde978cadd2ccb95dfa925426e4dc6a8a2d43d27d9c618f4"
-          },
-          "linux-arm64": {
-            "format": "stdio-binary",
-            "file": "mcp-time.linux-arm64",
-            "sha256": "c47c35d92fda1374785a8e0a120f755078f51141b71112aeefe0f344d5abab71"
-          },
-          "win32-x64": {
-            "format": "stdio-binary",
-            "file": "mcp-time.windows-amd64.exe",
-            "sha256": "737071560f39f2f4bee467e68fb5a9f5726ac3aa0e661688ff6bc9026f0d2449"
-          }
-        }
       }
     ],
     "withdrawn": []
   },
-  "signature": "TYZC1G3dGqRgatOeb6tX48jN55TH/4AclVRjmnp3hE5U47zYbFkRleojjZKPr7A4TM7Ko1cgJMFAZyDoIP5zAA=="
+  "signature": "jqH/BrojB1rzbVRxezuceiziaWjiA9KJWP5JDXYsEAIuNjE8Ex9GeBZe/ud0BWeO81Q4FISqlV+3mDf42kSPBQ=="
 }
