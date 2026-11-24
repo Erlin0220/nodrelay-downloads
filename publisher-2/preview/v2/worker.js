@@ -9692,6 +9692,78 @@ var profiles = {
   }
 };
 
+// ../cloud/local-services.mjs
+async function localChannelKey(activationToken) {
+  if (typeof activationToken !== "string" || !/^[A-Za-z0-9_-]{43}$/.test(activationToken)) throw new Error("Invalid device activation credential");
+  const data2 = new TextEncoder().encode("nodrelay/local-services/v1:" + activationToken);
+  return Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", data2)), (b) => b.toString(16).padStart(2, "0")).join("");
+}
+__name(localChannelKey, "localChannelKey");
+var localRpc = "_nodrelay_local_mcp";
+var createPolicy = `CREATE TABLE IF NOT EXISTS fleet_local_services (
+  device_id TEXT NOT NULL REFERENCES fleet_devices(id) ON DELETE CASCADE, id TEXT NOT NULL,
+  name TEXT NOT NULL, source TEXT NOT NULL, transport TEXT NOT NULL, PRIMARY KEY(device_id,id)
+)`;
+function localServicePolicy(db, devices) {
+  const rows = /* @__PURE__ */ __name(async (device) => {
+    if (!await db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='fleet_local_services'").first()) return [];
+    return (await db.prepare("SELECT id,name,source,transport FROM fleet_local_services WHERE device_id=?").bind(device).all()).results;
+  }, "rows");
+  async function rpc(device, args, signal) {
+    const reply = await devices.gatewayRequest(device, "development", "tools/call", { name: localRpc, arguments: args }, signal);
+    if (args.action === "call") return reply;
+    if (reply.isError || !reply.structuredContent) throw new Error(args.action === "inventory" ? "\u8BBE\u5907\u672A\u54CD\u5E94\u672C\u673A MCP \u53D1\u73B0\uFF0C\u8BF7\u68C0\u67E5\u8FDE\u63A5\u548C\u5BA2\u6237\u7AEF\u7248\u672C\u3002" : "\u65E0\u6CD5\u8BFB\u53D6\u5DE5\u5177\u76EE\u5F55\uFF0C\u8BF7\u68C0\u67E5\u672C\u673A\u670D\u52A1\u6216\u6388\u6743\u3002");
+    return reply.structuredContent;
+  }
+  __name(rpc, "rpc");
+  return {
+    async search(device, query, selected, signal) {
+      const ids = (await rows(device)).map((s) => s.id).filter((id2) => !selected || id2 === selected);
+      if (!ids.length) return [];
+      return (await rpc(device, { action: "search", query, ids }, signal)).tools;
+    },
+    async inventory(device, signal) {
+      const enabled = new Map((await rows(device)).map((row) => [row.id, row]));
+      let inventory;
+      try {
+        inventory = await rpc(device, { action: "inventory", enabled: [...enabled.keys()], check: true }, signal);
+      } catch {
+        return {
+          services: [...enabled.values()].map((row) => ({ ...row, enabled: true, status: "\u672A\u8FDE\u63A5" })),
+          warnings: ["\u8BBE\u5907\u672A\u54CD\u5E94\u3002\u8BF7\u68C0\u67E5\u8BBE\u5907\u8FDE\u63A5\uFF0C\u5E76\u786E\u8BA4\u5BA2\u6237\u7AEF\u652F\u6301\u672C\u673A MCP\u3002"]
+        };
+      }
+      const services = inventory.services.map((service) => {
+        const on = enabled.delete(service.id);
+        return { ...service, enabled: on, status: service.status ?? service.unavailable ?? "\u5DF2\u53D1\u73B0" };
+      });
+      return {
+        services: [...services, ...[...enabled.values()].map((row) => ({ ...row, enabled: true, status: inventory.pending ? "\u68C0\u6D4B\u4E2D" : "\u672A\u53D1\u73B0" }))],
+        warnings: inventory.warnings
+      };
+    },
+    async set(device, id2, enabled, signal) {
+      await db.prepare(createPolicy).run();
+      if (!enabled) {
+        await db.prepare("DELETE FROM fleet_local_services WHERE device_id=? AND id=?").bind(device, id2).run();
+        try {
+          await rpc(device, { action: "release", id: id2 }, signal);
+        } catch {
+        }
+        return;
+      }
+      const service = await rpc(device, { action: "describe", id: id2 }, signal);
+      if (service.id !== id2) throw new Error("\u8BBE\u5907\u4E0A\u7684\u670D\u52A1\u5DF2\u53D8\u5316\uFF0C\u8BF7\u5237\u65B0\u540E\u91CD\u8BD5\u3002");
+      await db.prepare("INSERT OR IGNORE INTO fleet_local_services (device_id,id,name,source,transport) VALUES (?,?,?,?,?)").bind(device, id2, service.name, service.source, service.transport).run();
+    },
+    async dispatch(device, args, signal) {
+      if (!(await rows(device)).some((row) => row.id === args.id)) throw new Error("\u672C\u673A MCP \u672A\u542F\u7528\u3002");
+      return rpc(device, args, signal);
+    }
+  };
+}
+__name(localServicePolicy, "localServicePolicy");
+
 // ../cloud/devices.mjs
 var now3 = /* @__PURE__ */ __name(() => Math.floor(Date.now() / 1e3), "now");
 var randomToken = /* @__PURE__ */ __name(() => base64url_exports.encode(crypto.getRandomValues(new Uint8Array(32))), "randomToken");
@@ -9916,11 +9988,13 @@ function createDevices(env, request = fetch) {
     async gatewayRequest(id2, kind, method, params, signal) {
       const row = await readDevice(db, id2);
       if (row?.status !== "active") throw new DeviceError("Device is not active.", 404);
-      const route = deviceRoutes(row, await unwrap(row)).find((r) => r.kind === kind);
+      const tokens = await unwrap(row);
+      const route = deviceRoutes(row, tokens).find((r) => r.kind === kind);
       if (!route) throw new DeviceError("This profile is not enabled for the selected device.", 403);
       const response2 = await request(route.url, { method: "POST", redirect: "error", signal, headers: {
         Authorization: "Bearer " + route.token,
         Accept: "application/json, text/event-stream",
+        ...kind === "development" && params.name === localRpc && tokens.activationToken && { "X-Nodrelay-Local": await localChannelKey(tokens.activationToken) },
         "Content-Type": "application/json",
         "MCP-Protocol-Version": "2025-11-25"
       }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) });
@@ -13375,6 +13449,14 @@ button { cursor: pointer; }
 a { color: light-dark(#165dcc,#8cb6ff); text-underline-offset: 3px; }
 dt { font-weight: 600; }
 dd { margin: 0 0 10px; }
+.local-services { list-style:none; margin:20px 0; padding:0; border-block:1px solid var(--line); }
+.local-service { display:flex; justify-content:space-between; gap:18px; align-items:center; padding:14px 0; }
+.local-service + li { border-top:1px solid var(--line); }
+.local-service div { min-width:0; overflow-wrap:anywhere; }
+.local-service small { display:block; opacity:.78; margin-top:3px; }
+.local-service button { white-space:nowrap; }
+.local-service button[aria-checked=true] { color:white; background:#2165dc; border-color:#2165dc; }
+#local-list[aria-busy=true] ~ #scan-again::after { content:'\u4E2D\u2026'; }
 `;
 function consolePage(title, body, nonce) {
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
@@ -13386,6 +13468,38 @@ __name(consolePage, "consolePage");
 
 // ../cloud/management.mjs
 var assets = {
+  "/admin/local-mcp.js": ["text/javascript", `
+const list = document.querySelector('#local-list');
+let timer, reading, submitting = false;
+function schedule() {
+  clearTimeout(timer);
+  if (!document.hidden && !submitting) timer = setTimeout(refresh, 60000);
+}
+async function refresh() {
+  if (reading || submitting || document.hidden) return;
+  reading = new AbortController();
+  list.setAttribute('aria-busy', 'true');
+  try {
+    const response = await fetch(location.href, { cache: 'no-store', redirect: 'error', signal: reading.signal });
+    if (!response.ok) throw new Error();
+    const next = new DOMParser().parseFromString(await response.text(), 'text/html').querySelector('#local-list');
+    if (!next) throw new Error();
+    if (!submitting && next.innerHTML !== list.innerHTML) {
+      const focused = document.activeElement.closest('form')?.elements.id.value;
+      list.replaceChildren(...next.childNodes);
+      if (focused) Array.from(list.querySelectorAll('form')).find(f => f.elements.id.value === focused)?.querySelector('button').focus();
+    }
+    document.querySelector('#scan-message').textContent = '';
+  } catch {
+    if (!reading.signal.aborted) document.querySelector('#scan-message').textContent = '\u68C0\u6D4B\u5931\u8D25\uFF0C\u8BF7\u91CD\u8BD5\u3002';
+  } finally { reading = null; list.removeAttribute('aria-busy'); schedule(); }
+}
+document.querySelector('#scan-again').addEventListener('click', e => { e.preventDefault(); refresh(); });
+document.addEventListener('submit', () => { submitting = true; reading?.abort(); clearTimeout(timer); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { clearTimeout(timer); reading?.abort(); } else refresh(); });
+window.addEventListener('pageshow', () => { submitting = false; schedule(); });
+schedule();
+`],
   "/admin/console.css": ["text/css", consoleStyles],
   "/admin/console-logo.png": ["image/png", consoleLogo],
   "/admin/devices.js": ["text/javascript", consoleScript],
@@ -13461,7 +13575,7 @@ function deviceList(devices, options, intents) {
     <tr role="row" data-state="${escapeHtml(device.status === "installing" ? "pending" : device.status)}" data-device="${escapeHtml(device.id)}"${device.intentId ? ` data-intent="${escapeHtml(device.intentId)}"` : ""}${canReissue ? ` data-platform="${escapeHtml(device.platform)}"` : ""}>
       <th role="rowheader" scope="row"><div class="identity"><span class="initial" aria-hidden="true">${escapeHtml(initial)}</span><div><span class="device-name">${escapeHtml(name)}</span><span class="system">${escapeHtml(label2[device.platform] ?? device.platform ?? "")}</span></div></div></th>
       <td role="cell"><span class="state">${escapeHtml(state[device.status] ?? device.status)}</span></td>
-      <td role="cell"><div class="row-actions">${device.status === "draft" ? button("setup-command", "\u5B89\u88C5\u547D\u4EE4") : device.intentId && device.status === "pending" ? button("intent-command", "\u5B89\u88C5\u547D\u4EE4") + button("intent-revoke", "\u64A4\u9500\u547D\u4EE4", true) : device.intentId ? button("disable", "\u505C\u7528\u8FDC\u7A0B\u63A5\u5165", true) : (canReissue ? button("setup-command", "\u5B89\u88C5\u547D\u4EE4") : "") + button("status", "\u67E5\u770B\u72B6\u6001") + (device.status === "pending" ? button("cancel", "\u64A4\u9500\u5B89\u88C5\u7968\u636E", true) : "") + (device.status === "disabled" ? button("review", "\u590D\u6838\u505C\u7528", true) : button("disable", "\u505C\u7528\u8FDC\u7A0B\u63A5\u5165", true))}</div></td>
+      <td role="cell"><div class="row-actions">${device.status === "draft" ? button("setup-command", "\u5B89\u88C5\u547D\u4EE4") : device.intentId && device.status === "pending" ? button("intent-command", "\u5B89\u88C5\u547D\u4EE4") + button("intent-revoke", "\u64A4\u9500\u547D\u4EE4", true) : device.intentId ? button("disable", "\u505C\u7528\u8FDC\u7A0B\u63A5\u5165", true) : (canReissue ? button("setup-command", "\u5B89\u88C5\u547D\u4EE4") : "") + button("status", "\u67E5\u770B\u72B6\u6001") + (device.status === "pending" ? button("cancel", "\u64A4\u9500\u5B89\u88C5\u7968\u636E", true) : "") + (device.status === "disabled" ? button("review", "\u590D\u6838\u505C\u7528", true) : button("disable", "\u505C\u7528\u8FDC\u7A0B\u63A5\u5165", true))}${device.status === "active" ? `<a class="button" href="/admin/local-mcp?deviceId=${encodeURIComponent(device.id)}">\u672C\u673A MCP</a>` : ""}</div></td>
     </tr>`;
   }).join("");
   const total = /* @__PURE__ */ __name((status) => devices.filter((device) => device.status === status).length, "total");
@@ -13500,11 +13614,26 @@ __name(devicePage, "devicePage");
 var back = '<p><a href="/">\u8FD4\u56DE\u8BBE\u5907\u5217\u8868</a></p>';
 async function manage(request, env, url, { limitedBody: limitedBody2, html: html2, json: json2, assetResponse: assetResponse2, provider = createDevices, upgradeProvider = createUpgradeAdmin, execution }) {
   const devices = provider(env);
+  const local = localServicePolicy(env.TICKETS, devices);
   const getIntents = /* @__PURE__ */ __name(() => enrollmentContext(env), "getIntents");
   const wantsJson = request.headers.get("Accept")?.split(",").some((value) => value.split(";", 1)[0].trim() === "application/json");
   try {
     if (request.method === "GET") {
       if (Object.hasOwn(assets, url.pathname)) return assetResponse2(...assets[url.pathname]);
+      if (url.pathname === "/admin/local-mcp") {
+        const id2 = url.searchParams.get("deviceId");
+        const device = (await devices.list()).find((d) => d.id === id2 && d.status === "active");
+        if (!device) return html2(consolePage("\u8BBE\u5907\u4E0D\u53EF\u7528", back), 404);
+        const { services, warnings } = await local.inventory(id2, request.signal);
+        const rows = services.sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id)).map((s) => `<li class="local-service"><div><b>${escapeHtml(s.name)}</b><small>${escapeHtml(s.source)} \xB7 ${escapeHtml(s.transport)} \xB7 ${escapeHtml(s.status)}</small></div>
+          <form method="post" action="/admin/local-mcp"><input type="hidden" name="deviceId" value="${escapeHtml(id2)}"><input type="hidden" name="id" value="${escapeHtml(s.id)}">
+          <button role="switch" aria-checked="${s.enabled}" aria-label="${escapeHtml(s.name)}" name="enabled" value="${s.enabled ? "0" : "1"}"${s.unavailable && !s.enabled ? " disabled" : ""}>${s.enabled ? "\u5DF2\u542F\u7528" : "\u672A\u542F\u7528"}</button></form></li>`).join("");
+        return html2(consolePage("\u672C\u673A MCP", `<p><a href="/">\u8BBE\u5907</a> / ${escapeHtml(device.displayName ?? id2)}</p>
+          <p>\u542F\u7528\u540E\uFF0CGPT \u53EF\u67E5\u627E\u548C\u8C03\u7528\u8BE5\u670D\u52A1\u7684\u5DE5\u5177\u3002</p><section id="local-list">${warnings.map((w) => '<p role="status">' + escapeHtml(w) + "</p>").join("")}
+          ${rows ? '<ul class="local-services">' + rows + "</ul>" : "<p>\u6682\u672A\u53D1\u73B0\u672C\u673A MCP\u3002</p>"}</section>
+          <a id="scan-again" href="?deviceId=${encodeURIComponent(id2)}">\u91CD\u65B0\u68C0\u6D4B</a> <span id="scan-message" role="status"></span>
+          <script src="/admin/local-mcp.js" defer><\/script>`));
+      }
       if (url.pathname === "/admin/client-callbacks") return json2(await devices.clientCallbacks());
       if (url.pathname === "/admin/upgrade/check") return json2(await upgradeProvider(env).check());
       if (url.pathname === "/admin/upgrade/status") return json2(await upgradeProvider(env).status());
@@ -13577,6 +13706,17 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
     if (request.headers.get("Content-Type")?.split(";", 1)[0] !== "application/x-www-form-urlencoded") return json2({ error: "Expected form" }, 415);
     const fields = [...new URLSearchParams(await limitedBody2(request))];
     const input = Object.fromEntries(fields);
+    if (url.pathname === "/admin/local-mcp") {
+      if (fields.length !== 3 || !/^[\w-]{43}$/.test(input.id) || !["0", "1"].includes(input.enabled) || !(await devices.list()).some((row) => row.id === input.deviceId && row.status === "active")) {
+        return html2(consolePage("\u670D\u52A1\u9009\u62E9\u65E0\u6548", back), 400);
+      }
+      try {
+        await local.set(input.deviceId, input.id, input.enabled === "1", request.signal);
+      } catch {
+        return html2(consolePage("\u65E0\u6CD5\u66F4\u6539\u5F00\u5173", `<p>\u8BF7\u68C0\u67E5\u8BBE\u5907\u8FDE\u63A5\uFF0C\u91CD\u65B0\u68C0\u6D4B\u540E\u518D\u8BD5\u3002</p><a href="/admin/local-mcp?deviceId=${encodeURIComponent(input.deviceId)}">\u8FD4\u56DE\u672C\u673A MCP</a>`), 409);
+      }
+      return new Response(null, { status: 303, headers: { Location: "/admin/local-mcp?deviceId=" + encodeURIComponent(input.deviceId), "Cache-Control": "no-store" } });
+    }
     if (url.pathname === "/admin/devices/reserve") {
       const named = Object.hasOwn(input, "name");
       if (!(fields.length === 1 && (named || Object.hasOwn(input, "deviceId")) || fields.length === 2 && named && Object.hasOwn(input, "operationId"))) {
@@ -24517,23 +24657,36 @@ data:
 var kinds = ["development", "browser"];
 var actions = new Map(kinds.flatMap((kind) => [...profiles[kind].tools, ...profiles[kind].optional ?? []].map((name) => [name, kind])));
 var deviceId = { type: "string", description: "Exact ID returned by list_devices." };
-var schema = /* @__PURE__ */ __name((properties) => ({ type: "object", properties, required: Object.keys(properties), additionalProperties: false }), "schema");
+var schema = /* @__PURE__ */ __name((properties, required2 = Object.keys(properties)) => ({ type: "object", properties, required: required2, additionalProperties: false }), "schema");
+var argumentsSchema = { type: "object", additionalProperties: true };
 var tools = [
-  { name: "list_devices", description: "List active devices in this Nodrelay deployment.", inputSchema: schema({}), annotations: { readOnlyHint: true } },
+  { name: "list_devices", title: "\u5217\u51FA\u8BBE\u5907", description: "List active devices in this Nodrelay deployment.", inputSchema: schema({}), annotations: { readOnlyHint: true } },
+  ...profiles.development.tools.map((name) => ({
+    name,
+    description: `Run ${name} on the specified device. Use device_tools for its arguments.`,
+    inputSchema: schema({ deviceId, arguments: argumentsSchema })
+  })),
   {
     name: "device_tools",
-    description: "Get the available tools and their argument schemas from one device and profile.",
-    inputSchema: schema({ deviceId, profile: { type: "string", enum: kinds } }),
+    title: "\u67E5\u627E\u5DE5\u5177",
+    description: "Find tools on this device by keyword or service. Returns serviceId, name and argument schema.",
+    inputSchema: schema({
+      deviceId,
+      query: { type: "string" },
+      profile: { type: "string", enum: kinds },
+      serviceId: { type: "string" }
+    }, ["deviceId"]),
     annotations: { readOnlyHint: true }
   },
-  ...[...actions].map(([name, kind]) => ({
-    name,
-    description: `Run ${name} on the specified device. Use device_tools (${kind}) for its arguments.`,
-    inputSchema: schema({ deviceId, arguments: { type: "object", additionalProperties: true } })
-  }))
+  {
+    name: "call_device_tool",
+    title: "\u8C03\u7528\u5DE5\u5177",
+    description: "Call a tool from device_tools. Use its exact device, serviceId, name and arguments.",
+    inputSchema: schema({ deviceId, serviceId: { type: "string" }, name: { type: "string" }, arguments: argumentsSchema })
+  }
 ];
 var data = /* @__PURE__ */ __name((value) => ({ content: [{ type: "text", text: JSON.stringify(value) }] }), "data");
-async function gatewayMcp(request, devices) {
+async function gatewayMcp(request, devices, local) {
   if (request.method !== "POST") return new Response(null, { status: 405, headers: { Allow: "POST" } });
   const server = new Server({ name: "nodrelay", title: gatewayTitle, version: "1.0.0" }, {
     capabilities: { tools: {} },
@@ -24543,23 +24696,41 @@ async function gatewayMcp(request, devices) {
   server.setRequestHandler(CallToolRequestSchema, async ({ params }) => {
     if (params.name === "list_devices") return data((await devices.list()).filter((d) => d.status === "active").map(({ id: id2, displayName, platform }) => ({ id: id2, displayName, platform })));
     const args = params.arguments;
-    const listing = params.name === "device_tools";
-    const kind = listing ? args?.profile : actions.get(params.name);
-    if (!kinds.includes(kind) || !args || typeof args.deviceId !== "string" || !listing && (!args.arguments || typeof args.arguments !== "object" || Array.isArray(args.arguments))) {
-      throw new McpError(ErrorCode.InvalidParams, "Choose a device from list_devices and use its device_tools schema.");
+    const invalid2 = /* @__PURE__ */ __name(() => new McpError(ErrorCode.InvalidParams, "Choose a device and tool from device_tools."), "invalid");
+    if (!args || typeof args.deviceId !== "string") throw invalid2();
+    if (params.name === "device_tools") {
+      if (args.profile !== void 0 && !kinds.includes(args.profile) || args.query !== void 0 && typeof args.query !== "string" || args.serviceId !== void 0 && typeof args.serviceId !== "string") throw invalid2();
+      const query = (args.query ?? "").toLowerCase();
+      const builtins = args.profile ? [args.profile] : kinds;
+      const sources = builtins.filter((id2) => !args.serviceId || id2 === args.serviceId);
+      const groups = await Promise.all([...sources.map(async (id2) => {
+        try {
+          const result = await devices.gatewayRequest(args.deviceId, id2, "tools/list", {}, request.signal);
+          return result.tools.filter((t) => actions.get(t.name) === id2 && [t.name, t.title, t.description, id2].join(" ").toLowerCase().includes(query)).map((tool) => ({ ...tool, serviceId: id2, serviceName: id2 }));
+        } catch (error2) {
+          if (id2 === "browser" && error2.status === 403) return [];
+          return [{ serviceId: id2, error: "\u5DE5\u5177\u76EE\u5F55\u6682\u4E0D\u53EF\u7528" }];
+        }
+      }), !args.profile && !kinds.includes(args.serviceId) ? local.search(args.deviceId, query, args.serviceId, request.signal).catch(() => [{ error: "\u672C\u673A MCP \u76EE\u5F55\u6682\u4E0D\u53EF\u7528" }]) : []]);
+      return data(groups.flat());
     }
-    const result = await devices.gatewayRequest(
+    if (!args.arguments || typeof args.arguments !== "object" || Array.isArray(args.arguments)) throw invalid2();
+    const indirect = params.name === "call_device_tool";
+    const kind = indirect ? args.serviceId : "development";
+    const name = indirect ? args.name : params.name;
+    if (typeof kind !== "string" || typeof name !== "string") throw invalid2();
+    if (indirect && kind === "development") throw new McpError(ErrorCode.InvalidParams, "Use the dedicated DevSpace tool.");
+    if (indirect && !kinds.includes(kind)) return local.dispatch(
       args.deviceId,
-      kind,
-      listing ? "tools/list" : "tools/call",
-      listing ? {} : {
-        name: params.name,
-        arguments: args.arguments,
-        ...typeof params._meta?.["openai/session"] === "string" && { _meta: { "openai/session": params._meta["openai/session"] } }
-      },
+      { action: "call", id: kind, name, arguments: args.arguments },
       request.signal
     );
-    return listing ? data(result.tools.filter((tool) => actions.get(tool.name) === kind)) : result;
+    if (actions.get(name) !== kind) throw invalid2();
+    return devices.gatewayRequest(args.deviceId, kind, "tools/call", {
+      name,
+      arguments: args.arguments,
+      ...typeof params._meta?.["openai/session"] === "string" && { _meta: { "openai/session": params._meta["openai/session"] } }
+    }, request.signal);
   });
   const transport = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: void 0, enableJsonResponse: true });
   await server.connect(transport);
@@ -24658,7 +24829,8 @@ function createWorker({ verifyAdmin = accessAdmin, deviceProvider, upgradeProvid
           return json({ error: "Nodrelay MCP login required" }, 403);
         }
         if (request.headers.has("Origin") && request.headers.get("Origin") !== url.origin) return json({ error: "Invalid origin" }, 403);
-        return gatewayMcp(request, (deviceProvider ?? createDevices)(env));
+        const devices = (deviceProvider ?? createDevices)(env);
+        return gatewayMcp(request, devices, localServicePolicy(env.TICKETS, devices));
       }
       if (url.origin !== env.APP_ORIGIN || url.protocol !== "https:") return json({ error: "Unknown origin" }, 404);
       const { pathname } = url;
