@@ -1,7 +1,7 @@
-name: Verify preview.33 native downloads
+name: Verify preview.35 native downloads
 on:
   push:
-    branches: ['codex/verify-preview.33']
+    branches: ['codex/verify-preview.35']
 permissions: {}
 jobs:
   smoke:
@@ -10,8 +10,11 @@ jobs:
       matrix:
         include:
           - os: windows-2025
-            asset: devspace-fleet-0.1.5-preview.33-windows-x64.zip
-            digest: 232cad8d411506f7cda346b9a95061484e7861b77388f65c4c4aa07e8517b025
+            asset: devspace-fleet-0.1.5-preview.35-windows-x64.zip
+            digest: 6791e3ce21f9017d6b04e15d2b5135ee3ad5a799b50efb19edb838161a927fbb
+          - os: ubuntu-22.04
+            asset: devspace-fleet-0.1.5-preview.35-linux-x64.tgz
+            digest: 20812252fcc1014829e7d557c8fa4704f1d2a09134e0e043aa644738ac947dfe
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check public archive and native runtime
@@ -23,7 +26,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           $PSNativeCommandUseErrorActionPreference = $true
-          $url = "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.33-devices/$env:ASSET"
+          $url = "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.35-devices/$env:ASSET"
           curl --fail --silent --show-error --location --output $env:ASSET $url
           if ((Get-FileHash -Algorithm SHA256 $env:ASSET).Hash -ne $env:DIGEST) { throw 'Archive checksum mismatch' }
           mkdir payload
@@ -45,3 +48,23 @@ jobs:
           pty.onExit(({exitCode}) => { if(win) pty.kill(); assert.equal(exitCode,0); assert.match(output,/NODRELAY_PTY_OK/); console.log('Native terminal and SQLite OK'); });
           '@ | & $node -
           if ($IsLinux) { & ./node_modules/@anthropic-ai/claude-agent-sdk-linux-x64/claude --version }
+      - name: Exercise verified ZIP bootstrap on Windows PowerShell 5.1
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $installer = 'install-devspace-fleet-0.1.5-preview.35-windows-x64.ps1'
+          curl --fail --silent --show-error --location --output $installer "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5-preview.35-devices/$installer"
+          if ((Get-FileHash $installer).Hash -ne '1fb761ff4df014b64710c857f7d3dd647c80308e0c117ff6f68bbf77646f0945') { throw 'Installer digest mismatch' }
+          $env:TEST_INSTALLER = (Resolve-Path $installer).Path
+          $env:USERPROFILE = (New-Item -Type Directory -Path (Join-Path $env:RUNNER_TEMP 'empty test profile')).FullName
+          $code = @'
+          [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
+          function Read-Host($Prompt) { if ($Prompt -like 'Management*') { return 'https://qa.invalid' }; return 'qa-device' }
+          & $env:TEST_INSTALLER -Repair
+          '@
+          $PSNativeCommandUseErrorActionPreference = $false
+          $output = (& powershell.exe -NoProfile -NonInteractive -EncodedCommand ([Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($code))) 2>&1 | Out-String)
+          if ($LASTEXITCODE -eq 0 -or $output -notmatch 'Same-version repair requires' -or $output -notmatch '解压完成') { throw $output }
+          if (Get-ChildItem -Force $env:USERPROFILE -Filter '.nodrelay-install-*') { throw 'Leaked extraction directory' }
+          Write-Host 'Verified installer extracted the signed package and stopped before enrollment in an empty profile.'
