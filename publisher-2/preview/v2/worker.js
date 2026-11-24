@@ -7821,7 +7821,7 @@ __name(hostedInstallers, "hostedInstallers");
 var tokenPattern = /^[A-Za-z0-9_-]{43}$/;
 var devicePattern = /^[a-z][a-z0-9-]{0,23}$/;
 var sh = /* @__PURE__ */ __name((value) => "'" + value.replaceAll("'", "'\\''") + "'", "sh");
-var curlOptions = "--disable --fail --silent --show-error --location --max-redirs 5 --connect-timeout 15 --max-time 300 --retry 3 --retry-delay 2 --proto '=https' --proto-redir '=https'";
+var curlOptions = "--disable --fail --silent --show-error --location --max-redirs 5 --connect-timeout 15 --speed-limit 1 --speed-time 300 --retry 3 --retry-delay 2 --proto '=https' --proto-redir '=https'";
 var ps = /* @__PURE__ */ __name((value) => "'" + value.replaceAll("'", "''") + "'", "ps");
 var shellHash = 'if command -v sha256sum >/dev/null; then digest=$(sha256sum "$d/fleet.tgz"); else digest=$(shasum -a 256 "$d/fleet.tgz"); fi';
 var requireShellHash = /* @__PURE__ */ __name((expected) => `[ "\${digest%% *}" = ${expected} ] || { printf '%s\\n' 'Installer hash mismatch' >&2; exit 1; }`, "requireShellHash");
