@@ -5,13 +5,13 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __name = (target2, value) => __defProp(target2, "name", { value, configurable: true });
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
-var __export = (target, all) => {
+var __export = (target2, all) => {
   for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
+    __defProp(target2, name, { get: all[name], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
@@ -21,12 +21,12 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+var __toESM = (mod, isNodeMode, target2) => (target2 = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
   // If the importer is in node compatibility mode or this is not an ESM
   // file that has been converted to a CommonJS file using a Babel-
   // compatible transform (i.e. "__esModule" has not been set), then set
   // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target2, "default", { value: mod, enumerable: true }) : target2,
   mod
 ));
 var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __freeze(raw || cooked.slice()) }));
@@ -1179,56 +1179,56 @@ var require_util = __commonJS({
     }
     __name(toHash, "toHash");
     exports.toHash = toHash;
-    function alwaysValidSchema(it, schema3) {
-      if (typeof schema3 == "boolean")
-        return schema3;
-      if (Object.keys(schema3).length === 0)
+    function alwaysValidSchema(it, schema4) {
+      if (typeof schema4 == "boolean")
+        return schema4;
+      if (Object.keys(schema4).length === 0)
         return true;
-      checkUnknownRules(it, schema3);
-      return !schemaHasRules(schema3, it.self.RULES.all);
+      checkUnknownRules(it, schema4);
+      return !schemaHasRules(schema4, it.self.RULES.all);
     }
     __name(alwaysValidSchema, "alwaysValidSchema");
     exports.alwaysValidSchema = alwaysValidSchema;
-    function checkUnknownRules(it, schema3 = it.schema) {
+    function checkUnknownRules(it, schema4 = it.schema) {
       const { opts, self } = it;
       if (!opts.strictSchema)
         return;
-      if (typeof schema3 === "boolean")
+      if (typeof schema4 === "boolean")
         return;
       const rules = self.RULES.keywords;
-      for (const key4 in schema3) {
+      for (const key4 in schema4) {
         if (!rules[key4])
           checkStrictMode(it, `unknown keyword: "${key4}"`);
       }
     }
     __name(checkUnknownRules, "checkUnknownRules");
     exports.checkUnknownRules = checkUnknownRules;
-    function schemaHasRules(schema3, rules) {
-      if (typeof schema3 == "boolean")
-        return !schema3;
-      for (const key4 in schema3)
+    function schemaHasRules(schema4, rules) {
+      if (typeof schema4 == "boolean")
+        return !schema4;
+      for (const key4 in schema4)
         if (rules[key4])
           return true;
       return false;
     }
     __name(schemaHasRules, "schemaHasRules");
     exports.schemaHasRules = schemaHasRules;
-    function schemaHasRulesButRef(schema3, RULES) {
-      if (typeof schema3 == "boolean")
-        return !schema3;
-      for (const key4 in schema3)
+    function schemaHasRulesButRef(schema4, RULES) {
+      if (typeof schema4 == "boolean")
+        return !schema4;
+      for (const key4 in schema4)
         if (key4 !== "$ref" && RULES.all[key4])
           return true;
       return false;
     }
     __name(schemaHasRulesButRef, "schemaHasRulesButRef");
     exports.schemaHasRulesButRef = schemaHasRulesButRef;
-    function schemaRefOrVal({ topSchemaRef, schemaPath }, schema3, keyword, $data) {
+    function schemaRefOrVal({ topSchemaRef, schemaPath }, schema4, keyword, $data) {
       if (!$data) {
-        if (typeof schema3 == "number" || typeof schema3 == "boolean")
-          return schema3;
-        if (typeof schema3 == "string")
-          return (0, codegen_1._)`${schema3}`;
+        if (typeof schema4 == "number" || typeof schema4 == "boolean")
+          return schema4;
+        if (typeof schema4 == "string")
+          return (0, codegen_1._)`${schema4}`;
       }
       return (0, codegen_1._)`${topSchemaRef}${schemaPath}${(0, codegen_1.getProperty)(keyword)}`;
     }
@@ -1532,10 +1532,10 @@ var require_boolSchema = __commonJS({
       message: "boolean schema is false"
     };
     function topBoolOrEmptySchema(it) {
-      const { gen, schema: schema3, validateName } = it;
-      if (schema3 === false) {
+      const { gen, schema: schema4, validateName } = it;
+      if (schema4 === false) {
         falseSchemaError(it, false);
-      } else if (typeof schema3 == "object" && schema3.$async === true) {
+      } else if (typeof schema4 == "object" && schema4.$async === true) {
         gen.return(names_1.default.data);
       } else {
         gen.assign((0, codegen_1._)`${validateName}.errors`, null);
@@ -1545,8 +1545,8 @@ var require_boolSchema = __commonJS({
     __name(topBoolOrEmptySchema, "topBoolOrEmptySchema");
     exports.topBoolOrEmptySchema = topBoolOrEmptySchema;
     function boolOrEmptySchema(it, valid2) {
-      const { gen, schema: schema3 } = it;
-      if (schema3 === false) {
+      const { gen, schema: schema4 } = it;
+      if (schema4 === false) {
         gen.var(valid2, false);
         falseSchemaError(it);
       } else {
@@ -1612,20 +1612,20 @@ var require_applicability = __commonJS({
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.shouldUseRule = exports.shouldUseGroup = exports.schemaHasRulesForType = void 0;
-    function schemaHasRulesForType({ schema: schema3, self }, type) {
+    function schemaHasRulesForType({ schema: schema4, self }, type) {
       const group = self.RULES.types[type];
-      return group && group !== true && shouldUseGroup(schema3, group);
+      return group && group !== true && shouldUseGroup(schema4, group);
     }
     __name(schemaHasRulesForType, "schemaHasRulesForType");
     exports.schemaHasRulesForType = schemaHasRulesForType;
-    function shouldUseGroup(schema3, group) {
-      return group.rules.some((rule) => shouldUseRule(schema3, rule));
+    function shouldUseGroup(schema4, group) {
+      return group.rules.some((rule) => shouldUseRule(schema4, rule));
     }
     __name(shouldUseGroup, "shouldUseGroup");
     exports.shouldUseGroup = shouldUseGroup;
-    function shouldUseRule(schema3, rule) {
+    function shouldUseRule(schema4, rule) {
       var _a4;
-      return schema3[rule.keyword] !== void 0 || ((_a4 = rule.definition.implements) === null || _a4 === void 0 ? void 0 : _a4.some((kwd) => schema3[kwd] !== void 0));
+      return schema4[rule.keyword] !== void 0 || ((_a4 = rule.definition.implements) === null || _a4 === void 0 ? void 0 : _a4.some((kwd) => schema4[kwd] !== void 0));
     }
     __name(shouldUseRule, "shouldUseRule");
     exports.shouldUseRule = shouldUseRule;
@@ -1648,17 +1648,17 @@ var require_dataType = __commonJS({
       DataType2[DataType2["Correct"] = 0] = "Correct";
       DataType2[DataType2["Wrong"] = 1] = "Wrong";
     })(DataType || (exports.DataType = DataType = {}));
-    function getSchemaTypes(schema3) {
-      const types = getJSONTypes(schema3.type);
+    function getSchemaTypes(schema4) {
+      const types = getJSONTypes(schema4.type);
       const hasNull = types.includes("null");
       if (hasNull) {
-        if (schema3.nullable === false)
+        if (schema4.nullable === false)
           throw new Error("type: null contradicts nullable: false");
       } else {
-        if (!types.length && schema3.nullable !== void 0) {
+        if (!types.length && schema4.nullable !== void 0) {
           throw new Error('"nullable" cannot be used without "type"');
         }
-        if (schema3.nullable === true)
+        if (schema4.nullable === true)
           types.push("null");
       }
       return types;
@@ -1800,8 +1800,8 @@ var require_dataType = __commonJS({
     __name(checkDataTypes, "checkDataTypes");
     exports.checkDataTypes = checkDataTypes;
     var typeError = {
-      message: /* @__PURE__ */ __name(({ schema: schema3 }) => `must be ${schema3}`, "message"),
-      params: /* @__PURE__ */ __name(({ schema: schema3, schemaValue }) => typeof schema3 == "string" ? (0, codegen_1._)`{type: ${schema3}}` : (0, codegen_1._)`{type: ${schemaValue}}`, "params")
+      message: /* @__PURE__ */ __name(({ schema: schema4 }) => `must be ${schema4}`, "message"),
+      params: /* @__PURE__ */ __name(({ schema: schema4, schemaValue }) => typeof schema4 == "string" ? (0, codegen_1._)`{type: ${schema4}}` : (0, codegen_1._)`{type: ${schemaValue}}`, "params")
     };
     function reportTypeError(it) {
       const cxt = getTypeErrorContext(it);
@@ -1810,16 +1810,16 @@ var require_dataType = __commonJS({
     __name(reportTypeError, "reportTypeError");
     exports.reportTypeError = reportTypeError;
     function getTypeErrorContext(it) {
-      const { gen, data: data2, schema: schema3 } = it;
-      const schemaCode = (0, util_1.schemaRefOrVal)(it, schema3, "type");
+      const { gen, data: data2, schema: schema4 } = it;
+      const schemaCode = (0, util_1.schemaRefOrVal)(it, schema4, "type");
       return {
         gen,
         keyword: "type",
         data: data2,
-        schema: schema3.type,
+        schema: schema4.type,
         schemaCode,
         schemaValue: schemaCode,
-        parentSchema: schema3,
+        parentSchema: schema4,
         params: {},
         it
       };
@@ -1933,7 +1933,7 @@ var require_code2 = __commonJS({
     }
     __name(schemaProperties, "schemaProperties");
     exports.schemaProperties = schemaProperties;
-    function callValidateCode({ schemaCode, data: data2, it: { gen, topSchemaRef, schemaPath, errorPath }, it }, func, context, passSchema) {
+    function callValidateCode({ schemaCode, data: data2, it: { gen, topSchemaRef, schemaPath, errorPath }, it }, func, context2, passSchema) {
       const dataAndSchema = passSchema ? (0, codegen_1._)`${schemaCode}, ${data2}, ${topSchemaRef}${schemaPath}` : data2;
       const valCxt = [
         [names_1.default.instancePath, (0, codegen_1.strConcat)(names_1.default.instancePath, errorPath)],
@@ -1944,7 +1944,7 @@ var require_code2 = __commonJS({
       if (it.opts.dynamicRef)
         valCxt.push([names_1.default.dynamicAnchors, names_1.default.dynamicAnchors]);
       const args = (0, codegen_1._)`${dataAndSchema}, ${gen.object(...valCxt)}`;
-      return context !== codegen_1.nil ? (0, codegen_1._)`${func}.call(${context}, ${args})` : (0, codegen_1._)`${func}(${args})`;
+      return context2 !== codegen_1.nil ? (0, codegen_1._)`${func}.call(${context2}, ${args})` : (0, codegen_1._)`${func}(${args})`;
     }
     __name(callValidateCode, "callValidateCode");
     exports.callValidateCode = callValidateCode;
@@ -1988,15 +1988,15 @@ var require_code2 = __commonJS({
     __name(validateArray, "validateArray");
     exports.validateArray = validateArray;
     function validateUnion(cxt) {
-      const { gen, schema: schema3, keyword, it } = cxt;
-      if (!Array.isArray(schema3))
+      const { gen, schema: schema4, keyword, it } = cxt;
+      if (!Array.isArray(schema4))
         throw new Error("ajv implementation error");
-      const alwaysValid = schema3.some((sch) => (0, util_1.alwaysValidSchema)(it, sch));
+      const alwaysValid = schema4.some((sch) => (0, util_1.alwaysValidSchema)(it, sch));
       if (alwaysValid && !it.opts.unevaluated)
         return;
       const valid2 = gen.let("valid", false);
       const schValid = gen.name("_valid");
-      gen.block(() => schema3.forEach((_sch, i) => {
+      gen.block(() => schema4.forEach((_sch, i) => {
         const schCxt = cxt.subschema({
           keyword,
           schemaProp: i,
@@ -2025,8 +2025,8 @@ var require_keyword = __commonJS({
     var code_1 = require_code2();
     var errors_1 = require_errors();
     function macroKeywordCode(cxt, def) {
-      const { gen, keyword, schema: schema3, parentSchema, it } = cxt;
-      const macroSchema = def.macro.call(it.self, schema3, parentSchema, it);
+      const { gen, keyword, schema: schema4, parentSchema, it } = cxt;
+      const macroSchema = def.macro.call(it.self, schema4, parentSchema, it);
       const schemaRef = useKeyword(gen, keyword, macroSchema);
       if (it.opts.validateSchema !== false)
         it.self.validateSchema(macroSchema, true);
@@ -2044,9 +2044,9 @@ var require_keyword = __commonJS({
     exports.macroKeywordCode = macroKeywordCode;
     function funcKeywordCode(cxt, def) {
       var _a4;
-      const { gen, keyword, schema: schema3, parentSchema, $data, it } = cxt;
+      const { gen, keyword, schema: schema4, parentSchema, $data, it } = cxt;
       checkAsyncKeyword(it, def);
-      const validate2 = !$data && def.compile ? def.compile.call(it.self, schema3, parentSchema, it) : def.validate;
+      const validate2 = !$data && def.compile ? def.compile.call(it.self, schema4, parentSchema, it) : def.validate;
       const validateRef = useKeyword(gen, keyword, validate2);
       const valid2 = gen.let("valid");
       cxt.block$data(valid2, validateKeyword);
@@ -2116,21 +2116,21 @@ var require_keyword = __commonJS({
       return gen.scopeValue("keyword", typeof result == "function" ? { ref: result } : { ref: result, code: (0, codegen_1.stringify)(result) });
     }
     __name(useKeyword, "useKeyword");
-    function validSchemaType(schema3, schemaType, allowUndefined = false) {
-      return !schemaType.length || schemaType.some((st) => st === "array" ? Array.isArray(schema3) : st === "object" ? schema3 && typeof schema3 == "object" && !Array.isArray(schema3) : typeof schema3 == st || allowUndefined && typeof schema3 == "undefined");
+    function validSchemaType(schema4, schemaType, allowUndefined = false) {
+      return !schemaType.length || schemaType.some((st) => st === "array" ? Array.isArray(schema4) : st === "object" ? schema4 && typeof schema4 == "object" && !Array.isArray(schema4) : typeof schema4 == st || allowUndefined && typeof schema4 == "undefined");
     }
     __name(validSchemaType, "validSchemaType");
     exports.validSchemaType = validSchemaType;
-    function validateKeywordUsage({ schema: schema3, opts, self, errSchemaPath }, def, keyword) {
+    function validateKeywordUsage({ schema: schema4, opts, self, errSchemaPath }, def, keyword) {
       if (Array.isArray(def.keyword) ? !def.keyword.includes(keyword) : def.keyword !== keyword) {
         throw new Error("ajv implementation error");
       }
       const deps = def.dependencies;
-      if (deps === null || deps === void 0 ? void 0 : deps.some((kwd) => !Object.prototype.hasOwnProperty.call(schema3, kwd))) {
+      if (deps === null || deps === void 0 ? void 0 : deps.some((kwd) => !Object.prototype.hasOwnProperty.call(schema4, kwd))) {
         throw new Error(`parent schema must have dependencies of ${keyword}: ${deps.join(",")}`);
       }
       if (def.validateSchema) {
-        const valid2 = def.validateSchema(schema3[keyword]);
+        const valid2 = def.validateSchema(schema4[keyword]);
         if (!valid2) {
           const msg = `keyword "${keyword}" value is invalid at path "${errSchemaPath}": ` + self.errorsText(def.validateSchema.errors);
           if (opts.validateSchema === "log")
@@ -2153,8 +2153,8 @@ var require_subschema = __commonJS({
     exports.extendSubschemaMode = exports.extendSubschemaData = exports.getSubschema = void 0;
     var codegen_1 = require_codegen();
     var util_1 = require_util();
-    function getSubschema(it, { keyword, schemaProp, schema: schema3, schemaPath, errSchemaPath, topSchemaRef }) {
-      if (keyword !== void 0 && schema3 !== void 0) {
+    function getSubschema(it, { keyword, schemaProp, schema: schema4, schemaPath, errSchemaPath, topSchemaRef }) {
+      if (keyword !== void 0 && schema4 !== void 0) {
         throw new Error('both "keyword" and "schema" passed, only one allowed');
       }
       if (keyword !== void 0) {
@@ -2169,12 +2169,12 @@ var require_subschema = __commonJS({
           errSchemaPath: `${it.errSchemaPath}/${keyword}/${(0, util_1.escapeFragment)(schemaProp)}`
         };
       }
-      if (schema3 !== void 0) {
+      if (schema4 !== void 0) {
         if (schemaPath === void 0 || errSchemaPath === void 0 || topSchemaRef === void 0) {
           throw new Error('"schemaPath", "errSchemaPath" and "topSchemaRef" are required with "schema"');
         }
         return {
-          schema: schema3,
+          schema: schema4,
           schemaPath,
           topSchemaRef,
           errSchemaPath
@@ -2271,7 +2271,7 @@ var require_fast_deep_equal = __commonJS({
 var require_json_schema_traverse = __commonJS({
   "../node_modules/json-schema-traverse/index.js"(exports, module) {
     "use strict";
-    var traverse = module.exports = function(schema3, opts, cb) {
+    var traverse = module.exports = function(schema4, opts, cb) {
       if (typeof opts == "function") {
         cb = opts;
         opts = {};
@@ -2281,7 +2281,7 @@ var require_json_schema_traverse = __commonJS({
       };
       var post = cb.post || function() {
       };
-      _traverse(opts, pre, post, schema3, "", schema3);
+      _traverse(opts, pre, post, schema4, "", schema4);
     };
     traverse.keywords = {
       additionalItems: true,
@@ -2327,26 +2327,26 @@ var require_json_schema_traverse = __commonJS({
       maxProperties: true,
       minProperties: true
     };
-    function _traverse(opts, pre, post, schema3, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex) {
-      if (schema3 && typeof schema3 == "object" && !Array.isArray(schema3)) {
-        pre(schema3, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex);
-        for (var key4 in schema3) {
-          var sch = schema3[key4];
+    function _traverse(opts, pre, post, schema4, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex) {
+      if (schema4 && typeof schema4 == "object" && !Array.isArray(schema4)) {
+        pre(schema4, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex);
+        for (var key4 in schema4) {
+          var sch = schema4[key4];
           if (Array.isArray(sch)) {
             if (key4 in traverse.arrayKeywords) {
               for (var i = 0; i < sch.length; i++)
-                _traverse(opts, pre, post, sch[i], jsonPtr + "/" + key4 + "/" + i, rootSchema, jsonPtr, key4, schema3, i);
+                _traverse(opts, pre, post, sch[i], jsonPtr + "/" + key4 + "/" + i, rootSchema, jsonPtr, key4, schema4, i);
             }
           } else if (key4 in traverse.propsKeywords) {
             if (sch && typeof sch == "object") {
               for (var prop in sch)
-                _traverse(opts, pre, post, sch[prop], jsonPtr + "/" + key4 + "/" + escapeJsonPtr(prop), rootSchema, jsonPtr, key4, schema3, prop);
+                _traverse(opts, pre, post, sch[prop], jsonPtr + "/" + key4 + "/" + escapeJsonPtr(prop), rootSchema, jsonPtr, key4, schema4, prop);
             }
           } else if (key4 in traverse.keywords || opts.allKeys && !(key4 in traverse.skipKeywords)) {
-            _traverse(opts, pre, post, sch, jsonPtr + "/" + key4, rootSchema, jsonPtr, key4, schema3);
+            _traverse(opts, pre, post, sch, jsonPtr + "/" + key4, rootSchema, jsonPtr, key4, schema4);
           }
         }
-        post(schema3, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex);
+        post(schema4, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex);
       }
     }
     __name(_traverse, "_traverse");
@@ -2384,14 +2384,14 @@ var require_resolve = __commonJS({
       "enum",
       "const"
     ]);
-    function inlineRef(schema3, limit = true) {
-      if (typeof schema3 == "boolean")
+    function inlineRef(schema4, limit = true) {
+      if (typeof schema4 == "boolean")
         return true;
       if (limit === true)
-        return !hasRef(schema3);
+        return !hasRef(schema4);
       if (!limit)
         return false;
-      return countKeys(schema3) <= limit;
+      return countKeys(schema4) <= limit;
     }
     __name(inlineRef, "inlineRef");
     exports.inlineRef = inlineRef;
@@ -2402,11 +2402,11 @@ var require_resolve = __commonJS({
       "$dynamicRef",
       "$dynamicAnchor"
     ]);
-    function hasRef(schema3) {
-      for (const key4 in schema3) {
+    function hasRef(schema4) {
+      for (const key4 in schema4) {
         if (REF_KEYWORDS.has(key4))
           return true;
-        const sch = schema3[key4];
+        const sch = schema4[key4];
         if (Array.isArray(sch) && sch.some(hasRef))
           return true;
         if (typeof sch == "object" && hasRef(sch))
@@ -2415,16 +2415,16 @@ var require_resolve = __commonJS({
       return false;
     }
     __name(hasRef, "hasRef");
-    function countKeys(schema3) {
+    function countKeys(schema4) {
       let count = 0;
-      for (const key4 in schema3) {
+      for (const key4 in schema4) {
         if (key4 === "$ref")
           return Infinity;
         count++;
         if (SIMPLE_INLINED.has(key4))
           continue;
-        if (typeof schema3[key4] == "object") {
-          (0, util_1.eachItem)(schema3[key4], (sch) => count += countKeys(sch));
+        if (typeof schema4[key4] == "object") {
+          (0, util_1.eachItem)(schema4[key4], (sch) => count += countKeys(sch));
         }
         if (count === Infinity)
           return Infinity;
@@ -2459,16 +2459,16 @@ var require_resolve = __commonJS({
     __name(resolveUrl, "resolveUrl");
     exports.resolveUrl = resolveUrl;
     var ANCHOR = /^[a-z_][-a-z0-9._]*$/i;
-    function getSchemaRefs(schema3, baseId) {
-      if (typeof schema3 == "boolean")
+    function getSchemaRefs(schema4, baseId) {
+      if (typeof schema4 == "boolean")
         return {};
       const { schemaId, uriResolver } = this.opts;
-      const schId = normalizeId(schema3[schemaId] || baseId);
+      const schId = normalizeId(schema4[schemaId] || baseId);
       const baseIds = { "": schId };
       const pathPrefix = getFullPath(uriResolver, schId, false);
       const localRefs = {};
       const schemaRefs = /* @__PURE__ */ new Set();
-      traverse(schema3, { allKeys: true }, (sch, jsonPtr, _, parentJsonPtr) => {
+      traverse(schema4, { allKeys: true }, (sch, jsonPtr, _, parentJsonPtr) => {
         if (parentJsonPtr === void 0)
           return;
         const fullPath = pathPrefix + jsonPtr;
@@ -2555,15 +2555,15 @@ var require_validate = __commonJS({
     }
     __name(validateFunctionCode, "validateFunctionCode");
     exports.validateFunctionCode = validateFunctionCode;
-    function validateFunction({ gen, validateName, schema: schema3, schemaEnv, opts }, body) {
+    function validateFunction({ gen, validateName, schema: schema4, schemaEnv, opts }, body) {
       if (opts.code.es5) {
         gen.func(validateName, (0, codegen_1._)`${names_1.default.data}, ${names_1.default.valCxt}`, schemaEnv.$async, () => {
-          gen.code((0, codegen_1._)`"use strict"; ${funcSourceUrl(schema3, opts)}`);
+          gen.code((0, codegen_1._)`"use strict"; ${funcSourceUrl(schema4, opts)}`);
           destructureValCxtES5(gen, opts);
           gen.code(body);
         });
       } else {
-        gen.func(validateName, (0, codegen_1._)`${names_1.default.data}, ${destructureValCxt(opts)}`, schemaEnv.$async, () => gen.code(funcSourceUrl(schema3, opts)).code(body));
+        gen.func(validateName, (0, codegen_1._)`${names_1.default.data}, ${destructureValCxt(opts)}`, schemaEnv.$async, () => gen.code(funcSourceUrl(schema4, opts)).code(body));
       }
     }
     __name(validateFunction, "validateFunction");
@@ -2590,9 +2590,9 @@ var require_validate = __commonJS({
     }
     __name(destructureValCxtES5, "destructureValCxtES5");
     function topSchemaObjCode(it) {
-      const { schema: schema3, opts, gen } = it;
+      const { schema: schema4, opts, gen } = it;
       validateFunction(it, () => {
-        if (opts.$comment && schema3.$comment)
+        if (opts.$comment && schema4.$comment)
           commentKeyword(it);
         checkNoDefault(it);
         gen.let(names_1.default.vErrors, null);
@@ -2612,8 +2612,8 @@ var require_validate = __commonJS({
       gen.if((0, codegen_1._)`${it.evaluated}.dynamicItems`, () => gen.assign((0, codegen_1._)`${it.evaluated}.items`, (0, codegen_1._)`undefined`));
     }
     __name(resetEvaluated, "resetEvaluated");
-    function funcSourceUrl(schema3, opts) {
-      const schId = typeof schema3 == "object" && schema3[opts.schemaId];
+    function funcSourceUrl(schema4, opts) {
+      const schId = typeof schema4 == "object" && schema4[opts.schemaId];
       return schId && (opts.code.source || opts.code.process) ? (0, codegen_1._)`/*# sourceURL=${schId} */` : codegen_1.nil;
     }
     __name(funcSourceUrl, "funcSourceUrl");
@@ -2628,10 +2628,10 @@ var require_validate = __commonJS({
       (0, boolSchema_1.boolOrEmptySchema)(it, valid2);
     }
     __name(subschemaCode, "subschemaCode");
-    function schemaCxtHasRules({ schema: schema3, self }) {
-      if (typeof schema3 == "boolean")
-        return !schema3;
-      for (const key4 in schema3)
+    function schemaCxtHasRules({ schema: schema4, self }) {
+      if (typeof schema4 == "boolean")
+        return !schema4;
+      for (const key4 in schema4)
         if (self.RULES.all[key4])
           return true;
       return false;
@@ -2642,8 +2642,8 @@ var require_validate = __commonJS({
     }
     __name(isSchemaObj, "isSchemaObj");
     function subSchemaObjCode(it, valid2) {
-      const { schema: schema3, gen, opts } = it;
-      if (opts.$comment && schema3.$comment)
+      const { schema: schema4, gen, opts } = it;
+      if (opts.$comment && schema4.$comment)
         commentKeyword(it);
       updateContext(it);
       checkAsyncSchema(it);
@@ -2666,15 +2666,15 @@ var require_validate = __commonJS({
     }
     __name(typeAndKeywords, "typeAndKeywords");
     function checkRefsAndKeywords(it) {
-      const { schema: schema3, errSchemaPath, opts, self } = it;
-      if (schema3.$ref && opts.ignoreKeywordsWithRef && (0, util_1.schemaHasRulesButRef)(schema3, self.RULES)) {
+      const { schema: schema4, errSchemaPath, opts, self } = it;
+      if (schema4.$ref && opts.ignoreKeywordsWithRef && (0, util_1.schemaHasRulesButRef)(schema4, self.RULES)) {
         self.logger.warn(`$ref: keywords ignored in schema at path "${errSchemaPath}"`);
       }
     }
     __name(checkRefsAndKeywords, "checkRefsAndKeywords");
     function checkNoDefault(it) {
-      const { schema: schema3, opts } = it;
-      if (schema3.default !== void 0 && opts.useDefaults && opts.strictSchema) {
+      const { schema: schema4, opts } = it;
+      if (schema4.default !== void 0 && opts.useDefaults && opts.strictSchema) {
         (0, util_1.checkStrictMode)(it, "default is ignored in the schema root");
       }
     }
@@ -2690,8 +2690,8 @@ var require_validate = __commonJS({
         throw new Error("async schema in sync schema");
     }
     __name(checkAsyncSchema, "checkAsyncSchema");
-    function commentKeyword({ gen, schemaEnv, schema: schema3, errSchemaPath, opts }) {
-      const msg = schema3.$comment;
+    function commentKeyword({ gen, schemaEnv, schema: schema4, errSchemaPath, opts }) {
+      const msg = schema4.$comment;
       if (opts.$comment === true) {
         gen.code((0, codegen_1._)`${names_1.default.self}.logger.log(${msg})`);
       } else if (typeof opts.$comment == "function") {
@@ -2721,9 +2721,9 @@ var require_validate = __commonJS({
     }
     __name(assignEvaluated, "assignEvaluated");
     function schemaKeywords(it, types, typeErrors, errsCount) {
-      const { gen, schema: schema3, data: data2, allErrors, opts, self } = it;
+      const { gen, schema: schema4, data: data2, allErrors, opts, self } = it;
       const { RULES } = self;
-      if (schema3.$ref && (opts.ignoreKeywordsWithRef || !(0, util_1.schemaHasRulesButRef)(schema3, RULES))) {
+      if (schema4.$ref && (opts.ignoreKeywordsWithRef || !(0, util_1.schemaHasRulesButRef)(schema4, RULES))) {
         gen.block(() => keywordCode(it, "$ref", RULES.all.$ref.definition));
         return;
       }
@@ -2735,7 +2735,7 @@ var require_validate = __commonJS({
         groupKeywords(RULES.post);
       });
       function groupKeywords(group) {
-        if (!(0, applicability_1.shouldUseGroup)(schema3, group))
+        if (!(0, applicability_1.shouldUseGroup)(schema4, group))
           return;
         if (group.type) {
           gen.if((0, dataType_2.checkDataType)(group.type, data2, opts.strictNumbers));
@@ -2755,12 +2755,12 @@ var require_validate = __commonJS({
     }
     __name(schemaKeywords, "schemaKeywords");
     function iterateKeywords(it, group) {
-      const { gen, schema: schema3, opts: { useDefaults } } = it;
+      const { gen, schema: schema4, opts: { useDefaults } } = it;
       if (useDefaults)
         (0, defaults_1.assignDefaults)(it, group.type);
       gen.block(() => {
         for (const rule of group.rules) {
-          if ((0, applicability_1.shouldUseRule)(schema3, rule)) {
+          if ((0, applicability_1.shouldUseRule)(schema4, rule)) {
             keywordCode(it, rule.keyword, rule.definition, group.type);
           }
         }
@@ -3055,9 +3055,9 @@ var require_validate = __commonJS({
       }
       let expr = data2;
       const segments = jsonPointer.split("/");
-      for (const segment of segments) {
-        if (segment) {
-          data2 = (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)((0, util_1.unescapeJsonPointer)(segment))}`;
+      for (const segment2 of segments) {
+        if (segment2) {
+          data2 = (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)((0, util_1.unescapeJsonPointer)(segment2))}`;
           expr = (0, codegen_1._)`${expr} && ${data2}`;
         }
       }
@@ -3131,17 +3131,17 @@ var require_compile = __commonJS({
         var _a4;
         this.refs = {};
         this.dynamicAnchors = {};
-        let schema3;
+        let schema4;
         if (typeof env.schema == "object")
-          schema3 = env.schema;
+          schema4 = env.schema;
         this.schema = env.schema;
         this.schemaId = env.schemaId;
         this.root = env.root || this;
-        this.baseId = (_a4 = env.baseId) !== null && _a4 !== void 0 ? _a4 : (0, resolve_1.normalizeId)(schema3 === null || schema3 === void 0 ? void 0 : schema3[env.schemaId || "$id"]);
+        this.baseId = (_a4 = env.baseId) !== null && _a4 !== void 0 ? _a4 : (0, resolve_1.normalizeId)(schema4 === null || schema4 === void 0 ? void 0 : schema4[env.schemaId || "$id"]);
         this.schemaPath = env.schemaPath;
         this.localRefs = env.localRefs;
         this.meta = env.meta;
-        this.$async = schema3 === null || schema3 === void 0 ? void 0 : schema3.$async;
+        this.$async = schema4 === null || schema4 === void 0 ? void 0 : schema4.$async;
         this.refs = {};
       }
     };
@@ -3241,10 +3241,10 @@ var require_compile = __commonJS({
         return schOrFunc;
       let _sch = resolve.call(this, root, ref);
       if (_sch === void 0) {
-        const schema3 = (_a4 = root.localRefs) === null || _a4 === void 0 ? void 0 : _a4[ref];
+        const schema4 = (_a4 = root.localRefs) === null || _a4 === void 0 ? void 0 : _a4[ref];
         const { schemaId } = this.opts;
-        if (schema3)
-          _sch = new SchemaEnv({ schema: schema3, schemaId, root, baseId });
+        if (schema4)
+          _sch = new SchemaEnv({ schema: schema4, schemaId, root, baseId });
       }
       if (_sch === void 0)
         return;
@@ -3297,12 +3297,12 @@ var require_compile = __commonJS({
       if (!schOrRef.validate)
         compileSchema.call(this, schOrRef);
       if (id2 === (0, resolve_1.normalizeId)(ref)) {
-        const { schema: schema3 } = schOrRef;
+        const { schema: schema4 } = schOrRef;
         const { schemaId } = this.opts;
-        const schId = schema3[schemaId];
+        const schId = schema4[schemaId];
         if (schId)
           baseId = (0, resolve_1.resolveUrl)(this.opts.uriResolver, baseId, schId);
-        return new SchemaEnv({ schema: schema3, schemaId, root, baseId });
+        return new SchemaEnv({ schema: schema4, schemaId, root, baseId });
       }
       return getJsonPointer.call(this, p, schOrRef);
     }
@@ -3315,29 +3315,29 @@ var require_compile = __commonJS({
       "dependencies",
       "definitions"
     ]);
-    function getJsonPointer(parsedRef, { baseId, schema: schema3, root }) {
+    function getJsonPointer(parsedRef, { baseId, schema: schema4, root }) {
       var _a4;
       if (((_a4 = parsedRef.fragment) === null || _a4 === void 0 ? void 0 : _a4[0]) !== "/")
         return;
       for (const part of parsedRef.fragment.slice(1).split("/")) {
-        if (typeof schema3 === "boolean")
+        if (typeof schema4 === "boolean")
           return;
-        const partSchema = schema3[(0, util_1.unescapeFragment)(part)];
+        const partSchema = schema4[(0, util_1.unescapeFragment)(part)];
         if (partSchema === void 0)
           return;
-        schema3 = partSchema;
-        const schId = typeof schema3 === "object" && schema3[this.opts.schemaId];
+        schema4 = partSchema;
+        const schId = typeof schema4 === "object" && schema4[this.opts.schemaId];
         if (!PREVENT_SCOPE_CHANGE.has(part) && schId) {
           baseId = (0, resolve_1.resolveUrl)(this.opts.uriResolver, baseId, schId);
         }
       }
       let env;
-      if (typeof schema3 != "boolean" && schema3.$ref && !(0, util_1.schemaHasRulesButRef)(schema3, this.RULES)) {
-        const $ref = (0, resolve_1.resolveUrl)(this.opts.uriResolver, baseId, schema3.$ref);
+      if (typeof schema4 != "boolean" && schema4.$ref && !(0, util_1.schemaHasRulesButRef)(schema4, this.RULES)) {
+        const $ref = (0, resolve_1.resolveUrl)(this.opts.uriResolver, baseId, schema4.$ref);
         env = resolveSchema.call(this, root, $ref);
       }
       const { schemaId } = this.opts;
-      env = env || new SchemaEnv({ schema: schema3, schemaId, root, baseId });
+      env = env || new SchemaEnv({ schema: schema4, schemaId, root, baseId });
       if (env.schema !== env.root.schema)
         return env;
       return void 0;
@@ -3616,9 +3616,9 @@ var require_utils = __commonJS({
       const output = [];
       let trailingDirectory = false;
       for (let i = 0; i <= last; i++) {
-        const segment = segments[i];
-        if (segment === "." || segment === "..") {
-          if (segment === "..") {
+        const segment2 = segments[i];
+        if (segment2 === "." || segment2 === "..") {
+          if (segment2 === "..") {
             if (output.length !== 0 && output[output.length - 1] !== "..") {
               output.pop();
             } else {
@@ -3627,7 +3627,7 @@ var require_utils = __commonJS({
           }
           trailingDirectory = i === last;
         } else {
-          output.push(segment);
+          output.push(segment2);
         }
       }
       if (trailingDirectory && output[output.length - 1] !== "..") {
@@ -4209,58 +4209,58 @@ var require_fast_uri = __commonJS({
     }
     __name(resolve, "resolve");
     function resolveComponent(base, relative, options, skipNormalization) {
-      const target = {};
+      const target2 = {};
       if (!skipNormalization) {
         base = parse5(serialize(base, options), options);
         relative = parse5(serialize(relative, options), options);
       }
       options = options || {};
       if (!options.tolerant && relative.scheme) {
-        target.scheme = relative.scheme;
-        target.userinfo = relative.userinfo;
-        target.host = relative.host;
-        target.port = relative.port;
-        target.path = removeDotSegments(relative.path || "");
-        target.query = relative.query;
+        target2.scheme = relative.scheme;
+        target2.userinfo = relative.userinfo;
+        target2.host = relative.host;
+        target2.port = relative.port;
+        target2.path = removeDotSegments(relative.path || "");
+        target2.query = relative.query;
       } else {
         if (relative.userinfo !== void 0 || relative.host !== void 0 || relative.port !== void 0) {
-          target.userinfo = relative.userinfo;
-          target.host = relative.host;
-          target.port = relative.port;
-          target.path = removeDotSegments(relative.path || "");
-          target.query = relative.query;
+          target2.userinfo = relative.userinfo;
+          target2.host = relative.host;
+          target2.port = relative.port;
+          target2.path = removeDotSegments(relative.path || "");
+          target2.query = relative.query;
         } else {
           if (!relative.path) {
-            target.path = base.path;
+            target2.path = base.path;
             if (relative.query !== void 0) {
-              target.query = relative.query;
+              target2.query = relative.query;
             } else {
-              target.query = base.query;
+              target2.query = base.query;
             }
           } else {
             if (relative.path[0] === "/") {
-              target.path = removeDotSegments(relative.path);
+              target2.path = removeDotSegments(relative.path);
             } else {
               const baseHasAuthority = base.userinfo !== void 0 || base.host !== void 0 || base.port !== void 0;
               if (baseHasAuthority && !base.path) {
-                target.path = "/" + relative.path;
+                target2.path = "/" + relative.path;
               } else if (!base.path) {
-                target.path = relative.path;
+                target2.path = relative.path;
               } else {
-                target.path = base.path.slice(0, base.path.lastIndexOf("/") + 1) + relative.path;
+                target2.path = base.path.slice(0, base.path.lastIndexOf("/") + 1) + relative.path;
               }
-              target.path = base.scheme === void 0 && !baseHasAuthority && target.path[0] !== "/" ? removeDotSegmentsRelative(target.path) : removeDotSegments(target.path);
+              target2.path = base.scheme === void 0 && !baseHasAuthority && target2.path[0] !== "/" ? removeDotSegmentsRelative(target2.path) : removeDotSegments(target2.path);
             }
-            target.query = relative.query;
+            target2.query = relative.query;
           }
-          target.userinfo = base.userinfo;
-          target.host = base.host;
-          target.port = base.port;
+          target2.userinfo = base.userinfo;
+          target2.host = base.host;
+          target2.port = base.port;
         }
-        target.scheme = base.scheme;
+        target2.scheme = base.scheme;
       }
-      target.fragment = relative.fragment;
-      return target;
+      target2.fragment = relative.fragment;
+      return target2;
     }
     __name(resolveComponent, "resolveComponent");
     function equal(uriA, uriB, options) {
@@ -4379,18 +4379,18 @@ var require_fast_uri = __commonJS({
         return true;
       }
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && !isIPLiteral(parsed.host) && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
-        let url;
+        let url2;
         try {
-          url = new URL("http://" + parsed.host);
+          url2 = new URL("http://" + parsed.host);
         } catch (e) {
           parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e;
           return true;
         }
-        if (!isHostOnlyURL(url)) {
+        if (!isHostOnlyURL(url2)) {
           parsed.error = parsed.error || MALFORMED_HOST_ERROR;
           return true;
         }
-        parsed.host = url.hostname;
+        parsed.host = url2.hostname;
       }
       return false;
     }
@@ -4401,8 +4401,8 @@ var require_fast_uri = __commonJS({
       );
     }
     __name(hasForbiddenDomainHost, "hasForbiddenDomainHost");
-    function isHostOnlyURL(url) {
-      return url.username === "" && url.password === "" && url.port === "" && url.pathname === "/" && url.search === "" && url.hash === "" && url.hostname !== "";
+    function isHostOnlyURL(url2) {
+      return url2.username === "" && url2.password === "" && url2.port === "" && url2.pathname === "/" && url2.search === "" && url2.hash === "" && url2.hostname !== "";
     }
     __name(isHostOnlyURL, "isHostOnlyURL");
     function parseWithStatus(uri, opts) {
@@ -4774,16 +4774,16 @@ var require_core = __commonJS({
           this.errors = v.errors;
         return valid2;
       }
-      compile(schema3, _meta) {
-        const sch = this._addSchema(schema3, _meta);
+      compile(schema4, _meta) {
+        const sch = this._addSchema(schema4, _meta);
         return sch.validate || this._compileSchemaEnv(sch);
       }
-      compileAsync(schema3, meta2) {
+      compileAsync(schema4, meta2) {
         if (typeof this.opts.loadSchema != "function") {
           throw new Error("options.loadSchema should be a function");
         }
         const { loadSchema } = this.opts;
-        return runCompileAsync.call(this, schema3, meta2);
+        return runCompileAsync.call(this, schema4, meta2);
         async function runCompileAsync(_schema, _meta) {
           await loadMetaSchema.call(this, _schema.$schema);
           const sch = this._addSchema(_schema, _meta);
@@ -4835,37 +4835,37 @@ var require_core = __commonJS({
         __name(_loadSchema, "_loadSchema");
       }
       // Adds schema to the instance
-      addSchema(schema3, key4, _meta, _validateSchema = this.opts.validateSchema) {
-        if (Array.isArray(schema3)) {
-          for (const sch of schema3)
+      addSchema(schema4, key4, _meta, _validateSchema = this.opts.validateSchema) {
+        if (Array.isArray(schema4)) {
+          for (const sch of schema4)
             this.addSchema(sch, void 0, _meta, _validateSchema);
           return this;
         }
         let id2;
-        if (typeof schema3 === "object") {
+        if (typeof schema4 === "object") {
           const { schemaId } = this.opts;
-          id2 = schema3[schemaId];
+          id2 = schema4[schemaId];
           if (id2 !== void 0 && typeof id2 != "string") {
             throw new Error(`schema ${schemaId} must be string`);
           }
         }
         key4 = (0, resolve_1.normalizeId)(key4 || id2);
         this._checkUnique(key4);
-        this.schemas[key4] = this._addSchema(schema3, _meta, key4, _validateSchema, true);
+        this.schemas[key4] = this._addSchema(schema4, _meta, key4, _validateSchema, true);
         return this;
       }
       // Add schema that will be used to validate other schemas
       // options in META_IGNORE_OPTIONS are alway set to false
-      addMetaSchema(schema3, key4, _validateSchema = this.opts.validateSchema) {
-        this.addSchema(schema3, key4, true, _validateSchema);
+      addMetaSchema(schema4, key4, _validateSchema = this.opts.validateSchema) {
+        this.addSchema(schema4, key4, true, _validateSchema);
         return this;
       }
       //  Validate schema against its meta-schema
-      validateSchema(schema3, throwOrLogError) {
-        if (typeof schema3 == "boolean")
+      validateSchema(schema4, throwOrLogError) {
+        if (typeof schema4 == "boolean")
           return true;
         let $schema;
-        $schema = schema3.$schema;
+        $schema = schema4.$schema;
         if ($schema !== void 0 && typeof $schema != "string") {
           throw new Error("$schema must be a string");
         }
@@ -4875,7 +4875,7 @@ var require_core = __commonJS({
           this.errors = null;
           return true;
         }
-        const valid2 = this.validate($schema, schema3);
+        const valid2 = this.validate($schema, schema4);
         if (!valid2 && throwOrLogError) {
           const message2 = "schema is invalid: " + this.errorsText();
           if (this.opts.validateSchema === "log")
@@ -5003,7 +5003,7 @@ var require_core = __commonJS({
       errorsText(errors2 = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors2 || errors2.length === 0)
           return "No errors";
-        return errors2.map((e) => `${dataVar}${e.instancePath} ${e.message}`).reduce((text2, msg) => text2 + separator + msg);
+        return errors2.map((e) => `${dataVar}${e.instancePath} ${e.message}`).reduce((text3, msg) => text3 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -5018,9 +5018,9 @@ var require_core = __commonJS({
             if (typeof rule != "object")
               continue;
             const { $data } = rule.definition;
-            const schema3 = keywords[key4];
-            if ($data && schema3)
-              keywords[key4] = schemaOrData(schema3);
+            const schema4 = keywords[key4];
+            if ($data && schema4)
+              keywords[key4] = schemaOrData(schema4);
           }
         }
         return metaSchema;
@@ -5038,23 +5038,23 @@ var require_core = __commonJS({
           }
         }
       }
-      _addSchema(schema3, meta2, baseId, validateSchema = this.opts.validateSchema, addSchema = this.opts.addUsedSchema) {
+      _addSchema(schema4, meta2, baseId, validateSchema = this.opts.validateSchema, addSchema = this.opts.addUsedSchema) {
         let id2;
         const { schemaId } = this.opts;
-        if (typeof schema3 == "object") {
-          id2 = schema3[schemaId];
+        if (typeof schema4 == "object") {
+          id2 = schema4[schemaId];
         } else {
           if (this.opts.jtd)
             throw new Error("schema must be object");
-          else if (typeof schema3 != "boolean")
+          else if (typeof schema4 != "boolean")
             throw new Error("schema must be object or boolean");
         }
-        let sch = this._cache.get(schema3);
+        let sch = this._cache.get(schema4);
         if (sch !== void 0)
           return sch;
         baseId = (0, resolve_1.normalizeId)(id2 || baseId);
-        const localRefs = resolve_1.getSchemaRefs.call(this, schema3, baseId);
-        sch = new compile_1.SchemaEnv({ schema: schema3, schemaId, meta: meta2, baseId, localRefs });
+        const localRefs = resolve_1.getSchemaRefs.call(this, schema4, baseId);
+        sch = new compile_1.SchemaEnv({ schema: schema4, schemaId, meta: meta2, baseId, localRefs });
         this._cache.set(sch.schema, sch);
         if (addSchema && !baseId.startsWith("#")) {
           if (baseId)
@@ -5062,7 +5062,7 @@ var require_core = __commonJS({
           this.refs[baseId] = sch;
         }
         if (validateSchema)
-          this.validateSchema(schema3, true);
+          this.validateSchema(schema4, true);
         return sch;
       }
       _checkUnique(id2) {
@@ -5227,8 +5227,8 @@ var require_core = __commonJS({
     var $dataRef = {
       $ref: "https://raw.githubusercontent.com/ajv-validator/ajv/master/lib/refs/data.json#"
     };
-    function schemaOrData(schema3) {
-      return { anyOf: [schema3, $dataRef] };
+    function schemaOrData(schema4) {
+      return { anyOf: [schema4, $dataRef] };
     }
     __name(schemaOrData, "schemaOrData");
   }
@@ -5539,7 +5539,7 @@ var require_pattern = __commonJS({
       $data: true,
       error: error2,
       code(cxt) {
-        const { gen, data: data2, $data, schema: schema3, schemaCode, it } = cxt;
+        const { gen, data: data2, $data, schema: schema4, schemaCode, it } = cxt;
         const u = it.opts.unicodeRegExp ? "u" : "";
         if ($data) {
           const { regExp } = it.opts.code;
@@ -5548,7 +5548,7 @@ var require_pattern = __commonJS({
           gen.try(() => gen.assign(valid2, (0, codegen_1._)`${regExpCode}(${schemaCode}, ${u}).test(${data2})`), () => gen.assign(valid2, false));
           cxt.fail$data((0, codegen_1._)`!${valid2}`);
         } else {
-          const regExp = (0, code_1.usePattern)(cxt, schema3);
+          const regExp = (0, code_1.usePattern)(cxt, schema4);
           cxt.fail$data((0, codegen_1._)`!${regExp}.test(${data2})`);
         }
       }
@@ -5605,11 +5605,11 @@ var require_required = __commonJS({
       $data: true,
       error: error2,
       code(cxt) {
-        const { gen, schema: schema3, schemaCode, data: data2, $data, it } = cxt;
+        const { gen, schema: schema4, schemaCode, data: data2, $data, it } = cxt;
         const { opts } = it;
-        if (!$data && schema3.length === 0)
+        if (!$data && schema4.length === 0)
           return;
-        const useLoop = schema3.length >= opts.loopRequired;
+        const useLoop = schema4.length >= opts.loopRequired;
         if (it.allErrors)
           allErrorsMode();
         else
@@ -5617,7 +5617,7 @@ var require_required = __commonJS({
         if (opts.strictRequired) {
           const props = cxt.parentSchema.properties;
           const { definedProperties } = cxt.it;
-          for (const requiredKey of schema3) {
+          for (const requiredKey of schema4) {
             if ((props === null || props === void 0 ? void 0 : props[requiredKey]) === void 0 && !definedProperties.has(requiredKey)) {
               const schemaPath = it.schemaEnv.baseId + it.errSchemaPath;
               const msg = `required property "${requiredKey}" is not defined at "${schemaPath}" (strictRequired)`;
@@ -5629,7 +5629,7 @@ var require_required = __commonJS({
           if (useLoop || $data) {
             cxt.block$data(codegen_1.nil, loopAllRequired);
           } else {
-            for (const prop of schema3) {
+            for (const prop of schema4) {
               (0, code_1.checkReportMissingProp)(cxt, prop);
             }
           }
@@ -5642,7 +5642,7 @@ var require_required = __commonJS({
             cxt.block$data(valid2, () => loopUntilMissing(missing, valid2));
             cxt.ok(valid2);
           } else {
-            gen.if((0, code_1.checkMissingProp)(cxt, schema3, missing));
+            gen.if((0, code_1.checkMissingProp)(cxt, schema4, missing));
             (0, code_1.reportMissingProp)(cxt, missing);
             gen.else();
           }
@@ -5732,8 +5732,8 @@ var require_uniqueItems = __commonJS({
       $data: true,
       error: error2,
       code(cxt) {
-        const { gen, data: data2, $data, schema: schema3, parentSchema, schemaCode, it } = cxt;
-        if (!$data && !schema3)
+        const { gen, data: data2, $data, schema: schema4, parentSchema, schemaCode, it } = cxt;
+        if (!$data && !schema4)
           return;
         const valid2 = gen.let("valid");
         const itemTypes = parentSchema.items ? (0, dataType_1.getSchemaTypes)(parentSchema.items) : [];
@@ -5800,11 +5800,11 @@ var require_const = __commonJS({
       $data: true,
       error: error2,
       code(cxt) {
-        const { gen, data: data2, $data, schemaCode, schema: schema3 } = cxt;
-        if ($data || schema3 && typeof schema3 == "object") {
+        const { gen, data: data2, $data, schemaCode, schema: schema4 } = cxt;
+        if ($data || schema4 && typeof schema4 == "object") {
           cxt.fail$data((0, codegen_1._)`!${(0, util_1.useFunc)(gen, equal_1.default)}(${data2}, ${schemaCode})`);
         } else {
-          cxt.fail((0, codegen_1._)`${schema3} !== ${data2}`);
+          cxt.fail((0, codegen_1._)`${schema4} !== ${data2}`);
         }
       }
     };
@@ -5830,10 +5830,10 @@ var require_enum = __commonJS({
       $data: true,
       error: error2,
       code(cxt) {
-        const { gen, data: data2, $data, schema: schema3, schemaCode, it } = cxt;
-        if (!$data && schema3.length === 0)
+        const { gen, data: data2, $data, schema: schema4, schemaCode, it } = cxt;
+        if (!$data && schema4.length === 0)
           throw new Error("enum must have non-empty array");
-        const useLoop = schema3.length >= it.opts.loopEnum;
+        const useLoop = schema4.length >= it.opts.loopEnum;
         let eql;
         const getEql = /* @__PURE__ */ __name(() => eql !== null && eql !== void 0 ? eql : eql = (0, util_1.useFunc)(gen, equal_1.default), "getEql");
         let valid2;
@@ -5841,10 +5841,10 @@ var require_enum = __commonJS({
           valid2 = gen.let("valid");
           cxt.block$data(valid2, loopEnum);
         } else {
-          if (!Array.isArray(schema3))
+          if (!Array.isArray(schema4))
             throw new Error("ajv implementation error");
           const vSchema = gen.const("vSchema", schemaCode);
-          valid2 = (0, codegen_1.or)(...schema3.map((_x, i) => equalCode(vSchema, i)));
+          valid2 = (0, codegen_1.or)(...schema4.map((_x, i) => equalCode(vSchema, i)));
         }
         cxt.pass(valid2);
         function loopEnum() {
@@ -5853,7 +5853,7 @@ var require_enum = __commonJS({
         }
         __name(loopEnum, "loopEnum");
         function equalCode(vSchema, i) {
-          const sch = schema3[i];
+          const sch = schema4[i];
           return typeof sch === "object" && sch !== null ? (0, codegen_1._)`${getEql()}(${data2}, ${vSchema}[${i}])` : (0, codegen_1._)`${data2} === ${sch}`;
         }
         __name(equalCode, "equalCode");
@@ -5930,13 +5930,13 @@ var require_additionalItems = __commonJS({
       }
     };
     function validateAdditionalItems(cxt, items) {
-      const { gen, schema: schema3, data: data2, keyword, it } = cxt;
+      const { gen, schema: schema4, data: data2, keyword, it } = cxt;
       it.items = true;
       const len = gen.const("len", (0, codegen_1._)`${data2}.length`);
-      if (schema3 === false) {
+      if (schema4 === false) {
         cxt.setParams({ len: items.length });
         cxt.pass((0, codegen_1._)`${len} <= ${items.length}`);
-      } else if (typeof schema3 == "object" && !(0, util_1.alwaysValidSchema)(it, schema3)) {
+      } else if (typeof schema4 == "object" && !(0, util_1.alwaysValidSchema)(it, schema4)) {
         const valid2 = gen.var("valid", (0, codegen_1._)`${len} <= ${items.length}`);
         gen.if((0, codegen_1.not)(valid2), () => validateItems(valid2));
         cxt.ok(valid2);
@@ -5971,11 +5971,11 @@ var require_items = __commonJS({
       schemaType: ["object", "array", "boolean"],
       before: "uniqueItems",
       code(cxt) {
-        const { schema: schema3, it } = cxt;
-        if (Array.isArray(schema3))
-          return validateTuple(cxt, "additionalItems", schema3);
+        const { schema: schema4, it } = cxt;
+        if (Array.isArray(schema4))
+          return validateTuple(cxt, "additionalItems", schema4);
         it.items = true;
-        if ((0, util_1.alwaysValidSchema)(it, schema3))
+        if ((0, util_1.alwaysValidSchema)(it, schema4))
           return;
         cxt.ok((0, code_1.validateArray)(cxt));
       }
@@ -6052,10 +6052,10 @@ var require_items2020 = __commonJS({
       before: "uniqueItems",
       error: error2,
       code(cxt) {
-        const { schema: schema3, parentSchema, it } = cxt;
+        const { schema: schema4, parentSchema, it } = cxt;
         const { prefixItems } = parentSchema;
         it.items = true;
-        if ((0, util_1.alwaysValidSchema)(it, schema3))
+        if ((0, util_1.alwaysValidSchema)(it, schema4))
           return;
         if (prefixItems)
           (0, additionalItems_1.validateAdditionalItems)(cxt, prefixItems);
@@ -6086,7 +6086,7 @@ var require_contains = __commonJS({
       trackErrors: true,
       error: error2,
       code(cxt) {
-        const { gen, schema: schema3, parentSchema, data: data2, it } = cxt;
+        const { gen, schema: schema4, parentSchema, data: data2, it } = cxt;
         let min;
         let max;
         const { minContains, maxContains } = parentSchema;
@@ -6107,7 +6107,7 @@ var require_contains = __commonJS({
           cxt.fail();
           return;
         }
-        if ((0, util_1.alwaysValidSchema)(it, schema3)) {
+        if ((0, util_1.alwaysValidSchema)(it, schema4)) {
           let cond = (0, codegen_1._)`${len} >= ${min}`;
           if (max !== void 0)
             cond = (0, codegen_1._)`${cond} && ${len} <= ${max}`;
@@ -6195,14 +6195,14 @@ var require_dependencies = __commonJS({
         validateSchemaDeps(cxt, schDeps);
       }
     };
-    function splitDependencies({ schema: schema3 }) {
+    function splitDependencies({ schema: schema4 }) {
       const propertyDeps = {};
       const schemaDeps = {};
-      for (const key4 in schema3) {
+      for (const key4 in schema4) {
         if (key4 === "__proto__")
           continue;
-        const deps = Array.isArray(schema3[key4]) ? propertyDeps : schemaDeps;
-        deps[key4] = schema3[key4];
+        const deps = Array.isArray(schema4[key4]) ? propertyDeps : schemaDeps;
+        deps[key4] = schema4[key4];
       }
       return [propertyDeps, schemaDeps];
     }
@@ -6278,8 +6278,8 @@ var require_propertyNames = __commonJS({
       schemaType: ["object", "boolean"],
       error: error2,
       code(cxt) {
-        const { gen, schema: schema3, data: data2, it } = cxt;
-        if ((0, util_1.alwaysValidSchema)(it, schema3))
+        const { gen, schema: schema4, data: data2, it } = cxt;
+        if ((0, util_1.alwaysValidSchema)(it, schema4))
           return;
         const valid2 = gen.name("valid");
         gen.forIn("key", data2, (key4) => {
@@ -6325,12 +6325,12 @@ var require_additionalProperties = __commonJS({
       trackErrors: true,
       error: error2,
       code(cxt) {
-        const { gen, schema: schema3, parentSchema, data: data2, errsCount, it } = cxt;
+        const { gen, schema: schema4, parentSchema, data: data2, errsCount, it } = cxt;
         if (!errsCount)
           throw new Error("ajv implementation error");
         const { allErrors, opts } = it;
         it.props = true;
-        if (opts.removeAdditional !== "all" && (0, util_1.alwaysValidSchema)(it, schema3))
+        if (opts.removeAdditional !== "all" && (0, util_1.alwaysValidSchema)(it, schema4))
           return;
         const props = (0, code_1.allSchemaProperties)(parentSchema.properties);
         const patProps = (0, code_1.allSchemaProperties)(parentSchema.patternProperties);
@@ -6366,18 +6366,18 @@ var require_additionalProperties = __commonJS({
         }
         __name(deleteAdditional, "deleteAdditional");
         function additionalPropertyCode(key4) {
-          if (opts.removeAdditional === "all" || opts.removeAdditional && schema3 === false) {
+          if (opts.removeAdditional === "all" || opts.removeAdditional && schema4 === false) {
             deleteAdditional(key4);
             return;
           }
-          if (schema3 === false) {
+          if (schema4 === false) {
             cxt.setParams({ additionalProperty: key4 });
             cxt.error();
             if (!allErrors)
               gen.break();
             return;
           }
-          if (typeof schema3 == "object" && !(0, util_1.alwaysValidSchema)(it, schema3)) {
+          if (typeof schema4 == "object" && !(0, util_1.alwaysValidSchema)(it, schema4)) {
             const valid2 = gen.name("valid");
             if (opts.removeAdditional === "failing") {
               applyAdditionalSchema(key4, valid2, false);
@@ -6429,18 +6429,18 @@ var require_properties = __commonJS({
       type: "object",
       schemaType: "object",
       code(cxt) {
-        const { gen, schema: schema3, parentSchema, data: data2, it } = cxt;
+        const { gen, schema: schema4, parentSchema, data: data2, it } = cxt;
         if (it.opts.removeAdditional === "all" && parentSchema.additionalProperties === void 0) {
           additionalProperties_1.default.code(new validate_1.KeywordCxt(it, additionalProperties_1.default, "additionalProperties"));
         }
-        const allProps = (0, code_1.allSchemaProperties)(schema3);
+        const allProps = (0, code_1.allSchemaProperties)(schema4);
         for (const prop of allProps) {
           it.definedProperties.add(prop);
         }
         if (it.opts.unevaluated && allProps.length && it.props !== true) {
           it.props = util_1.mergeEvaluated.props(gen, (0, util_1.toHash)(allProps), it.props);
         }
-        const properties = allProps.filter((p) => !(0, util_1.alwaysValidSchema)(it, schema3[p]));
+        const properties = allProps.filter((p) => !(0, util_1.alwaysValidSchema)(it, schema4[p]));
         if (properties.length === 0)
           return;
         const valid2 = gen.name("valid");
@@ -6458,7 +6458,7 @@ var require_properties = __commonJS({
           cxt.ok(valid2);
         }
         function hasDefault(prop) {
-          return it.opts.useDefaults && !it.compositeRule && schema3[prop].default !== void 0;
+          return it.opts.useDefaults && !it.compositeRule && schema4[prop].default !== void 0;
         }
         __name(hasDefault, "hasDefault");
         function applyPropertySchema(prop) {
@@ -6489,10 +6489,10 @@ var require_patternProperties = __commonJS({
       type: "object",
       schemaType: "object",
       code(cxt) {
-        const { gen, schema: schema3, data: data2, parentSchema, it } = cxt;
+        const { gen, schema: schema4, data: data2, parentSchema, it } = cxt;
         const { opts } = it;
-        const patterns = (0, code_1.allSchemaProperties)(schema3);
-        const alwaysValidPatterns = patterns.filter((p) => (0, util_1.alwaysValidSchema)(it, schema3[p]));
+        const patterns = (0, code_1.allSchemaProperties)(schema4);
+        const alwaysValidPatterns = patterns.filter((p) => (0, util_1.alwaysValidSchema)(it, schema4[p]));
         if (patterns.length === 0 || alwaysValidPatterns.length === patterns.length && (!it.opts.unevaluated || it.props === true)) {
           return;
         }
@@ -6563,8 +6563,8 @@ var require_not = __commonJS({
       schemaType: ["object", "boolean"],
       trackErrors: true,
       code(cxt) {
-        const { gen, schema: schema3, it } = cxt;
-        if ((0, util_1.alwaysValidSchema)(it, schema3)) {
+        const { gen, schema: schema4, it } = cxt;
+        if ((0, util_1.alwaysValidSchema)(it, schema4)) {
           cxt.fail();
           return;
         }
@@ -6617,12 +6617,12 @@ var require_oneOf = __commonJS({
       trackErrors: true,
       error: error2,
       code(cxt) {
-        const { gen, schema: schema3, parentSchema, it } = cxt;
-        if (!Array.isArray(schema3))
+        const { gen, schema: schema4, parentSchema, it } = cxt;
+        if (!Array.isArray(schema4))
           throw new Error("ajv implementation error");
         if (it.opts.discriminator && parentSchema.discriminator)
           return;
-        const schArr = schema3;
+        const schArr = schema4;
         const valid2 = gen.let("valid", false);
         const passing = gen.let("passing", null);
         const schValid = gen.name("_valid");
@@ -6669,11 +6669,11 @@ var require_allOf = __commonJS({
       keyword: "allOf",
       schemaType: "array",
       code(cxt) {
-        const { gen, schema: schema3, it } = cxt;
-        if (!Array.isArray(schema3))
+        const { gen, schema: schema4, it } = cxt;
+        if (!Array.isArray(schema4))
           throw new Error("ajv implementation error");
         const valid2 = gen.name("valid");
-        schema3.forEach((sch, i) => {
+        schema4.forEach((sch, i) => {
           if ((0, util_1.alwaysValidSchema)(it, sch))
             return;
           const schCxt = cxt.subschema({ keyword: "allOf", schemaProp: i }, valid2);
@@ -6750,8 +6750,8 @@ var require_if = __commonJS({
       }
     };
     function hasSchema(it, keyword) {
-      const schema3 = it.schema[keyword];
-      return schema3 !== void 0 && !(0, util_1.alwaysValidSchema)(it, schema3);
+      const schema4 = it.schema[keyword];
+      return schema4 !== void 0 && !(0, util_1.alwaysValidSchema)(it, schema4);
     }
     __name(hasSchema, "hasSchema");
     exports.default = def;
@@ -6842,7 +6842,7 @@ var require_format = __commonJS({
       $data: true,
       error: error2,
       code(cxt, ruleType) {
-        const { gen, data: data2, $data, schema: schema3, schemaCode, it } = cxt;
+        const { gen, data: data2, $data, schema: schema4, schemaCode, it } = cxt;
         const { opts, errSchemaPath, schemaEnv, self } = it;
         if (!opts.validateFormats)
           return;
@@ -6875,7 +6875,7 @@ var require_format = __commonJS({
         }
         __name(validate$DataFormat, "validate$DataFormat");
         function validateFormat() {
-          const formatDef = self.formats[schema3];
+          const formatDef = self.formats[schema4];
           if (!formatDef) {
             unknownFormat();
             return;
@@ -6892,14 +6892,14 @@ var require_format = __commonJS({
             }
             throw new Error(unknownMsg());
             function unknownMsg() {
-              return `unknown format "${schema3}" ignored in schema at path "${errSchemaPath}"`;
+              return `unknown format "${schema4}" ignored in schema at path "${errSchemaPath}"`;
             }
             __name(unknownMsg, "unknownMsg");
           }
           __name(unknownFormat, "unknownFormat");
           function getFormat(fmtDef) {
-            const code = fmtDef instanceof RegExp ? (0, codegen_1.regexpCode)(fmtDef) : opts.code.formats ? (0, codegen_1._)`${opts.code.formats}${(0, codegen_1.getProperty)(schema3)}` : void 0;
-            const fmt = gen.scopeValue("formats", { key: schema3, ref: fmtDef, code });
+            const code = fmtDef instanceof RegExp ? (0, codegen_1.regexpCode)(fmtDef) : opts.code.formats ? (0, codegen_1._)`${opts.code.formats}${(0, codegen_1.getProperty)(schema4)}` : void 0;
+            const fmt = gen.scopeValue("formats", { key: schema4, ref: fmtDef, code });
             if (typeof fmtDef == "object" && !(fmtDef instanceof RegExp)) {
               return [fmtDef.type || "string", fmtDef.validate, (0, codegen_1._)`${fmt}.validate`];
             }
@@ -7013,15 +7013,15 @@ var require_discriminator = __commonJS({
       schemaType: "object",
       error: error2,
       code(cxt) {
-        const { gen, data: data2, schema: schema3, parentSchema, it } = cxt;
+        const { gen, data: data2, schema: schema4, parentSchema, it } = cxt;
         const { oneOf } = parentSchema;
         if (!it.opts.discriminator) {
           throw new Error("discriminator: requires discriminator option");
         }
-        const tagName = schema3.propertyName;
+        const tagName = schema4.propertyName;
         if (typeof tagName != "string")
           throw new Error("discriminator: requires propertyName");
-        if (schema3.mapping)
+        if (schema4.mapping)
           throw new Error("discriminator: mapping is not supported");
         if (!oneOf)
           throw new Error("discriminator: requires oneOf keyword");
@@ -7807,11 +7807,11 @@ function hostedInstallers(releases) {
     }));
     const available = Object.values(assets2);
     if (!available.length) continue;
-    const { version: version3, browser } = available[0];
-    if (available.some((asset) => asset.version !== version3 || asset.browser !== browser)) {
+    const { version: version3, browser: browser2 } = available[0];
+    if (available.some((asset) => asset.version !== version3 || asset.browser !== browser2)) {
       throw new Error(`Hosted ${operatingSystems[platform].label} installers must share the same version and capabilities`);
     }
-    groups[platform] = { version: version3, browser, assets: assets2 };
+    groups[platform] = { version: version3, browser: browser2, assets: assets2 };
   }
   return groups;
 }
@@ -7831,22 +7831,22 @@ var runWindows = "& (Join-Path $bundle 'bin/node.exe') (Join-Path $bundle 'fleet
 var requireWindowsSuccess = "if ($LASTEXITCODE -ne 0) { throw 'Device installation failed' }";
 var windowsCleanup = "for ($attempt = 0; $attempt -lt 5; $attempt++) { try { if (-not (Test-Path -LiteralPath $d -ErrorAction Stop)) { break }; Remove-Item -LiteralPath $d -Recurse -Force -ErrorAction Stop; break } catch { if ($attempt -eq 4) { Write-Warning 'Nodrelay could not remove its temporary installer files.' -WarningAction Continue } else { Start-Sleep -Milliseconds (200 * ($attempt + 1)) } } }";
 function shortInstallCommand(origin, platform, version3, ticket, deviceId2, { pinnedUrl } = {}) {
-  const url = new URL(installPath(platform), origin);
-  if (url.protocol !== "https:") throw new Error("Device bootstrap requires HTTPS");
+  const url2 = new URL(installPath(platform), origin);
+  if (url2.protocol !== "https:") throw new Error("Device bootstrap requires HTTPS");
   if (pinnedUrl) {
     const pinned = new URL(pinnedUrl);
-    if (pinned.origin !== url.origin || pinned.pathname !== url.pathname || pinned.searchParams.get("version") !== version3 || !/^[a-f0-9]{64}$/.test(pinned.searchParams.get("manifest") ?? "") || [...pinned.searchParams].length !== 2 || pinned.hash || pinned.username || pinned.password) throw new Error("Unsafe pinned installer destination");
-    url.search = pinned.search;
-  } else url.searchParams.set("version", version3);
+    if (pinned.origin !== url2.origin || pinned.pathname !== url2.pathname || pinned.searchParams.get("version") !== version3 || !/^[a-f0-9]{64}$/.test(pinned.searchParams.get("manifest") ?? "") || [...pinned.searchParams].length !== 2 || pinned.hash || pinned.username || pinned.password) throw new Error("Unsafe pinned installer destination");
+    url2.search = pinned.search;
+  } else url2.searchParams.set("version", version3);
   if (platform === "windows") {
-    return `& { $r=iwr ${ps(url.href)} -UseBasicParsing -MaximumRedirection 0 -TimeoutSec 30 -ErrorAction Stop; if($r.StatusCode -ne 200 -or $r.Content -cnotlike 'param(*'){ throw 'Installer unavailable' }; & ([scriptblock]::Create([string]$r.Content)) ${ps(deviceId2)} ${ps(ticket)} }`;
+    return `& { $r=iwr ${ps(url2.href)} -UseBasicParsing -MaximumRedirection 0 -TimeoutSec 30 -ErrorAction Stop; if($r.StatusCode -ne 200 -or $r.Content -cnotlike 'param(*'){ throw 'Installer unavailable' }; & ([scriptblock]::Create([string]$r.Content)) ${ps(deviceId2)} ${ps(ticket)} }`;
   }
-  return `(s=$(curl -qfsSL --max-redirs 0 -m30 -w '%{http_code}' ${sh(url.href)}) && case "$s" in '#!/bin/sh'*200) sh -c "\${s%???}" -- ${sh(deviceId2)} ${sh(ticket)};; *) echo 'Installer unavailable' >&2; exit 1;; esac)`;
+  return `(s=$(curl -qfsSL --max-redirs 0 -m30 -w '%{http_code}' ${sh(url2.href)}) && case "$s" in '#!/bin/sh'*200) sh -c "\${s%???}" -- ${sh(deviceId2)} ${sh(ticket)};; *) echo 'Installer unavailable' >&2; exit 1;; esac)`;
 }
 __name(shortInstallCommand, "shortInstallCommand");
 function publicInstallCommand(origin, platform, code) {
-  const url = new URL(origin);
-  if (url.protocol !== "https:" || url.origin !== origin || !/^https:\/\/[a-z0-9.-]+(?::\d{1,5})?$/.test(origin) || !Object.hasOwn(operatingSystems, platform) || typeof code !== "string" || !tokenPattern.test(code)) {
+  const url2 = new URL(origin);
+  if (url2.protocol !== "https:" || url2.origin !== origin || !/^https:\/\/[a-z0-9.-]+(?::\d{1,5})?$/.test(origin) || !Object.hasOwn(operatingSystems, platform) || typeof code !== "string" || !tokenPattern.test(code)) {
     throw new Error("Device install command requires a canonical HTTPS origin, platform and code");
   }
   const entry = origin + installPath(platform) + "?i";
@@ -8010,31 +8010,31 @@ var validOS = /* @__PURE__ */ __name((os) => typeof os === "string" && Object.ha
 var record = /* @__PURE__ */ __name((value) => value !== null && typeof value === "object" && !Array.isArray(value), "record");
 var encoder = new TextEncoder();
 function canonicalOrigin(input) {
-  const url = typeof input === "string" && URL.parse(input);
-  if (!url || url.origin !== input || url.protocol !== "https:") throw new Error("Expected canonical HTTPS management origin");
-  return url.origin;
+  const url2 = typeof input === "string" && URL.parse(input);
+  if (!url2 || url2.origin !== input || url2.protocol !== "https:") throw new Error("Expected canonical HTTPS management origin");
+  return url2.origin;
 }
 __name(canonicalOrigin, "canonicalOrigin");
 function trustedGroup(os, group) {
   if (!validOS(os) || !record(group) || !matches(versionPattern, group.version) || group.browser !== void 0 && typeof group.browser !== "boolean" || !record(group.assets) || Object.keys(group.assets).length === 0) throw new Error("Invalid approved installer group");
   const { version: version3 } = group;
-  const browser = group.browser === true;
+  const browser2 = group.browser === true;
   const assets2 = /* @__PURE__ */ Object.create(null);
   for (const arch of Object.keys(group.assets).sort()) {
     const entry = group.assets[arch];
-    const url = typeof entry?.url === "string" && URL.parse(entry.url);
-    if (!operatingSystems[os].architectures.includes(arch) || !matches(hashPattern, entry?.sha256) || !url || url.protocol !== "https:" || url.username || url.password || url.search || url.hash || entry.version !== void 0 && entry.version !== version3 || entry.browser !== void 0 && entry.browser !== browser) {
+    const url2 = typeof entry?.url === "string" && URL.parse(entry.url);
+    if (!operatingSystems[os].architectures.includes(arch) || !matches(hashPattern, entry?.sha256) || !url2 || url2.protocol !== "https:" || url2.username || url2.password || url2.search || url2.hash || entry.version !== void 0 && entry.version !== version3 || entry.browser !== void 0 && entry.browser !== browser2) {
       throw new Error("Invalid approved installer asset");
     }
-    assets2[arch] = Object.freeze({ sha256: entry.sha256, url: url.href });
+    assets2[arch] = Object.freeze({ sha256: entry.sha256, url: url2.href });
   }
-  return Object.freeze({ version: version3, browser, assets: Object.freeze(assets2) });
+  return Object.freeze({ version: version3, browser: browser2, assets: Object.freeze(assets2) });
 }
 __name(trustedGroup, "trustedGroup");
 var canonical = /* @__PURE__ */ __name((os, group) => JSON.stringify(["enrollment-bootstrap-v1", os, trustedGroup(os, group)]), "canonical");
 async function enrollmentBootstrapManifestId(os, group) {
-  const bytes = new Uint8Array(await crypto.subtle.digest("SHA-256", encoder.encode(canonical(os, group))));
-  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+  const bytes2 = new Uint8Array(await crypto.subtle.digest("SHA-256", encoder.encode(canonical(os, group))));
+  return Array.from(bytes2, (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 __name(enrollmentBootstrapManifestId, "enrollmentBootstrapManifestId");
 function mergeEnrollmentBootstrapHistory(previousHistory, releases) {
@@ -8069,15 +8069,15 @@ function response(status, body) {
 }
 __name(response, "response");
 async function resolveEnrollmentBootstrap(request, { origin, lookupApproved, render }) {
-  const url = new URL(request.url);
-  const match = /^\/device\/install\/([^/]+)$/.exec(url.pathname);
-  const short = url.searchParams.has("v");
-  if (!match || !(short || url.searchParams.has("manifest"))) return;
+  const url2 = new URL(request.url);
+  const match = /^\/device\/install\/([^/]+)$/.exec(url2.pathname);
+  const short = url2.searchParams.has("v");
+  if (!match || !(short || url2.searchParams.has("manifest"))) return;
   const os = match[1];
-  const version3 = url.searchParams.get(short ? "v" : "version");
-  const manifest = short ? void 0 : url.searchParams.get("manifest");
+  const version3 = url2.searchParams.get(short ? "v" : "version");
+  const manifest = short ? void 0 : url2.searchParams.get("manifest");
   const unavailable = /* @__PURE__ */ __name(() => response(404, "Installer version unavailable."), "unavailable");
-  if (request.method !== "GET" || url.origin !== canonicalOrigin(origin) || !validOS(os) || typeof render !== "function" || [...url.searchParams].length !== (short ? 1 : 2) || !matches(versionPattern, version3) || !short && !matches(hashPattern, manifest)) return unavailable();
+  if (request.method !== "GET" || url2.origin !== canonicalOrigin(origin) || !validOS(os) || typeof render !== "function" || [...url2.searchParams].length !== (short ? 1 : 2) || !matches(versionPattern, version3) || !short && !matches(hashPattern, manifest)) return unavailable();
   let selected;
   try {
     selected = await lookupApproved(os, version3);
@@ -8116,38 +8116,38 @@ function encode(string3) {
       throw new TypeError("non-ASCII string encountered in encode()");
     return encoder2.encode(string3);
   }
-  const bytes = new Uint8Array(string3.length);
+  const bytes2 = new Uint8Array(string3.length);
   for (let i = 0; i < string3.length; i++) {
     const code = string3.charCodeAt(i);
     if (code > 127)
       throw new TypeError("non-ASCII string encountered in encode()");
-    bytes[i] = code;
+    bytes2[i] = code;
   }
-  return bytes;
+  return bytes2;
 }
 __name(encode, "encode");
-function encodeBase64(input, url = false) {
+function encodeBase64(input, url2 = false) {
   if (Uint8Array.prototype.toBase64)
-    return input.toBase64({ alphabet: url ? "base64url" : "base64", omitPadding: url });
+    return input.toBase64({ alphabet: url2 ? "base64url" : "base64", omitPadding: url2 });
   const CHUNK_SIZE = 32768, arr = [];
   for (let i = 0; i < input.length; i += CHUNK_SIZE)
     arr.push(String.fromCharCode.apply(null, input.subarray(i, i + CHUNK_SIZE)));
   const encoded = btoa(arr.join(""));
-  return url ? encoded.replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_") : encoded;
+  return url2 ? encoded.replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_") : encoded;
 }
 __name(encodeBase64, "encodeBase64");
-function decodeBase64(encoded, url = false) {
+function decodeBase64(encoded, url2 = false) {
   if (Uint8Array.fromBase64)
-    return Uint8Array.fromBase64(encoded, { alphabet: url ? "base64url" : "base64" });
-  if (url) {
+    return Uint8Array.fromBase64(encoded, { alphabet: url2 ? "base64url" : "base64" });
+  if (url2) {
     if (encoded.includes("+") || encoded.includes("/"))
       throw new TypeError("Invalid base64url");
     encoded = encoded.replace(/-/g, "+").replace(/_/g, "/");
   }
-  const binary = atob(encoded), bytes = new Uint8Array(binary.length);
+  const binary = atob(encoded), bytes2 = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++)
-    bytes[i] = binary.charCodeAt(i);
-  return bytes;
+    bytes2[i] = binary.charCodeAt(i);
+  return bytes2;
 }
 __name(decodeBase64, "decodeBase64");
 
@@ -8830,8 +8830,8 @@ __name(isCloudflareWorkers, "isCloudflareWorkers");
 var USER_AGENT;
 (typeof navigator > "u" || !"Cloudflare-Workers"?.startsWith?.("Mozilla/5.0 ")) && (USER_AGENT = "jose/v6.2.13");
 var customFetch = /* @__PURE__ */ Symbol();
-async function fetchJwks(url, headers, signal, fetchImpl = fetch) {
-  const response2 = await fetchImpl(url, {
+async function fetchJwks(url2, headers, signal, fetchImpl = fetch) {
+  const response2 = await fetchImpl(url2, {
     method: "GET",
     signal,
     redirect: "manual",
@@ -8859,10 +8859,10 @@ function validateDuration(value, fallback, option) {
   return typeof value == "number" ? value : fallback;
 }
 __name(validateDuration, "validateDuration");
-function createRemoteJWKSet(url, options) {
-  if (!(url instanceof URL))
+function createRemoteJWKSet(url2, options) {
+  if (!(url2 instanceof URL))
     throw new TypeError("url must be an instance of URL");
-  const href = new URL(url.href).href, opts = options ?? {}, timeoutOption = opts.timeoutDuration;
+  const href = new URL(url2.href).href, opts = options ?? {}, timeoutOption = opts.timeoutDuration;
   if (typeof timeoutOption == "number" && (!Number.isInteger(timeoutOption) || timeoutOption < 0))
     throw new TypeError('"timeoutDuration" option must be a non-negative integer');
   const timeoutDuration = typeof timeoutOption == "number" ? timeoutOption : 5e3, cooldownDuration = validateDuration(opts.cooldownDuration, 3e4, "cooldownDuration"), cacheMaxAge = validateDuration(opts.cacheMaxAge, 6e5, "cacheMaxAge"), headers = new Headers(opts.headers);
@@ -8928,12 +8928,12 @@ var parse = new TextDecoder();
 var tokenPattern2 = /^[A-Za-z0-9_-]{43}$/;
 var devicePattern2 = /^[a-z][a-z0-9-]{0,23}$/;
 var devicePort = /* @__PURE__ */ __name((value) => Number.isInteger(value) && value >= 1024 && value <= 65535, "devicePort");
-function validateDevicePorts(ports, browser) {
-  const expected = browser ? ["browser", "development"] : ["development"];
+function validateDevicePorts(ports, browser2) {
+  const expected = browser2 ? ["browser", "development"] : ["development"];
   if (ports === null || typeof ports !== "object" || Array.isArray(ports) || JSON.stringify(Object.keys(ports).sort()) !== JSON.stringify(expected) || !expected.every((key4) => devicePort(ports[key4])) || new Set(expected.map((key4) => ports[key4])).size !== expected.length) {
     throw new Error("Invalid device ports");
   }
-  return browser ? { development: ports.development, browser: ports.browser } : { development: ports.development };
+  return browser2 ? { development: ports.development, browser: ports.browser } : { development: ports.development };
 }
 __name(validateDevicePorts, "validateDevicePorts");
 function validateCredentials(credentials) {
@@ -9083,8 +9083,8 @@ function safeCloudflareRoute(path) {
 }
 __name(safeCloudflareRoute, "safeCloudflareRoute");
 var accessNotEnabled = "access_not_enabled";
-function accountAccessOrganizationError(method, url, status, payload) {
-  if (method !== "GET" || status !== 403 || url.search || !/^\/client\/v4\/accounts\/[a-f0-9]{32}\/access\/organizations$/.test(url.pathname) || payload?.success !== false || payload.result !== null || !Array.isArray(payload.errors) || payload.errors.length !== 1) return;
+function accountAccessOrganizationError(method, url2, status, payload) {
+  if (method !== "GET" || status !== 403 || url2.search || !/^\/client\/v4\/accounts\/[a-f0-9]{32}\/access\/organizations$/.test(url2.pathname) || payload?.success !== false || payload.result !== null || !Array.isArray(payload.errors) || payload.errors.length !== 1) return;
   const error2 = payload.errors[0];
   if (error2?.code === 9999 && typeof error2.message === "string" && error2.message.startsWith("access.api.error.not_enabled:")) return accessNotEnabled;
 }
@@ -9120,15 +9120,15 @@ function cloudflareApi(token, { request = fetch, beforeRequest, requestTimeoutMs
   async function send(method, path, body, query) {
     const access = typeof token === "function" ? await token() : token;
     await beforeRequest?.();
-    const url = new URL(endpoint + path);
-    for (const [name, value] of Object.entries(query ?? {})) url.searchParams.set(name, String(value));
+    const url2 = new URL(endpoint + path);
+    for (const [name, value] of Object.entries(query ?? {})) url2.searchParams.set(name, String(value));
     const headers = { Authorization: `Bearer ${access}` };
     const form = body instanceof FormData;
     if (body && !form) headers["Content-Type"] = "application/json";
     const controller = new AbortController();
     const { signal } = controller;
     const exchange = /* @__PURE__ */ __name(async () => {
-      const response2 = await request(url, {
+      const response2 = await request(url2, {
         method,
         headers,
         redirect: "manual",
@@ -9146,7 +9146,7 @@ function cloudflareApi(token, { request = fetch, beforeRequest, requestTimeoutMs
         throw new CloudflareError(method, response2.status, codes, {
           path,
           rayId: response2.headers.get("cf-ray"),
-          reason: accountAccessOrganizationError(method, url, response2.status, payload)
+          reason: accountAccessOrganizationError(method, url2, response2.status, payload)
         });
       }
       return payload;
@@ -9214,11 +9214,11 @@ function single(items, predicate, label3) {
   return matches6[0];
 }
 __name(single, "single");
-async function ensureDns(api, zoneId, name, target, owner) {
+async function ensureDns(api, zoneId, name, target2, owner) {
   const path = `/zones/${zoneId}/dns_records`;
   const existing = single(await api.list(path, { name }), (item) => item.name === name, "DNS record");
-  if (!existing) return api.post(path, { name, type: "CNAME", content: target, proxied: true, ttl: 1, comment: owner });
-  if (existing.type !== "CNAME" || existing.content.replace(/\.$/, "") !== target || !existing.proxied || existing.comment !== owner) {
+  if (!existing) return api.post(path, { name, type: "CNAME", content: target2, proxied: true, ttl: 1, comment: owner });
+  if (existing.type !== "CNAME" || existing.content.replace(/\.$/, "") !== target2 || !existing.proxied || existing.comment !== owner) {
     throw new Error("DNS hostname already belongs to a different configuration");
   }
   return existing;
@@ -9257,17 +9257,17 @@ function snapshotRelease(platform, release) {
   const [os, fixed] = platformParts(platform);
   if (!os || !record2(release) || !matches2(versionPattern2, release.version) || release.browser !== void 0 && typeof release.browser !== "boolean") throw new Error("Invalid pinned release");
   const { version: version3 } = release;
-  const browser = release.browser === true;
+  const browser2 = release.browser === true;
   const source = fixed ? { [fixed]: release } : release.assets;
   if (!record2(source) || !Object.keys(source).length) throw new Error("Missing pinned installer assets");
   const assets2 = {};
   for (const architecture of Object.keys(source).sort()) {
     const asset = source[architecture];
-    if (!operatingSystems[os].architectures.includes(architecture) || !record2(asset) || !matches2(hashPattern2, asset.sha256) || asset.version !== void 0 && asset.version !== version3 || asset.browser !== void 0 && asset.browser !== browser) throw new Error("Invalid pinned installer asset");
-    const { sha256: sha2563, url, localFile } = asset;
-    if (url === void 0 === (localFile === void 0)) throw new Error("Invalid pinned installer location");
-    if (url !== void 0) {
-      const parsed = typeof url === "string" && URL.parse(url);
+    if (!operatingSystems[os].architectures.includes(architecture) || !record2(asset) || !matches2(hashPattern2, asset.sha256) || asset.version !== void 0 && asset.version !== version3 || asset.browser !== void 0 && asset.browser !== browser2) throw new Error("Invalid pinned installer asset");
+    const { sha256: sha2563, url: url2, localFile } = asset;
+    if (url2 === void 0 === (localFile === void 0)) throw new Error("Invalid pinned installer location");
+    if (url2 !== void 0) {
+      const parsed = typeof url2 === "string" && URL.parse(url2);
       if (!parsed || parsed.protocol !== "https:" || parsed.username || parsed.password || parsed.search || parsed.hash) {
         throw new Error("Invalid pinned installer URL");
       }
@@ -9277,7 +9277,7 @@ function snapshotRelease(platform, release) {
       assets2[architecture] = { sha256: sha2563, localFile };
     }
   }
-  return { platform, version: version3, browser, assets: assets2 };
+  return { platform, version: version3, browser: browser2, assets: assets2 };
 }
 __name(snapshotRelease, "snapshotRelease");
 function publicIntent(row) {
@@ -9361,16 +9361,16 @@ async function decryptEnrollmentIntent(secret, row) {
   return { ...intent, code };
 }
 __name(decryptEnrollmentIntent, "decryptEnrollmentIntent");
-async function claimEnrollmentIntent(db, { code, recoveryProof, deviceId: deviceId2, platform, architecture, version: version3, sha256: sha2563, browser } = {}) {
+async function claimEnrollmentIntent(db, { code, recoveryProof, deviceId: deviceId2, platform, architecture, version: version3, sha256: sha2563, browser: browser2 } = {}) {
   const [, fixed] = platformParts(platform);
-  if (!matches2(tokenPattern2, code) || !matches2(tokenPattern2, recoveryProof) || recoveryProof === code || !matches2(devicePattern2, deviceId2) || typeof architecture !== "string" || fixed && fixed !== architecture || !matches2(versionPattern2, version3) || !matches2(hashPattern2, sha2563) || typeof browser !== "boolean") return;
+  if (!matches2(tokenPattern2, code) || !matches2(tokenPattern2, recoveryProof) || recoveryProof === code || !matches2(devicePattern2, deviceId2) || typeof architecture !== "string" || fixed && fixed !== architecture || !matches2(versionPattern2, version3) || !matches2(hashPattern2, sha2563) || typeof browser2 !== "boolean") return;
   const [codeDigest, recoveryDigest] = await Promise.all([digest(code), digest("enrollment-claim-recovery-v1:" + recoveryProof)]);
   const row = await db.prepare(`SELECT id, device_id, snapshot, state, created_at, resolved_at FROM enrollment_intents
     WHERE code_digest = ? AND device_id = ? AND state IN ('pending', 'claimed')`).bind(codeDigest, deviceId2).first();
   if (!row) return;
   const [os] = platformParts(platform);
   const release = publicIntent(row).releases[os];
-  if (!release || release.platform !== platform || release.version !== version3 || release.browser !== browser || !Object.hasOwn(release.assets, architecture) || release.assets[architecture].sha256 !== sha2563) return;
+  if (!release || release.platform !== platform || release.version !== version3 || release.browser !== browser2 || !Object.hasOwn(release.assets, architecture) || release.assets[architecture].sha256 !== sha2563) return;
   const claimedSnapshot = JSON.stringify(release);
   if (row.state === "pending") {
     const claimed = await db.prepare(`UPDATE enrollment_intents
@@ -9605,12 +9605,12 @@ function exactRedirect(value) {
   if (typeof value !== "string" || !/^[a-z][a-z0-9+.-]*:\/[^#*{}\s\\]+$/i.test(value) || value.length > 2048) {
     throw new PortalCallbackError("\u8BF7\u8F93\u5165\u5BA2\u6237\u7AEF\u7684\u5B8C\u6574\u56DE\u8C03\u5730\u5740\u3002\u5B83\u4E0D\u80FD\u5305\u542B\u901A\u914D\u7B26\u6216\u7247\u6BB5\u3002", 400);
   }
-  const url = URL.parse(value);
-  const allowedScheme = url?.protocol === "https:" || url?.protocol === "http:" && ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname) || url?.protocol === "cursor:" || /^[a-z][a-z0-9-]*(?:\.[a-z0-9-]+)+:$/i.test(url?.protocol ?? "");
-  if (!url || !allowedScheme || url.username || url.password || /^https?:$/.test(url.protocol) && !/^https?:\/\/[^/]/i.test(value)) {
+  const url2 = URL.parse(value);
+  const allowedScheme = url2?.protocol === "https:" || url2?.protocol === "http:" && ["localhost", "127.0.0.1", "[::1]"].includes(url2.hostname) || url2?.protocol === "cursor:" || /^[a-z][a-z0-9-]*(?:\.[a-z0-9-]+)+:$/i.test(url2?.protocol ?? "");
+  if (!url2 || !allowedScheme || url2.username || url2.password || /^https?:$/.test(url2.protocol) && !/^https?:\/\/[^/]/i.test(value)) {
     throw new PortalCallbackError("\u56DE\u8C03\u5730\u5740\u5FC5\u987B\u4F7F\u7528 HTTPS\u3001\u73AF\u56DE HTTP \u6216\u5BA2\u6237\u7AEF\u7684\u539F\u751F\u56DE\u8C03\u534F\u8BAE\u3002", 400);
   }
-  if ([...url.searchParams.keys()].some((key4) => /^(?:code|state|client_secret|access_token|refresh_token|id_token|token)$/i.test(key4))) {
+  if ([...url2.searchParams.keys()].some((key4) => /^(?:code|state|client_secret|access_token|refresh_token|id_token|token)$/i.test(key4))) {
     throw new PortalCallbackError("\u8BF7\u4F7F\u7528\u5BA2\u6237\u7AEF\u7684\u56DE\u8C03\u5730\u5740\uFF0C\u53BB\u6389\u6388\u6743\u7801\u6216\u51ED\u636E\u3002", 400);
   }
   return value;
@@ -9705,6 +9705,11 @@ async function localChannelKey(activationToken) {
 }
 __name(localChannelKey, "localChannelKey");
 var localRpc = "_nodrelay_local_mcp";
+var LocalServiceUnavailable = class extends Error {
+  static {
+    __name(this, "LocalServiceUnavailable");
+  }
+};
 var createPolicy = `CREATE TABLE IF NOT EXISTS fleet_local_services (
   device_id TEXT NOT NULL REFERENCES fleet_devices(id) ON DELETE CASCADE, id TEXT NOT NULL,
   name TEXT NOT NULL, source TEXT NOT NULL, transport TEXT NOT NULL, PRIMARY KEY(device_id,id)
@@ -9712,27 +9717,45 @@ var createPolicy = `CREATE TABLE IF NOT EXISTS fleet_local_services (
 var createDisabled = `CREATE TABLE IF NOT EXISTS fleet_local_services_disabled (
   device_id TEXT NOT NULL REFERENCES fleet_devices(id) ON DELETE CASCADE, id TEXT NOT NULL, PRIMARY KEY(device_id,id)
 )`;
+var createPresence = `CREATE TABLE IF NOT EXISTS fleet_local_service_presence (
+  device_id TEXT NOT NULL REFERENCES fleet_devices(id) ON DELETE CASCADE, id TEXT NOT NULL,
+  name TEXT NOT NULL, source TEXT NOT NULL, transport TEXT NOT NULL, present INTEGER NOT NULL,
+  PRIMARY KEY(device_id,id)
+)`;
 function localServicePolicy(db, devices) {
   const rows = /* @__PURE__ */ __name(async (device) => {
     if (!await db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='fleet_local_services'").first()) return [];
     return (await db.prepare("SELECT id,name,source,transport FROM fleet_local_services WHERE device_id=?").bind(device).all()).results;
   }, "rows");
-  async function rpc(device, args, signal) {
+  async function granted(device, id2) {
+    if (!await db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='fleet_local_services'").first()) return false;
+    return Boolean(await db.prepare("SELECT 1 FROM fleet_local_services WHERE device_id=? AND id=?").bind(device, id2).first());
+  }
+  __name(granted, "granted");
+  async function rpc2(device, args, signal) {
     const reply = await devices.gatewayRequest(device, "development", "tools/call", { name: localRpc, arguments: args }, signal);
     if (args.action === "call") return reply;
     if (reply.isError || !reply.structuredContent) throw new Error(args.action === "inventory" ? "\u8BBE\u5907\u672A\u54CD\u5E94\u672C\u673A MCP \u53D1\u73B0\uFF0C\u8BF7\u68C0\u67E5\u8FDE\u63A5\u548C\u5BA2\u6237\u7AEF\u7248\u672C\u3002" : "\u65E0\u6CD5\u8BFB\u53D6\u5DE5\u5177\u76EE\u5F55\uFF0C\u8BF7\u68C0\u67E5\u672C\u673A\u670D\u52A1\u6216\u6388\u6743\u3002");
     return reply.structuredContent;
   }
-  __name(rpc, "rpc");
+  __name(rpc2, "rpc");
   async function inventory(device, signal, check = true) {
     let enabled = new Map((await rows(device)).map((row) => [row.id, row]));
+    const known = new Map(enabled);
+    const hasPresence = check && await db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='fleet_local_service_presence'").first();
+    const presence = hasPresence ? (await db.prepare("SELECT id,name,source,transport,present FROM fleet_local_service_presence WHERE device_id=?").bind(device).all()).results : [];
+    for (const row of presence) {
+      if (row.present) known.set(row.id, row);
+      else known.delete(row.id);
+    }
+    const cached2 = /* @__PURE__ */ __name((status) => [...known.values()].map(({ id: id2, name, source, transport }) => ({ id: id2, name, source, transport, enabled: enabled.has(id2), status })), "cached");
     let scan;
     try {
-      scan = await rpc(device, { action: "inventory", enabled: [...enabled.keys()], check }, signal);
+      scan = await rpc2(device, { action: "inventory", enabled: [...enabled.keys()], check }, signal);
     } catch {
       return {
         complete: false,
-        services: [...enabled.values()].map((row) => ({ ...row, enabled: true, status: "\u672A\u8FDE\u63A5" })),
+        services: cached2("\u672A\u8FDE\u63A5"),
         warnings: ["\u8BBE\u5907\u672A\u54CD\u5E94\uFF0C\u672A\u80FD\u8BFB\u53D6\u672C\u673A MCP \u5217\u8868\u3002"]
       };
     }
@@ -9747,23 +9770,40 @@ function localServicePolicy(db, devices) {
       ]);
     }
     enabled = new Map((await rows(device)).map((row) => [row.id, row]));
-    const services = scan.services.map((service) => {
-      const on = enabled.delete(service.id);
-      return { ...service, enabled: on, status: service.status ?? service.unavailable ?? "\u5DF2\u53D1\u73B0" };
-    });
     const complete = !scan.pending && !scan.warnings.length;
-    const missing = complete ? "\u672A\u53D1\u73B0" : scan.pending ? "\u68C0\u6D4B\u4E2D" : "\u672A\u80FD\u786E\u8BA4";
-    return {
-      services: [...services, ...[...enabled.values()].map((row) => ({ ...row, enabled: true, status: missing }))],
-      complete,
-      warnings: scan.warnings
-    };
+    const previous = new Map(presence.map((row) => [row.id, row]));
+    const changes = [];
+    const services = scan.services.map((service) => {
+      const { id: id2, name, source, transport } = service, old = previous.get(id2);
+      if (check && (!old?.present || old.name !== name || old.source !== source || old.transport !== transport)) {
+        changes.push({ id: id2, name, source, transport, present: 1 });
+      }
+      known.delete(id2);
+      return { ...service, enabled: enabled.has(id2), status: service.status ?? service.unavailable ?? "\u5DF2\u53D1\u73B0" };
+    });
+    if (!complete) services.push(...cached2(scan.pending ? "\u68C0\u6D4B\u4E2D" : "\u672A\u80FD\u786E\u8BA4"));
+    else if (check) for (const row of known.values()) changes.push({ ...row, present: 0 });
+    if (changes.length) {
+      if (!hasPresence) await db.prepare(createPresence).run();
+      await db.prepare(`INSERT OR REPLACE INTO fleet_local_service_presence (device_id,id,name,source,transport,present)
+        SELECT ?,value->>'id',value->>'name',value->>'source',value->>'transport',value->>'present' FROM json_each(?)`).bind(device, JSON.stringify(changes)).run();
+    }
+    return { services, complete, pending: scan.pending, warnings: scan.warnings };
   }
   __name(inventory, "inventory");
   return {
+    async cliList(device, signal) {
+      try {
+        const result = await rpc2(device, { action: "cli-list" }, signal);
+        if (Array.isArray(result.commands)) return result;
+      } catch {
+        signal?.throwIfAborted();
+      }
+      return { commands: [], complete: false, warnings: ["\u65E0\u6CD5\u8BFB\u53D6 CLI \u5217\u8868\uFF0C\u8BF7\u68C0\u67E5\u8BBE\u5907\u8FDE\u63A5\u548C\u5BA2\u6237\u7AEF\u7248\u672C\u3002"] };
+    },
     async installed(device, terms, signal) {
       try {
-        const result = await rpc(device, { action: "installed-search", terms }, signal);
+        const result = await rpc2(device, { action: "installed-search", terms }, signal);
         if (Array.isArray(result.matches)) return result;
       } catch {
         signal?.throwIfAborted();
@@ -9773,23 +9813,24 @@ function localServicePolicy(db, devices) {
     // The owner's catalogue preview is separate from the ChatGPT grant.
     async previewTools(device, id2, signal) {
       try {
-        const { tools: tools2 } = await rpc(device, { action: "catalog", id: id2 }, signal);
+        const { tools: tools2 } = await rpc2(device, { action: "catalog", id: id2 }, signal);
         return tools2.map(({ name, description }) => ({ name, description }));
       } finally {
-        if (!(await rows(device)).some((row) => row.id === id2)) await rpc(device, { action: "release", id: id2 });
+        if (!await granted(device, id2)) await rpc2(device, { action: "release", id: id2 });
       }
     },
     async search(device, query, selected, signal) {
       if (selected) {
-        if (!(await rows(device)).some((row) => row.id === selected)) return [];
-        return (await rpc(device, { action: "search", query, ids: [selected] }, signal)).tools;
+        if (!await granted(device, selected)) return [];
+        return (await rpc2(device, { action: "search", query, ids: [selected] }, signal)).tools;
       }
       const { services, warnings } = await inventory(device, signal, false);
-      const ids = services.filter((s) => s.enabled && !s.unavailable && s.status !== "\u672A\u53D1\u73B0").map((s) => s.id);
-      const tools2 = ids.length ? (await rpc(device, { action: "search", query, ids }, signal)).tools : [];
+      const ids = services.filter((s) => s.enabled && !s.unavailable).map((s) => s.id);
+      const tools2 = ids.length ? (await rpc2(device, { action: "search", query, ids }, signal)).tools : [];
       return [...tools2, ...warnings.map((error2) => ({ error: error2 }))];
     },
     inventory,
+    enabled: granted,
     async set(device, id2, enabled, signal) {
       if (!enabled) {
         await db.batch([
@@ -9799,13 +9840,18 @@ function localServicePolicy(db, devices) {
           db.prepare("DELETE FROM fleet_local_services WHERE device_id=? AND id=?").bind(device, id2)
         ]);
         try {
-          await rpc(device, { action: "release", id: id2 }, signal);
+          await rpc2(device, { action: "release", id: id2 }, signal);
         } catch {
         }
         return;
       }
-      const service = await rpc(device, { action: "describe", id: id2 }, signal);
-      if (service.id !== id2) throw new Error("\u8BBE\u5907\u4E0A\u7684\u670D\u52A1\u5DF2\u53D8\u5316\uFF0C\u8BF7\u5237\u65B0\u540E\u91CD\u8BD5\u3002");
+      let service;
+      try {
+        service = await rpc2(device, { action: "describe", id: id2 }, signal);
+      } catch (cause) {
+        throw new LocalServiceUnavailable("\u672A\u80FD\u8FDE\u63A5\u670D\u52A1\uFF0C\u672A\u5F00\u542F\u3002", { cause });
+      }
+      if (service.id !== id2) throw new LocalServiceUnavailable("\u670D\u52A1\u5DF2\u53D8\u5316\uFF0C\u8BF7\u91CD\u65B0\u68C0\u6D4B\u3002");
       await db.batch([
         db.prepare(createPolicy),
         db.prepare(createDisabled),
@@ -9814,8 +9860,8 @@ function localServicePolicy(db, devices) {
       ]);
     },
     async dispatch(device, args, signal) {
-      if (!(await rows(device)).some((row) => row.id === args.id)) throw new Error("\u672C\u673A MCP \u672A\u542F\u7528\u3002");
-      return rpc(device, args, signal);
+      if (!await granted(device, args.id)) throw new Error("\u672C\u673A MCP \u672A\u542F\u7528\u3002");
+      return rpc2(device, args, signal);
     }
   };
 }
@@ -9848,6 +9894,11 @@ function deviceDisplayName(input) {
 }
 __name(deviceDisplayName, "deviceDisplayName");
 var deviceLabelsTable = "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'fleet_device_labels'";
+var deletedDevicesTable = "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'fleet_deleted_devices'";
+async function wasDeleted(db, id2) {
+  return await db.prepare(deletedDevicesTable).first() && await db.prepare("SELECT 1 FROM fleet_deleted_devices WHERE device_id=?").bind(id2).first();
+}
+__name(wasDeleted, "wasDeleted");
 var createDeviceLabels = `CREATE TABLE IF NOT EXISTS fleet_device_labels (
   device_id TEXT PRIMARY KEY NOT NULL REFERENCES fleet_devices(id) ON DELETE CASCADE,
   display_name TEXT NOT NULL
@@ -10081,11 +10132,14 @@ function createDevices(env, request = fetch) {
         return callbackLabels(state2);
       });
     },
-    async list() {
-      const labeled = await db.prepare(deviceLabelsTable).first();
-      return (await db.prepare(`SELECT id, platform, ${registrationStatus} AS status, updated_at
+    async list(id2) {
+      const [labeled, deleted] = await Promise.all([deviceLabelsTable, deletedDevicesTable].map((sql) => db.prepare(sql).first()));
+      const where = [id2 !== void 0 && "id = ?", deleted && "id NOT IN (SELECT device_id FROM fleet_deleted_devices)"].filter(Boolean);
+      const statement = db.prepare(`SELECT id, platform, ${registrationStatus} AS status, updated_at
         ${labeled ? ", display_name AS displayName" : ""} FROM fleet_devices
-        ${labeled ? "LEFT JOIN fleet_device_labels ON device_id = id" : ""} ORDER BY id`).all()).results;
+        ${labeled ? "LEFT JOIN fleet_device_labels ON device_id = id" : ""}
+        ${where.length ? "WHERE " + where.join(" AND ") : ""} ORDER BY id`);
+      return (await (id2 === void 0 ? statement : statement.bind(id2)).all()).results;
     },
     async reserveNamed(input, operationId) {
       const name = deviceDisplayName(input);
@@ -10097,6 +10151,7 @@ function createDevices(env, request = fetch) {
           await db.prepare("CREATE TABLE IF NOT EXISTS fleet_device_reservations (operation_id TEXT PRIMARY KEY, device_id TEXT NOT NULL, display_name TEXT NOT NULL)").run();
           const replay = await db.prepare("SELECT device_id, display_name FROM fleet_device_reservations WHERE operation_id = ?").bind(operationId).first();
           if (replay) {
+            if (await wasDeleted(db, replay.device_id)) throw new DeviceError("\u8FD9\u53F0\u8BBE\u5907\u5DF2\u5220\u9664\u3002", 410);
             if (replay.display_name !== name) throw new DeviceError("\u8BE5\u64CD\u4F5C\u7F16\u53F7\u5DF2\u7528\u4E8E\u5176\u4ED6\u8BBE\u5907\u540D\u79F0\u3002", 409);
             return { deviceId: replay.device_id, draftSaved: true };
           }
@@ -10268,12 +10323,12 @@ function createDevices(env, request = fetch) {
     async enrollmentStatus(id2) {
       validId(id2);
       const row = await db.prepare(`SELECT ${registrationStatus} AS status FROM fleet_devices WHERE id = ?`).bind(id2).first();
-      if (!row) throw new DeviceError("Unknown device", 404);
+      if (!row || row.status === "disabled" && await wasDeleted(db, id2)) throw new DeviceError("Unknown device", 404);
       return { registration: row.status };
     },
     async status(id2) {
       const row = await readDevice(db, id2);
-      if (!row) throw new DeviceError("Unknown device", 404);
+      if (!row || row.status === "disabled" && await wasDeleted(db, id2)) throw new DeviceError("Unknown device", 404);
       if (row.draft) return { deviceId: id2, registration: "draft", tunnel: "unregistered", mcp: "not_enabled", checkedAt: now3() };
       const api = cloudflareApi(token, { request });
       const tunnelCheck = (async () => {
@@ -10352,13 +10407,15 @@ function createDevices(env, request = fetch) {
         ]);
         if (row.tunnel_id) {
           const path = `${account}/cfd_tunnel/${row.tunnel_id}`;
-          const tunnel = await api.get(path);
-          if (tunnel.name !== `${spec.label}-${row.unique_name}`) throw new DeviceError("Tunnel ownership changed", 409);
-          await api.put(path + "/configurations", { config: { ingress: tunnelRules("", []) } });
-          if (row.credentials) {
-            const secret = base64url_exports.encode(crypto.getRandomValues(new Uint8Array(32))).replaceAll("-", "+").replaceAll("_", "/") + "=";
-            await api.patch(path, { tunnel_secret: secret });
-            await api.del(path + "/connections");
+          const tunnel = await api.getOptional(path);
+          if (tunnel && !tunnel.deleted_at) {
+            if (tunnel.name !== `${spec.label}-${row.unique_name}` || tunnel.config_src !== "cloudflare") throw new DeviceError("Tunnel ownership changed", 409);
+            await api.put(path + "/configurations", { config: { ingress: tunnelRules("", []) } });
+            if (row.credentials) {
+              const secret = base64url_exports.encode(crypto.getRandomValues(new Uint8Array(32))).replaceAll("-", "+").replaceAll("_", "/") + "=";
+              await api.patch(path, { tunnel_secret: secret });
+              await api.del(path + "/connections");
+            }
           }
         }
         const revoked = stored && await wrap(row, {
@@ -10368,6 +10425,45 @@ function createDevices(env, request = fetch) {
         await db.prepare("UPDATE fleet_devices SET credentials = ? WHERE id = ?").bind(revoked, id2).run();
         return { status: "disabled" };
       });
+    },
+    async remove(id2) {
+      await this.disable(id2);
+      return run(async (api, guard) => {
+        await db.prepare("CREATE TABLE IF NOT EXISTS fleet_deleted_devices (device_id TEXT PRIMARY KEY NOT NULL)").run();
+        if (await db.prepare("SELECT 1 FROM fleet_deleted_devices WHERE device_id=?").bind(id2).first()) return { status: "deleted" };
+        const row = await readDevice(db, id2);
+        if (row.credentials) {
+          const path = account + "/cfd_tunnel";
+          const name = spec.label + "-" + row.unique_name;
+          const tunnel = row.tunnel_id ? await api.getOptional(path + "/" + row.tunnel_id) : single(await api.list(path, { name, is_deleted: false }), (item) => item.name === name, "device Tunnel");
+          if (tunnel && (tunnel.name !== name || tunnel.config_src !== "cloudflare")) {
+            throw new DeviceError("Tunnel \u5F52\u5C5E\u4E0D\u5339\u914D\uFF0C\u672A\u5220\u9664\u3002", 409);
+          }
+          const tunnelId = row.tunnel_id ?? tunnel?.id;
+          if (tunnelId) {
+            const dns = "/zones/" + spec.zoneId + "/dns_records";
+            const { hostname } = identity(spec, row);
+            const record5 = single(await api.list(dns, { name: hostname }), (item) => item.name === hostname, "DNS record");
+            if (record5) {
+              if (record5.type !== "CNAME" || record5.comment !== spec.label || record5.content.replace(/\.$/, "") !== tunnelId + ".cfargotunnel.com") {
+                throw new DeviceError("\u8BBE\u5907\u57DF\u540D\u5F52\u5C5E\u4E0D\u5339\u914D\uFF0C\u672A\u5220\u9664\u3002", 409);
+              }
+              await api.del(dns + "/" + record5.id);
+            }
+            if (tunnel && !tunnel.deleted_at) await api.del(path + "/" + tunnelId);
+          }
+        }
+        const cleanup = ["fleet_device_labels", "enrollment_intents", "fleet_local_services", "fleet_local_services_disabled", "fleet_local_service_presence"];
+        const { results: tables } = await db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all();
+        await guard();
+        await db.batch([
+          ...cleanup.filter((name) => tables.some((t) => t.name === name)).map((name) => db.prepare("DELETE FROM " + name + " WHERE device_id=?").bind(id2)),
+          ...tables.some((t) => t.name === "fleet_device_reservations") ? [db.prepare("UPDATE fleet_device_reservations SET display_name='' WHERE device_id=?").bind(id2)] : [],
+          db.prepare("UPDATE fleet_devices SET platform='', tunnel_id=NULL WHERE id=?").bind(id2),
+          db.prepare("INSERT INTO fleet_deleted_devices (device_id) VALUES (?)").bind(id2)
+        ]);
+        return { status: "deleted" };
+      });
     }
   };
 }
@@ -10376,7 +10472,7 @@ __name(createDevices, "createDevices");
 // ../cloud/enrollment-admin.mjs
 var uuidPattern2 = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
 var valid = /* @__PURE__ */ __name((pattern, value) => typeof value === "string" && pattern.test(value), "valid");
-var fieldsAre = /* @__PURE__ */ __name((value, fields) => value !== null && typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === fields.length && fields.every((field) => Object.hasOwn(value, field)), "fieldsAre");
+var fieldsAre = /* @__PURE__ */ __name((value, fields2) => value !== null && typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === fields2.length && fields2.every((field) => Object.hasOwn(value, field)), "fieldsAre");
 var enrollmentErrors = {
   invalid_target: [400, "\u65E0\u6CD5\u8BC6\u522B\u8FD9\u53F0\u8BBE\u5907\u7684\u5B89\u88C5\u547D\u4EE4\u3002"],
   invalid_device: [400, "\u8BBE\u5907\u540D\u79F0\u6216\u7CFB\u7EDF\u9009\u9879\u65E0\u6548\uFF0C\u8BF7\u68C0\u67E5\u540E\u91CD\u8BD5\u3002"],
@@ -10511,15 +10607,15 @@ async function persistEnrollmentArchive(batch, { history, previous, current, ini
         required: !initialize && wasActive,
         archive: wasActive && !Object.hasOwn(current[os] ?? {}, version3)
       });
-      for (const { url, sha256: sha2563 } of Object.values(group.assets)) {
-        if (pins.has(url) && pins.get(url) !== sha2563) throw archiveError("enrollment_pin_conflict");
-        pins.set(url, sha2563);
+      for (const { url: url2, sha256: sha2563 } of Object.values(group.assets)) {
+        if (pins.has(url2) && pins.get(url2) !== sha2563) throw archiveError("enrollment_pin_conflict");
+        pins.set(url2, sha2563);
       }
     }
   }
   const reads = [
     ...items.map(({ os, version: version3 }) => ({ sql: "SELECT body, archived FROM enrollment_packages WHERE os = ? AND version = ?", params: [os, version3] })),
-    ...Array.from(pins.keys(), (url) => ({ sql: "SELECT sha256 FROM enrollment_asset_pins WHERE url = ?", params: [url] }))
+    ...Array.from(pins.keys(), (url2) => ({ sql: "SELECT sha256 FROM enrollment_asset_pins WHERE url = ?", params: [url2] }))
   ];
   const inspect = /* @__PURE__ */ __name((rows, verify) => {
     const writes = [];
@@ -10535,11 +10631,11 @@ async function persistEnrollmentArchive(batch, { history, previous, current, ini
       else if (archive && row.archived !== 1) writes.push({ sql: "UPDATE enrollment_packages SET archived = 1 WHERE os = ? AND version = ? AND body = ?", params: [os, version3, body] });
     }
     let i = items.length;
-    for (const [url, sha2563] of pins) {
+    for (const [url2, sha2563] of pins) {
       const row = rows[i++].results[0];
       if (row && row.sha256 !== sha2563) throw archiveError("enrollment_pin_conflict");
       if (!row && verify) throw archiveError("enrollment_archive_unconfirmed");
-      if (!row) writes.push({ sql: "INSERT INTO enrollment_asset_pins(url,sha256) VALUES (?,?) ON CONFLICT(url) DO NOTHING", params: [url, sha2563] });
+      if (!row) writes.push({ sql: "INSERT INTO enrollment_asset_pins(url,sha256) VALUES (?,?) ON CONFLICT(url) DO NOTHING", params: [url2, sha2563] });
     }
     return writes;
   }, "inspect");
@@ -10613,8 +10709,8 @@ function enrollmentContext(env) {
       if (!release || !Object.values(release.assets).every((asset) => asset.url)) return;
       return bootstrapInstaller(origin, os, release, { enrollmentIntent: true, deviceId: intent.deviceId });
     },
-    async command(origin, target) {
-      const { releases: releases2, deviceId: deviceId2, code } = await admin.reveal(target);
+    async command(origin, target2) {
+      const { releases: releases2, deviceId: deviceId2, code } = await admin.reveal(target2);
       const commands = Object.fromEntries(Object.entries(releases2).map(([os, release]) => [os, publicInstallCommand(origin, release.platform, code)]));
       const systems = Object.keys(commands);
       const platform = systems.includes("macos") ? "macos" : systems[0];
@@ -10723,7 +10819,7 @@ var consoleDeviceListScript = String.raw`
       if (listRequest !== controller) return;
       if (response.status === 304) {
         listFeedback.textContent = '';
-        return;
+        return true;
       }
       if (!response.ok) throw new Error('List read failed');
       const { rows, counts } = await response.json();
@@ -10745,6 +10841,7 @@ var consoleDeviceListScript = String.raw`
         const next = replacement && [...replacement.querySelectorAll('button[data-action]')].find(button => button.dataset.action === action);
         (next ?? search).focus();
       }
+      return true;
     } catch {
       if (listRequest === controller) {
         listFeedback.textContent = '同步中断，显示上次的设备状态。';
@@ -10846,6 +10943,16 @@ var consoleUpgradeScript = String.raw`
   const upgradeDialog = document.querySelector('#upgrade-dialog');
   const upgradeDescription = document.querySelector('#upgrade-description');
   const upgradeStatus = document.querySelector('#upgrade-status');
+  const upgradeSteps = Array.from(document.querySelector('#upgrade-steps').children, row => ({ row, label:row.textContent }));
+  function showStep(step = 0, runningLabel = '') {
+    upgradeSteps.forEach(({ row, label }, index) => {
+      const current = index + 1 === step && runningLabel;
+      if (current) row.setAttribute('aria-current','step'); else row.removeAttribute('aria-current');
+      row.toggleAttribute('data-done', index + 1 < step);
+      const text = current || label;
+      if (row.textContent !== text) row.textContent = text;
+    });
+  }
   function displayVersions(current, target) {
     document.querySelector('#upgrade-versions').hidden = !target;
     document.querySelector('#upgrade-from').textContent = current ? 'v' + current : '尚未确认';
@@ -10869,9 +10976,9 @@ var consoleUpgradeScript = String.raw`
   const phaseText = { uploading: '上传结果尚未确认。', staged: '已记录候选版本，切换结果尚未确认。',
     deploying: '版本切换结果尚未确认。' };
   const runningPhaseText = {
-    uploading: '2/3 · 签名已校验，正在上传新版本。',
-    staged: '2/3 · 新版本已上传，准备切换流量。',
-    deploying: '3/3 · 正在确认 Cloudflare 是否已切换流量。',
+    uploading: '正在上传管理台版本',
+    staged: '已上传，正在准备切换',
+    deploying: '正在切换版本并核对',
   };
   function historicalUpgradeText(version, currentVersion) {
     const respondingVersion = currentVersion ? '当前页面版本 v' + currentVersion + '。' : '';
@@ -10908,19 +11015,18 @@ var consoleUpgradeScript = String.raw`
   function currentUpgradeView(view) {
     return upgradeView === view && view.foreground && upgradeDialog.open && !document.hidden;
   }
-  function monitorUpgradeProgress(operationId, version, view) {
+  function monitorUpgradeProgress(operationId, version) {
     const controller = new AbortController();
     let timer;
     const read = async () => {
-      if (controller.signal.aborted || !currentUpgradeView(view)) return;
+      if (controller.signal.aborted) return;
+      if (!upgradeDialog.open || document.hidden) { timer = setTimeout(read, 2500); return; }
       const signal = AbortSignal.any([controller.signal, AbortSignal.timeout(6000)]);
       const status = await requestJson('/admin/upgrade/status', { signal }).catch(() => null);
-      if (controller.signal.aborted || !currentUpgradeView(view)) return;
+      if (controller.signal.aborted) return;
       if (status?.operationId === operationId && status.version === version && Object.hasOwn(runningPhaseText, status.phase)) {
-        upgradeDialog.setAttribute('data-step', status.phase === 'deploying' ? '3' : '2');
+        showStep(status.phase === 'deploying' ? 3 : 2, runningPhaseText[status.phase]);
         markUpgradeRecovery(true);
-        const message = runningPhaseText[status.phase];
-        if (upgradeStatus.textContent !== message) upgradeStatus.textContent = message;
       }
       timer = setTimeout(read, 2500);
     };
@@ -10929,22 +11035,26 @@ var consoleUpgradeScript = String.raw`
   }
   async function finishConfirmedUpgrade(result, operationId, version, view) {
     showUpgradeHeader();
+    showStep(result.status === 'deployment_confirmed' ? 3 : 0);
     if (result.status !== 'deployment_confirmed' || result.operationId !== operationId ||
         result.version !== version || !currentUpgradeView(view)) return;
-    upgradeStatus.textContent = 'Cloudflare 已确认切换流量。正在检查新版本是否已能访问…';
+    showStep(3,'正在核对新版本是否可访问');
+    upgradeStatus.textContent = '';
     for (let i = 0; i < 4; i++) {
-      if (!currentUpgradeView(view)) return;
+      if (!currentUpgradeView(view)) break;
       const state = await requestJson('/admin/upgrade/status', { signal: AbortSignal.timeout(3000) }).catch(() => null);
-      if (!currentUpgradeView(view)) return;
+      if (!currentUpgradeView(view)) break;
       if (state?.phase === 'confirmed' && state.operationId === operationId &&
           state.version === version && state.currentVersion === version) {
+        showStep(4);
         upgradeStatus.textContent = '新版本已上线，正在刷新管理台…';
         window.location.reload();
         return;
       }
       if (i < 3) await new Promise(resolve => setTimeout(resolve, 1000));
     }
-    if (currentUpgradeView(view)) upgradeStatus.textContent = cutoverText(result);
+    showStep(3);
+    upgradeStatus.textContent = cutoverText(result);
   }
   function showUpgradeHeader(feed, status) {
     const version = status?.currentVersion ?? feed?.currentVersion;
@@ -10978,20 +11088,16 @@ var consoleUpgradeScript = String.raw`
     const controller = new AbortController();
     upgradeStatusRequest = controller;
     const isCurrent = () => upgradeDialog.open && upgradeStatusRequest === controller;
-    upgradeDescription.textContent = '';
-    upgradeStatus.textContent = '正在检查升级状态…';
     confirmUpgrade.hidden = true;
     if (upgrading) {
       // Let the in-flight POST finish and render its result. An overlapping
       // GET could overwrite that result or lose the retry button.
-      const checking = upgrading === 'reconcile';
-      reconcileUpgrade.hidden = !checking;
-      upgradeStatus.textContent = checking ? '正在向 Cloudflare 核对实际生效的版本…'
-        : '正在等待 Cloudflare 响应，请勿重复提交。';
       showUpgradeDialog();
       return;
     }
-    upgradeDialog.removeAttribute('data-step');
+    upgradeDescription.textContent = '';
+    upgradeStatus.textContent = '正在检查升级状态…';
+    showStep();
     displayVersions();
     reconcileUpgrade.hidden = true;
     pendingUpgrade = undefined;
@@ -11003,6 +11109,7 @@ var consoleUpgradeScript = String.raw`
       const { phase, operationId, version, currentVersion } = status;
       if (activePhases.has(phase)) {
         displayVersions(currentVersion, version);
+        showStep(phase === 'deploying' ? 3 : 2);
         showUpgradeHeader(null, status);
         releaseCheck = undefined;
         pendingUpgrade = operationId;
@@ -11091,11 +11198,11 @@ var consoleUpgradeScript = String.raw`
     const operationId = crypto.randomUUID();
     const view = upgradeView;
     upgrading = 'start';
-    upgradeDialog.setAttribute('data-step', '1');
+    showStep(1,'正在校验发布签名');
     hideUpgradeAction(confirmUpgrade);
-    upgradeStatus.textContent = '1/3 · 正在校验签名和目标版本。可以关闭此窗口，稍后查看结果。';
+    upgradeStatus.textContent = '';
     markUpgradeRecovery();
-    const stopProgress = monitorUpgradeProgress(operationId, version, view);
+    const stopProgress = monitorUpgradeProgress(operationId, version);
     try {
       const result = await post('/admin/upgrade/start', { version, ...digest, operationId });
       stopProgress();
@@ -11108,6 +11215,7 @@ var consoleUpgradeScript = String.raw`
       await finishConfirmedUpgrade(result, operationId, version, view);
     } catch (error) {
       stopProgress();
+      showStep();
       upgradeStatus.textContent = error.message;
       const state = await requestJson('/admin/upgrade/status').catch(() => null);
       if (activePhases.has(state?.phase) && state.operationId) markUpgradeRecovery(true);
@@ -11121,10 +11229,11 @@ var consoleUpgradeScript = String.raw`
           upgradeStatus.textContent = historicalUpgradeText(state.version, state.currentVersion);
         }
       } else if (upgradeDialog.open && activePhases.has(state?.phase) && state.operationId) {
+        showStep(state.phase === 'deploying' ? 3 : 2);
         pendingUpgrade = state.operationId;
         reconcileUpgrade.hidden = false;
       }
-    } finally { upgrading = undefined; upgradeDialog.removeAttribute('data-step'); }
+    } finally { upgrading = undefined; }
   }
 `;
 var consoleAfterUpgrade = String.raw`
@@ -11783,9 +11892,9 @@ var consoleDeviceDetails = String.raw`
       }
       return;
     }
-    const current = { deviceId: row.dataset.device, action, ...(row.dataset.intent && { intentId: row.dataset.intent }) };
+    const current = { deviceId: row.dataset.device, action, ...(action !== 'delete' && row.dataset.intent && { intentId: row.dataset.intent }) };
     selected = current;
-    const isRisk = ['disable', 'cancel', 'intent-revoke'].includes(action);
+    const isRisk = ['delete', 'disable', 'cancel', 'intent-revoke'].includes(action);
     detail.dataset.risk = isRisk;
     detailTitle.textContent = action === 'status' ? '设备状态' : button.textContent;
     summary.textContent = [row.querySelector('.device-name').textContent, row.querySelector('.system').textContent].filter(Boolean).join(' · ');
@@ -11795,10 +11904,11 @@ var consoleDeviceDetails = String.raw`
     detailConfirm.hidden = !isRisk;
     detailRecheck.hidden = isRisk;
     detailConfirm.disabled = false;
-    detailConfirm.textContent = action === 'disable' ? '确认停用' : action === 'intent-revoke' ? '确认撤销命令' : '确认取消票据';
+    detailConfirm.textContent = action === 'delete' ? '确认删除' : action === 'disable' ? '确认停用' : action === 'intent-revoke' ? '确认撤销命令' : '确认取消票据';
     showField('registration', row.querySelector('.state').textContent);
     for (const field of ['checked', 'tunnel', 'mcp', 'browser', 'release', 'client', 'revocation']) showField(field);
     detailFeedback.textContent = {
+      delete: '安装命令和远程接入将失效。保留本机客户端和项目文件。',
       disable: '停用将撤销该设备的安装票据、Tunnel 凭据和 网关访问权限。',
       cancel: '取消后，这台设备未使用的安装票据将失效。',
       'intent-revoke': '撤销后，已复制但未领取的安装命令立即失效。',
@@ -11859,22 +11969,39 @@ var consoleDeviceDetails = String.raw`
     }
   });
   detailConfirm.addEventListener('click', async () => {
-    if (saving || !selected || !['disable', 'cancel', 'intent-revoke'].includes(selected.action)) return;
+    if (saving || !selected || !['delete', 'disable', 'cancel', 'intent-revoke'].includes(selected.action)) return;
     saving = true;
     detailConfirm.disabled = true;
     for (const button of detailClose) button.disabled = true;
-    detailFeedback.textContent = '正在提交请求…';
+    detailFeedback.textContent = selected.action === 'delete' ? '正在删除设备…' : '正在提交请求…';
     try {
       const result = selected.action === 'intent-revoke'
         ? await post('/admin/enrollment-intents', { deviceId: selected.deviceId, intentId: selected.intentId, action: 'revoke' })
         : await post('/admin/device', selected);
       refreshOnClose = true;
+      if (selected.action === 'delete') {
+        detail.close();
+        return;
+      }
       detailConfirm.hidden = true;
       detailDismiss.textContent = '关闭';
       detailFeedback.textContent = selected.action === 'disable' ? '远程接入已停用。'
         : result.status === 'cancelled' ? (selected.action === 'intent-revoke' ? '安装命令已撤销。' : '安装票据已取消。')
           : '没有可取消的票据。已领取的凭据不受影响。';
     } catch (error) {
+      if (selected.action === 'delete') {
+        const synced = await refreshDeviceList();
+        if (synced && ![...tbody.rows].some(row => row.dataset.device === selected.deviceId)) {
+          detail.close();
+          return;
+        }
+        detailConfirm.hidden = !synced;
+        detailDismiss.textContent = '关闭';
+        if (!synced) {
+          detailFeedback.textContent = '暂时无法确认删除结果。请刷新设备列表后核对。';
+          return;
+        }
+      }
       detailFeedback.textContent = error.message;
     } finally {
       saving = false;
@@ -11916,7 +12043,11 @@ var desktopStyles = `
   .summary-cards button { display:flex; align-items:center; justify-content:space-between; text-align:left; padding:16px 20px; border-radius:11px; background:var(--surface); color:var(--secondary); }
   .summary-cards .count { display:block; font:650 28px/1.35 ui-monospace,monospace; color:var(--text); }
   .summary-cards button[aria-pressed=true] { border-color:var(--active); }
-  .summary-cards .icon,.initial { background:var(--selected); color:var(--active); width:39px; height:39px; border-radius:10px; border:0; }
+  .summary-cards .icon { background:var(--selected); color:var(--active); width:39px; height:39px; border-radius:10px; border:0; }
+  .monogram { display:inline-grid; place-items:center; flex:none; width:39px; height:39px; border-radius:10px;
+    font:650 18px/1 system-ui,sans-serif; color:light-dark(hsl(var(--h) 47% 29%),hsl(var(--h) 63% 83%));
+    background:light-dark(hsl(var(--h) 52% 92%),hsl(var(--h) 26% 23%)); }
+  ${[212, 33, 270, 165, 343, 190, 12, 85].map((h, i) => `.tone-${i}{--h:${h}}`).join("")}
   .summary-cards .icon { padding:10px; }
   [data-filter=pending] .icon { color:var(--pending); background:light-dark(#fcf1cf,#3e3523); }
   [data-filter=disabled] .icon { color:var(--secondary); background:var(--inset); }
@@ -11975,22 +12106,45 @@ var desktopStyles = `
   #device-command-systems:not([hidden]) + #command-content textarea { border-radius:0 0 8px 8px; }
   .workspace main.service-page { width:min(1060px,calc(100% - 80px)); margin-top:48px; }
   .device-context { color:var(--secondary); font-size:13px; margin-bottom:9px; }
-  #service-total { display:inline-block; vertical-align:middle; font:550 13px ui-monospace,monospace; letter-spacing:0; border-radius:6px; padding:4px 7px; background:var(--inset); }
+  .device-tool-tabs { display:flex; gap:24px; margin-bottom:18px; border-bottom:1px solid var(--line); }
+  .device-tool-tabs a { display:flex; align-items:center; gap:6px; padding:8px 2px; color:var(--secondary); text-decoration:none; border-bottom:2px solid transparent; }
+  .device-tool-tabs a[aria-current] { border-color:var(--active); color:var(--active); font-weight:650; }
+  .device-tool-tabs small { font:550 12px ui-monospace,monospace; border-radius:6px; padding:3px 6px; background:var(--selected); }
+  .cli-search { display:flex; gap:8px; margin:18px 0; align-items:center; }
+  .cli-search .search { flex:1; min-width:0; max-width:34em; }
+  .cli-scope { display:flex; align-items:center; justify-content:space-between; margin:18px 2px 10px; font-size:14px; }
+  .cli-scope a { color:var(--active); }
+  .cli-list { margin:0; background:var(--surface); border:1px solid var(--line); border-radius:10px; }
+  .cli-list div { display:grid; grid-template-columns:minmax(9em,1fr) 3fr; align-items:baseline; gap:12px; padding:12px 16px; }
+  .cli-list div+div { border-top:1px solid var(--line); }
+  .cli-list dt,.cli-list dd { margin:0; font:13px/1.5 ui-monospace,monospace; overflow-wrap:anywhere; }
+  .cli-list dt { font-weight:650; } .cli-list dd { color:var(--secondary); }
+  #cli-feedback:empty { display:none; }
+  @media(max-width:640px){.cli-list div{grid-template-columns:1fr;gap:3px}}
   .service-grid { display:grid; gap:14px; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:16px; }
   .service-card { padding:16px 18px 0; min-width:0; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
+  .service-card:target { outline:2px solid var(--active); outline-offset:2px; scroll-margin-block:20px; }
   .service-meta,.service-foot,.service-head { display:flex; align-items:center; justify-content:space-between; gap:8px; }
   .service-meta { color:var(--secondary); font-size:12px; flex-wrap:wrap; }
   .service-source code,.sheet-source { font:11px/1.4 ui-monospace,monospace; color:var(--secondary); }
   .service-signal::before { content:""; display:inline-block; vertical-align:middle; width:6px; height:6px; margin-right:5px; border-radius:50%; background:var(--secondary); }
   .service-signal[data-ready=true]::before { background:var(--active); }
   .service-card h2 { margin:22px 0 20px; font-size:20px; overflow-wrap:anywhere; display:flex; align-items:center; gap:13px; }
-  .service-card h2 svg,.sheet-tile svg { flex:none; width:44px; height:44px; padding:10px; background:var(--selected); color:var(--active); border-radius:12px; }
+  .service-card .monogram { width:44px; height:44px; border-radius:12px; font-size:22px; }
   .upgrade-steps { padding:0; list-style:none; counter-reset:upgrade; margin:12px 0; }
   #upgrade-versions[hidden] ~ .upgrade-steps { display:none; }
   .upgrade-steps li { display:flex; align-items:center; gap:12px; padding:6px 0; color:var(--secondary); }
-  .upgrade-steps li::before { counter-increment:upgrade; content:counter(upgrade); border-radius:50%; padding:3px 8px; font:600 13px/18px ui-monospace,monospace; background:var(--inset); }
-  #upgrade-dialog[data-step="1"] li:nth-child(1)::before,#upgrade-dialog[data-step="2"] li:nth-child(2)::before,#upgrade-dialog[data-step="3"] li:nth-child(3)::before { background:var(--blue); color:white; }
+  .upgrade-steps li::before { counter-increment:upgrade; content:counter(upgrade); flex:none; display:grid; place-items:center; width:24px; height:24px; box-sizing:border-box; border-radius:50%; font:600 13px/1 ui-monospace,monospace; background:var(--inset); }
+  .upgrade-steps li[data-done]::before { content:'\u2713'; color:var(--active); background:var(--selected); }
+  .upgrade-steps li[aria-current=step] { font-weight:600; color:var(--text); }
+  .upgrade-steps li[aria-current=step]::before { content:''; width:20px; height:20px; margin:2px; background:none; border:2px solid var(--line); border-top-color:var(--active); border-right-color:var(--active); animation:upgrade-spin .85s linear infinite; }
+  @keyframes upgrade-spin { to { transform:rotate(1turn); } }
+  @media(prefers-reduced-motion:reduce){.upgrade-steps li[aria-current=step]::before{animation:none}}
+  #upgrade-status:empty { display:none; }
   .service-foot { border-top:1px solid var(--rule); min-height:48px; }
+  .service-foot form { display:flex; align-items:center; justify-content:flex-end; gap:6px; }
+  .service-foot [role=status] { color:var(--secondary); font-size:12px; }
+  .service-foot .switch { flex:none; }
   .tools-link { border:0; background:transparent; color:var(--active); padding:6px 0; font-size:13px; font-weight:600; }
   #service-sheet { inset:0 0 0 auto; margin:0; padding:0; width:min(450px,100%); max-width:100%; height:100dvh; max-height:100dvh; border:0; border-radius:0; box-shadow:-16px 0 60px #121d251c; overflow:hidden; }
   #service-sheet[open] { display:flex; flex-direction:column; }
@@ -12001,7 +12155,7 @@ var desktopStyles = `
   .sheet-scroll { overflow:auto; overscroll-behavior:contain; overflow-wrap:anywhere; }
   .sheet-identity { display:flex; align-items:center; gap:16px; padding:30px 24px; }
   .sheet-identity h2 { font-size:25px; margin:0; letter-spacing:-1px; }
-  .sheet-tile svg { display:block; width:58px; height:58px; padding:12px; }
+  .sheet-tile .monogram { width:58px; height:58px; border-radius:14px; font-size:28px; }
   .sheet-catalog { padding:22px 24px; border-top:1px solid var(--line); }
   .sheet-catalog h3 { font-size:14px; margin:0 0 12px; }
   .sheet-catalog .tool-detail dt { font-size:14px; }
@@ -12297,6 +12451,7 @@ var consoleLogo = Uint8Array.from(atob(logoBase64), (char) => char.charCodeAt(0)
 var consoleLogoUrl = "data:image/png;base64," + logoBase64;
 var sections = {
   devices: ["\u8BBE\u5907", "/", "M3 4h18v12H3z M8 20h8 M12 16v4"],
+  market: ["\u5DE5\u5177\u5E02\u573A", "/admin/market", "M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z"],
   gateway: ["MCP \u7F51\u5173", "/?view=gateway", "M9 15l6-6 M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0 M16 8l1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"],
   settings: ["\u7BA1\u7406\u53F0\u8BBE\u7F6E", "/?view=settings", "M3 7h8m4 0h6M3 17h2m4 0h12 M11 4v6 M7 14v6"]
 };
@@ -12312,7 +12467,7 @@ var upgradeDialog = `<dialog id="upgrade-dialog" aria-labelledby="upgrade-title"
   <div class="dialog-body">
     <dl class="detail" id="upgrade-versions" hidden><dt>\u5F53\u524D\u7248\u672C</dt><dd id="upgrade-from"></dd><dt>\u76EE\u6807\u7248\u672C</dt><dd id="upgrade-to"></dd></dl>
     <p id="upgrade-description"></p>
-    <ol class="upgrade-steps"><li>\u6821\u9A8C\u53D1\u5E03\u7B7E\u540D</li><li>\u90E8\u7F72\u7BA1\u7406\u53F0\u7248\u672C</li><li>\u5207\u6362\u7248\u672C\u5E76\u6838\u5BF9</li></ol>
+    <ol id="upgrade-steps" class="upgrade-steps" aria-label="\u5347\u7EA7\u8FDB\u5EA6" aria-live="polite"><li>\u6821\u9A8C\u53D1\u5E03\u7B7E\u540D</li><li>\u90E8\u7F72\u7BA1\u7406\u53F0\u7248\u672C</li><li>\u5207\u6362\u7248\u672C\u5E76\u6838\u5BF9</li></ol>
     <p id="upgrade-status" class="feedback" role="status"></p>
   </div>
   <form class="dialog-actions" id="close-upgrade" method="dialog">
@@ -12322,7 +12477,7 @@ var upgradeDialog = `<dialog id="upgrade-dialog" aria-labelledby="upgrade-title"
   </form>
 </dialog>`;
 var _a;
-var consoleTemplate = String.raw(_a || (_a = __template(['<!doctype html>\n<html lang="zh-CN">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>@@TITLE@@ \xB7 Nodrelay</title>\n<style nonce="@@NONCE@@">', '</style>\n<link rel="icon" type="image/png" href="', '">\n</head>\n<body>\n<svg class="sr-only" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">\n  <symbol id="moon" viewBox="0 0 24 24"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008"></path></symbol>\n  <symbol id="sun" viewBox="0 0 24 24"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path></symbol>\n  <symbol id="monitor" viewBox="0 0 24 24"><path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10"></path><path d="M7 20h10"></path><path d="M9 16v4"></path><path d="M15 16v4"></path></symbol>\n  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"></path></symbol>\n  <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></symbol>\n  <symbol id="pause" viewBox="0 0 24 24"><path d="M9 5v14m6-14v14"/></symbol>\n  <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></symbol>\n  <symbol id="copy" viewBox="0 0 24 24"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></symbol>\n  <symbol id="link" viewBox="0 0 24 24"><path d="M9 15l6 -6"></path><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"></path><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path></symbol>\n  <symbol id="search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></symbol>\n  <symbol id="close" viewBox="0 0 24 24"><path d="M18 6l-12 12"></path><path d="M6 6l12 12"></path></symbol>\n  <symbol id="risk" viewBox="0 0 24 24"><path d="M12 9v4"></path><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0"></path><path d="M12 16h.01"></path></symbol>\n</svg>\n@@SHELL@@\n<main>\n<section @@SETTINGS_HIDDEN@@>\n  <div class="page-intro"><div><h1>\u7BA1\u7406\u53F0\u8BBE\u7F6E</h1><p>\u7BA1\u7406\u5F53\u524D\u7248\u672C\u4E0E\u63A7\u5236\u53F0\u5916\u89C2\u3002</p></div></div>\n  <div class="table-wrap settings-row"><div><strong>\u7BA1\u7406\u53F0\u7248\u672C</strong>\n    <span id="brand-version" class="brand-version" hidden></span>\n  </div><button class="button" id="check-update" type="button">\u68C0\u67E5\u66F4\u65B0</button></div>\n  <div class="table-wrap appearance"><h2>\u5916\u89C2</h2><p>\u9009\u62E9\u7BA1\u7406\u53F0\u4F7F\u7528\u7684\u4E3B\u9898\u3002</p><div class="theme-options" role="group" aria-label="\u5916\u89C2\u4E3B\u9898">\n    ', '\n  </div>\n</div></section>\n<section @@DEVICES_HIDDEN@@ class="page-intro">\n    <div><h1 id="devices-title">\u8BBE\u5907\u7BA1\u7406</h1><p>\u67E5\u770B\u8BBE\u5907\u7684\u6CE8\u518C\u72B6\u6001\uFF0C\u7BA1\u7406\u672C\u673A\u670D\u52A1\u4E0E\u63A5\u5165\u6743\u9650\u3002</p></div>\n    <button class="button primary" type="button" id="add"@@ADD_DISABLED@@><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u8BBE\u5907</button>\n  </section>\n  <section @@GATEWAY_HIDDEN@@><div class="page-intro"><div><h1>MCP \u7F51\u5173</h1><p>\u7BA1\u7406 Agent \u7684\u8FDE\u63A5\u7AEF\u70B9\u4E0E\u5BA2\u6237\u7AEF\u56DE\u8C03\u3002</p></div></div>\n  <section class="portal" aria-label="ChatGPT \u8FDE\u63A5\u5730\u5740">\n      <svg class="wire" viewBox="0 0 180 115" fill="none" stroke="#69a386" stroke-width="1.5" aria-hidden="true"><path d="M8 22h45l27 35h45m-117 36h45l27-36m46 0h45"/><circle cx="10" cy="22" r="7"/><circle cx="10" cy="93" r="7"/><rect x="106" y="39" width="37" height="37" rx="9" fill="#245542"/><path d="m117 58 6 6 10-14"/><circle cx="168" cy="57" r="5"/></svg>\n      <small>MCP ENDPOINT</small><h2>\u7F51\u5173\u8FDE\u63A5\u5730\u5740</h2>\n      <div class="portal-value">\n        <code id="address" tabindex="-1">@@PORTAL@@</code>\n        <button class="button" type="button" id="copy-address"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5730\u5740</span></button>\n      </div>\n      <span class="sr-only" id="copy-feedback" role="status"></span>\n  </section>\n  <div class="table-wrap settings-row"><div><strong>\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</strong><p>\u67E5\u770B\u9884\u7F6E\u89C4\u5219\uFF0C\u767B\u8BB0\u5176\u4ED6\u5BA2\u6237\u7AEF\u7684\u6388\u6743\u56DE\u8C03\u3002</p></div><button class="button" type="button" id="open-callbacks" aria-haspopup="dialog">\u914D\u7F6E\u56DE\u8C03</button></div></section>\n\n  <section @@DEVICES_HIDDEN@@ class="devices" aria-labelledby="devices-title">\n    <div class="summary-cards">', '</div>\n    <div class="table-wrap fleet-table">\n    <div class="toolbar">\n      <div class="filters" role="group" aria-label="\u6309\u63A5\u5165\u72B6\u6001\u7B5B\u9009">\n        <button type="button" data-filter="all" aria-pressed="true">\u5168\u90E8 <span class="count">@@COUNT_ALL@@</span></button>\n        <button type="button" data-filter="active" aria-pressed="false">\u5DF2\u6CE8\u518C <span class="count">@@COUNT_ACTIVE@@</span></button>\n        <button type="button" data-filter="pending" aria-pressed="false">\u5F85\u63A5\u5165 <span class="count">@@COUNT_PENDING@@</span></button>\n        <button type="button" data-filter="disabled" aria-pressed="false">\u505C\u7528 <span class="count">@@COUNT_DISABLED@@</span></button>\n      </div>\n      <label class="search">\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <span class="sr-only">\u641C\u7D22\u8BBE\u5907\u540D\u79F0\u6216 ID</span>\n        <input type="search" id="device-search" placeholder="\u641C\u7D22\u8BBE\u5907\u540D\u79F0\u6216 ID" autocomplete="off">\n      </label>\n    </div>\n      <table role="table" aria-labelledby="devices-title">\n        <thead role="rowgroup"><tr role="row"><th scope="col">\u8BBE\u5907\u540D\u79F0 / ID</th><th scope="col">\u6CE8\u518C\u72B6\u6001</th><th class="platform-col" scope="col">\u64CD\u4F5C\u7CFB\u7EDF</th><th scope="col">\u64CD\u4F5C</th></tr></thead>\n        <tbody role="rowgroup">@@ROWS@@</tbody>\n      </table>\n      <div class="empty" id="empty" hidden>\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <strong role="status">\u672A\u627E\u5230\u5339\u914D\u7684\u8BBE\u5907</strong>\n        <p>\u8BD5\u8BD5\u5176\u4ED6\u8BBE\u5907\u540D\u79F0\uFF0C\u6216\u6E05\u9664\u7B5B\u9009\u3002</p>\n        <button class="button" type="button" id="clear-filters">\u6E05\u9664\u7B5B\u9009</button>\n      </div>\n    </div>\n    <p class="note" role="status" id="device-list-feedback"></p>\n  </section>\n</main></div>\n\n<dialog id="add-dialog" aria-labelledby="add-title" data-any-system="@@ANY_SYSTEM@@" data-browser-consent="@@BROWSER_CONSENT@@">\n  <header class="dialog-head">\n    <h2 id="add-title">\u6DFB\u52A0\u8BBE\u5907</h2>\n    <button type="submit" form="close-add" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <form id="add-device-form" method="post" action="/admin/devices/reserve">\n    <div class="dialog-body">\n      <label>\u8BBE\u5907\u540D\u79F0 <input name="name" required autofocus placeholder="\u4F8B\u5982\uFF1A\u529E\u516C\u5BA4 Mac" autocomplete="off" aria-describedby="name-hint"></label>\n      <p class="field-hint" id="name-hint">\u6700\u591A 20 \u4E2A\u5B57\uFF0C\u53EF\u7A0D\u540E\u5B89\u88C5\u3002</p>\n      <p class="feedback" id="add-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button primary" type="submit" id="save-device">\u6DFB\u52A0\u5E76\u5B89\u88C5</button><button class="button" type="submit" id="save-for-later">\u7A0D\u540E\u5B89\u88C5</button></div>\n  </form>\n  <form id="setup-device-form" method="post" action="/admin/devices" hidden>\n    <div class="dialog-body">\n      <p><strong id="setup-device-target"></strong> \xB7 <span id="setup-device-hint">\u9009\u62E9\u76EE\u6807\u8BBE\u5907\u7684\u64CD\u4F5C\u7CFB\u7EDF\u3002</span></p>\n      <input type="hidden" name="deviceId">\n      <fieldset class="platform-tabs"><legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend>@@PLATFORMS@@</fieldset>\n      <label id="browser-consent" hidden><span><input id="confirm-browser" name="browserConsent" type="checkbox" value="1" disabled> \u6B64\u5B89\u88C5\u5305\u5305\u542B\u6D4F\u89C8\u5668\u5DE5\u5177\uFF0C\u6211\u786E\u8BA4\u5141\u8BB8\u4F7F\u7528\u3002</span></label>\n      <p class="feedback" id="setup-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button" type="submit" form="close-add">\u5173\u95ED</button><button class="button primary" type="submit" id="issue-command">\u751F\u6210\u5B89\u88C5\u547D\u4EE4</button></div>\n  </form>\n  <section class="dialog-body device-command" id="device-command-result" aria-labelledby="add-title" hidden>\n    <p id="device-command-target"></p>\n    <fieldset class="platform-tabs" id="device-command-systems" hidden><legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend></fieldset>\n    <div id="command-content" hidden>\n      <textarea id="device-command" aria-label="\u5B89\u88C5\u547D\u4EE4" readonly rows="3" wrap="soft" spellcheck="false"></textarea>\n      <button class="button primary" type="button" id="copy-device-command"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5B89\u88C5\u547D\u4EE4</span></button>\n    </div>\n    <p id="device-command-feedback" role="status" hidden></p>\n    <p id="device-command-expiration" class="field-hint"></p>\n    <p id="device-enrollment-progress" class="feedback" role="status" tabindex="-1"></p>\n  </section>\n  <form id="close-add" method="dialog"></form>\n</dialog>\n\n<dialog id="device-dialog" aria-labelledby="device-dialog-title">\n  <span class="risk-mark" id="risk-mark" hidden><svg class="icon" aria-hidden="true"><use href="#risk"></use></svg></span>\n  <header class="dialog-head">\n    <h2 id="device-dialog-title"></h2>\n    <button type="submit" form="close-detail" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="device-summary"></p>\n    <dl class="detail" id="device-details">\n      <dt>\u6700\u540E\u68C0\u67E5</dt><dd id="checked-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u6CE8\u518C</dt><dd id="registration-detail"></dd>\n      <dt>Cloudflare Tunnel</dt><dd id="tunnel-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u5F00\u53D1\u5DE5\u5177\u76EE\u5F55</dt><dd id="mcp-detail">\u672A\u67E5\u8BE2</dd>\n      <dt id="browser-label" hidden>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd id="browser-detail" hidden></dd>\n      <dt id="release-label" hidden>\u5B89\u88C5\u5305\u7248\u672C</dt><dd id="release-detail" hidden></dd>\n      <dt id="client-label" hidden>\u5BA2\u6237\u7AEF</dt><dd id="client-detail" hidden></dd>\n      <dt id="revocation-label" hidden>\u64A4\u9500</dt><dd id="revocation-detail" hidden></dd>\n    </dl>\n    <p class="feedback" id="device-feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-detail" method="dialog">\n    <button class="button" id="detail-dismiss">\u5173\u95ED</button>\n    <button class="button" id="detail-recheck" type="button" hidden>\u91CD\u65B0\u68C0\u67E5</button>\n    <button class="button danger" id="detail-confirm" type="button" disabled hidden></button>\n  </form>\n</dialog>\n\n<dialog id="callback-dialog" aria-labelledby="callback-title">\n  <header class="dialog-head">\n    <h2 id="callback-title">\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</h2>\n    <button type="submit" form="close-callbacks" class="dialog-close" aria-label="\u5173\u95ED\u56DE\u8C03\u914D\u7F6E"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div id="callback-overview">\n    <div class="dialog-body callback-body">\n      <div class="callback-current">\n        <div><strong>\u5BA2\u6237\u7AEF\u6CE8\u518C</strong><p id="callback-summary"></p></div>\n        <span class="callback-tag" id="callback-state" hidden></span>\n      </div>\n      <p id="callback-feedback" role="status" tabindex="-1" hidden></p>\n      <button id="retry-callback-read" class="button" type="button" hidden>\u91CD\u65B0\u8BFB\u53D6</button>\n      <section class="callback-section" id="callback-configured" aria-labelledby="callback-configured-title" hidden>\n        <h3 id="callback-configured-title">\u5DF2\u8BBE\u56DE\u8C03\u5730\u5740</h3>\n        <ul id="callback-configured-list" class="callback-clients"></ul>\n      </section>\n      <section class="callback-section" id="callback-presets">\n        <details><summary>\u67E5\u770B\u9884\u7F6E\u56DE\u8C03\u89C4\u5219</summary>\n        <ul class="callback-clients">\n          <li class="callback-client" data-preset-name="ChatGPT">\n            <strong class="callback-identity">ChatGPT</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u56FA\u5B9A\u56DE\u8C03\uFF08\u9002\u7528\u65F6\uFF09</span><code data-callback-address>https://chatgpt.com/connector_platform_oauth_redirect</code></div>\n              <div class="callback-uri"><span>\u6309\u8FDE\u63A5\u5206\u914D \xB7 \u6A21\u677F</span><code data-callback-address="https://chatgpt.com/connector/oauth/*">https://chatgpt.com/connector/oauth/{callback_id}</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="Claude">\n            <strong class="callback-identity">Claude</strong>\n            <div class="callback-uri"><span>\u81EA\u5B9A\u4E49\u8FDE\u63A5\u5668</span><code data-callback-address>https://claude.ai/api/mcp/auth_callback</code></div>\n          </li>\n          <li class="callback-client" data-preset-name="Cursor">\n            <strong class="callback-identity">Cursor</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875\u4E0E Agents</span><code data-callback-address>https://www.cursor.com/agents/mcp/oauth/callback</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://localhost:8787/callback</code></div>\n              <div class="callback-uri"><span>\u539F\u751F\u534F\u8BAE</span><code data-callback-address>cursor://anysphere.cursor-mcp/oauth/callback</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="VS Code">\n            <strong class="callback-identity">VS Code</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875</span><code data-callback-address>https://vscode.dev/redirect</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://127.0.0.1:33418/</code></div>\n            </div>\n          </li>\n        </ul></details>\n        <ul class="callback-clients"><li class="callback-client">\n            <div class="callback-identity"><strong>WorkBuddy</strong><span class="callback-tag" id="workbuddy-state" data-tone="pending">\u5F85\u914D\u7F6E</span></div>\n            <div class="callback-unset"><button class="button" type="button" id="add-workbuddy" data-client="WorkBuddy" disabled>\u586B\u5199 WorkBuddy \u56DE\u8C03</button></div>\n          </li>\n        </ul>\n      </section>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="submit" form="close-callbacks">\u5173\u95ED</button>\n      <button class="button primary" type="button" id="add-client" disabled><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u5176\u4ED6\u5BA2\u6237\u7AEF</button>\n    </div>\n  </div>\n  <form id="callback-form" novalidate hidden>\n    <div class="dialog-body callback-body">\n      <label for="callback-name">\u5BA2\u6237\u7AEF\u540D\u79F0</label>\n      <input id="callback-name" name="clientName" type="text" autocomplete="off" maxlength="64" required aria-describedby="callback-name-error">\n      <p id="callback-name-error" class="field-error" role="alert" hidden></p>\n      <label for="callback-url">\u56DE\u8C03\u5730\u5740</label>\n      <input id="callback-url" name="redirectUri" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="2048" placeholder="https://client.example/oauth/callback" required aria-describedby="callback-url-hint callback-url-error">\n      <p id="callback-url-hint" class="field-hint">\u586B\u5199\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u5B8C\u6574 URL\uFF0C\u4E0D\u542B\u6388\u6743\u7801\u6216\u5BC6\u94A5\u3002</p>\n      <p id="callback-url-error" class="field-error" role="alert" hidden></p>\n      <p id="callback-save-error" class="field-error" role="alert" hidden></p>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="button" id="cancel-callback">\u53D6\u6D88</button>\n      <button class="button primary" id="save-callback" type="submit">\u4FDD\u5B58</button>\n    </div>\n  </form>\n  <form id="close-callbacks" method="dialog"></form>\n</dialog>\n\n', '\n<script nonce="@@NONCE@@">@@SCRIPT@@<\/script>\n</body>\n</html>\n'])), consoleStyles, consoleLogoUrl, [["light", "\u6D45\u8272"], ["dark", "\u6DF1\u8272"], ["system", "\u8DDF\u968F\u7CFB\u7EDF"]].map(([v, n]) => `<button type="button" data-theme-option="${v}" aria-pressed="${v === "system"}"><span class="minipic" aria-hidden="true"><i></i><i></i></span>${n}</button>`).join(""), [["active", "\u5DF2\u6CE8\u518C", "monitor", "ACTIVE"], ["pending", "\u5F85\u63A5\u5165", "clock", "PENDING"], ["disabled", "\u5DF2\u505C\u7528", "pause", "DISABLED"]].map(([v, n, icon, token]) => `<button type="button" data-filter="${v}" aria-pressed="false"><span>${n}<strong class="count">@@COUNT_${token}@@</strong></span><svg class="icon" aria-hidden="true"><use href="#${icon}"></use></svg></button>`).join(""), upgradeDialog);
+var consoleTemplate = String.raw(_a || (_a = __template(['<!doctype html>\n<html lang="zh-CN">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>@@TITLE@@ \xB7 Nodrelay</title>\n<style nonce="@@NONCE@@">', '</style>\n<link rel="icon" type="image/png" href="', '">\n</head>\n<body>\n<svg class="sr-only" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">\n  <symbol id="moon" viewBox="0 0 24 24"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008"></path></symbol>\n  <symbol id="sun" viewBox="0 0 24 24"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path></symbol>\n  <symbol id="monitor" viewBox="0 0 24 24"><path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10"></path><path d="M7 20h10"></path><path d="M9 16v4"></path><path d="M15 16v4"></path></symbol>\n  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"></path></symbol>\n  <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></symbol>\n  <symbol id="pause" viewBox="0 0 24 24"><path d="M9 5v14m6-14v14"/></symbol>\n  <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></symbol>\n  <symbol id="copy" viewBox="0 0 24 24"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></symbol>\n  <symbol id="link" viewBox="0 0 24 24"><path d="M9 15l6 -6"></path><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"></path><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path></symbol>\n  <symbol id="search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></symbol>\n  <symbol id="close" viewBox="0 0 24 24"><path d="M18 6l-12 12"></path><path d="M6 6l12 12"></path></symbol>\n  <symbol id="risk" viewBox="0 0 24 24"><path d="M12 9v4"></path><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0"></path><path d="M12 16h.01"></path></symbol>\n</svg>\n@@SHELL@@\n<main>\n<section @@SETTINGS_HIDDEN@@>\n  <div class="page-intro"><div><h1>\u7BA1\u7406\u53F0\u8BBE\u7F6E</h1><p>\u7BA1\u7406\u5F53\u524D\u7248\u672C\u4E0E\u63A7\u5236\u53F0\u5916\u89C2\u3002</p></div></div>\n  <div class="table-wrap settings-row"><div><strong>\u7BA1\u7406\u53F0\u7248\u672C</strong>\n    <span id="brand-version" class="brand-version" hidden></span>\n  </div><button class="button" id="check-update" type="button">\u68C0\u67E5\u66F4\u65B0</button></div>\n  <div class="table-wrap appearance"><h2>\u5916\u89C2</h2><p>\u9009\u62E9\u7BA1\u7406\u53F0\u4F7F\u7528\u7684\u4E3B\u9898\u3002</p><div class="theme-options" role="group" aria-label="\u5916\u89C2\u4E3B\u9898">\n    ', '\n  </div>\n</div></section>\n<section @@DEVICES_HIDDEN@@ class="page-intro">\n    <div><h1 id="devices-title">\u8BBE\u5907\u7BA1\u7406</h1><p>\u67E5\u770B\u8BBE\u5907\u7684\u6CE8\u518C\u72B6\u6001\uFF0C\u7BA1\u7406\u672C\u673A\u670D\u52A1\u4E0E\u63A5\u5165\u6743\u9650\u3002</p></div>\n    <button class="button primary" type="button" id="add"@@ADD_DISABLED@@><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u8BBE\u5907</button>\n  </section>\n  <section @@GATEWAY_HIDDEN@@><div class="page-intro"><div><h1>MCP \u7F51\u5173</h1><p>\u7BA1\u7406 Agent \u7684\u8FDE\u63A5\u7AEF\u70B9\u4E0E\u5BA2\u6237\u7AEF\u56DE\u8C03\u3002</p></div></div>\n  <section class="portal" aria-label="ChatGPT \u8FDE\u63A5\u5730\u5740">\n      <svg class="wire" viewBox="0 0 180 115" fill="none" stroke="#69a386" stroke-width="1.5" aria-hidden="true"><path d="M8 22h45l27 35h45m-117 36h45l27-36m46 0h45"/><circle cx="10" cy="22" r="7"/><circle cx="10" cy="93" r="7"/><rect x="106" y="39" width="37" height="37" rx="9" fill="#245542"/><path d="m117 58 6 6 10-14"/><circle cx="168" cy="57" r="5"/></svg>\n      <small>MCP ENDPOINT</small><h2>\u7F51\u5173\u8FDE\u63A5\u5730\u5740</h2>\n      <div class="portal-value">\n        <code id="address" tabindex="-1">@@PORTAL@@</code>\n        <button class="button" type="button" id="copy-address"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5730\u5740</span></button>\n      </div>\n      <span class="sr-only" id="copy-feedback" role="status"></span>\n  </section>\n  <div class="table-wrap settings-row"><div><strong>\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</strong><p>\u67E5\u770B\u9884\u7F6E\u89C4\u5219\uFF0C\u767B\u8BB0\u5176\u4ED6\u5BA2\u6237\u7AEF\u7684\u6388\u6743\u56DE\u8C03\u3002</p></div><button class="button" type="button" id="open-callbacks" aria-haspopup="dialog">\u914D\u7F6E\u56DE\u8C03</button></div></section>\n\n  <section @@DEVICES_HIDDEN@@ class="devices" aria-labelledby="devices-title">\n    <div class="summary-cards">', '</div>\n    <div class="table-wrap fleet-table">\n    <div class="toolbar">\n      <div class="filters" role="group" aria-label="\u6309\u63A5\u5165\u72B6\u6001\u7B5B\u9009">\n        <button type="button" data-filter="all" aria-pressed="true">\u5168\u90E8 <span class="count">@@COUNT_ALL@@</span></button>\n        <button type="button" data-filter="active" aria-pressed="false">\u5DF2\u6CE8\u518C <span class="count">@@COUNT_ACTIVE@@</span></button>\n        <button type="button" data-filter="pending" aria-pressed="false">\u5F85\u63A5\u5165 <span class="count">@@COUNT_PENDING@@</span></button>\n        <button type="button" data-filter="disabled" aria-pressed="false">\u505C\u7528 <span class="count">@@COUNT_DISABLED@@</span></button>\n      </div>\n      <label class="search">\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <span class="sr-only">\u641C\u7D22\u8BBE\u5907\u540D\u79F0\u6216 ID</span>\n        <input type="search" id="device-search" placeholder="\u641C\u7D22\u8BBE\u5907\u540D\u79F0\u6216 ID" autocomplete="off">\n      </label>\n    </div>\n      <table role="table" aria-labelledby="devices-title">\n        <thead role="rowgroup"><tr role="row"><th scope="col">\u8BBE\u5907\u540D\u79F0 / ID</th><th scope="col">\u6CE8\u518C\u72B6\u6001</th><th class="platform-col" scope="col">\u64CD\u4F5C\u7CFB\u7EDF</th><th scope="col">\u64CD\u4F5C</th></tr></thead>\n        <tbody role="rowgroup">@@ROWS@@</tbody>\n      </table>\n      <div class="empty" id="empty" hidden>\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <strong role="status">\u672A\u627E\u5230\u5339\u914D\u7684\u8BBE\u5907</strong>\n        <p>\u8BD5\u8BD5\u5176\u4ED6\u8BBE\u5907\u540D\u79F0\uFF0C\u6216\u6E05\u9664\u7B5B\u9009\u3002</p>\n        <button class="button" type="button" id="clear-filters">\u6E05\u9664\u7B5B\u9009</button>\n      </div>\n    </div>\n    <p class="note" role="status" id="device-list-feedback"></p>\n  </section>\n</main></div>\n\n<dialog id="add-dialog" aria-labelledby="add-title" data-any-system="@@ANY_SYSTEM@@" data-browser-consent="@@BROWSER_CONSENT@@">\n  <header class="dialog-head">\n    <h2 id="add-title">\u6DFB\u52A0\u8BBE\u5907</h2>\n    <button type="submit" form="close-add" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <form id="add-device-form" method="post" action="/admin/devices/reserve">\n    <div class="dialog-body">\n      <label>\u8BBE\u5907\u540D\u79F0 <input name="name" required autofocus placeholder="\u4F8B\u5982\uFF1A\u529E\u516C\u5BA4 Mac" autocomplete="off" aria-describedby="name-hint"></label>\n      <p class="field-hint" id="name-hint">\u6700\u591A 20 \u4E2A\u5B57\uFF0C\u53EF\u7A0D\u540E\u5B89\u88C5\u3002</p>\n      <p class="feedback" id="add-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button primary" type="submit" id="save-device">\u6DFB\u52A0\u5E76\u5B89\u88C5</button><button class="button" type="submit" id="save-for-later">\u7A0D\u540E\u5B89\u88C5</button></div>\n  </form>\n  <form id="setup-device-form" method="post" action="/admin/devices" hidden>\n    <div class="dialog-body">\n      <p><strong id="setup-device-target"></strong> \xB7 <span id="setup-device-hint">\u9009\u62E9\u76EE\u6807\u8BBE\u5907\u7684\u64CD\u4F5C\u7CFB\u7EDF\u3002</span></p>\n      <input type="hidden" name="deviceId">\n      <fieldset class="platform-tabs"><legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend>@@PLATFORMS@@</fieldset>\n      <label id="browser-consent" hidden><span><input id="confirm-browser" name="browserConsent" type="checkbox" value="1" disabled> \u6B64\u5B89\u88C5\u5305\u5305\u542B\u6D4F\u89C8\u5668\u5DE5\u5177\uFF0C\u6211\u786E\u8BA4\u5141\u8BB8\u4F7F\u7528\u3002</span></label>\n      <p class="feedback" id="setup-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button" type="submit" form="close-add">\u5173\u95ED</button><button class="button primary" type="submit" id="issue-command">\u751F\u6210\u5B89\u88C5\u547D\u4EE4</button></div>\n  </form>\n  <section class="dialog-body device-command" id="device-command-result" aria-labelledby="add-title" hidden>\n    <p id="device-command-target"></p>\n    <fieldset class="platform-tabs" id="device-command-systems" hidden><legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend></fieldset>\n    <div id="command-content" hidden>\n      <textarea id="device-command" aria-label="\u5B89\u88C5\u547D\u4EE4" readonly rows="3" wrap="soft" spellcheck="false"></textarea>\n      <button class="button primary" type="button" id="copy-device-command"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5B89\u88C5\u547D\u4EE4</span></button>\n    </div>\n    <p id="device-command-feedback" role="status" hidden></p>\n    <p id="device-command-expiration" class="field-hint"></p>\n    <p id="device-enrollment-progress" class="feedback" role="status" tabindex="-1"></p>\n  </section>\n  <form id="close-add" method="dialog"></form>\n</dialog>\n\n<dialog id="device-dialog" aria-labelledby="device-dialog-title">\n  <span class="risk-mark" id="risk-mark" hidden><svg class="icon" aria-hidden="true"><use href="#risk"></use></svg></span>\n  <header class="dialog-head">\n    <h2 id="device-dialog-title"></h2>\n    <button type="submit" form="close-detail" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="device-summary"></p>\n    <dl class="detail" id="device-details">\n      <dt>\u6700\u540E\u68C0\u67E5</dt><dd id="checked-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u6CE8\u518C</dt><dd id="registration-detail"></dd>\n      <dt>Cloudflare Tunnel</dt><dd id="tunnel-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u5F00\u53D1\u5DE5\u5177\u76EE\u5F55</dt><dd id="mcp-detail">\u672A\u67E5\u8BE2</dd>\n      <dt id="browser-label" hidden>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd id="browser-detail" hidden></dd>\n      <dt id="release-label" hidden>\u5B89\u88C5\u5305\u7248\u672C</dt><dd id="release-detail" hidden></dd>\n      <dt id="client-label" hidden>\u5BA2\u6237\u7AEF</dt><dd id="client-detail" hidden></dd>\n      <dt id="revocation-label" hidden>\u64A4\u9500</dt><dd id="revocation-detail" hidden></dd>\n    </dl>\n    <p class="feedback" id="device-feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-detail" method="dialog">\n    <button class="button" id="detail-dismiss">\u5173\u95ED</button>\n    <button class="button" id="detail-recheck" type="button" hidden>\u91CD\u65B0\u68C0\u67E5</button>\n    <button class="button danger" id="detail-confirm" type="button" disabled hidden></button>\n  </form>\n</dialog>\n\n<dialog id="callback-dialog" aria-labelledby="callback-title">\n  <header class="dialog-head">\n    <h2 id="callback-title">\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</h2>\n    <button type="submit" form="close-callbacks" class="dialog-close" aria-label="\u5173\u95ED\u56DE\u8C03\u914D\u7F6E"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div id="callback-overview">\n    <div class="dialog-body callback-body">\n      <div class="callback-current">\n        <div><strong>\u5BA2\u6237\u7AEF\u6CE8\u518C</strong><p id="callback-summary"></p></div>\n        <span class="callback-tag" id="callback-state" hidden></span>\n      </div>\n      <p id="callback-feedback" role="status" tabindex="-1" hidden></p>\n      <button id="retry-callback-read" class="button" type="button" hidden>\u91CD\u65B0\u8BFB\u53D6</button>\n      <section class="callback-section" id="callback-configured" aria-labelledby="callback-configured-title" hidden>\n        <h3 id="callback-configured-title">\u5DF2\u8BBE\u56DE\u8C03\u5730\u5740</h3>\n        <ul id="callback-configured-list" class="callback-clients"></ul>\n      </section>\n      <section class="callback-section" id="callback-presets">\n        <details><summary>\u67E5\u770B\u9884\u7F6E\u56DE\u8C03\u89C4\u5219</summary>\n        <ul class="callback-clients">\n          <li class="callback-client" data-preset-name="ChatGPT">\n            <strong class="callback-identity">ChatGPT</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u56FA\u5B9A\u56DE\u8C03\uFF08\u9002\u7528\u65F6\uFF09</span><code data-callback-address>https://chatgpt.com/connector_platform_oauth_redirect</code></div>\n              <div class="callback-uri"><span>\u6309\u8FDE\u63A5\u5206\u914D \xB7 \u6A21\u677F</span><code data-callback-address="https://chatgpt.com/connector/oauth/*">https://chatgpt.com/connector/oauth/{callback_id}</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="Claude">\n            <strong class="callback-identity">Claude</strong>\n            <div class="callback-uri"><span>\u81EA\u5B9A\u4E49\u8FDE\u63A5\u5668</span><code data-callback-address>https://claude.ai/api/mcp/auth_callback</code></div>\n          </li>\n          <li class="callback-client" data-preset-name="Cursor">\n            <strong class="callback-identity">Cursor</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875\u4E0E Agents</span><code data-callback-address>https://www.cursor.com/agents/mcp/oauth/callback</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://localhost:8787/callback</code></div>\n              <div class="callback-uri"><span>\u539F\u751F\u534F\u8BAE</span><code data-callback-address>cursor://anysphere.cursor-mcp/oauth/callback</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="VS Code">\n            <strong class="callback-identity">VS Code</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875</span><code data-callback-address>https://vscode.dev/redirect</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://127.0.0.1:33418/</code></div>\n            </div>\n          </li>\n        </ul></details>\n        <ul class="callback-clients"><li class="callback-client">\n            <div class="callback-identity"><strong>WorkBuddy</strong><span class="callback-tag" id="workbuddy-state" data-tone="pending">\u5F85\u914D\u7F6E</span></div>\n            <div class="callback-unset"><button class="button" type="button" id="add-workbuddy" data-client="WorkBuddy" disabled>\u586B\u5199 WorkBuddy \u56DE\u8C03</button></div>\n          </li>\n        </ul>\n      </section>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="submit" form="close-callbacks">\u5173\u95ED</button>\n      <button class="button primary" type="button" id="add-client" disabled><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u5176\u4ED6\u5BA2\u6237\u7AEF</button>\n    </div>\n  </div>\n  <form id="callback-form" novalidate hidden>\n    <div class="dialog-body callback-body">\n      <label for="callback-name">\u5BA2\u6237\u7AEF\u540D\u79F0</label>\n      <input id="callback-name" name="clientName" type="text" autocomplete="off" maxlength="64" required aria-describedby="callback-name-error">\n      <p id="callback-name-error" class="field-error" role="alert" hidden></p>\n      <label for="callback-url">\u56DE\u8C03\u5730\u5740</label>\n      <input id="callback-url" name="redirectUri" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="2048" placeholder="https://client.example/oauth/callback" required aria-describedby="callback-url-hint callback-url-error">\n      <p id="callback-url-hint" class="field-hint">\u586B\u5199\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u5B8C\u6574 URL\uFF0C\u4E0D\u542B\u6388\u6743\u7801\u6216\u5BC6\u94A5\u3002</p>\n      <p id="callback-url-error" class="field-error" role="alert" hidden></p>\n      <p id="callback-save-error" class="field-error" role="alert" hidden></p>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="button" id="cancel-callback">\u53D6\u6D88</button>\n      <button class="button primary" id="save-callback" type="submit">\u4FDD\u5B58</button>\n    </div>\n  </form>\n  <form id="close-callbacks" method="dialog"></form>\n</dialog>\n\n', '\n<script nonce="@@NONCE@@">@@SCRIPT@@<\/script>\n</body>\n</html>\n'])), consoleStyles, consoleLogoUrl, [["light", "\u6D45\u8272"], ["dark", "\u6DF1\u8272"], ["system", "\u8DDF\u968F\u7CFB\u7EDF"]].map(([v, n]) => `<button type="button" data-theme-option="${v}" aria-pressed="${v === "system"}"><span class="minipic" aria-hidden="true"><i></i><i></i></span>${n}</button>`).join(""), [["active", "\u5DF2\u6CE8\u518C", "monitor", "ACTIVE"], ["pending", "\u5F85\u63A5\u5165", "clock", "PENDING"], ["disabled", "\u5DF2\u505C\u7528", "pause", "DISABLED"]].map(([v, n, icon2, token]) => `<button type="button" data-filter="${v}" aria-pressed="false"><span>${n}<strong class="count">@@COUNT_${token}@@</strong></span><svg class="icon" aria-hidden="true"><use href="#${icon2}"></use></svg></button>`).join(""), upgradeDialog);
 
 // ../cloud/upgrade-feed-migration.mjs
 var legacyPreviewFeed = "https://raw.githubusercontent.com/Erlin0220/nodrelay-downloads/refs/heads/macos-preview/updates/";
@@ -12351,16 +12506,16 @@ var protocolName = "FLEET_ENROLLMENT_PROTOCOL";
 var historyName = "FLEET_ENROLLMENT_HISTORY";
 var catalogName = "FLEET_ENROLLMENT_CATALOG";
 function hostedCatalog(input) {
-  if (!record3(input) || !supportedEnrollmentTargets.every((target) => Object.hasOwn(input, target)) || Object.keys(input).some((target) => !targets.includes(target))) {
+  if (!record3(input) || !supportedEnrollmentTargets.every((target2) => Object.hasOwn(input, target2)) || Object.keys(input).some((target2) => !targets.includes(target2))) {
     throw new Error("Signed enrollment needs all currently supported installer targets");
   }
-  return Object.freeze(Object.fromEntries(targets.filter((target) => Object.hasOwn(input, target)).map((target) => {
-    const asset = input[target];
-    const url = typeof asset?.url === "string" && URL.parse(asset.url);
-    if (!exact(asset, ["url", "sha256", "version", "browser"]) || !matches3(hash, asset.sha256) || !matches3(assetVersion, asset.version) || typeof asset.browser !== "boolean" || !url || url.href !== asset.url || url.protocol !== "https:" || url.username || url.password || url.search || url.hash) {
+  return Object.freeze(Object.fromEntries(targets.filter((target2) => Object.hasOwn(input, target2)).map((target2) => {
+    const asset = input[target2];
+    const url2 = typeof asset?.url === "string" && URL.parse(asset.url);
+    if (!exact(asset, ["url", "sha256", "version", "browser"]) || !matches3(hash, asset.sha256) || !matches3(assetVersion, asset.version) || typeof asset.browser !== "boolean" || !url2 || url2.href !== asset.url || url2.protocol !== "https:" || url2.username || url2.password || url2.search || url2.hash) {
       throw new Error("Invalid signed hosted enrollment installer");
     }
-    return [target, Object.freeze({ url: url.href, sha256: asset.sha256, version: asset.version, browser: asset.browser })];
+    return [target2, Object.freeze({ url: url2.href, sha256: asset.sha256, version: asset.version, browser: asset.browser })];
   })));
 }
 __name(hostedCatalog, "hostedCatalog");
@@ -12374,17 +12529,17 @@ function validateSignedEnrollmentRelease({ release, manifestSha256 }) {
 }
 __name(validateSignedEnrollmentRelease, "validateSignedEnrollmentRelease");
 function loadPlain(bindings, name) {
-  const fields = bindings.filter((binding) => binding?.name === name);
-  if (!fields.length) return;
-  if (fields.length !== 1 || fields[0].type !== "plain_text" || typeof fields[0].text !== "string" || !fields[0].text) {
+  const fields2 = bindings.filter((binding) => binding?.name === name);
+  if (!fields2.length) return;
+  if (fields2.length !== 1 || fields2[0].type !== "plain_text" || typeof fields2[0].text !== "string" || !fields2[0].text) {
     throw new Error("Unverified existing enrollment binding");
   }
-  return fields[0].text;
+  return fields2[0].text;
 }
 __name(loadPlain, "loadPlain");
-function parse2(text2) {
+function parse2(text3) {
   try {
-    return JSON.parse(text2);
+    return JSON.parse(text3);
   } catch {
     throw new Error("Unverified existing enrollment binding");
   }
@@ -12394,12 +12549,12 @@ function assertDistinctAssetPins(history, legacy) {
   const pins = /* @__PURE__ */ new Map();
   const observe = /* @__PURE__ */ __name((asset) => {
     if (asset?.url === void 0) return;
-    const url = typeof asset.url === "string" && URL.parse(asset.url);
-    if (!url || url.protocol !== "https:" || url.username || url.password || url.search || url.hash || !matches3(hash, asset.sha256)) {
+    const url2 = typeof asset.url === "string" && URL.parse(asset.url);
+    if (!url2 || url2.protocol !== "https:" || url2.username || url2.password || url2.search || url2.hash || !matches3(hash, asset.sha256)) {
       throw new Error("Unverified hosted asset pin");
     }
-    if (pins.has(url.href) && pins.get(url.href) !== asset.sha256) throw Object.assign(new Error("A published installer URL cannot be reassigned to different bytes"), { code: "enrollment_pin_conflict" });
-    pins.set(url.href, asset.sha256);
+    if (pins.has(url2.href) && pins.get(url2.href) !== asset.sha256) throw Object.assign(new Error("A published installer URL cannot be reassigned to different bytes"), { code: "enrollment_pin_conflict" });
+    pins.set(url2.href, asset.sha256);
   }, "observe");
   for (const asset of Object.values(legacy)) observe(asset);
   for (const versions of Object.values(history)) {
@@ -12490,8 +12645,8 @@ function timestamp(value) {
   return Number.isFinite(time4) && new Date(time4).toISOString() === value ? time4 : NaN;
 }
 __name(timestamp, "timestamp");
-async function sha256(bytes) {
-  return [...new Uint8Array(await crypto.subtle.digest("SHA-256", bytes))].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+async function sha256(bytes2) {
+  return [...new Uint8Array(await crypto.subtle.digest("SHA-256", bytes2))].map((byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 __name(sha256, "sha256");
 async function verifyUpgradeManifest({ manifest, signature, publicKey, channel, currentVersion, now: now4 = Date.now(), allowCurrent = false, format = 1 }) {
@@ -12511,12 +12666,12 @@ async function verifyUpgradeManifest({ manifest, signature, publicKey, channel, 
   } catch {
     throw new Error("Invalid Nodrelay upgrade metadata");
   }
-  const fields = ["schema", "product", "channel", "version", "minimumVersion", "issuedAt", "expiresAt", "workerBundle", "workerSha256"];
+  const fields2 = ["schema", "product", "channel", "version", "minimumVersion", "issuedAt", "expiresAt", "workerBundle", "workerSha256"];
   if (format === 2) {
-    fields.push("enrollment");
-    if (Object.hasOwn(release ?? {}, "feedMigration")) fields.push("feedMigration");
+    fields2.push("enrollment");
+    if (Object.hasOwn(release ?? {}, "feedMigration")) fields2.push("feedMigration");
   }
-  if (!release || !fields.every((name) => Object.hasOwn(release, name)) || Object.keys(release).length !== fields.length || release.schema !== format || release.product !== "nodrelay-management" || release.workerBundle !== "worker.js" || typeof release.workerSha256 !== "string" || !/^[a-f0-9]{64}$/.test(release.workerSha256)) {
+  if (!release || !fields2.every((name) => Object.hasOwn(release, name)) || Object.keys(release).length !== fields2.length || release.schema !== format || release.product !== "nodrelay-management" || release.workerBundle !== "worker.js" || typeof release.workerSha256 !== "string" || !/^[a-f0-9]{64}$/.test(release.workerSha256)) {
     throw new Error("Invalid Nodrelay upgrade metadata");
   }
   const next = version(release.version), current = version(currentVersion), minimum = version(release.minimumVersion);
@@ -12590,12 +12745,12 @@ function validateUpgradeBindings(activeBindings, candidateBindings, plannedChang
   const active = bindingMap(activeBindings);
   const candidate = bindingMap(candidateBindings);
   const expected = new Map(active);
-  for (const [name, text2] of Object.entries(plannedChanges)) {
-    if (!permittedChanges.has(name) || typeof text2 !== "string" || !text2 || active.has(name) && active.get(name).type !== "plain_text") throw new Error("Unapproved Nodrelay binding change");
-    if (name === "NODRELAY_UPGRADE_FEED" && (active.get(name)?.text !== legacyPreviewFeed || active.get("NODRELAY_UPGRADE_CHANNEL")?.text !== "preview" || text2 !== publicPreviewFeed)) {
+  for (const [name, text3] of Object.entries(plannedChanges)) {
+    if (!permittedChanges.has(name) || typeof text3 !== "string" || !text3 || active.has(name) && active.get(name).type !== "plain_text") throw new Error("Unapproved Nodrelay binding change");
+    if (name === "NODRELAY_UPGRADE_FEED" && (active.get(name)?.text !== legacyPreviewFeed || active.get("NODRELAY_UPGRADE_CHANNEL")?.text !== "preview" || text3 !== publicPreviewFeed)) {
       throw new Error("Unapproved Nodrelay feed migration");
     }
-    expected.set(name, { ...active.get(name), name, type: "plain_text", text: text2 });
+    expected.set(name, { ...active.get(name), name, type: "plain_text", text: text3 });
   }
   if (candidate.size !== expected.size || [...expected].some(([name, binding]) => JSON.stringify(canonical3(binding)) !== JSON.stringify(canonical3(candidate.get(name))))) {
     throw new Error("Cloudflare Worker bindings do not match the approved upgrade plan");
@@ -12605,7 +12760,7 @@ __name(validateUpgradeBindings, "validateUpgradeBindings");
 
 // ../cloud/upgrade-artifacts.mjs
 var maxBytes = { manifest: 64 * 1024, signature: 64, worker: 8 * 1024 * 1024 };
-var downloadRequest = /* @__PURE__ */ __name((url, request, signal) => request(url.href, {
+var downloadRequest = /* @__PURE__ */ __name((url2, request, signal) => request(url2.href, {
   method: "GET",
   redirect: "manual",
   cache: "no-store",
@@ -12613,8 +12768,8 @@ var downloadRequest = /* @__PURE__ */ __name((url, request, signal) => request(u
   signal,
   headers: { Accept: "application/octet-stream, application/json, text/javascript" }
 }), "downloadRequest");
-async function download(url, max, request, signal, received) {
-  const response2 = received ?? await downloadRequest(url, request, signal);
+async function download(url2, max, request, signal, received) {
+  const response2 = received ?? await downloadRequest(url2, request, signal);
   const length = Number(response2.headers.get("Content-Length"));
   if (response2.status !== 200 || !response2.body || length > max) {
     await response2.body?.cancel();
@@ -12709,7 +12864,7 @@ var blocked = /* @__PURE__ */ new Set(["PROVISIONER_TOKEN", "FLEET_OAUTH_SEED", 
 var usage = /* @__PURE__ */ new Set(["standard", "bundled", "unbound"]);
 var maxWorkerBytes = 8 * 1024 * 1024;
 var matches4 = /* @__PURE__ */ __name((pattern, value) => typeof value === "string" && pattern.test(value), "matches");
-var keysOnly = /* @__PURE__ */ __name((value, fields) => value && typeof value === "object" && !Array.isArray(value) && Object.keys(value).every((field) => fields.includes(field)), "keysOnly");
+var keysOnly = /* @__PURE__ */ __name((value, fields2) => value && typeof value === "object" && !Array.isArray(value) && Object.keys(value).every((field) => fields2.includes(field)), "keysOnly");
 var etag = /* @__PURE__ */ __name((value) => matches4(/^[a-zA-Z0-9_-]{16,128}$/, value), "etag");
 function reject(message2) {
   throw new Error(message2);
@@ -12794,7 +12949,7 @@ var enrollmentSettings = Object.freeze([
   "FLEET_ENROLLMENT_HISTORY",
   "FLEET_ENROLLMENT_CATALOG"
 ]);
-function rolloutBindings(list, baseline, enrollment, previewFeedMigration) {
+function rolloutBindings(list, baseline2, enrollment, previewFeedMigration) {
   if (!Array.isArray(list) || list.length < 2) reject("Incomplete Worker upgrade upload bindings");
   const names = /* @__PURE__ */ new Set();
   const result = list.map((value) => {
@@ -12830,9 +12985,9 @@ function rolloutBindings(list, baseline, enrollment, previewFeedMigration) {
       }
       return { name, type, text: publicPreviewFeed };
     }
-    if (baseline && baselineSettings.includes(name)) {
-      const url = name === "NODRELAY_UPGRADE_FEED" && typeof value.text === "string" && URL.parse(value.text);
-      const valid2 = name === "NODRELAY_UPGRADE_CHANNEL" ? ["stable", "preview"].includes(value.text) : name === "NODRELAY_UPGRADE_PUBLIC_KEY" ? matches4(/^[A-Za-z0-9_-]{59}$/, value.text) : url && url.href === value.text && url.protocol === "https:" && !url.port && !url.username && !url.password && !url.search && !url.hash && url.pathname.endsWith("/");
+    if (baseline2 && baselineSettings.includes(name)) {
+      const url2 = name === "NODRELAY_UPGRADE_FEED" && typeof value.text === "string" && URL.parse(value.text);
+      const valid2 = name === "NODRELAY_UPGRADE_CHANNEL" ? ["stable", "preview"].includes(value.text) : name === "NODRELAY_UPGRADE_PUBLIC_KEY" ? matches4(/^[A-Za-z0-9_-]{59}$/, value.text) : url2 && url2.href === value.text && url2.protocol === "https:" && !url2.port && !url2.username && !url2.password && !url2.search && !url2.hash && url2.pathname.endsWith("/");
       if (type !== "plain_text" || !keysOnly(value, ["type", "name", "text"]) || !valid2) {
         reject("Invalid Worker baseline trust binding");
       }
@@ -12842,7 +12997,7 @@ function rolloutBindings(list, baseline, enrollment, previewFeedMigration) {
     return { name, type };
   });
   for (const name of [
-    ...baseline ? baselineSettings : [baselineSettings[0]],
+    ...baseline2 ? baselineSettings : [baselineSettings[0]],
     ...enrollment ? enrollmentSettings : [],
     ...previewFeedMigration ? ["NODRELAY_UPGRADE_FEED"] : [],
     "TICKETS",
@@ -12855,9 +13010,9 @@ function rolloutBindings(list, baseline, enrollment, previewFeedMigration) {
   return result;
 }
 __name(rolloutBindings, "rolloutBindings");
-function createCloudflareUpgradeAdapter(api, target, { baseline = false, enrollment = false } = {}) {
-  const account = target?.accountId, worker2 = target?.worker;
-  if (baseline === true && enrollment === true || !matches4(accountId, account) || !matches4(workerName, worker2) || typeof api?.get !== "function" || typeof api?.post !== "function") reject("Invalid Cloudflare upgrade adapter target");
+function createCloudflareUpgradeAdapter(api, target2, { baseline: baseline2 = false, enrollment = false } = {}) {
+  const account = target2?.accountId, worker2 = target2?.worker;
+  if (baseline2 === true && enrollment === true || !matches4(accountId, account) || !matches4(workerName, worker2) || typeof api?.get !== "function" || typeof api?.post !== "function") reject("Invalid Cloudflare upgrade adapter target");
   const script = "/accounts/" + account + "/workers/scripts/" + worker2;
   function assertTarget(input) {
     if (input?.accountId !== account || input.worker !== worker2) reject("Cloudflare upgrade adapter target changed");
@@ -12892,7 +13047,7 @@ function createCloudflareUpgradeAdapter(api, target, { baseline = false, enrollm
           "usageModel",
           "operationId",
           "previewFeedMigration"
-        ]) || options.previewFeedMigration !== void 0 && (options.previewFeedMigration !== true || enrollment !== true || baseline === true) || options.module !== "worker.js" || options.bindingsInherit !== "strict" || !matches4(operationUuid, options.operationId) || !(options.bundle instanceof Uint8Array) || options.bundle.length < 1 || options.bundle.length > maxWorkerBytes || !matches4(/^\d{4}-\d{2}-\d{2}$/, options.compatibilityDate) || !Array.isArray(options.compatibilityFlags) || options.compatibilityFlags.some((flag) => !matches4(/^[a-z0-9_]{1,100}$/, flag)) || new Set(options.compatibilityFlags).size !== options.compatibilityFlags.length || !usage.has(options.usageModel)) {
+        ]) || options.previewFeedMigration !== void 0 && (options.previewFeedMigration !== true || enrollment !== true || baseline2 === true) || options.module !== "worker.js" || options.bindingsInherit !== "strict" || !matches4(operationUuid, options.operationId) || !(options.bundle instanceof Uint8Array) || options.bundle.length < 1 || options.bundle.length > maxWorkerBytes || !matches4(/^\d{4}-\d{2}-\d{2}$/, options.compatibilityDate) || !Array.isArray(options.compatibilityFlags) || options.compatibilityFlags.some((flag) => !matches4(/^[a-z0-9_]{1,100}$/, flag)) || new Set(options.compatibilityFlags).size !== options.compatibilityFlags.length || !usage.has(options.usageModel)) {
           reject("Invalid staged Cloudflare Worker upload input");
         }
         metadata = JSON.stringify({
@@ -12900,7 +13055,7 @@ function createCloudflareUpgradeAdapter(api, target, { baseline = false, enrollm
           compatibility_date: options.compatibilityDate,
           compatibility_flags: options.compatibilityFlags,
           usage_model: options.usageModel,
-          bindings: rolloutBindings(options.bindings, baseline === true, enrollment === true, options.previewFeedMigration === true),
+          bindings: rolloutBindings(options.bindings, baseline2 === true, enrollment === true, options.previewFeedMigration === true),
           annotations: { "workers/tag": options.operationId }
         });
       } catch (error2) {
@@ -12953,11 +13108,11 @@ var duration = 90;
 var commandLeaseWaitMs = 95e3;
 var pollMs = 3e3;
 var normalLeaseLimit = duration + 5;
-function key3(target) {
-  if (!/^[a-f0-9]{32}$/.test(target?.accountId ?? "") || !/^fleet-[a-z0-9][a-z0-9-]{1,14}[a-z0-9]-[a-f0-9]{12}$/.test(target?.worker ?? "")) {
+function key3(target2) {
+  if (!/^[a-f0-9]{32}$/.test(target2?.accountId ?? "") || !/^fleet-[a-z0-9][a-z0-9-]{1,14}[a-z0-9]-[a-f0-9]{12}$/.test(target2?.worker ?? "")) {
     throw new Error("Invalid upgrade journal target");
   }
-  return JSON.stringify([target.accountId, target.worker]);
+  return JSON.stringify([target2.accountId, target2.worker]);
 }
 __name(key3, "key");
 function upgradeStateError(code, message2, cause) {
@@ -12983,8 +13138,8 @@ function diagnostic(error2, stage, state2, mutation) {
   return error2;
 }
 __name(diagnostic, "diagnostic");
-async function readUpgradeJournal(db, target) {
-  const row = await db.prepare("SELECT record FROM management_upgrade_journal WHERE target = ?").bind(key3(target)).first();
+async function readUpgradeJournal(db, target2) {
+  const row = await db.prepare("SELECT record FROM management_upgrade_journal WHERE target = ?").bind(key3(target2)).first();
   return row ? JSON.parse(row.record) : void 0;
 }
 __name(readUpgradeJournal, "readUpgradeJournal");
@@ -12997,8 +13152,8 @@ function createUpgradeJournal(db, {
   sleep = /* @__PURE__ */ __name((ms) => new Promise((resolve) => setTimeout(resolve, ms)), "sleep")
 } = {}) {
   return {
-    async withLock(target, run) {
-      const id2 = key3(target);
+    async withLock(target2, run) {
+      const id2 = key3(target2);
       const owner = base64url_exports.encode(crypto.getRandomValues(new Uint8Array(32)));
       const readLease = /* @__PURE__ */ __name(() => db.prepare(`SELECT (owner = ?) AS own, (expires_at > unixepoch()) AS active,
           (expires_at - unixepoch()) AS seconds_left FROM fleet_leases WHERE id = 1`).bind(owner).first(), "readLease");
@@ -13092,7 +13247,7 @@ function createUpgradeJournal(db, {
         }, "assertHeld");
         return await run({
           assertHeld,
-          read: /* @__PURE__ */ __name(() => readUpgradeJournal(db, target), "read"),
+          read: /* @__PURE__ */ __name(() => readUpgradeJournal(db, target2), "read"),
           async write(record5) {
             const data2 = JSON.stringify(record5);
             if (typeof data2 !== "string" || data2.length > 4096) throw new Error("Invalid upgrade journal record");
@@ -13235,26 +13390,26 @@ async function verifySchema(db) {
 }
 __name(verifySchema, "verifySchema");
 function checkedSpec(spec, api) {
-  const url = typeof spec?.origin === "string" && URL.parse(spec.origin);
-  if (!url || url.protocol !== "https:" || url.origin !== spec.origin || url.port || !/^[a-f0-9]{32}$/.test(spec.accountId ?? "") || !/^fleet-[a-z][a-z0-9-]{2,15}-[a-f0-9]{12}$/.test(spec.label ?? "") || spec.label !== spec.worker || spec.accountScopedAccess !== true || spec.zoneScopedAccess || typeof api?.get !== "function" || typeof api?.list !== "function") {
+  const url2 = typeof spec?.origin === "string" && URL.parse(spec.origin);
+  if (!url2 || url2.protocol !== "https:" || url2.origin !== spec.origin || url2.port || !/^[a-f0-9]{32}$/.test(spec.accountId ?? "") || !/^fleet-[a-z][a-z0-9-]{2,15}-[a-f0-9]{12}$/.test(spec.label ?? "") || spec.label !== spec.worker || spec.accountScopedAccess !== true || spec.zoneScopedAccess || typeof api?.get !== "function" || typeof api?.list !== "function") {
     throw new Error("Cannot verify the existing managed deployment enrollment configuration");
   }
-  return url;
+  return url2;
 }
 __name(checkedSpec, "checkedSpec");
-var routeApp = /* @__PURE__ */ __name((spec, url, pathname) => publicAccessApp(spec.label + pathname.replaceAll("/", "-"), url.hostname + pathname), "routeApp");
+var routeApp = /* @__PURE__ */ __name((spec, url2, pathname) => publicAccessApp(spec.label + pathname.replaceAll("/", "-"), url2.hostname + pathname), "routeApp");
 async function inspectEnrollmentUpgradeReadiness({ api, db, spec }) {
-  const url = checkedSpec(spec, api);
+  const url2 = checkedSpec(spec, api);
   if (typeof db?.prepare !== "function") throw new Error("Cannot verify the existing managed deployment enrollment configuration");
   await verifySchema(db).catch((cause) => {
     throw Object.assign(new Error(cause.message, { cause }), { code: "enrollment_schema_unverified" });
   });
-  return inspectRoutes(api, spec, url).catch((cause) => {
+  return inspectRoutes(api, spec, url2).catch((cause) => {
     throw Object.assign(new Error(cause.message, { cause }), { code: "enrollment_routes_unverified" });
   });
 }
 __name(inspectEnrollmentUpgradeReadiness, "inspectEnrollmentUpgradeReadiness");
-async function inspectRoutes(api, spec, url) {
+async function inspectRoutes(api, spec, url2) {
   const path = "/accounts/" + spec.accountId + "/access/apps";
   const listed = await api.list(path);
   const readOnly = {
@@ -13265,10 +13420,10 @@ async function inspectRoutes(api, spec, url) {
     }
   };
   const exactAccessRoutes = Object.fromEntries(await Promise.all(enrollmentUpgradeAccessPaths.map(async (pathname) => {
-    const target = url.hostname + pathname;
-    const app = routeApp(spec, url, pathname);
+    const target2 = url2.hostname + pathname;
+    const app = routeApp(spec, url2, pathname);
     const found = await ensureScopedAccessApp(readOnly, spec, app, { accountScoped: true, bootstrap: true });
-    if (!exactDestination(found, target)) throw new Error("An enrollment Access application includes a different or wider route");
+    if (!exactDestination(found, target2)) throw new Error("An enrollment Access application includes a different or wider route");
     return [pathname, true];
   })));
   return Object.freeze({ verifiedD1: true, exactAccessRoutes: Object.freeze(exactAccessRoutes) });
@@ -13319,14 +13474,14 @@ function pinnedTarget(expected, operationId) {
   return Object.freeze({ accountId: accountId2, worker: worker2, zoneId, origin, ownerEmail, accessAudience, activeVersion, currentVersion });
 }
 __name(pinnedTarget, "pinnedTarget");
-function checkTarget(bindings, target) {
+function checkTarget(bindings, target2) {
   const lookup = /* @__PURE__ */ __name((name) => bindings.find((binding) => binding.name === name)?.text, "lookup");
   let spec;
   try {
     spec = JSON.parse(lookup("FLEET_SPEC"));
   } catch {
   }
-  if (lookup("APP_ORIGIN") !== target.origin || lookup("OWNER_EMAIL") !== target.ownerEmail || lookup("ACCESS_AUD") !== target.accessAudience || lookup("NODRELAY_RELEASE_VERSION") !== target.currentVersion || !spec?.accountScopedAccess || spec.accountId !== target.accountId || spec.zoneId !== target.zoneId || spec.origin !== target.origin || spec.ownerEmail !== target.ownerEmail || spec.worker !== target.worker || spec.label !== target.worker) {
+  if (lookup("APP_ORIGIN") !== target2.origin || lookup("OWNER_EMAIL") !== target2.ownerEmail || lookup("ACCESS_AUD") !== target2.accessAudience || lookup("NODRELAY_RELEASE_VERSION") !== target2.currentVersion || !spec?.accountScopedAccess || spec.accountId !== target2.accountId || spec.zoneId !== target2.zoneId || spec.origin !== target2.origin || spec.ownerEmail !== target2.ownerEmail || spec.worker !== target2.worker || spec.label !== target2.worker) {
     throw new UpgradeOperationError("target_drift", "The live Cloudflare bindings do not match this authorized Nodrelay target and release");
   }
 }
@@ -13356,22 +13511,22 @@ var validEtag = /* @__PURE__ */ __name((value) => typeof value === "string" && /
 var enrollmentBindings = ["FLEET_ENROLLMENT_PROTOCOL", "FLEET_ENROLLMENT_HISTORY", "FLEET_ENROLLMENT_CATALOG"];
 var validHash = /* @__PURE__ */ __name((x) => typeof x === "string" && /^[a-f0-9]{64}$/.test(x), "validHash");
 async function enrollmentPlanDigest(changes, migratesFeed = false) {
-  const fields = migratesFeed ? [...enrollmentBindings, "NODRELAY_UPGRADE_FEED"] : enrollmentBindings;
-  const value = JSON.stringify(fields.map((name) => [name, changes[name]]));
+  const fields2 = migratesFeed ? [...enrollmentBindings, "NODRELAY_UPGRADE_FEED"] : enrollmentBindings;
+  const value = JSON.stringify(fields2.map((name) => [name, changes[name]]));
   return Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value))), (b) => b.toString(16).padStart(2, "0")).join("");
 }
 __name(enrollmentPlanDigest, "enrollmentPlanDigest");
 async function runUpgradeOperation({ expected, artifact, operationId, api, journal, enrollmentApproval, now: now4 = Date.now() }) {
-  const target = pinnedTarget(expected, operationId);
-  const { release, bundle, manifestSha256 } = await verifyUpgradeRelease({ ...artifact, currentVersion: target.currentVersion, now: now4 });
+  const target2 = pinnedTarget(expected, operationId);
+  const { release, bundle, manifestSha256 } = await verifyUpgradeRelease({ ...artifact, currentVersion: target2.currentVersion, now: now4 });
   const enrollmentChange = release.schema === 2;
   if (enrollmentChange && (enrollmentApproval?.manifestSha256 !== manifestSha256 || typeof enrollmentApproval.inspect !== "function")) {
     throw new UpgradeOperationError("format_not_enabled", "This enrollment release was not confirmed.");
   }
-  return journal.withLock(target, async (txn) => {
+  return journal.withLock(target2, async (txn) => {
     const previous = await txn.read();
     if (previous?.phase === "confirmed" && previous.operationId === operationId) {
-      if (previous.releaseVersion !== release.version || previous.releaseSha256 !== release.workerSha256 || previous.manifestSha256 !== manifestSha256 || previous.baseVersion !== target.activeVersion || !uuid2.test(previous.candidateVersion ?? "")) {
+      if (previous.releaseVersion !== release.version || previous.releaseSha256 !== release.workerSha256 || previous.manifestSha256 !== manifestSha256 || previous.baseVersion !== target2.activeVersion || !uuid2.test(previous.candidateVersion ?? "")) {
         throw new UpgradeOperationError("operation_conflict", "This operation ID already refers to a different upgrade");
       }
       return { status: "previously_confirmed", version: release.version, versionId: previous.candidateVersion };
@@ -13379,21 +13534,21 @@ async function runUpgradeOperation({ expected, artifact, operationId, api, journ
     if (previous && !["confirmed", "abandoned"].includes(previous.phase)) {
       throw new UpgradeOperationError("reconciliation_required", "An earlier upgrade is unsettled. Check Cloudflare before submitting another upgrade");
     }
-    const baseline = await api.readDeployment(target);
-    const live = baseline?.deployments;
-    if (Array.isArray(live) && live.length === 1 && live[0]?.version_id === target.activeVersion && live[0].percentage === 100 && uuid2.test(baseline.latestVersion ?? "") && baseline.latestVersion !== target.activeVersion) {
+    const baseline2 = await api.readDeployment(target2);
+    const live = baseline2?.deployments;
+    if (Array.isArray(live) && live.length === 1 && live[0]?.version_id === target2.activeVersion && live[0].percentage === 100 && uuid2.test(baseline2.latestVersion ?? "") && baseline2.latestVersion !== target2.activeVersion) {
       throw new UpgradeOperationError("baseline_version_mismatch", "Cloudflare is serving a different version from its latest upload. No upload or rollout was attempted");
     }
-    requireDeployment(baseline, target.activeVersion, target.activeVersion);
-    const read = await api.readVersion(target, target.activeVersion);
-    if (read?.id !== target.activeVersion || !validEtag(read.etag)) {
+    requireDeployment(baseline2, target2.activeVersion, target2.activeVersion);
+    const read = await api.readVersion(target2, target2.activeVersion);
+    if (read?.id !== target2.activeVersion || !validEtag(read.etag)) {
       throw new UpgradeOperationError("baseline_unproven", "Cloudflare did not identify the active Worker version");
     }
     const active = structuredClone(read);
     const activeBindings = active.bindings;
-    const state2 = { ...baseline, activeBindings };
+    const state2 = { ...baseline2, activeBindings };
     validateUpgradePreconditions({ ...state2, candidateBindings: activeBindings });
-    checkTarget(activeBindings, target);
+    checkTarget(activeBindings, target2);
     const runtime = snapshot(active.runtime);
     if (!enrollmentChange && activeBindings.some((b) => b.name === "FLEET_ENROLLMENT_HISTORY" && b.text === enrollmentStorage)) {
       throw new UpgradeOperationError("enrollment_storage_incompatible", archiveErrors.enrollment_storage_incompatible);
@@ -13433,20 +13588,20 @@ async function runUpgradeOperation({ expected, artifact, operationId, api, journ
     };
     const names = new Set(activeBindings.map(({ name }) => name));
     const bindings = activeBindings.map(({ name }) => Object.hasOwn(changes, name) ? { name, type: "plain_text", text: changes[name] } : { name, type: "inherit" });
-    for (const [name, text2] of Object.entries(changes)) if (!names.has(name)) bindings.push({ name, type: "plain_text", text: text2 });
+    for (const [name, text3] of Object.entries(changes)) if (!names.has(name)) bindings.push({ name, type: "plain_text", text: text3 });
     const record5 = {
       operationId,
-      baseVersion: target.activeVersion,
+      baseVersion: target2.activeVersion,
       releaseVersion: release.version,
       releaseSha256: release.workerSha256,
       ...enrollmentChanges && { manifestSha256, enrollmentChangesSha256: await enrollmentPlanDigest(changes, migratesFeed) },
       ...migratesFeed && { migratesFeed: true }
     };
     const assertStable = /* @__PURE__ */ __name(async (latest) => {
-      requireDeployment(await api.readDeployment(target), target.activeVersion, latest);
+      requireDeployment(await api.readDeployment(target2), target2.activeVersion, latest);
       await txn.assertHeld();
     }, "assertStable");
-    await assertStable(target.activeVersion);
+    await assertStable(target2.activeVersion);
     if (archive) {
       try {
         await enrollmentApproval.persistArchive(archive);
@@ -13454,13 +13609,13 @@ async function runUpgradeOperation({ expected, artifact, operationId, api, journ
         const code = Object.hasOwn(archiveErrors, error2.code) ? error2.code : "enrollment_archive_unconfirmed";
         throw new UpgradeOperationError(code, archiveErrors[code]);
       }
-      await assertStable(target.activeVersion);
+      await assertStable(target2.activeVersion);
     }
     const uploading = { ...record5, phase: "uploading", uploadStartedAt: now4 };
     await txn.write(uploading);
     let uploaded;
     try {
-      uploaded = await api.uploadVersion(target, {
+      uploaded = await api.uploadVersion(target2, {
         bundle,
         module: "worker.js",
         bindingsInherit: "strict",
@@ -13480,13 +13635,13 @@ async function runUpgradeOperation({ expected, artifact, operationId, api, journ
         `Cloudflare staging was not confirmed (${failureText(failure2)}). No rollout was attempted; check Cloudflare before retrying`
       ), { failure: failure2 });
     }
-    if (!uploaded || typeof uploaded.id !== "string" || !uuid2.test(uploaded.id) || uploaded.id === target.activeVersion || !validEtag(uploaded.etag)) {
+    if (!uploaded || typeof uploaded.id !== "string" || !uuid2.test(uploaded.id) || uploaded.id === target2.activeVersion || !validEtag(uploaded.etag)) {
       throw new UpgradeOperationError("upload_unconfirmed", "Cloudflare did not identify the staged version. No rollout was attempted");
     }
     const candidateVersion = uploaded.id;
     const staged = { ...record5, candidateVersion, candidateEtag: uploaded.etag };
     await txn.write({ ...staged, phase: "staged" });
-    const candidate = await api.readVersion(target, candidateVersion);
+    const candidate = await api.readVersion(target2, candidateVersion);
     if (candidate?.id !== candidateVersion || candidate.etag !== uploaded.etag) {
       throw new UpgradeOperationError("candidate_unproven", "The staged Worker does not match Cloudflare readback. No rollout was attempted");
     }
@@ -13501,12 +13656,12 @@ async function runUpgradeOperation({ expected, artifact, operationId, api, journ
       throw error2;
     }
     try {
-      await api.deployVersion(target, { strategy: "percentage", versions: [{ version_id: candidateVersion, percentage: 100 }] });
+      await api.deployVersion(target2, { strategy: "percentage", versions: [{ version_id: candidateVersion, percentage: 100 }] });
     } catch {
       throw new UpgradeOperationError("deployment_unconfirmed", "Cloudflare rollout was not confirmed. Check the current deployment; no automatic retry or rollback was attempted");
     }
     try {
-      requireDeployment(await api.readDeployment(target), candidateVersion, candidateVersion);
+      requireDeployment(await api.readDeployment(target2), candidateVersion, candidateVersion);
       await txn.assertHeld();
       await txn.write({ ...staged, phase: "confirmed" });
     } catch {
@@ -13517,34 +13672,34 @@ async function runUpgradeOperation({ expected, artifact, operationId, api, journ
 }
 __name(runUpgradeOperation, "runUpgradeOperation");
 async function confirmRecordedDeployment({ expected, operationId, api, journal, now: now4 = Date.now }) {
-  const target = pinnedTarget(expected, operationId);
-  return journal.withLock(target, async (txn) => {
+  const target2 = pinnedTarget(expected, operationId);
+  return journal.withLock(target2, async (txn) => {
     const record5 = await txn.read();
     const phase = record5?.phase;
     if (phase === "abandoned" && record5.operationId === operationId) {
       return { status: "upload_abandoned", version: record5.releaseVersion, operationId };
     }
-    if (record5?.operationId !== operationId || !["uploading", "staged", "deploying", "confirmed"].includes(phase) || !uuid2.test(record5.baseVersion ?? "") || record5.baseVersion !== target.activeVersion || (phase === "uploading" ? record5.candidateVersion !== void 0 || record5.candidateEtag !== void 0 : !uuid2.test(record5.candidateVersion ?? "") || record5.candidateVersion === record5.baseVersion || !validEtag(record5.candidateEtag))) {
+    if (record5?.operationId !== operationId || !["uploading", "staged", "deploying", "confirmed"].includes(phase) || !uuid2.test(record5.baseVersion ?? "") || record5.baseVersion !== target2.activeVersion || (phase === "uploading" ? record5.candidateVersion !== void 0 || record5.candidateEtag !== void 0 : !uuid2.test(record5.candidateVersion ?? "") || record5.candidateVersion === record5.baseVersion || !validEtag(record5.candidateEtag))) {
       throw new UpgradeOperationError("reconciliation_required", "There is no exact recorded version to reconcile");
     }
     if (record5.phase === "confirmed") {
       return { status: "previously_confirmed", version: record5.releaseVersion, operationId };
     }
     if (phase === "uploading") {
-      const [deployment3, original2] = await Promise.all([api.readDeployment(target), api.readVersion(target, record5.baseVersion)]);
+      const [deployment3, original2] = await Promise.all([api.readDeployment(target2), api.readVersion(target2, record5.baseVersion)]);
       if (!uuid2.test(deployment3?.latestVersion ?? "") || original2?.id !== record5.baseVersion || !validEtag(original2.etag)) {
         throw new UpgradeOperationError("candidate_unproven", "Cloudflare did not identify the original version");
       }
-      checkTarget(original2.bindings, target);
+      checkTarget(original2.bindings, target2);
       requireDeployment(deployment3, record5.baseVersion, deployment3.latestVersion);
-      requireDeployment(await api.readDeployment(target), record5.baseVersion, deployment3.latestVersion);
+      requireDeployment(await api.readDeployment(target2), record5.baseVersion, deployment3.latestVersion);
       await txn.assertHeld();
       const unconfirmed = /* @__PURE__ */ __name((extra) => ({ status: "baseline_active_upload_unconfirmed", version: record5.releaseVersion, operationId, ...extra }), "unconfirmed");
       if (typeof api.taggedVersions !== "function") return unconfirmed();
-      const tagged = await api.taggedVersions(target, operationId);
+      const tagged = await api.taggedVersions(target2, operationId);
       if (tagged.length > 1) throw new UpgradeOperationError("candidate_unproven", "Cloudflare lists several versions for one upgrade");
       if (tagged.length === 1) {
-        const landed = await api.readVersion(target, tagged[0]);
+        const landed = await api.readVersion(target2, tagged[0]);
         if (landed?.id !== tagged[0] || landed.id === record5.baseVersion || !validEtag(landed.etag)) {
           throw new UpgradeOperationError("candidate_unproven", "Cloudflare did not identify the uploaded version");
         }
@@ -13563,9 +13718,9 @@ async function confirmRecordedDeployment({ expected, operationId, api, journal, 
       return unconfirmed({ retryAfter: (since ?? clock) + uploadSettleMs });
     }
     const [deployment2, original, candidate] = await Promise.all([
-      api.readDeployment(target),
-      api.readVersion(target, record5.baseVersion),
-      api.readVersion(target, record5.candidateVersion)
+      api.readDeployment(target2),
+      api.readVersion(target2, record5.baseVersion),
+      api.readVersion(target2, record5.candidateVersion)
     ]);
     const rolloutStillUnconfirmed = phase === "deploying" && deployment2?.deployments?.[0]?.version_id === record5.baseVersion;
     const active = phase === "staged" || rolloutStillUnconfirmed ? record5.baseVersion : record5.candidateVersion;
@@ -13574,10 +13729,10 @@ async function confirmRecordedDeployment({ expected, operationId, api, journal, 
       throw new UpgradeOperationError("candidate_unproven", "Cloudflare version identity cannot confirm the recorded deployment");
     }
     const currentVersion = original.bindings.find(({ name }) => name === "NODRELAY_RELEASE_VERSION")?.text;
-    if (!currentVersion || !(phase === "staged" ? target.currentVersion === currentVersion : [currentVersion, record5.releaseVersion].includes(target.currentVersion))) {
+    if (!currentVersion || !(phase === "staged" ? target2.currentVersion === currentVersion : [currentVersion, record5.releaseVersion].includes(target2.currentVersion))) {
       throw new UpgradeOperationError("target_drift", "Nodrelay runtime version does not match the recorded deployment");
     }
-    checkTarget(original.bindings, { ...target, currentVersion });
+    checkTarget(original.bindings, { ...target2, currentVersion });
     const changes = { NODRELAY_RELEASE_VERSION: record5.releaseVersion };
     if (record5.manifestSha256 !== void 0 || record5.enrollmentChangesSha256 !== void 0 || record5.migratesFeed !== void 0) {
       if (!validHash(record5.manifestSha256) || !validHash(record5.enrollmentChangesSha256)) {
@@ -13596,7 +13751,7 @@ async function confirmRecordedDeployment({ expected, operationId, api, journal, 
     }
     validateUpgradeBindings(original.bindings, candidate.bindings, changes);
     compatibleRuntime(candidate.runtime, snapshot(original.runtime));
-    requireDeployment(await api.readDeployment(target), active, record5.candidateVersion);
+    requireDeployment(await api.readDeployment(target2), active, record5.candidateVersion);
     await txn.assertHeld();
     if (phase === "staged") return { status: "baseline_active_candidate_staged", version: record5.releaseVersion, operationId };
     if (rolloutStillUnconfirmed) return { status: "baseline_active_rollout_unconfirmed", version: record5.releaseVersion, operationId };
@@ -13819,12 +13974,12 @@ function createUpgradeAdmin(env, {
           persistArchive: workerArchiveWriter(env.TICKETS),
           inspect: /* @__PURE__ */ __name(() => inspectEnrollment({ api: provider, db: env.TICKETS, spec: config2.spec }), "inspect")
         };
-        const baseline = await api.readDeployment(config2.target);
-        const active = baseline?.deployments;
-        if (!Array.isArray(active) || active.length !== 1 || active[0]?.percentage !== 100 || !matches5(uuid3, active[0]?.version_id) || !matches5(uuid3, baseline.latestVersion)) {
+        const baseline2 = await api.readDeployment(config2.target);
+        const active = baseline2?.deployments;
+        if (!Array.isArray(active) || active.length !== 1 || active[0]?.percentage !== 100 || !matches5(uuid3, active[0]?.version_id) || !matches5(uuid3, baseline2.latestVersion)) {
           throw new UpgradeAdminError("target_drift");
         }
-        if (baseline.latestVersion !== active[0].version_id) throw new UpgradeAdminError("baseline_version_mismatch");
+        if (baseline2.latestVersion !== active[0].version_id) throw new UpgradeAdminError("baseline_version_mismatch");
         const expected = { ...config2.target, currentVersion: config2.currentVersion, activeVersion: active[0].version_id };
         const result = await runOperation({ expected, artifact, operationId, api, enrollmentApproval, journal: createJournal(env.TICKETS), now: clock() });
         if (result?.version !== version3 || !["deployment_confirmed", "previously_confirmed"].includes(result?.status)) {
@@ -13893,8 +14048,553 @@ ${nonce ? `<style nonce="${nonce}">${pageStyles}</style>` : '<link rel="styleshe
 }
 __name(consolePage, "consolePage");
 
+// ../cloud/market-bootstrap.json
+var market_bootstrap_default = {
+  catalog: {
+    schema: 1,
+    revision: 1,
+    items: [
+      {
+        id: "shardbrowser",
+        name: "ShardBrowser",
+        kind: "\u5E94\u7528",
+        repo: "ProxyShard/ShardBrowser",
+        version: "2.1.6",
+        description: "\u5728\u8BBE\u5907\u4E0A\u7BA1\u7406\u6D4F\u89C8\u5668\u6863\u6848\u548C\u4EE3\u7406\u3002",
+        features: [
+          "\u5728\u5B98\u65B9\u684C\u9762\u5E94\u7528\u91CC\u521B\u5EFA\u548C\u7BA1\u7406\u6D4F\u89C8\u5668\u6863\u6848",
+          "\u4E3A\u4E0D\u540C\u6863\u6848\u914D\u7F6E\u4EE3\u7406\uFF0C\u4FDD\u7559\u5404\u81EA\u7684\u767B\u5F55\u72B6\u6001"
+        ],
+        assets: {
+          "darwin-arm64": {
+            format: "mac-app-tgz",
+            file: "ShardBrowser.Launcher.app.tar.gz",
+            sha256: "e00e9e5cef79edd7c75f87886c93052365a8b7f7c7517ff533eef45a9cd20143"
+          },
+          "win32-x64": {
+            format: "windows-app",
+            file: "ShardBrowser-Launcher-portable-win-x64.exe",
+            sha256: "235eb0139822bedb79309eb31933edd13545ded725ece14832ed798cbe78ca51"
+          }
+        }
+      },
+      {
+        id: "calculator",
+        name: "\u8BA1\u7B97\u5668",
+        kind: "MCP",
+        repo: "cyanheads/calculator-mcp-server",
+        version: "0.6.0",
+        registry: "io.github.cyanheads/calculator-mcp-server",
+        description: "\u8BA1\u7B97\u8868\u8FBE\u5F0F\u3001\u6362\u7B97\u5355\u4F4D\u548C\u5904\u7406\u65E5\u671F\u3002",
+        features: [
+          "\u8BA1\u7B97\u8868\u8FBE\u5F0F\u5E76\u8FD4\u56DE\u7CBE\u786E\u7ED3\u679C",
+          "\u5316\u7B80\u8868\u8FBE\u5F0F\u3001\u6C42\u5BFC\u548C\u6362\u7B97\u5355\u4F4D"
+        ],
+        assets: {
+          any: {
+            format: "node-mcpb",
+            file: "calculator-mcp-server.mcpb",
+            entry: "dist/index.js",
+            sha256: "b507b408f08c61ea5d5235c3b28bb0dd5e74b0793f7e0563a9c73046d62f1a6e"
+          }
+        }
+      },
+      {
+        id: "time",
+        name: "\u65F6\u95F4\u4E0E\u65F6\u533A",
+        kind: "MCP",
+        repo: "TheoBrigitte/mcp-time",
+        version: "0.4.0",
+        description: "\u67E5\u8BE2\u65F6\u95F4\u3001\u8F6C\u6362\u65F6\u533A\u548C\u89E3\u6790\u65E5\u671F\u3002",
+        features: [
+          "\u67E5\u8BE2\u672C\u5730\u65F6\u95F4\u6216\u6307\u5B9A\u65F6\u533A\u7684\u65F6\u95F4",
+          "\u6BD4\u8F83\u65E5\u671F\u3001\u6362\u7B97\u65F6\u533A\u548C\u8BA1\u7B97\u76F8\u5BF9\u65F6\u95F4"
+        ],
+        assets: {
+          "darwin-arm64": {
+            format: "stdio-binary",
+            file: "mcp-time.darwin-arm64",
+            sha256: "4e8cae536f57aaeffbd39b8a9af4d613d9c1613648c3ac4857ba30453e6d193e"
+          },
+          "darwin-x64": {
+            format: "stdio-binary",
+            file: "mcp-time.darwin-amd64",
+            sha256: "1ed4818b828b5ede2d05bde9fdd49359316a9265dcad543facee4a67f22d6ae2"
+          },
+          "linux-x64": {
+            format: "stdio-binary",
+            file: "mcp-time.linux-amd64",
+            sha256: "9f5cbbc016139beacde978cadd2ccb95dfa925426e4dc6a8a2d43d27d9c618f4"
+          },
+          "linux-arm64": {
+            format: "stdio-binary",
+            file: "mcp-time.linux-arm64",
+            sha256: "c47c35d92fda1374785a8e0a120f755078f51141b71112aeefe0f344d5abab71"
+          },
+          "win32-x64": {
+            format: "stdio-binary",
+            file: "mcp-time.windows-amd64.exe",
+            sha256: "737071560f39f2f4bee467e68fb5a9f5726ac3aa0e661688ff6bc9026f0d2449"
+          }
+        }
+      }
+    ],
+    withdrawn: []
+  },
+  signature: "wq1QmMBymYJvJd8SfvU9zpGvd13vCG07EcgKdYSwRoE3vTi9aQeSYV5MALjKOLscTM5qm1Cs1shbSEEQdlAsAg=="
+};
+
+// ../cloud/market-trust.mjs
+var marketFeed = "https://raw.githubusercontent.com/Erlin0220/nodrelay-downloads/gateway-preview/market/v1/catalog.json";
+var marketPublicKey = "MCowBQYDK2VwAyEAIJhRFeOWB1rfR8JvvS0YbWE+f3D4aPkq5XNQ88L6YiY=";
+var bytes = /* @__PURE__ */ __name((value) => Uint8Array.from(atob(value), (c) => c.charCodeAt(0)), "bytes");
+var idPattern = /^[a-z][a-z0-9-]*$/;
+var segment = /^[A-Za-z0-9_][A-Za-z0-9._+-]*$/;
+var text2 = /* @__PURE__ */ __name((value) => typeof value === "string" && value.length > 0, "text");
+function validateMarket(c) {
+  if (c.schema !== 1 || !Number.isSafeInteger(c.revision) || c.revision < 1 || !Array.isArray(c.items) || !Array.isArray(c.withdrawn)) throw Error("\u65E0\u6548\u7684\u5E02\u573A\u76EE\u5F55");
+  const ids = /* @__PURE__ */ new Set();
+  for (const i of c.items) {
+    if (!text2(i.id) || !idPattern.test(i.id) || ids.has(i.id) || !text2(i.name) || !text2(i.description) || !["MCP", "\u5E94\u7528"].includes(i.kind) || !text2(i.version) || !segment.test(i.version) || !text2(i.repo) || i.repo.split("/").length !== 2 || !i.repo.split("/").every((v) => segment.test(v)) || !Array.isArray(i.features) || !i.features.every(text2) || !i.assets || Array.isArray(i.assets) || typeof i.assets !== "object") throw Error("\u65E0\u6548\u7684\u5E02\u573A\u6761\u76EE");
+    if (i.cli !== void 0 && (i.kind !== "\u5E94\u7528" || !text2(i.cli) || !idPattern.test(i.cli))) throw Error("\u65E0\u6548\u7684 CLI \u547D\u4EE4\u540D");
+    ids.add(i.id);
+    for (const [target2, a] of Object.entries(i.assets)) {
+      if (!/^(any|[a-z0-9]+-[a-z0-9]+)$/.test(target2) || !text2(a.format) || !text2(a.file) || !segment.test(a.file) || !/^[0-9a-f]{64}$/.test(a.sha256) || a.format === "node-mcpb" && (!text2(a.entry) || !a.entry.split("/").every((v) => segment.test(v)))) throw Error("\u65E0\u6548\u7684\u5B89\u88C5\u5305");
+      if (Boolean(i.cli) !== a.format.startsWith("cli-") || a.format === "cli-wheel" && (!/^[0-9a-f]{2}\/[0-9a-f]{2}\/[0-9a-f]{60}$/.test(a.pypiPath) || !a.file.endsWith(".whl"))) throw Error("\u65E0\u6548\u7684 CLI \u5B89\u88C5\u5305");
+    }
+  }
+  for (const w of c.withdrawn) if (!text2(w.id) || !idPattern.test(w.id) || !text2(w.version) || !text2(w.reason)) throw Error("\u65E0\u6548\u7684\u64A4\u56DE\u8BB0\u5F55");
+  return c;
+}
+__name(validateMarket, "validateMarket");
+async function verifyMarket({ catalog, signature }, publicKey = marketPublicKey) {
+  const key4 = await crypto.subtle.importKey("spki", bytes(publicKey), "Ed25519", false, ["verify"]);
+  if (!await crypto.subtle.verify("Ed25519", key4, bytes(signature), new TextEncoder().encode(JSON.stringify(catalog)))) throw Error("\u5E02\u573A\u76EE\u5F55\u7B7E\u540D\u65E0\u6548");
+  return validateMarket(catalog);
+}
+__name(verifyMarket, "verifyMarket");
+async function fetchMarket(request = fetch) {
+  const response2 = await request(marketFeed, {
+    redirect: "manual",
+    credentials: "omit",
+    headers: { Accept: "application/json" },
+    signal: AbortSignal.timeout(15e3)
+  });
+  if (!response2.ok) {
+    await response2.body?.cancel();
+    throw Error("\u516C\u5171\u5E02\u573A\u6682\u65F6\u4E0D\u53EF\u7528");
+  }
+  const envelope = await response2.json();
+  await verifyMarket(envelope);
+  return envelope;
+}
+__name(fetchMarket, "fetchMarket");
+
+// ../cloud/market-catalog.mjs
+var baseline = market_bootstrap_default.catalog;
+var marketItems = baseline.items;
+function registryRecord(item) {
+  return "https://registry.modelcontextprotocol.io/v0.1/servers/" + encodeURIComponent(item.registry) + "/versions/" + encodeURIComponent(item.version);
+}
+__name(registryRecord, "registryRecord");
+var schema2 = "CREATE TABLE IF NOT EXISTS nodrelay_market_feed (slot INTEGER PRIMARY KEY, revision INTEGER NOT NULL, manifest TEXT NOT NULL)";
+async function cachedMarket(db) {
+  if (!await db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='nodrelay_market_feed'").first()) return baseline;
+  const row = await db.prepare("SELECT manifest FROM nodrelay_market_feed WHERE slot=1 AND revision>?").bind(baseline.revision).first();
+  return row ? JSON.parse(row.manifest) : baseline;
+}
+__name(cachedMarket, "cachedMarket");
+async function refreshMarket(db, request = fetch) {
+  const { catalog } = await fetchMarket(request);
+  const current = await cachedMarket(db);
+  if (catalog.revision < current.revision) throw Error("\u516C\u5171\u76EE\u5F55\u7248\u672C\u5DF2\u56DE\u9000");
+  if (catalog.revision === current.revision) {
+    if (JSON.stringify(catalog) !== JSON.stringify(current)) throw Error("\u540C\u4E00\u76EE\u5F55\u7248\u672C\u5B58\u5728\u51B2\u7A81");
+    return current.revision;
+  }
+  if (catalog.revision > baseline.revision) await db.batch([db.prepare(schema2), db.prepare(
+    "INSERT INTO nodrelay_market_feed(slot,revision,manifest) VALUES(1,?,?) ON CONFLICT(slot) DO UPDATE SET revision=excluded.revision,manifest=excluded.manifest WHERE excluded.revision>nodrelay_market_feed.revision"
+  ).bind(catalog.revision, JSON.stringify(catalog))]);
+  return (await cachedMarket(db)).revision;
+}
+__name(refreshMarket, "refreshMarket");
+
+// ../cloud/market-styles.mjs
+var marketStyles = `
+.workspace main.market {width:min(1160px,calc(100% - 64px));margin:26px auto 68px}
+.market a{text-decoration:none}.market .muted,.market-meta,.market-notice{color:var(--secondary)}
+.market-hero{isolation:isolate;position:relative;text-align:center;padding:38px 12px 26px;overflow:hidden}
+.market-hero:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle,color-mix(in srgb,var(--active) 30%, transparent) 1px,transparent 1.5px) 0 0/10px 10px;mask-image:radial-gradient(ellipse 64% 84% at 50% 2%,black,transparent)}
+.market-overline{display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border:1px solid var(--line);border-radius:20px;background:var(--surface);font:600 10px/1.5 ui-monospace,monospace;letter-spacing:1.5px;color:var(--active)}
+.market-overline:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.market-hero h1{font-size:clamp(38px,4.8vw,64px);line-height:1.12;letter-spacing:-.07em;margin:13px 0 23px}
+.market-search{display:flex;align-items:center;gap:12px;width:min(530px,100%);margin:auto;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:0 15px;box-shadow:0 6px 20px #14251a09}
+.market-search:focus-within{outline:2px solid var(--active)}.market-search input{flex:1;min-width:0;padding:13px 0;border:0;background:none;color:var(--text);font:inherit;outline:0}
+.market-search svg{flex:none;color:var(--secondary)}.market-search button{border:0;background:none;color:var(--secondary);padding:6px}
+.market-filters,.market-tools,.market-person,.market-foot,.market-state,.market-select,.market-pills,.market-info,.market-sources{display:flex;align-items:center;gap:10px}
+.market-filters{justify-content:center;flex-wrap:wrap;gap:6px;margin:18px 0 0}.market-filters a{border-radius:30px;padding:5px 13px;border:1px solid var(--line);background:var(--surface);color:var(--secondary);font-size:13px}
+.market-filters a[aria-current]{background:var(--text);border-color:var(--text);color:var(--surface)}
+.market-tools{justify-content:space-between;align-items:center;flex-wrap:wrap;margin:20px 0 14px}.market-tools h2,.market-panel h2{margin:0;font-size:22px;letter-spacing:-.7px}
+.market-tools h2 small{font:500 13px ui-monospace,monospace;color:var(--secondary);margin-left:7px}.market-select{font-size:13px;color:var(--secondary);flex-wrap:wrap}
+.market-select select{max-width:100%;background:var(--surface);color:var(--text);border:1px solid var(--line);padding:7px 10px;border-radius:8px;font:inherit}
+.market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.market-card{min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:14px;display:flex;flex-direction:column;overflow:hidden}
+.market-card:hover{border-color:color-mix(in srgb,var(--active) 45%,var(--line));box-shadow:0 6px 20px #152b2010}
+.market-cover{display:block;color:inherit;padding:20px 18px 16px;flex:1}.market-cover:hover h3{text-decoration:underline;text-underline-offset:4px}
+.market-icon{display:inline-grid;place-items:center;flex:none;width:46px;height:46px;border-radius:12px;background:#e5eef8;color:#326088}.market-icon svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.market-icon.time{color:#876137;background:#f7ecd8}.market-icon.shardbrowser{background:#13171f}.market-icon img{width:100%;height:100%;object-fit:contain;border-radius:inherit}
+.market-icon.spec-kit{background:#e8e5f5;color:#625986}.market-icon.open-code-review{background:#dceee4;color:#35674b}
+.market-person>div{min-width:0}.market-person h3{font-size:18px;letter-spacing:-.5px;margin:0;overflow-wrap:anywhere}.market-meta{font-size:12px;margin:3px 0 0}
+.market-cover p,.market-summary{font-size:14px;line-height:1.65;color:var(--secondary);margin:18px 0}.market-pills{gap:6px;flex-wrap:wrap}.market-pill{font:500 11px/1.5 ui-monospace,monospace;border:1px solid var(--line);padding:2px 7px;border-radius:20px;color:var(--secondary)}
+.market-foot{border-top:1px solid var(--line);background:color-mix(in srgb,var(--inset) 45%,var(--surface));min-height:54px;padding:9px 16px;justify-content:space-between;flex-wrap:wrap}
+.market-foot form,.market-panel form{margin:0}.market-state{font-size:12px;color:var(--secondary);gap:6px}.market-state:before{content:"";width:6px;height:6px;background:currentColor;border-radius:50%}
+.market-state[data-state=installed]{color:var(--active)}.market-state[data-state=failed]{color:light-dark(#993c30,#ffb5a8)}.market .button{font-size:13px;min-height:32px;line-height:1.35}.market-empty{padding:32px 14px;text-align:center;color:var(--secondary);border:1px dashed var(--line);border-radius:12px}
+.market-notice:empty{display:none}.market-notice{margin:10px 0}.market-back,.market-sources a{font-size:13px;color:var(--active)}
+.market-detail{padding:32px 0 25px;border-bottom:1px solid var(--line)}.market-detail .market-icon{width:64px;height:64px;border-radius:16px}.market-detail .market-icon svg{width:36px;height:36px}
+.market-detail h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.055em;margin:0;line-height:1.12}.market-detail .market-info{align-items:flex-start;gap:16px}.market-summary{font-size:16px;margin-bottom:0}
+.market-columns{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(255px,1fr);gap:26px;align-items:start;margin-top:25px}.market-panel{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:22px;min-width:0}.market-panel h2{font-size:18px;margin-bottom:15px}
+.market-info-list{margin:0 0 17px;padding:0;list-style:none}.market-info-list li{padding:9px 0;border-bottom:1px solid var(--rule);font-size:14px}.market-sources{flex-wrap:wrap}.market-sources a{text-decoration:underline;text-underline-offset:3px}
+.market-installbox .market-select{display:grid}.market-installbox .market-state{margin:14px 0}.market-installbox button,.market-installbox .button{width:100%}.market-installbox select{width:100%}
+.market-installbox label:has(input[readonly]){display:grid;gap:6px;color:var(--secondary);font-size:13px}.market-installbox input[readonly]{width:100%;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--inset);color:var(--text);font:13px ui-monospace,monospace}
+.market-actions{display:flex;align-items:center;gap:12px}.market-actions>a{font-size:13px;color:var(--secondary)}.market-actions>a:hover{color:var(--active);text-decoration:underline}
+.install-methods{display:flex;position:relative;gap:3px;border:0;margin:0 0 12px;padding:3px;border-radius:9px;background:var(--inset)}
+.install-methods legend,.install-methods input{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}
+.install-methods label{flex:1;margin:0;text-align:center;cursor:pointer}.install-methods span{display:block;border-radius:7px;padding:7px;color:var(--secondary);font-size:13px}
+.install-methods input:checked+span{color:var(--text);background:var(--surface);box-shadow:0 1px 4px #10251a24;font-weight:600}.install-methods input:focus-visible+span{outline:2px solid var(--active)}
+.agent-install{display:none}.market-installbox:has([value=agent]:checked) .direct-install{display:none}.market-installbox:has([value=agent]:checked) .agent-install{display:grid;gap:9px}
+.agent-install label,.agent-install [role=status]{color:var(--secondary);font-size:13px}.agent-install [role=status]:empty{display:none}
+.agent-install textarea{width:100%;box-sizing:border-box;resize:vertical;border:1px solid var(--line);border-radius:8px;background:var(--inset);color:var(--text);font:13px/1.6 ui-monospace,monospace;padding:10px;overflow-wrap:anywhere}
+@media(max-width:1180px){.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.workspace main.market{width:calc(100% - 30px);margin:12px auto 40px}.market-hero{padding:24px 4px 15px}.market-columns{display:flex;flex-direction:column}.market-panel{width:100%}.market-installbox{order:-1}}
+@media(max-width:560px){.market-grid{grid-template-columns:1fr}.market-tools h2{font-size:20px}.market-cover{padding:16px}.market-hero h1{font-size:38px}.market-card .market-cover p{margin:12px 0}.market-select{gap:5px}.market-filters a{padding:5px 10px}}
+`;
+
+// ../cloud/shardbrowser-icon.mjs
+var shardBrowserIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAISklEQVR42u1dXXLTSBCeaZunJbXmBOs9AbnBmhPEFFC1T0ScIL4B4QRkTxAnT1tFKMwJECfAPgHhBIQiPCXWbI9sFkj0M5LmX90vUEWQY32fpvv7eno0ZBS9jiHdAiIABRGAgghAQQSgIAJQEAEoiAAURAAKIgAFEYCCCEBBBKAgAlBEGtCHL/kkEbt/J2JMcN8OHjvwWZa9wb9uwOdiscMHz+ZzfkHQ92AF+AV8GYJPL0X2LknEiKCPnACPEzH5BfzvHBBsV5JArg4Ef09qgCIS4OpAJAitBshzuli/xKVcPt0X+MsfnZ0OXpT9/KOna1FzyQsAePBqzpe0AngeMm/nOX0DvowRonv4JLlOKv7bquay8prvtumCCOBzfGPraXFO5wcV/y1VuPRI5OmgkkhEAPcVPX9els9LvxyIZYPrH/eRBBByRX/j3wtisGxIst6RIIwVIFvPapArJEBe3HH2pSkJHu9joUkE8COkhSsY36sRdqVpgAuxbCETZ4/218dEAA/iKstmtYAxfr9C6aatPliwpA8kCCEF7Cv8zLi02QOQtv7knATXb2K2jsFv4ycvyJRu/hUrVgN3Getm8kTePwC/LdtKja9UCG47f6uu1nGsJACfpV+Vxr/taVf6+ksd/YMYSeAtAdCdS5qla/5XhSGU6moifc2yjzE1kcBX6adY/N1qFjENhhBT6B/EQgIvCXDd8On/sQroM4T6QgIvCYBdvoN2aYNpNYTUSBC2dQwhS79bIHOm3xCqJUHY/QMIWvoVFGmlVXoXQyjiJhL4tuOnifQriktThpACCXAH0gERoNsu3pmGi0wqDKFPhr/CUWj9A/Bpy1cb6VeQCCas2w6hrhVsUE0kbwhwqePpr+kMcmBLSzImGBKAR9JvX9OlRmWdQc4gtfiFEtxY8sF36xg8kn5jXddbs/Wk1BCyPH/ge//ACwJkQtvT/70i361oGr0nEnhEgNxO/bHXn+mZdqmyaI0YQipNpA8+WscQhfRr0BkUAK6mgMY+9g8gDunHlLeK79iQggE1kSAG6Veytuw6NISCGUeDSKRfUWU5cWoIBTKO5owAjxIx1Sn9vDSEAmgiuVsBhPHGybhcesHSo5lHpyQAZ1u+NEu/ovjKWOFnnM3tS8HaTqIj6xgcTfsc2vgcnmVVhtBb5tc2KCf9A3Ak/fYs3dVJRR2wYMy7vXDWSWCdAJcsa73lS2e8mg/njuWgF+NoYH+/Pzuwdy/LHcHtNrEZ8zEsjqNBTNKvabyec5kGTnw9ycwGCSAy6Xczapf416eDxHcSmDzmFmKTfjcq/XOllcBzElwZ7CSCTwc9GKCAst7PSQDw0MvC0GATiduSfnKo0nb1fwfgz3/n/Jy12KGExeq0/mga66H9YEuweMbfyPLy/74N+N8l4tnpcLoDcA8ni5/l6UHvbKE342hWVgAcmPhou/rn+KTotnxzFbOZO5CE/sMlEyQxt16G3wTID3pA1lq+P/9gTp8Zn2LCaWRMFfJpvB8qCcwT4On1wmYulUs/Lt8T280tuRPZRd2AAB5WHZjtlADyxlxtij9bscK8PXH9RpBtqpji3Z2iHfm7BRbMX58MnnlHAMz9R4xZs36Vwd+okvUeZ3yMd0CeOj7igp0L9A0ABiudVfb2tTUyTUyMpoqWJOCRSD8l8DcHT62fKxhS53jWwEKOlJ8d87c6V8RrhitDJqa1fQpLJOAmp33kRgcfwM9TkcA2a1snEl82hUv54g4MWkvLogdEymO8RxOdqQKJu7zL4YFqGjRGADkX13XWXyFOEPxZ1ZfdqpA3ulYieYPxj5RzONGZKjRLTGUVxAOWfidbD9/lKnTBZKoQIt2BwVtdxacGiXmB9+aeMwJg8TdnJrd8+wF+UapIMc0s0K59r2t1aCUx0bXEWmDkhAAWpJ+f4FsqJFUkJoL6Ar2BQycEePx0fYiy6nnPwbdSSJZIzEYuKDew/H82JP3CBd9SIencCDIIQC348jUv8k0fLLwwUkg6IYAh6VcLfr6VWrCExRAGCkkrBDAk/foFvqVC0ggBdEs/lVZn5OBbKSS5Rt//M4EfXiEJvh30QOAz5d3CsuhFGfihyzgZ92nLVx34+Uojspd9B7/k5j3cDrrYXQF0nfGnAr4ckiDwm09CV8WQeXDGnyr4FrqLIb/54cJ6DaDjjD8CX0sp/+Uug7l1AnQ944/A7w689ErucNht6yByJ9IPf3HgYkbgt4pVLv8AFjrmHobWpV8OPkyqtCuBf+MpR/NHvvtwwAapLgOoMwFanfGnAL6sK75uLOVRn59yXJoX8ik33Q8YdtiUMDYBftZP8D/lh1ci4PIoW5sdwWH7gx44gd9xgokBX8iXWLjcE8CNb/ki8H9+yvPOnu2nXOsK0OiMv56Dn59FCDwdMljoLt6crACNpn36Cf5qm8vTNr689yuA8hl/SuDL7WPY2AkZfPye+E7iVB46aUKieUcAxTP+Vgh+Ug8+Pw5ZouW7dDw7c9goARSlX+2cXnDg/2TE/MYGC1+KN+sE4Nk6EdUlQzTgb94sxlMbRkwwBKgZSwodfGdGTEg1wKeSqdUgwffFiAknBQA7wiLwZVPw5SvVs4wd+WTEhCLRvPMBtgcoylpASjecZIHDSvAdb94MwYgJigBNwhH4WnvllAJ8Bz8CIyY6AlgA31qvnAjgA/iRGzHRECA/E1AT+CTRwlwB9smI6TcBRm0kGj3l8RDgpGYVICMmZgLIAxsvs/X4/yNQSaKxXhpBm0MO2YiMmJ47gRQ9dgIpiAAURAAKIgAFEYCCCEBBBKAgAlAQASiIABREAAoiAAURgIIIQOFB/AdyYnvZE0nKsAAAAABJRU5ErkJggg==";
+
+// ../cloud/tool-market.mjs
+var url = "/admin/market";
+var categories = { all: "\u5168\u90E8", mcp: "MCP \u5DE5\u5177", cli: "\u547D\u4EE4\u884C\u5DE5\u5177", app: "\u684C\u9762\u5E94\u7528", installed: "\u5DF2\u5B89\u88C5" };
+var categoryOf = /* @__PURE__ */ __name((entry) => entry.cli ? "cli" : entry.kind === "MCP" ? "mcp" : "app", "categoryOf");
+var browser = `
+const results=document.querySelector('#market-results');
+const address=new URL(location.href);
+let follow=address.searchParams.get('follow');
+if(follow){address.searchParams.delete('follow');history.replaceState(null,'',address);}
+if(document.hidden)follow=null;
+const devicePicker=document.querySelector('#mk-device');
+let interacting=false;
+if(!address.searchParams.has('deviceId')&&!devicePicker.value){
+  let saved;
+  try{saved=localStorage.getItem('nodrelay-market-device');}catch{}
+  if(saved&&Array.from(devicePicker.options).some(option=>option.value===saved)){
+    address.searchParams.set('deviceId',saved);location.replace(address);
+  }
+}
+let timer, reading;
+function schedule(){
+  clearTimeout(timer);
+  if(document.hidden||reading)return;
+  const destination=follow&&results.querySelector('[data-service-link="'+CSS.escape(follow)+'"]');
+  if(destination){follow=null;location.replace(destination.href);return;}
+  if(results.querySelector('[data-pending]'))timer=setTimeout(poll,2500);
+}
+async function poll(restore=false,url=location.href,push=false){
+  if(reading||document.hidden)return;
+  const controller=reading=new AbortController();
+  let resume=true;
+  try{
+    const options={redirect:'error',cache:'no-store',signal:controller.signal,headers:{Accept:'application/json'}};
+    if(!restore){
+      const labels=[...results.querySelectorAll('[data-pending]')];
+      const params=new URLSearchParams({deviceId:results.querySelector('#mk-device').value});
+      for(const label of labels)params.append('id',label.dataset.pending);
+      const response=await fetch('/admin/market/progress?'+params,options);
+      if(!response.ok)throw Error();
+      const {items,revision}=await response.json();
+      controller.signal.throwIfAborted();
+      if(revision===Number(results.dataset.revision)&&labels.every(label=>items.some(i=>i.id===label.dataset.pending&&i.state==='installing'))){
+        for(const label of labels)if(!label.hidden)label.textContent=items.find(i=>i.id===label.dataset.pending).step;
+        return;
+      }
+    }
+    const response=await fetch(url,options);
+    if(!response.ok)throw new Error();
+    const {fragment,header,revision}=await response.json();
+    controller.signal.throwIfAborted();
+    if(revision!==Number(results.dataset.revision)){location.assign(url);return;}
+    if(header&&restore){
+      const searchFocused=document.activeElement.closest('.market-search');
+      document.querySelector('.market-hero').outerHTML=header;
+      if(searchFocused)document.querySelector('.market-search input[type=search]').focus({preventScroll:true});
+    }
+    const focused=document.activeElement===results.querySelector('#mk-device');
+    results.innerHTML=fragment;
+    if(focused)results.querySelector('#mk-device').focus({preventScroll:true});
+    if(push)history.pushState(null,'',url);
+    document.querySelector('#market-feedback').textContent='';
+  }catch{
+    if(!controller.signal.aborted){document.querySelector('#market-feedback').textContent='\u672A\u80FD\u6838\u5BF9\u8FDB\u5EA6\uFF0C\u8BF7\u5237\u65B0\u67E5\u770B\u3002';resume=false;}
+  }finally{if(reading===controller){reading=undefined;if(resume)schedule();}}
+}
+function filter(url,push){
+  reading?.abort();reading=undefined;clearTimeout(timer);follow=null;interacting=true;
+  void poll(true,url,push);
+}
+document.addEventListener('click',event=>{
+  const link=event.target.closest('.market-filters a');
+  if(!link||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+  event.preventDefault();filter(link.href,true);
+});
+window.addEventListener('popstate',()=>{if(document.querySelector('.market-hero'))filter(location.href,false);});
+document.addEventListener('change',e=>{if(e.target.id==='mk-device'){
+  follow=null;try{localStorage.setItem('nodrelay-market-device',e.target.value);}catch{}
+  e.target.form.requestSubmit();
+}else if(e.target.name==='install-mode'){
+  const mode=new URL(location.href),field=document.querySelector('#market-mode');
+  field.disabled=e.target.value!=='agent';
+  if(field.disabled)mode.searchParams.delete('mode');else mode.searchParams.set('mode','agent');
+  history.replaceState(null,'',mode);
+}});
+results.addEventListener('click',async event=>{
+  const button=event.target.closest('#copy-agent-prompt');
+  if(!button)return;
+  const prompt=document.querySelector('#agent-prompt'),feedback=document.querySelector('#copy-agent-status');
+  interacting=true;
+  try{await navigator.clipboard.writeText(prompt.value);feedback.textContent='\u5DF2\u590D\u5236';}
+  catch{prompt.focus();prompt.select();feedback.textContent='\u5DF2\u9009\u4E2D\u6307\u4EE4\uFF0C\u8BF7\u624B\u52A8\u590D\u5236\u3002';}
+});
+document.addEventListener('click',e=>{if(e.target.closest('a,button,select,input'))follow=null;});
+document.addEventListener('submit',e=>{
+  follow=null;
+  if(e.target.matches('.market-search')){
+    e.preventDefault();const url=new URL(e.target.action);url.search=new URLSearchParams(new FormData(e.target));filter(url,true);return;
+  }
+  if(e.target.method==='post'&&e.submitter){e.submitter.disabled=true;e.submitter.textContent=e.target.action.includes('/install?')?'\u6B63\u5728\u6838\u5BF9\u5B89\u88C5\u2026':'\u6B63\u5728\u6253\u5F00\u2026';}
+});
+window.addEventListener('pagehide',()=>{follow=null;interacting=true;clearTimeout(timer);reading?.abort();reading=undefined;});
+window.addEventListener('pageshow',e=>{if(e.persisted)void poll(true);});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)follow=null;schedule();});schedule();
+document.addEventListener('input',()=>{interacting=true;},{once:true});
+document.addEventListener('submit',()=>{interacting=true;},{once:true});
+if(!follow&&!results.querySelector('[data-pending]')&&results.dataset.sync==='true'){
+  fetch('/admin/market/catalog',{redirect:'error',cache:'no-store'}).then(async response=>{
+    if(!response.ok)throw Error();
+    const {revision}=await response.json();
+    if(revision>Number(results.dataset.revision)&&!interacting&&!document.hidden)location.replace(location.href);
+  }).catch(()=>{document.querySelector('#market-feedback').textContent='\u76EE\u5F55\u672A\u80FD\u66F4\u65B0\uFF0C\u6B63\u5728\u663E\u793A\u5DF2\u4FDD\u5B58\u7684\u5DE5\u5177\u3002';});
+}`;
+async function rpc(devices, deviceId2, action, id2, signal, revision, ids) {
+  const reply = await devices.gatewayRequest(deviceId2, "development", "tools/call", { name: localRpc, arguments: { action, id: id2, revision, ids } }, signal);
+  if (reply.isError || !reply.structuredContent) throw new Error("\u8BBE\u5907\u672A\u786E\u8BA4");
+  return reply.structuredContent;
+}
+__name(rpc, "rpc");
+async function marketProgress(devices, device, ids, feed, signal) {
+  const { items } = await rpc(devices, device, "market-status", void 0, signal, feed.revision, ids);
+  return { revision: feed.revision, items: items.filter((i) => ids.includes(i.id)).map(({ id: id2, state: state2, step }) => ({ id: id2, state: state2, step })) };
+}
+__name(marketProgress, "marketProgress");
+function context(params, marketItems2) {
+  return {
+    item: marketItems2.find((row) => row.id === params.get("item"))?.id,
+    category: Object.hasOwn(categories, params.get("category")) ? params.get("category") : "all",
+    q: params.get("q")?.trim()
+  };
+}
+__name(context, "context");
+function fields(values) {
+  return Object.entries(values).filter(([k, v]) => v && !(k === "category" && v === "all"));
+}
+__name(fields, "fields");
+function target(values) {
+  const query = new URLSearchParams(fields(values)).toString();
+  return url + (query ? "?" + query : "");
+}
+__name(target, "target");
+function hidden(values) {
+  return fields(values).map(([k, v]) => '<input type="hidden" name="' + escapeHtml(k) + '" value="' + escapeHtml(v) + '">').join("");
+}
+__name(hidden, "hidden");
+async function installMarketItem(devices, input, request, feed = baseline) {
+  const open2 = new URL(request.url).pathname === url + "/open";
+  const entry = feed.items.find((i) => i.id === input.item);
+  if (!entry || open2 && categoryOf(entry) !== "app" || !input.deviceId || !(await devices.list(input.deviceId)).some((d) => d.id === input.deviceId && d.status === "active")) return new Response("\u5DE5\u5177\u6216\u8BBE\u5907\u4E0D\u53EF\u7528", { status: 400 });
+  const back2 = { ...context(new URL(request.url).searchParams, feed.items), deviceId: input.deviceId };
+  try {
+    if (!open2 && (Number(input.revision) !== feed.revision || feed.withdrawn.some((w) => w.id === entry.id && w.version === entry.version))) back2.notice = "changed";
+    else {
+      const result = await rpc(devices, input.deviceId, open2 ? "market-open" : "market-install", input.item, request.signal, feed.revision);
+      if (open2) back2.notice = "opened";
+      else if (result.state === "catalog-changed") back2.notice = "changed";
+      else if (entry.kind === "MCP" && ["installing", "installed"].includes(result.state)) back2.follow = input.item;
+    }
+  } catch {
+    back2.notice = open2 ? "open-unknown" : "unknown";
+  }
+  return new Response(null, { status: 303, headers: { Location: target(back2), "Cache-Control": "no-store" } });
+}
+__name(installMarketItem, "installMarketItem");
+var icons = {
+  codegraph: '<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="11" r="2.5"/><circle cx="7" cy="18" r="2.5"/><path d="m8.3 7 7.4 3M6.2 8.5l.6 7M9.2 16.8l6.7-4.5"/>',
+  "spec-kit": '<path d="M6 3h9l3 3v15H6zM9 10h6m-6 4h6m-6 3h4"/>',
+  "open-code-review": '<path d="m5 7-4 5 4 5m14-10 4 5-4 5M8 12l3 3 5-6"/>',
+  calculator: '<rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 7h8M8 11h2m4 0h2m-8 4h2m4 0h2m-8 4h2m4 0h2"/>',
+  time: '<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/>'
+};
+function icon(id2) {
+  return '<span class="market-icon ' + escapeHtml(id2) + '" aria-hidden="true">' + (id2 === "shardbrowser" ? '<img src="' + shardBrowserIcon + '" alt="">' : '<svg viewBox="0 0 24 24">' + (Object.hasOwn(icons, id2) ? icons[id2] : '<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8m-4-4v8"/>') + "</svg>") + "</span>";
+}
+__name(icon, "icon");
+async function renderMarket(devices, upgrade, request, feed = baseline, sync = false) {
+  const marketItems2 = feed.items;
+  const params = new URL(request.url).searchParams, { item, category, q } = context(params, marketItems2);
+  const available = (await devices.list()).filter((d) => d.status === "active");
+  const selected = params.has("deviceId") ? available.find((d) => d.id === params.get("deviceId")) : available.length === 1 ? available[0] : void 0;
+  const view = { category, q, item, deviceId: selected?.id };
+  const candidates = marketItems2.filter((row) => (!q || [row.name, row.repo, row.description, row.cli, categories[categoryOf(row)]].join(" ").toLowerCase().includes(q.toLowerCase())) && (category === "all" || category === "installed" || category === categoryOf(row)));
+  const ids = item ? [item] : category === "installed" || ["unknown", "open-unknown"].includes(params.get("notice")) ? void 0 : candidates.map((row) => row.id);
+  let status, protocol2, warning = "";
+  if (selected) {
+    try {
+      if (!ids || ids.length) ({ items: status, catalogProtocol: protocol2 } = await rpc(devices, selected.id, "market-status", void 0, request.signal, feed.revision, ids));
+    } catch {
+      warning = "\u65E0\u6CD5\u8BFB\u53D6\u8BBE\u5907\u72B6\u6001\u3002\u8BF7\u68C0\u67E5\u8FDE\u63A5\u53CA\u5BA2\u6237\u7AEF\u7248\u672C\u3002";
+    }
+  } else if (!available.length) warning = "\u8FD8\u6CA1\u6709\u5DF2\u63A5\u5165\u7684\u8BBE\u5907\u3002";
+  const messages = { opened: "\u5DF2\u8BF7\u6C42\u5728\u6240\u9009\u8BBE\u5907\u4E0A\u6253\u5F00\u5B98\u65B9\u5E94\u7528\u3002", changed: "\u76EE\u5F55\u5DF2\u53D8\u66F4\uFF0C\u8BF7\u6838\u5BF9\u5DE5\u5177\u7248\u672C\u3002", "open-unknown": "\u672A\u786E\u8BA4\u662F\u5426\u6253\u5F00\uFF0C\u8BF7\u5148\u67E5\u770B\u6240\u9009\u8BBE\u5907\u3002", unknown: "\u5B89\u88C5\u8BF7\u6C42\u672A\u6536\u5230\u786E\u8BA4\uFF0C\u8BF7\u6838\u5BF9\u4E0B\u65B9\u8BBE\u5907\u72B6\u6001\u3002" };
+  if (Object.hasOwn(messages, params.get("notice"))) warning = [messages[params.get("notice")], warning].filter(Boolean).join(" ");
+  const agent = item && params.get("mode") === "agent";
+  const picker = '<form class="market-select" action="' + url + '">' + hidden({ ...view, deviceId: void 0 }) + (item ? '<input type="hidden" id="market-mode" name="mode" value="agent"' + (agent ? "" : " disabled") + ">" : "") + '<label for="mk-device">\u76EE\u6807\u8BBE\u5907</label><select id="mk-device" name="deviceId"><option value="">\u9009\u62E9\u8BBE\u5907</option>' + available.map((d) => '<option value="' + escapeHtml(d.id) + '"' + (selected === d ? " selected" : "") + ">" + escapeHtml(d.displayName ?? d.id) + "</option>").join("") + "</select><noscript><button>\u67E5\u770B</button></noscript></form>";
+  const href = /* @__PURE__ */ __name((change) => escapeHtml(target({ ...view, ...change })), "href");
+  const labels = { installed: "\u5DF2\u5B89\u88C5", available: "\u672A\u5B89\u88C5", unsupported: "\u8BBE\u5907\u4E0D\u652F\u6301", failed: "\u5B89\u88C5\u5931\u8D25", withdrawn: "\u7248\u672C\u5DF2\u64A4\u56DE", "installed-withdrawn": "\u5DF2\u5B89\u88C5\u7248\u672C\u5DF2\u64A4\u56DE", "upgrade-required": "\u9700\u5347\u7EA7\u5BA2\u6237\u7AEF" };
+  function controls(entry) {
+    const current = status?.find((row) => row.id === entry.id);
+    const withdrawn = feed.withdrawn.find((w) => w.id === entry.id && w.version === (current?.version ?? entry.version));
+    const state2 = withdrawn ? ["installed", "installed-withdrawn"].includes(current?.state) ? "installed-withdrawn" : "withdrawn" : status && protocol2 !== 1 ? "upgrade-required" : current?.state;
+    const label3 = state2 === "installing" ? current.step : labels[state2] ?? (selected ? "\u72B6\u6001\u672A\u786E\u8BA4" : "\u672A\u9009\u8BBE\u5907");
+    const open2 = state2 === "installed" && categoryOf(entry) === "app";
+    let action = "";
+    if (open2 || state2 === "available" || state2 === "failed") {
+      const path = open2 ? "open" : "install", name = open2 ? "\u6253\u5F00\u5B98\u65B9\u5E94\u7528" : state2 === "failed" ? "\u91CD\u8BD5\u5B89\u88C5" : "\u4E00\u952E\u5B89\u88C5";
+      action = '<form method="post" action="' + url + "/" + path + "?" + escapeHtml(new URLSearchParams(fields(view)).toString()) + '">' + hidden({ item: entry.id, deviceId: selected.id, ...!open2 && { revision: String(feed.revision) } }) + '<button class="button ' + (open2 ? "" : "primary") + '" aria-label="' + name + "\uFF1A" + escapeHtml(entry.name) + '">' + name + "</button></form>";
+    } else if (state2 === "installed" && entry.cli) {
+      action = item === entry.id ? '<label>\u547D\u4EE4\u8DEF\u5F84<input readonly aria-label="\u547D\u4EE4\u8DEF\u5F84" value="' + escapeHtml(current.command) + '"></label>' : '<a class="button" href="' + href({ item: entry.id }) + '">\u67E5\u770B\u547D\u4EE4</a>';
+    } else if (state2 === "installed") action = '<a class="button" data-service-link="' + escapeHtml(entry.id) + '" href="/admin/local-mcp?deviceId=' + encodeURIComponent(selected.id) + "#market-" + encodeURIComponent(entry.id) + '">\u67E5\u770B\u672C\u673A MCP \u670D\u52A1</a>';
+    else if (!selected && available.length) action = '<a class="button" href="#mk-device">\u9009\u62E9\u8BBE\u5907</a>';
+    return {
+      state: state2,
+      label: '<span class="market-state" data-state="' + escapeHtml(state2 ?? "unknown") + '"' + (state2 === "installing" ? ' data-pending="' + escapeHtml(entry.id) + '"' : "") + ">" + escapeHtml(label3) + "</span>",
+      action,
+      failure: ["withdrawn", "installed-withdrawn"].includes(state2) ? '<p class="market-notice">' + escapeHtml(withdrawn?.reason ?? current.reason) + "</p>" : state2 === "failed" ? '<p class="market-notice">' + escapeHtml(current.step) + "\uFF1A" + escapeHtml(current.reason) + "</p>" : ""
+    };
+  }
+  __name(controls, "controls");
+  const detail = marketItems2.find((row) => row.id === item), nonce = crypto.randomUUID();
+  let top = "", body = "";
+  if (detail) {
+    const entry = detail, c = controls(entry);
+    let install = picker + c.label + c.failure + c.action;
+    if (["available", "failed"].includes(c.state)) {
+      const destination = new URL(target({ item: entry.id, deviceId: selected.id }), request.url);
+      const form = new URLSearchParams({ item: entry.id, deviceId: selected.id, revision: String(feed.revision) });
+      const prompt = "\u8BF7\u5728\u8BFA\u8054\u8BBE\u5907 " + selected.id + " \u4E0A\u5B89\u88C5\u300C" + entry.name + "\u300Dv" + entry.version + "\u3002\n" + destination.href + "\n\n\u7528\u5DF2\u6388\u6743\u7684\u7BA1\u7406\u53F0\u4F1A\u8BDD\u6838\u5BF9\u8BBE\u5907\u3001\u7248\u672C\u548C\u72B6\u6001\uFF1B\u9700\u8981\u767B\u5F55\u65F6\u4EA4\u7ED9\u6211\u3002\u4EC5\u5728\u9875\u9762\u5141\u8BB8\u5B89\u88C5\u4E14\u8868\u5355\u5339\u914D\u65F6\uFF0C\u540C\u6E90\u63D0\u4EA4\u4E00\u6B21\uFF1A\nPOST /admin/market/install\napplication/x-www-form-urlencoded\n" + form + "\n\u4E5F\u53EF\u4EE5\u7528\u8BE5\u9875\u9762\u7684\u5B89\u88C5\u6309\u94AE\uFF0C\u4E24\u79CD\u65B9\u5F0F\u53EA\u9009\u4E00\u79CD\u3002\u5B89\u88C5\u4E2D\u6216\u8BF7\u6C42\u7ED3\u679C\u4E0D\u660E\u65F6\uFF0C\u56DE\u539F\u9875\u6838\u5BF9\uFF0C\u4E0D\u91CD\u590D\u63D0\u4EA4\u3002\n" + (entry.cli ? "\u5B89\u88C5\u5B8C\u6210\u540E\u62A5\u544A\u6240\u9009\u8BBE\u5907\u4E0A\u7684\u547D\u4EE4\u8DEF\u5F84\uFF0C\u4E0D\u521D\u59CB\u5316\u9879\u76EE\u6216\u8C03\u7528\u6A21\u578B\u3002" : entry.kind === "MCP" ? "\u5B89\u88C5\u5B8C\u6210\u540E\u6253\u5F00\u300C\u672C\u673A MCP \u670D\u52A1\u300D\uFF0C\u62A5\u544A\u670D\u52A1\u548C\u5DE5\u5177\u540D\u79F0\u3002" : "\u786E\u8BA4\u300C\u5DF2\u5B89\u88C5\u300D\u5373\u53EF\uFF0C\u4E0D\u542F\u52A8\u684C\u9762\u5E94\u7528\u3002");
+      const toggle = '<fieldset class="install-methods"><legend>\u5B89\u88C5\u65B9\u5F0F</legend><label><input type="radio" name="install-mode" value="direct"' + (agent ? "" : " checked") + '><span>\u4E00\u952E\u5B89\u88C5</span></label><label><input type="radio" name="install-mode" value="agent"' + (agent ? " checked" : "") + "><span>Agent \u5B89\u88C5</span></label></fieldset>";
+      install = picker + c.label + c.failure + toggle + '<div class="direct-install">' + c.action + '</div><div class="agent-install"><label for="agent-prompt">\u53D1\u7ED9\u4F60\u7684 Agent</label><textarea id="agent-prompt" rows="6" readonly>' + escapeHtml(prompt) + '</textarea><button class="button primary" id="copy-agent-prompt" type="button">\u590D\u5236\u5B89\u88C5\u6307\u4EE4</button><span id="copy-agent-status" role="status"></span></div>';
+    }
+    top = '<a class="market-back" href="' + href({ item: void 0 }) + '">\u2039 \u8FD4\u56DE\u5DE5\u5177\u5E02\u573A</a><header class="market-detail"><div class="market-info">' + icon(item) + "<div><h1>" + escapeHtml(entry.name) + '</h1><div class="market-meta">' + escapeHtml(entry.repo.split("/")[0]) + " \xB7 v" + escapeHtml(entry.version) + " \xB7 " + categories[categoryOf(entry)] + '</div></div></div><p class="market-summary">' + escapeHtml(entry.description) + "</p></header>";
+    body = '<div class="market-columns"><section class="market-panel"><h2>\u529F\u80FD</h2><ul class="market-info-list">' + entry.features.map((s) => "<li>" + escapeHtml(s) + "</li>").join("") + '</ul><div class="market-sources"><a href="https://github.com/' + entry.repo + "/releases/tag/v" + escapeHtml(entry.version) + '" rel="noreferrer" target="_blank">\u53D1\u5E03\u8005\u53D1\u884C\u9875</a>' + (entry.registry ? '<a href="' + registryRecord(entry) + '" rel="noreferrer" target="_blank">MCP Registry</a>' : "") + '</div></section><section class="market-panel market-installbox"><h2>\u8BBE\u5907\u5B89\u88C5</h2>' + install + "</section></div>";
+  } else {
+    const found = category === "installed" ? candidates.filter((row) => status?.some((s) => s.id === row.id && ["installed", "installed-withdrawn"].includes(s.state))) : candidates;
+    top = '<header class="market-hero"><span class="market-overline">NODRELAY MARKET</span><h1>\u5DE5\u5177\u5E02\u573A</h1><form class="market-search">' + hidden({ ...view, q: void 0 }) + '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><input aria-label="\u641C\u7D22\u5DE5\u5177" name="q" type="search" placeholder="\u641C\u7D22\u5DE5\u5177\u3001\u7528\u9014\u6216\u53D1\u5E03\u8005" value="' + escapeHtml(q ?? "") + '"><button>\u641C\u7D22</button></form><nav aria-label="\u5E02\u573A\u5206\u7C7B" class="market-filters">' + Object.entries(categories).map(([id2, label3]) => '<a href="' + href({ category: id2 }) + '"' + (category === id2 ? ' aria-current="page"' : "") + ">" + label3 + "</a>").join("") + "</nav></header>";
+    const removed = category === "installed" ? (status ?? []).filter((row) => row.unlisted && (!q || row.unlisted.name.toLowerCase().includes(q.toLowerCase()))) : [];
+    let cards = found.map((entry) => {
+      const c = controls(entry);
+      const actions2 = ["available", "failed"].includes(c.state) ? '<div class="market-actions"><a href="' + href({ item: entry.id, mode: "agent" }) + '">Agent \u5B89\u88C5</a>' + c.action + "</div>" : c.action;
+      return '<article class="market-card"><a class="market-cover" href="' + href({ item: entry.id }) + '"><div class="market-person">' + icon(entry.id) + "<div><h3>" + escapeHtml(entry.name) + '</h3><div class="market-meta">' + escapeHtml(entry.repo.split("/")[0]) + "</div></div></div><p>" + escapeHtml(entry.description) + '</p><div class="market-pills"><span class="market-pill">' + categories[categoryOf(entry)] + '</span><span class="market-pill">v' + escapeHtml(entry.version) + "</span></div></a>" + c.failure + '<footer class="market-foot">' + c.label + actions2 + "</footer></article>";
+    }).join("");
+    for (const row of removed) {
+      const note = row.state === "installed-withdrawn" ? "\u7248\u672C\u5DF2\u64A4\u56DE\uFF1A" + row.reason : "\u5DF2\u4ECE\u5E02\u573A\u4E0B\u67B6";
+      const link = row.unlisted.kind === "MCP" ? '<a class="button" href="/admin/local-mcp?deviceId=' + encodeURIComponent(selected.id) + "#market-" + encodeURIComponent(row.id) + '">\u67E5\u770B\u672C\u673A MCP \u670D\u52A1</a>' : "";
+      cards += '<article class="market-card"><div class="market-cover"><h3>' + escapeHtml(row.unlisted.name) + "</h3><p>" + escapeHtml(note) + '</p></div><footer class="market-foot"><span>\u5DF2\u5B89\u88C5 \xB7 v' + escapeHtml(row.version) + "</span>" + link + "</footer></article>";
+    }
+    const known = category !== "installed" || Boolean(status);
+    const empty = !known ? "\u9009\u62E9\u5DF2\u8FDE\u63A5\u7684\u8BBE\u5907\u67E5\u770B\u5B89\u88C5\u8BB0\u5F55\u3002" : q ? "\u6CA1\u6709\u5339\u914D\u7684\u5DE5\u5177\u3002" : category === "installed" ? "\u8FD9\u53F0\u8BBE\u5907\u8FD8\u6CA1\u6709\u5B89\u88C5\u5E02\u573A\u5DE5\u5177\u3002" : category === "mcp" ? "\u6682\u65E0\u6536\u5F55\u7684 MCP \u5DE5\u5177\u3002" : category === "app" ? "\u6682\u65E0\u6536\u5F55\u7684\u684C\u9762\u5E94\u7528\u3002" : "\u6682\u65E0\u6536\u5F55\u7684\u5DE5\u5177\u3002";
+    body = '<div class="market-tools"><h2>' + (q ? "\u641C\u7D22\u7ED3\u679C" : category === "all" ? "\u7CBE\u9009\u5DE5\u5177" : categories[category]) + (known ? "<small>" + (found.length + removed.length) + "</small>" : "") + "</h2>" + picker + "</div>" + (cards ? '<div class="market-grid">' + cards + "</div>" : '<p class="market-empty">' + empty + "</p>");
+    if (category === "installed") {
+      for (const row of status ?? []) if (row.state === "installing") body += '<span hidden data-pending="' + escapeHtml(row.id) + '"></span>';
+    }
+  }
+  const fragment = `<p role="status" class="market-notice">${escapeHtml(warning)}</p>${body}`;
+  if (upgrade === null) return { fragment, header: detail ? void 0 : top, revision: feed.revision };
+  return { nonce, body: `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${detail ? escapeHtml(detail.name) + " \xB7 " : ""}\u5DE5\u5177\u5E02\u573A \xB7 Nodrelay</title><style nonce="${nonce}">${consoleStyles}${marketStyles}</style><script nonce="${nonce}">${restoreConsoleTheme}<\/script></head><body>${consoleShell("market", detail ? escapeHtml(detail.name) : "", ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`)}<main class="market">${top}<div id="market-results" data-sync="${sync}" data-revision="${feed.revision}">${fragment}</div><p id="market-feedback" role="status"></p></main></div>${upgradeDialog}<script nonce="${nonce}">${browser}<\/script><script nonce="${nonce}">${consoleUpgradeScript}<\/script></body></html>` };
+}
+__name(renderMarket, "renderMarket");
+
 // ../cloud/management.mjs
 var assets = {
+  "/admin/local-cli.js": ["text/javascript", `
+const form = document.querySelector('.cli-search'), query = form.elements.q;
+const scope = document.querySelector('.cli-scope'), results = document.querySelector('#cli-results');
+const refresh = document.querySelector('#scan-again');
+let snapshot, request, latest = 0;
+async function show(url, push, fresh = false) {
+  const turn = ++latest;
+  const note = document.querySelector('#cli-feedback');
+  if (fresh) snapshot = undefined;
+  if (!snapshot) {
+    note.textContent = '\u6B63\u5728\u8BFB\u53D6 CLI\u2026';
+    try {
+      request ??= fetch(refresh.href, {headers:{Accept:'application/json'},redirect:'error',cache:'no-store'})
+        .then(r => { if (!r.ok) throw Error(); return r.json(); }).finally(() => { request = undefined; });
+      const data = await request;
+      if (turn !== latest) return;
+      snapshot = data;
+    } catch {
+      if (turn === latest) note.textContent = '\u672A\u80FD\u8BFB\u53D6 CLI\uFF0C\u8BF7\u5237\u65B0\u91CD\u8BD5\u3002';
+      return;
+    }
+  }
+  const {commands,complete,indexing,warnings} = snapshot;
+  const text = (url.searchParams.get('q') ?? '').trim(), all = url.searchParams.get('scope') === 'all';
+  const needle = text.toLowerCase();
+  const matches = commands.filter(c => needle ? c.name.toLowerCase().includes(needle) || c.path.toLowerCase().includes(needle) : all || c.recommended);
+  const clean = new URL(url); clean.searchParams.delete('q');
+  const alternate = new URL(clean);
+  if (all) alternate.searchParams.delete('scope'); else alternate.searchParams.set('scope','all');
+  query.value = text;
+  form.elements.scope.disabled = !all;
+  const clear = form.querySelector('a'); clear.hidden = !text; clear.href = clean;
+  scope.querySelector('strong').textContent = text ? '\u641C\u7D22\u7ED3\u679C' : all ? '\u5168\u90E8 CLI' : '\u63A8\u8350 CLI';
+  const link = scope.querySelector('a'); link.hidden = Boolean(text) || !commands.length; link.href = alternate; link.textContent = all ? '\u53EA\u770B\u63A8\u8350' : '\u67E5\u770B\u5168\u90E8';
+  const dl = document.createElement('dl'); dl.className = 'cli-list';
+  for (const c of matches) {
+    const row = document.createElement('div'), name = document.createElement('dt'), path = document.createElement('dd');
+    name.textContent = c.name; path.textContent = c.path; row.append(name,path); dl.append(row);
+  }
+  results.replaceChildren();
+  if (matches.length) results.append(dl);
+  else if (complete) {
+    const empty = document.createElement('p'); empty.className='empty';
+    empty.textContent = text ? '\u6CA1\u6709\u5339\u914D\u7684 CLI' : commands.length ? '\u6682\u65E0\u63A8\u8350 CLI' : '\u672A\u53D1\u73B0\u672C\u673A CLI'; results.append(empty);
+  }
+  note.textContent = [indexing ? '\u6B63\u5728\u8BC6\u522B CLI\u2026' : '',...warnings].filter(Boolean).join(' ');
+  document.querySelector('#cli-total').textContent = complete ? matches.length : '\u2014';
+  refresh.href = url;
+  if (push && url.href !== location.href) history.pushState(null,'',url);
+  if (!complete || indexing) snapshot = undefined;
+}
+form.addEventListener('submit', e => {
+  e.preventDefault(); const url = new URL(location.href);
+  if (query.value.trim()) url.searchParams.set('q',query.value.trim()); else url.searchParams.delete('q');
+  void show(url,true);
+});
+for (const link of [form.querySelector('a'),scope.querySelector('a'),refresh]) link.addEventListener('click', e => {
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  e.preventDefault(); void show(new URL(link.href),true,link === refresh);
+});
+window.addEventListener('popstate', () => show(new URL(location.href),false));
+`],
   "/admin/local-mcp.js": ["text/javascript", `
 const list = document.querySelector('#local-list');
 const sheet = document.querySelector('#service-sheet');
@@ -13915,7 +14615,7 @@ list.addEventListener('click', event => {
   const button = title ? title.closest('article').querySelector('[data-catalog]') : event.target.closest('[data-catalog]');
   if (!button) return;
   const card = button.closest('article');
-  sheet.querySelector('.sheet-tile').replaceChildren(card.querySelector('h2 svg').cloneNode(true));
+  sheet.querySelector('.sheet-tile').replaceChildren(card.querySelector('.monogram').cloneNode(true));
   sheet.querySelector('h2').textContent = card.querySelector('.service-title').textContent;
   sheet.querySelector('.sheet-source').textContent = card.querySelector('.service-source').textContent;
   heading.textContent = '\u5DE5\u5177\u76EE\u5F55';
@@ -13965,20 +14665,28 @@ async function readCatalog(detail, manual = false) {
 window.addEventListener('pagehide', () => { if (sheet.open) { expanded.controller.abort(); sheet.close(); } });
 try { const preference = localStorage.getItem('nodrelay-theme'); if (['dark','light'].includes(preference)) document.documentElement.dataset.theme = preference; } catch {}
 let timer, reading, submitting = false;
+let saving = 0, scanQueued = false;
+let pending = list.hasAttribute('data-pending');
 function schedule() {
   clearTimeout(timer);
-  if (!document.hidden && !submitting) timer = setTimeout(refresh, 60000);
+  if (pending && !document.hidden && !submitting && !saving) timer = setTimeout(refresh, 60000);
 }
 async function refresh(manual = false) {
-  if (reading || submitting || document.hidden) return;
-  reading = new AbortController();
+  if ((reading && !reading.signal.aborted) || submitting || document.hidden) return;
+  if (saving) { scanQueued = true; return; }
+  scanQueued = false;
+  clearTimeout(timer);
+  pending = false;
+  const controller = reading = new AbortController();
   list.setAttribute('aria-busy', 'true');
   document.querySelector('#scan-message').textContent = '\u6B63\u5728\u68C0\u6D4B\u2026';
   try {
-    const response = await fetch(location.href, { cache: 'no-store', redirect: 'error', signal: reading.signal });
+    const response = await fetch(document.querySelector('#scan-again').href, { headers:{Accept:'application/json'}, cache: 'no-store', redirect: 'error', signal: controller.signal });
     if (!response.ok) throw new Error();
-    const next = new DOMParser().parseFromString(await response.text(), 'text/html').querySelector('#local-list');
+    const next = new DOMParser().parseFromString((await response.json()).list, 'text/html').querySelector('#local-list');
+    controller.signal.throwIfAborted();
     if (!next) throw new Error();
+    pending = next.hasAttribute('data-pending');
     if (!submitting && next.innerHTML !== list.innerHTML) {
       const focus = document.activeElement;
       const focused = focus.closest('form')?.elements.id.value;
@@ -13996,13 +14704,54 @@ async function refresh(manual = false) {
     }
     document.querySelector('#scan-message').textContent = '';
   } catch {
-    if (!reading.signal.aborted) document.querySelector('#scan-message').textContent = '\u68C0\u6D4B\u5931\u8D25\uFF0C\u8BF7\u91CD\u8BD5\u3002';
-  } finally { reading = null; list.removeAttribute('aria-busy'); schedule(); }
+    if (!controller.signal.aborted) document.querySelector('#scan-message').textContent = '\u68C0\u6D4B\u5931\u8D25\uFF0C\u8BF7\u91CD\u8BD5\u3002';
+  } finally {
+    if (reading === controller) { reading = null; list.removeAttribute('aria-busy'); schedule(); }
+  }
 }
 document.querySelector('#scan-again').addEventListener('click', e => { e.preventDefault(); refresh(true); });
-document.addEventListener('submit', () => { submitting = true; reading?.abort(); clearTimeout(timer); });
+list.addEventListener('submit', async event => {
+  event.preventDefault();
+  const form = event.target, button = form.elements.enabled;
+  if (button.disabled) return;
+  const status = form.querySelector('[role=status]');
+  const identity = { deviceId: list.dataset.device, id: form.elements.id.value };
+  const target = button.value === '1';
+  const body = new URLSearchParams({ ...identity, enabled: button.value });
+  button.disabled = true;
+  button.setAttribute('aria-busy', 'true');
+  status.textContent = target ? '\u6B63\u5728\u5F00\u542F\u2026' : '\u6B63\u5728\u5173\u95ED\u2026';
+  saving++;
+  clearTimeout(timer);
+  if (reading) { scanQueued = true; reading.abort(); }
+  let uncertain = false;
+  try {
+    try {
+      const response = await fetch(form.action, { method:'POST', headers:{Accept:'application/json'}, body, redirect:'error' });
+      if (response.status === 400 || response.status === 403) { status.textContent = '\u672A\u66F4\u6539\uFF0C\u8BF7\u5237\u65B0\u540E\u91CD\u8BD5\u3002'; return; }
+      const result = await response.json();
+      if (response.status === 409 && result.rejected) { status.textContent = result.error; return; }
+      if (!response.ok || result.enabled !== target) throw new Error();
+    } catch {
+      status.textContent = '\u6B63\u5728\u6838\u5BF9\u2026';
+      try {
+        const response = await fetch('/admin/local-mcp/grant?' + new URLSearchParams(identity), {cache:'no-store', redirect:'error'});
+        uncertain = !response.ok || (await response.json()).enabled !== target;
+      } catch { uncertain = true; }
+      if (uncertain) { status.textContent = '\u7ED3\u679C\u5F85\u786E\u8BA4\uFF0C\u8BF7\u91CD\u65B0\u68C0\u6D4B\u3002'; return; }
+    }
+    button.setAttribute('aria-checked', String(target));
+    button.value = target ? '0' : '1';
+    status.textContent = '';
+  } finally {
+    button.removeAttribute('aria-busy');
+    button.disabled = uncertain || (button.value === '1' && form.closest('article').querySelector('[data-catalog]').disabled);
+    if (!--saving) { if (scanQueued) void refresh(true); else schedule(); }
+  }
+});
+document.addEventListener('submit', event => { if (!event.defaultPrevented) { submitting = true; reading?.abort(); clearTimeout(timer); } });
 document.addEventListener('visibilitychange', () => { if (document.hidden) { clearTimeout(timer); reading?.abort(); } else refresh(); });
-window.addEventListener('pageshow', () => { submitting = false; schedule(); });
+window.addEventListener('pageshow', event => { submitting = false; if (event.persisted) refresh(); });
 schedule();
 `],
   "/admin/console.css": ["text/css", consoleStyles],
@@ -14063,25 +14812,32 @@ function durableCommand(result, intentId) {
 __name(durableCommand, "durableCommand");
 function platformOptions(releases) {
   const hosted = hostedInstallers(releases);
-  return Object.entries(operatingSystems).flatMap(([platform, { architectures, label: text2 }]) => {
-    if (hosted[platform]) return [{ value: platform, text: text2, enabled: true, browser: hosted[platform].browser }];
+  return Object.entries(operatingSystems).flatMap(([platform, { architectures, label: text3 }]) => {
+    if (hosted[platform]) return [{ value: platform, text: text3, enabled: true, browser: hosted[platform].browser }];
     const local = architectures.map((arch) => platform + "-" + arch).filter((value) => releases[value]?.localFile);
-    return local.length ? local.map((value) => ({ value, text: label2[value], enabled: true, browser: releases[value].browser })) : [{ value: platform, text: text2, enabled: false }];
+    return local.length ? local.map((value) => ({ value, text: label2[value], enabled: true, browser: releases[value].browser })) : [{ value: platform, text: text3, enabled: false }];
   });
 }
 __name(platformOptions, "platformOptions");
+function monogram(name, id2) {
+  const [initial] = name.match(/[\p{L}\p{N}]\p{M}*/u) ?? [...name.trim()];
+  let tone = 0;
+  for (const char of id2) tone = Math.imul(tone, 31) + char.codePointAt(0) >>> 0;
+  return `<span class="monogram tone-${tone % 8}" aria-hidden="true">${escapeHtml((initial ?? "\xB7").toUpperCase())}</span>`;
+}
+__name(monogram, "monogram");
 function deviceList(devices, options, intents) {
-  const button = /* @__PURE__ */ __name((action, text2, quiet = false) => `<button class="button${quiet ? " quiet" : ""}" type="button" data-action="${action}">${text2}</button>`, "button");
+  const button = /* @__PURE__ */ __name((action, text3, quiet = false) => `<button class="button${quiet ? " quiet" : ""}" type="button" data-action="${action}">${text3}</button>`, "button");
   const rows = devices.map((device) => {
     const name = device.displayName ?? device.id;
-    const identity2 = `<span class="initial" aria-hidden="true"><svg class="icon"><use href="#monitor"/></svg></span><span><span class="device-name">${escapeHtml(name)}</span><span class="system">${escapeHtml(device.id)}</span></span>`;
+    const identity2 = `${monogram(name, device.id)}<span><span class="device-name">${escapeHtml(name)}</span><span class="system">${escapeHtml(device.id)}</span></span>`;
     const canReissue = !intents && device.status === "pending" && options.some((option) => option.enabled && option.value === device.platform);
     return `
     <tr role="row" data-state="${escapeHtml(device.status === "installing" ? "pending" : device.status)}" data-device="${escapeHtml(device.id)}"${device.intentId ? ` data-intent="${escapeHtml(device.intentId)}"` : ""}${canReissue ? ` data-platform="${escapeHtml(device.platform)}"` : ""}>
       <th role="rowheader" scope="row">${device.status === "active" ? `<a class="identity identity-link" href="/admin/local-mcp?deviceId=${encodeURIComponent(device.id)}">${identity2}</a>` : `<div class="identity">${identity2}</div>`}</th>
       <td role="cell"><span class="state">${escapeHtml(state[device.status] ?? device.status)}</span></td>
       <td role="cell" class="platform-col">${device.platform ? escapeHtml(label2[device.platform] ?? device.platform) : "\u2014"}</td>
-      <td role="cell"><div class="row-actions">${device.status === "draft" ? button("setup-command", "\u5B89\u88C5\u547D\u4EE4") : device.intentId && device.status === "pending" ? button("intent-command", "\u5B89\u88C5\u547D\u4EE4") + button("intent-revoke", "\u64A4\u9500\u547D\u4EE4", true) : device.intentId ? button("disable", "\u505C\u7528\u8FDC\u7A0B\u63A5\u5165", true) : (canReissue ? button("setup-command", "\u5B89\u88C5\u547D\u4EE4") : "") + button("status", "\u67E5\u770B\u72B6\u6001") + (device.status === "pending" ? button("cancel", "\u64A4\u9500\u5B89\u88C5\u7968\u636E", true) : "") + (device.status === "disabled" ? button("review", "\u590D\u6838\u505C\u7528", true) : button("disable", "\u505C\u7528\u8FDC\u7A0B\u63A5\u5165", true))}${device.status === "active" ? `<a class="button" href="/admin/local-mcp?deviceId=${encodeURIComponent(device.id)}">\u672C\u673A MCP</a>` : ""}</div></td>
+      <td role="cell"><div class="row-actions">${device.status === "draft" ? button("setup-command", "\u5B89\u88C5\u547D\u4EE4") : device.intentId && device.status === "pending" ? button("intent-command", "\u5B89\u88C5\u547D\u4EE4") + button("intent-revoke", "\u64A4\u9500\u547D\u4EE4", true) : device.intentId ? button("disable", "\u505C\u7528\u8FDC\u7A0B\u63A5\u5165", true) : (canReissue ? button("setup-command", "\u5B89\u88C5\u547D\u4EE4") : "") + button("status", "\u67E5\u770B\u72B6\u6001") + (device.status === "pending" ? button("cancel", "\u64A4\u9500\u5B89\u88C5\u7968\u636E", true) : "") + (device.status === "disabled" ? button("review", "\u590D\u6838\u505C\u7528", true) : button("disable", "\u505C\u7528\u8FDC\u7A0B\u63A5\u5165", true))}${device.status === "active" ? `<a class="button" href="/admin/local-mcp?deviceId=${encodeURIComponent(device.id)}">\u672C\u673A\u5DE5\u5177</a>` : ""}${button("delete", "\u5220\u9664\u8BBE\u5907", true)}</div></td>
     </tr>`;
   }).join("");
   const total = /* @__PURE__ */ __name((status) => devices.filter((device) => device.status === status).length, "total");
@@ -14097,7 +14853,7 @@ function devicePage({ rows, counts }, options, { portalHostname }, intents, nonc
   const section = ["gateway", "settings"].includes(view) ? view : "devices";
   const portal = /^[a-z0-9.-]+$/.test(portalHostname ?? "") ? "https://" + portalHostname : "";
   const selected = options.findIndex((option) => option.enabled);
-  const platforms = options.map(({ value, text: text2, enabled, browser }, index) => `<label${enabled ? "" : ' title="\u5F53\u524D\u65E0\u53EF\u7528\u5B89\u88C5\u5305"'}><input class="sr-only" type="radio" name="platform" value="${escapeHtml(value)}"${browser === true ? ' data-browser="true"' : ""}${enabled ? "" : " disabled"}${index === selected ? " checked" : ""}><span>${escapeHtml(text2)}</span></label>`).join("\n");
+  const platforms = options.map(({ value, text: text3, enabled, browser: browser2 }, index) => `<label${enabled ? "" : ' title="\u5F53\u524D\u65E0\u53EF\u7528\u5B89\u88C5\u5305"'}><input class="sr-only" type="radio" name="platform" value="${escapeHtml(value)}"${browser2 === true ? ' data-browser="true"' : ""}${enabled ? "" : " disabled"}${index === selected ? " checked" : ""}><span>${escapeHtml(text3)}</span></label>`).join("\n");
   const values = {
     TITLE: { devices: "\u8BBE\u5907\u7BA1\u7406", gateway: "MCP \u7F51\u5173", settings: "\u7BA1\u7406\u53F0\u8BBE\u7F6E" }[section],
     SHELL: consoleShell(section, "", ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`),
@@ -14122,47 +14878,88 @@ function devicePage({ rows, counts }, options, { portalHostname }, intents, nonc
 }
 __name(devicePage, "devicePage");
 var back = '<p><a href="/">\u8FD4\u56DE\u8BBE\u5907\u5217\u8868</a></p>';
-async function manage(request, env, url, { limitedBody: limitedBody2, html: html2, json: json2, assetResponse: assetResponse2, provider = createDevices, upgradeProvider = createUpgradeAdmin, execution }) {
+async function manage(request, env, url2, { limitedBody: limitedBody2, html: html2, json: json2, assetResponse: assetResponse2, provider = createDevices, upgradeProvider = createUpgradeAdmin, execution }) {
   const devices = provider(env);
   const local = localServicePolicy(env.TICKETS, devices);
   const getIntents = /* @__PURE__ */ __name(() => enrollmentContext(env), "getIntents");
   const wantsJson = request.headers.get("Accept")?.split(",").some((value) => value.split(";", 1)[0].trim() === "application/json");
   try {
     if (request.method === "GET") {
-      if (Object.hasOwn(assets, url.pathname)) return assetResponse2(...assets[url.pathname]);
-      if (url.pathname === "/admin/local-mcp") {
-        const id2 = url.searchParams.get("deviceId");
-        const device = (await devices.list()).find((d) => d.id === id2 && d.status === "active");
+      if (Object.hasOwn(assets, url2.pathname)) return assetResponse2(...assets[url2.pathname]);
+      if (url2.pathname === "/admin/market") {
+        const [feed, upgrade] = await Promise.all([cachedMarket(env.TICKETS), wantsJson ? null : upgradeProvider(env).status().catch(() => ({ phase: "unknown" }))]);
+        const page2 = await renderMarket(devices, upgrade, request, feed, true);
+        return wantsJson ? json2(page2) : html2(page2.body, 200, page2.nonce);
+      }
+      if (url2.pathname === "/admin/market/progress") {
+        const device = url2.searchParams.get("deviceId"), ids = url2.searchParams.getAll("id");
+        if (!device || !ids.length) return json2({ error: "\u8BF7\u9009\u62E9\u8BBE\u5907\u548C\u5DE5\u5177" }, 400);
+        return json2(await marketProgress(devices, device, ids, await cachedMarket(env.TICKETS), request.signal));
+      }
+      if (url2.pathname === "/admin/market/catalog") return json2({ revision: await refreshMarket(env.TICKETS) });
+      if (url2.pathname === "/admin/local-mcp/grant") {
+        const device = url2.searchParams.get("deviceId"), id2 = url2.searchParams.get("id");
+        if (!device || !/^[\w-]{43}$/.test(id2)) return json2({ error: "\u670D\u52A1\u9009\u62E9\u65E0\u6548" }, 400);
+        return json2({ enabled: await local.enabled(device, id2) });
+      }
+      if (url2.pathname === "/admin/local-mcp") {
+        const id2 = url2.searchParams.get("deviceId");
+        const device = (await devices.list(id2)).find((d) => d.id === id2 && d.status === "active");
         if (!device) return html2(consolePage("\u8BBE\u5907\u4E0D\u53EF\u7528", back), 404);
-        const [{ services, warnings, complete }, upgrade] = await Promise.all([
-          local.inventory(id2, request.signal),
-          upgradeProvider(env).status().catch(() => ({ phase: "unknown" }))
-        ]);
+        const cli = url2.searchParams.get("view") === "cli";
+        const query = cli ? (url2.searchParams.get("q") ?? "").trim() : "";
+        const base = "?deviceId=" + encodeURIComponent(id2);
+        const cliUrl = base + "&amp;view=cli";
+        const allCli = url2.searchParams.get("scope") === "all";
+        const scopeUrl = cliUrl + (allCli ? "&amp;scope=all" : "");
+        const nonce = crypto.randomUUID();
+        const name = escapeHtml(device.displayName ?? id2);
+        const upgradeState = !wantsJson && upgradeProvider(env).status().catch(() => ({ phase: "unknown" }));
+        const render = /* @__PURE__ */ __name(async (body, total) => {
+          const upgrade = await upgradeState;
+          return html2(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${name} \xB7 \u672C\u673A\u5DE5\u5177 \xB7 Nodrelay</title><style nonce="${nonce}">${consoleStyles}</style><script nonce="${nonce}">${restoreConsoleTheme}<\/script></head>
+          <body>${consoleShell("devices", name, ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`)}<main class="service-page"><div class="device-context">${name}</div><div class="page-intro"><h1>\u672C\u673A\u5DE5\u5177</h1><a class="button" id="scan-again" href="${cli ? scopeUrl + (query ? "&amp;q=" + encodeURIComponent(query) : "") : base}">${cli ? "\u5237\u65B0" : "\u91CD\u65B0\u68C0\u6D4B"}</a></div>
+          <nav class="device-tool-tabs" aria-label="\u672C\u673A\u5DE5\u5177\u5206\u7C7B"><a href="${base}"${cli ? "" : ' aria-current="page"'}>MCP \u670D\u52A1${cli ? "" : ' <small id="service-total">' + total + "</small>"}</a><a href="${cliUrl}"${cli ? ' aria-current="page"' : ""}>CLI${cli ? ' <small id="cli-total">' + total + "</small>" : ""}</a></nav>
+          ${body}${upgradeDialog}<script nonce="${nonce}">${consoleUpgradeScript}<\/script><script src="/admin/local-${cli ? "cli" : "mcp"}.js" defer><\/script></body></html>`, 200, nonce);
+        }, "render");
+        if (cli) {
+          const { commands, complete: complete2, indexing, warnings: warnings2 } = await local.cliList(id2, request.signal);
+          commands.sort((a, b) => a.name.localeCompare(b.name));
+          if (wantsJson) return json2({ commands, complete: complete2, indexing, warnings: warnings2 });
+          const needle = query.toLowerCase();
+          const matches6 = commands.filter((c) => needle ? c.name.toLowerCase().includes(needle) || c.path.toLowerCase().includes(needle) : allCli || c.recommended);
+          return await render(`<section aria-label="\u547D\u4EE4\u884C\u5DE5\u5177"><form class="cli-search" method="get">
+            <input type="hidden" name="deviceId" value="${escapeHtml(id2)}"><input type="hidden" name="view" value="cli">
+            <input type="hidden" name="scope" value="all"${allCli ? "" : " disabled"}>
+            <label class="search"><input type="search" name="q" value="${escapeHtml(query)}" placeholder="\u641C\u7D22\u5168\u90E8 CLI \u7684\u540D\u79F0\u6216\u8DEF\u5F84" aria-label="\u641C\u7D22\u5168\u90E8 CLI \u7684\u540D\u79F0\u6216\u8DEF\u5F84"></label>
+            <button class="button">\u641C\u7D22</button><a class="button quiet" href="${scopeUrl}"${query ? "" : " hidden"}>\u6E05\u9664</a></form>
+            <div class="cli-scope"><strong>${query ? "\u641C\u7D22\u7ED3\u679C" : allCli ? "\u5168\u90E8 CLI" : "\u63A8\u8350 CLI"}</strong><a href="${allCli ? cliUrl : cliUrl + "&amp;scope=all"}"${!query && commands.length ? "" : " hidden"}>${allCli ? "\u53EA\u770B\u63A8\u8350" : "\u67E5\u770B\u5168\u90E8"}</a></div>
+            <p class="scan-note" role="status" id="cli-feedback">${[indexing ? "\u6B63\u5728\u8BC6\u522B CLI\u2026" : "", ...warnings2].filter(Boolean).map(escapeHtml).join(" ")}</p><div id="cli-results">
+            ${matches6.length ? '<dl class="cli-list">' + matches6.map((c) => "<div><dt>" + escapeHtml(c.name) + "</dt><dd>" + escapeHtml(c.path) + "</dd></div>").join("") + "</dl>" : complete2 ? '<p class="empty">' + (query ? "\u6CA1\u6709\u5339\u914D\u7684 CLI" : commands.length ? "\u6682\u65E0\u63A8\u8350 CLI" : "\u672A\u53D1\u73B0\u672C\u673A CLI") + "</p>" : ""}</div></section></main></div>`, complete2 ? matches6.length : "\u2014");
+        }
+        const { services, warnings, complete, pending } = await local.inventory(id2, request.signal);
         const rows = services.sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id)).map((s) => {
           const [status, count] = s.status.split(" \xB7 ");
           const unavailable = s.unavailable || ["\u672A\u8FDE\u63A5", "\u672A\u53D1\u73B0", "\u68C0\u6D4B\u4E2D", "\u672A\u80FD\u786E\u8BA4"].includes(status);
-          return `<article class="service-card"><div class="service-meta"><span class="service-source">${escapeHtml(s.source)} <code>${escapeHtml(s.transport)}</code></span><span class="service-signal" data-ready="${status === "\u53EF\u7528"}" title="${escapeHtml(s.status)}">${escapeHtml(status)}</span></div>
-          <h2><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 7 9-5 9 5v10l-9 5-9-5zm0 0 9 5 9-5m-9 5v10"/></svg><button class="service-title" type="button" aria-controls="service-sheet" aria-haspopup="dialog"${unavailable ? " disabled" : ""}>${escapeHtml(s.name)}</button></h2><div class="service-foot"><button type="button" class="tools-link" data-catalog="${escapeHtml(s.id)}" aria-label="\u67E5\u770B ${escapeHtml(s.name)} \u7684\u5DE5\u5177" aria-controls="service-sheet" aria-haspopup="dialog"${unavailable ? " disabled" : ""}>${unavailable ? "\u5DE5\u5177\u4E0D\u53EF\u7528" : escapeHtml(count ?? "\u67E5\u770B\u5DE5\u5177") + " \u203A"}</button>
+          return `<article class="service-card"${s.marketItem ? ' id="market-' + escapeHtml(s.marketItem) + '" tabindex="-1"' : ""}><div class="service-meta"><span class="service-source">${escapeHtml(s.source)} <code>${escapeHtml(s.transport)}</code></span><span class="service-signal" data-ready="${status === "\u53EF\u7528"}" title="${escapeHtml(s.status)}">${escapeHtml(status)}</span></div>
+          <h2>${monogram(s.name, s.id)}<button class="service-title" type="button" aria-controls="service-sheet" aria-haspopup="dialog"${unavailable ? " disabled" : ""}>${escapeHtml(s.name)}</button></h2><div class="service-foot"><button type="button" class="tools-link" data-catalog="${escapeHtml(s.id)}" aria-label="\u67E5\u770B ${escapeHtml(s.name)} \u7684\u5DE5\u5177" aria-controls="service-sheet" aria-haspopup="dialog"${unavailable ? " disabled" : ""}>${unavailable ? "\u5DE5\u5177\u4E0D\u53EF\u7528" : escapeHtml(count ?? "\u67E5\u770B\u5DE5\u5177") + " \u203A"}</button>
           <form method="post" action="/admin/local-mcp"><input type="hidden" name="deviceId" value="${escapeHtml(id2)}"><input type="hidden" name="id" value="${escapeHtml(s.id)}">
-          <button class="switch" role="switch" aria-checked="${s.enabled}" aria-label="\u6388\u6743\u4F7F\u7528 ${escapeHtml(s.name)}" name="enabled" value="${s.enabled ? "0" : "1"}"${s.unavailable && !s.enabled ? " disabled" : ""}></button></form></div></article>`;
+          <span role="status"></span><button class="switch" role="switch" aria-checked="${s.enabled}" aria-label="\u6388\u6743\u4F7F\u7528 ${escapeHtml(s.name)}" name="enabled" value="${s.enabled ? "0" : "1"}"${unavailable && !s.enabled ? " disabled" : ""}></button></form></div></article>`;
         }).join("");
-        const nonce = crypto.randomUUID();
-        const name = escapeHtml(device.displayName ?? id2);
-        return html2(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${name} \xB7 \u672C\u673A MCP \xB7 Nodrelay</title><style nonce="${nonce}">${consoleStyles}</style><script nonce="${nonce}">${restoreConsoleTheme}<\/script></head>
-          <body>${consoleShell("devices", name, ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`)}<main class="service-page"><div class="device-context">${name}</div><div class="page-intro"><h1>\u672C\u673A MCP \u670D\u52A1 <small id="service-total">${complete ? services.length : "\u2014"}</small></h1><a class="button" id="scan-again" href="?deviceId=${encodeURIComponent(id2)}">\u91CD\u65B0\u68C0\u6D4B</a></div>
-          <section>
-          <p id="scan-message" class="scan-note" role="status"></p><div id="local-list" data-device="${escapeHtml(id2)}" data-total="${complete ? services.length : "\u2014"}">${warnings.map((w) => '<p class="scan-note" role="status">' + escapeHtml(w) + "</p>").join("")}
-          <div class="service-grid">${rows || (complete ? '<p class="empty">\u672A\u53D1\u73B0\u672C\u673A MCP \u670D\u52A1</p>' : "")}</div></div></section>
-          </main></div><dialog id="service-sheet" aria-labelledby="sheet-name"><header><strong>\u670D\u52A1\u8BE6\u60C5</strong><button class="sheet-close" aria-label="\u5173\u95ED\u8BE6\u60C5" autofocus><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></svg></button></header><div class="sheet-scroll"><div class="sheet-identity"><span class="sheet-tile"></span><div><h2 id="sheet-name"></h2><span class="sheet-source"></span></div></div><section class="sheet-catalog"><h3>\u5DE5\u5177\u76EE\u5F55</h3><div class="tool-detail" aria-live="polite"></div></section></div></dialog>${upgradeDialog}<script nonce="${nonce}">${consoleUpgradeScript}<\/script><script src="/admin/local-mcp.js" defer><\/script></body></html>`, 200, nonce);
+        const list = `<div id="local-list" data-device="${escapeHtml(id2)}" data-total="${complete ? services.length : "\u2014"}"${pending ? " data-pending" : ""}>${warnings.map((w) => '<p class="scan-note" role="status">' + escapeHtml(w) + "</p>").join("")}
+          <div class="service-grid">${rows || (complete ? '<p class="empty">\u672A\u53D1\u73B0\u672C\u673A MCP \u670D\u52A1</p>' : "")}</div></div>`;
+        if (wantsJson) return json2({ list });
+        return await render(`<section aria-label="MCP \u670D\u52A1"><p id="scan-message" class="scan-note" role="status"></p>${list}</section>
+          </main></div><dialog id="service-sheet" aria-labelledby="sheet-name"><header><strong>\u670D\u52A1\u8BE6\u60C5</strong><button class="sheet-close" aria-label="\u5173\u95ED\u8BE6\u60C5" autofocus><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></svg></button></header><div class="sheet-scroll"><div class="sheet-identity"><span class="sheet-tile"></span><div><h2 id="sheet-name"></h2><span class="sheet-source"></span></div></div><section class="sheet-catalog"><h3>\u5DE5\u5177\u76EE\u5F55</h3><div class="tool-detail" aria-live="polite"></div></section></div></dialog>`, complete ? services.length : "\u2014");
       }
-      if (url.pathname === "/admin/client-callbacks") return json2(await devices.clientCallbacks());
-      if (url.pathname === "/admin/upgrade/check") return json2(await upgradeProvider(env).check());
-      if (url.pathname === "/admin/upgrade/status") return json2(await upgradeProvider(env).status());
-      if (url.pathname === "/admin/devices/enrollment") {
-        const id2 = url.searchParams.get("deviceId");
-        const intentId = url.searchParams.get("intentId");
+      if (url2.pathname === "/admin/client-callbacks") return json2(await devices.clientCallbacks());
+      if (url2.pathname === "/admin/upgrade/check") return json2(await upgradeProvider(env).check());
+      if (url2.pathname === "/admin/upgrade/status") return json2(await upgradeProvider(env).status());
+      if (url2.pathname === "/admin/devices/enrollment") {
+        const id2 = url2.searchParams.get("deviceId");
+        const intentId = url2.searchParams.get("intentId");
         if (intentId !== null) {
-          if (url.searchParams.getAll("intentId").length !== 1 || url.searchParams.getAll("deviceId").length !== 1) {
+          if (url2.searchParams.getAll("intentId").length !== 1 || url2.searchParams.getAll("deviceId").length !== 1) {
             return json2({ error: "Invalid enrollment query" }, 400);
           }
           const registration = enrollmentIsEnabled(env) ? await readBoundEnrollmentRegistration(env.TICKETS, id2, intentId) : void 0;
@@ -14179,11 +14976,11 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
         }
         return status ? json2(status) : json2({ error: "Device unavailable" }, 404);
       }
-      if (url.pathname === "/" || url.pathname === "/admin/devices") {
+      if (url2.pathname === "/" || url2.pathname === "/admin/devices") {
         const intents = getIntents();
         const [devicesOnFile, upgrade] = await Promise.all([
           devices.list(),
-          url.pathname === "/" ? upgradeProvider(env).status().catch(() => ({ phase: "unknown" })) : void 0
+          url2.pathname === "/" ? upgradeProvider(env).status().catch(() => ({ phase: "unknown" })) : void 0
         ]);
         const existing = new Map(devicesOnFile.map((row) => [row.id, row]));
         if (intents) {
@@ -14197,7 +14994,7 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
         const rows = [...existing.values()].sort((left, right) => (left.displayName ?? left.id).localeCompare(right.displayName ?? right.id) || left.id.localeCompare(right.id));
         const options = platformOptions(intents?.releases ?? devices.releases);
         const list = deviceList(rows, options, Boolean(intents));
-        if (url.pathname === "/admin/devices") {
+        if (url2.pathname === "/admin/devices") {
           const body = new TextEncoder().encode(JSON.stringify(list));
           const tag2 = 'W/"' + base64url_exports.encode(new Uint8Array(await crypto.subtle.digest("SHA-256", body))) + '"';
           const unchanged = request.headers.get("If-None-Match")?.split(",").some((value) => {
@@ -14207,11 +15004,11 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
           return assetResponse2("application/json", unchanged ? null : body, unchanged ? 304 : 200, { ETag: tag2 });
         }
         const nonce = crypto.randomUUID();
-        return html2(devicePage(list, options, JSON.parse(env.FLEET_SPEC), Boolean(intents), nonce, upgrade, url.searchParams.get("view")), 200, nonce);
+        return html2(devicePage(list, options, JSON.parse(env.FLEET_SPEC), Boolean(intents), nonce, upgrade, url2.searchParams.get("view")), 200, nonce);
       }
     }
     if (request.method !== "POST") return json2({ error: "Unknown route" }, 404);
-    if (url.pathname === activatePath) {
+    if (url2.pathname === activatePath) {
       if (request.headers.get("Content-Type")?.split(";", 1)[0] !== "application/json") return json2({ error: "Expected JSON" }, 415);
       let input2;
       try {
@@ -14235,70 +15032,76 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
       }
       return json2(result, result.status === "revoked" ? 410 : 200);
     }
-    if (request.headers.get("Origin") !== url.origin) return json2({ error: "Invalid origin" }, 403);
+    if (request.headers.get("Origin") !== url2.origin) return json2({ error: "Invalid origin" }, 403);
     if (request.headers.get("Content-Type")?.split(";", 1)[0] !== "application/x-www-form-urlencoded") return json2({ error: "Expected form" }, 415);
-    const fields = [...new URLSearchParams(await limitedBody2(request))];
-    const input = Object.fromEntries(fields);
-    if (url.pathname === "/admin/local-mcp/tools") {
-      if (fields.length !== 2 || !/^[\w-]{43}$/.test(input.id) || !input.deviceId) return json2({ error: "\u670D\u52A1\u9009\u62E9\u65E0\u6548" }, 400);
+    const fields2 = [...new URLSearchParams(await limitedBody2(request))];
+    const input = Object.fromEntries(fields2);
+    if (url2.pathname === "/admin/market/install" || url2.pathname === "/admin/market/open") {
+      if (fields2.length !== (url2.pathname.endsWith("/open") ? 2 : 3)) return json2({ error: "\u5DE5\u5177\u6216\u8BBE\u5907\u65E0\u6548" }, 400);
+      return await installMarketItem(devices, input, request, await cachedMarket(env.TICKETS));
+    }
+    if (url2.pathname === "/admin/local-mcp/tools") {
+      if (fields2.length !== 2 || !/^[\w-]{43}$/.test(input.id) || !input.deviceId) return json2({ error: "\u670D\u52A1\u9009\u62E9\u65E0\u6548" }, 400);
       const preview = local.previewTools(input.deviceId, input.id, request.signal);
       execution?.waitUntil(preview.then(() => {
       }, () => {
       }));
       return json2({ tools: await preview });
     }
-    if (url.pathname === "/admin/local-mcp") {
-      if (fields.length !== 3 || !/^[\w-]{43}$/.test(input.id) || !["0", "1"].includes(input.enabled) || !(await devices.list()).some((row) => row.id === input.deviceId && row.status === "active")) {
-        return html2(consolePage("\u670D\u52A1\u9009\u62E9\u65E0\u6548", back), 400);
+    if (url2.pathname === "/admin/local-mcp") {
+      if (fields2.length !== 3 || !/^[\w-]{43}$/.test(input.id) || !["0", "1"].includes(input.enabled) || !input.deviceId || !(await devices.list(input.deviceId)).some((row) => row.id === input.deviceId && row.status === "active")) {
+        return wantsJson ? json2({ error: "\u670D\u52A1\u9009\u62E9\u65E0\u6548" }, 400) : html2(consolePage("\u670D\u52A1\u9009\u62E9\u65E0\u6548", back), 400);
       }
       try {
         await local.set(input.deviceId, input.id, input.enabled === "1", request.signal);
-      } catch {
+      } catch (error2) {
+        if (wantsJson) return error2 instanceof LocalServiceUnavailable ? json2({ rejected: true, error: error2.message }, 409) : json2({ error: "\u6388\u6743\u7ED3\u679C\u5F85\u786E\u8BA4" }, 503);
         return html2(consolePage("\u65E0\u6CD5\u66F4\u6539\u5F00\u5173", `<p>\u8BF7\u68C0\u67E5\u8BBE\u5907\u8FDE\u63A5\uFF0C\u91CD\u65B0\u68C0\u6D4B\u540E\u518D\u8BD5\u3002</p><a href="/admin/local-mcp?deviceId=${encodeURIComponent(input.deviceId)}">\u8FD4\u56DE\u672C\u673A MCP</a>`), 409);
       }
+      if (wantsJson) return json2({ enabled: input.enabled === "1" });
       return new Response(null, { status: 303, headers: { Location: "/admin/local-mcp?deviceId=" + encodeURIComponent(input.deviceId), "Cache-Control": "no-store" } });
     }
-    if (url.pathname === "/admin/devices/reserve") {
+    if (url2.pathname === "/admin/devices/reserve") {
       const named = Object.hasOwn(input, "name");
-      if (!(fields.length === 1 && (named || Object.hasOwn(input, "deviceId")) || fields.length === 2 && named && Object.hasOwn(input, "operationId"))) {
+      if (!(fields2.length === 1 && (named || Object.hasOwn(input, "deviceId")) || fields2.length === 2 && named && Object.hasOwn(input, "operationId"))) {
         const error2 = "\u6DFB\u52A0\u8BBE\u5907\u53EA\u9700\u8981\u4E00\u4E2A\u8BBE\u5907\u540D\u79F0\u3002";
         return wantsJson ? json2({ error: error2 }, 400) : html2(consolePage("\u8BBE\u5907\u64CD\u4F5C\u5931\u8D25", `<p>${escapeHtml(error2)}</p>${back}`), 400);
       }
       const reserved = named ? await devices.reserveNamed(input.name, input.operationId) : await devices.reserve(input.deviceId);
       return wantsJson ? json2(reserved) : html2(consolePage("\u8BBE\u5907\u5DF2\u6DFB\u52A0", back));
     }
-    if (url.pathname.startsWith("/admin/upgrade/") && fields.length !== Object.keys(input).length) {
+    if (url2.pathname.startsWith("/admin/upgrade/") && fields2.length !== Object.keys(input).length) {
       return json2({ error: "\u5347\u7EA7\u8BF7\u6C42\u5305\u542B\u91CD\u590D\u5B57\u6BB5\uFF0C\u8BF7\u91CD\u65B0\u68C0\u67E5\u7248\u672C\u3002" }, 400);
     }
-    if (fields.length !== Object.keys(input).length && (url.pathname === "/admin/enrollment-intents" || url.pathname === "/admin/devices" && enrollmentIsEnabled(env))) {
+    if (fields2.length !== Object.keys(input).length && (url2.pathname === "/admin/enrollment-intents" || url2.pathname === "/admin/devices" && enrollmentIsEnabled(env))) {
       const error2 = "\u63A5\u5165\u8BF7\u6C42\u5305\u542B\u91CD\u590D\u5B57\u6BB5\uFF0C\u8BF7\u8FD4\u56DE\u8BBE\u5907\u5217\u8868\u540E\u91CD\u8BD5\u3002";
       return wantsJson ? json2({ error: error2, code: "duplicate_fields" }, 400) : html2(consolePage("\u8BBE\u5907\u64CD\u4F5C\u5931\u8D25", `<p>${escapeHtml(error2)}</p>${back}`), 400);
     }
-    if (url.pathname === "/admin/upgrade/reconcile") return json2(await upgradeProvider(env).reconcile(input));
-    if (url.pathname === "/admin/upgrade/start") {
+    if (url2.pathname === "/admin/upgrade/reconcile") return json2(await upgradeProvider(env).reconcile(input));
+    if (url2.pathname === "/admin/upgrade/start") {
       const operation = upgradeProvider(env).start(input);
       execution?.waitUntil(operation.catch(() => {
       }));
       return json2(await operation);
     }
-    if (url.pathname === "/admin/client-callbacks") {
+    if (url2.pathname === "/admin/client-callbacks") {
       return json2(await devices.registerClientCallback(input.clientName, input.redirectUri));
     }
-    if (url.pathname === "/admin/enrollment-intents") {
+    if (url2.pathname === "/admin/enrollment-intents") {
       const intents = getIntents();
       if (!intents) return json2({ error: "\u63A5\u5165\u547D\u4EE4\u670D\u52A1\u6682\u4E0D\u53EF\u7528\u3002" }, 404);
-      const target = { deviceId: input.deviceId, intentId: input.intentId };
+      const target2 = { deviceId: input.deviceId, intentId: input.intentId };
       if (input.action === "reveal") {
-        const result = await intents.command(url.origin, target);
-        return json2(durableCommand(result, target.intentId));
+        const result = await intents.command(url2.origin, target2);
+        return json2(durableCommand(result, target2.intentId));
       }
       if (input.action === "revoke") {
-        await intents.admin.revoke(target);
+        await intents.admin.revoke(target2);
         return json2({ status: "cancelled" });
       }
       return json2({ error: "\u672A\u77E5\u7684\u63A5\u5165\u547D\u4EE4\u64CD\u4F5C\u3002" }, 400);
     }
-    if (url.pathname === "/admin/devices") {
+    if (url2.pathname === "/admin/devices") {
       if (enrollmentIsEnabled(env)) {
         const intents = getIntents();
         const anySystem = input.platform === void 0 || input.platform === "";
@@ -14308,14 +15111,14 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
           confirmBrowser: input.browserConsent === "1"
         });
         if (wantsJson && intent.preparedDraft) {
-          const result = await intents.command(url.origin, { deviceId: intent.deviceId, intentId: intent.id });
+          const result = await intents.command(url2.origin, { deviceId: intent.deviceId, intentId: intent.id });
           return json2(durableCommand(result, intent.id));
         }
         if (wantsJson) return json2({ intentSaved: true, deviceId: intent.deviceId });
         return html2(consolePage("\u8BBE\u5907\u5DF2\u6DFB\u52A0", back));
       }
       const { asset, ticket, expiresAt } = await devices.launch(input.deviceId, input.platform, { confirmBrowser: input.browserConsent === "1" });
-      const command = asset.assets ? shortInstallCommand(url.origin, input.platform, asset.version, ticket, input.deviceId) : installCommand(url.origin, input.platform, asset, ticket, input.deviceId);
+      const command = asset.assets ? shortInstallCommand(url2.origin, input.platform, asset.version, ticket, input.deviceId) : installCommand(url2.origin, input.platform, asset, ticket, input.deviceId);
       const instructions = `${asset.browser ? "\u8BF7\u5148\u5728\u76EE\u6807\u8BBE\u5907\u914D\u7F6E\u6D4F\u89C8\u5668\u4E13\u7528\u540E\u7AEF\u3002" : ""}${asset.localFile ? "\u8BF7\u5728\u9884\u7F6E\u5B89\u88C5\u5305\u6240\u5728\u76EE\u5F55\u8FD0\u884C\u547D\u4EE4\u3002" : ""}${runOnDevice[input.platform.split("-")[0]]}`;
       if (wantsJson) return json2({ command, instructions, expiresAt, serverTime: Math.floor(Date.now() / 1e3), deviceId: input.deviceId, platform: label2[input.platform] });
       return html2(consolePage("\u5B89\u88C5\u547D\u4EE4", `${asset.localFile ? `<p>\u5B89\u88C5\u5305\uFF1A<code>${escapeHtml(asset.localFile)}</code></p>` : ""}
@@ -14325,18 +15128,23 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
         <button class="strong" type="button" id="copy" hidden>\u590D\u5236\u5B89\u88C5\u547D\u4EE4</button> <span role="status" id="copy-status"></span>
         <script src="/admin/copy.js" defer><\/script>${back}`));
     }
-    if (url.pathname === "/admin/device") {
+    if (url2.pathname === "/admin/device") {
+      if (input.action === "delete") {
+        if (fields2.length !== 2) return json2({ error: "\u5220\u9664\u8BF7\u6C42\u65E0\u6548\u3002" }, 400);
+        const result = await devices.remove(input.deviceId);
+        return wantsJson ? json2(result) : html2(consolePage("\u8BBE\u5907\u5DF2\u5220\u9664", back));
+      }
       if (input.action === "status") {
         const result = await devices.status(input.deviceId);
         if (wantsJson) return json2(result);
         const development = result.mcpProfiles?.development ?? result.mcp;
-        const browser = result.mcpProfiles?.browser;
+        const browser2 = result.mcpProfiles?.browser;
         return html2(consolePage("\u8BBE\u5907\u72B6\u6001", `<p><strong>${escapeHtml(result.deviceId)}</strong></p><dl>
           <dt>\u6700\u540E\u68C0\u67E5\uFF08UTC\uFF09</dt><dd>${escapeHtml(new Date(result.checkedAt * 1e3).toISOString())}</dd>
           <dt>\u6CE8\u518C</dt><dd>${escapeHtml(state[result.registration] ?? result.registration)}</dd>
           <dt>Cloudflare Tunnel</dt><dd>${escapeHtml(result.tunnel === "check_failed" ? "\u65E0\u6CD5\u67E5\u8BE2" + (result.tunnelDiagnostic?.httpStatus ? " \xB7 HTTP " + result.tunnelDiagnostic.httpStatus : "") : result.tunnel)}</dd>
           <dt>\u5F00\u53D1\u5DE5\u5177\u76EE\u5F55</dt><dd>${escapeHtml(mcpState[development] ?? development)}</dd>
-          ${browser ? `<dt>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd>${escapeHtml(mcpState[browser] ?? browser)}</dd>` : ""}
+          ${browser2 ? `<dt>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd>${escapeHtml(mcpState[browser2] ?? browser2)}</dd>` : ""}
           ${result.release ? `<dt>\u5B89\u88C5\u5305\u7248\u672C</dt><dd>${escapeHtml(result.release)}</dd>` : ""}
           ${result.revocation ? `<dt>\u64A4\u9500</dt><dd>${result.revocation === "complete" ? "\u5DF2\u5B8C\u6210" : "\u5C1A\u672A\u5B8C\u6210\uFF0C\u8BF7\u91CD\u8BD5\u505C\u7528"}</dd>` : ""}
           </dl>${back}`));
@@ -14361,7 +15169,7 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
     }
     return json2({ error: "Unknown route" }, 404);
   } catch (error2) {
-    if (url.pathname === activatePath) {
+    if (url2.pathname === activatePath) {
       return error2 instanceof DeviceError ? json2({
         error: error2.message,
         ...error2.status === 409 && activationErrorCodes.includes(error2.activationCode) && { code: error2.activationCode }
@@ -14371,11 +15179,11 @@ async function manage(request, env, url, { limitedBody: limitedBody2, html: html
       return wantsJson ? json2({ error: error2.message, code: error2.code }, error2.status) : html2(consolePage("\u8BBE\u5907\u64CD\u4F5C\u5931\u8D25", `<p>${escapeHtml(error2.message)}</p>${back}`), error2.status);
     }
     if (error2 instanceof UpgradeAdminError) return json2({ error: error2.message, code: error2.code }, error2.status);
-    if (url.pathname.startsWith("/admin/upgrade/")) return json2({ error: "\u65E0\u6CD5\u786E\u8BA4\u5347\u7EA7\u72B6\u6001\u3002\u8BF7\u5148\u6838\u5BF9\uFF0C\u4E0D\u8981\u91CD\u590D\u63D0\u4EA4\u3002" }, 503);
+    if (url2.pathname.startsWith("/admin/upgrade/")) return json2({ error: "\u65E0\u6CD5\u786E\u8BA4\u5347\u7EA7\u72B6\u6001\u3002\u8BF7\u5148\u6838\u5BF9\uFF0C\u4E0D\u8981\u91CD\u590D\u63D0\u4EA4\u3002" }, 503);
     const expected = error2 instanceof DeviceError || error2 instanceof PortalCallbackError;
     const message2 = expected ? error2.message : "\u8BF7\u68C0\u67E5 Cloudflare \u6743\u9650\u548C\u8BBE\u5907\u8FDE\u63A5\u540E\u91CD\u8BD5\u3002";
     const status = expected ? error2.status : 503;
-    if (wantsJson || ["/admin/client-callbacks", "/admin/devices/enrollment", "/admin/local-mcp/tools"].includes(url.pathname)) return json2({ error: message2 }, status);
+    if (wantsJson || ["/admin/client-callbacks", "/admin/devices/enrollment", "/admin/local-mcp/tools"].includes(url2.pathname)) return json2({ error: message2 }, status);
     return html2(consolePage("\u8BBE\u5907\u64CD\u4F5C\u5931\u8D25", `<p>${escapeHtml(message2)}</p>${back}`), status);
   }
 }
@@ -14470,7 +15278,7 @@ function assertNotEqual(val) {
 }
 __name(assertNotEqual, "assertNotEqual");
 function toZod() {
-  return (schema3) => schema3;
+  return (schema4) => schema4;
 }
 __name(toZod, "toZod");
 function assertIs(_arg) {
@@ -14567,8 +15375,8 @@ function objectClone(obj) {
   return Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));
 }
 __name(objectClone, "objectClone");
-function assignProp(target, prop, value) {
-  Object.defineProperty(target, prop, {
+function assignProp(target2, prop, value) {
+  Object.defineProperty(target2, prop, {
     value,
     writable: true,
     enumerable: true,
@@ -14581,12 +15389,12 @@ function rawShape(def) {
   return desc?.get ? desc.get.raw : desc?.value;
 }
 __name(rawShape, "rawShape");
-function sourceShape(schema3) {
-  return rawShape(schema3._zod.def) ?? schema3._zod.def.shape;
+function sourceShape(schema4) {
+  return rawShape(schema4._zod.def) ?? schema4._zod.def.shape;
 }
 __name(sourceShape, "sourceShape");
-function deferProp(target, key4, getter) {
-  Object.defineProperty(target, key4, {
+function deferProp(target2, key4, getter) {
+  Object.defineProperty(target2, key4, {
     get() {
       const value = getter();
       assignProp(this, key4, value);
@@ -14597,38 +15405,38 @@ function deferProp(target, key4, getter) {
   });
 }
 __name(deferProp, "deferProp");
-function putProp(target, key4, value) {
-  if (key4 in target)
-    assignProp(target, key4, value);
+function putProp(target2, key4, value) {
+  if (key4 in target2)
+    assignProp(target2, key4, value);
   else
-    target[key4] = value;
+    target2[key4] = value;
 }
 __name(putProp, "putProp");
-function mirrorShape(target, source, keys, wrap) {
+function mirrorShape(target2, source, keys, wrap) {
   const raw = sourceShape(source);
   for (const key4 of keys) {
     const desc = Object.getOwnPropertyDescriptor(raw, key4);
     if (!desc.enumerable)
       continue;
     if (desc.get) {
-      deferProp(target, key4, () => {
+      deferProp(target2, key4, () => {
         const value = source._zod.def.shape[key4];
         return wrap ? wrap(value, key4) : value;
       });
     } else
-      putProp(target, key4, wrap ? wrap(desc.value, key4) : desc.value);
+      putProp(target2, key4, wrap ? wrap(desc.value, key4) : desc.value);
   }
 }
 __name(mirrorShape, "mirrorShape");
-function mirrorProps(target, source) {
+function mirrorProps(target2, source) {
   for (const key4 of Reflect.ownKeys(source)) {
     const desc = Object.getOwnPropertyDescriptor(source, key4);
     if (!desc.enumerable)
       continue;
     if (desc.get)
-      deferProp(target, key4, () => source[key4]);
+      deferProp(target2, key4, () => source[key4]);
     else
-      putProp(target, key4, desc.value);
+      putProp(target2, key4, desc.value);
   }
 }
 __name(mirrorProps, "mirrorProps");
@@ -14641,8 +15449,8 @@ function mergeDefs(...defs) {
   return Object.defineProperties({}, mergedDescriptors);
 }
 __name(mergeDefs, "mergeDefs");
-function cloneDef(schema3) {
-  return mergeDefs(schema3._zod.def);
+function cloneDef(schema4) {
+  return mergeDefs(schema4._zod.def);
 }
 __name(cloneDef, "cloneDef");
 function getElementAtPath(obj, path) {
@@ -14822,35 +15630,35 @@ function normalizeParams(_params) {
 }
 __name(normalizeParams, "normalizeParams");
 function createTransparentProxy(getter) {
-  let target;
+  let target2;
   return new Proxy({}, {
     get(_, prop, receiver) {
-      target ?? (target = getter());
-      return Reflect.get(target, prop, receiver);
+      target2 ?? (target2 = getter());
+      return Reflect.get(target2, prop, receiver);
     },
     set(_, prop, value, receiver) {
-      target ?? (target = getter());
-      return Reflect.set(target, prop, value, receiver);
+      target2 ?? (target2 = getter());
+      return Reflect.set(target2, prop, value, receiver);
     },
     has(_, prop) {
-      target ?? (target = getter());
-      return Reflect.has(target, prop);
+      target2 ?? (target2 = getter());
+      return Reflect.has(target2, prop);
     },
     deleteProperty(_, prop) {
-      target ?? (target = getter());
-      return Reflect.deleteProperty(target, prop);
+      target2 ?? (target2 = getter());
+      return Reflect.deleteProperty(target2, prop);
     },
     ownKeys(_) {
-      target ?? (target = getter());
-      return Reflect.ownKeys(target);
+      target2 ?? (target2 = getter());
+      return Reflect.ownKeys(target2);
     },
     getOwnPropertyDescriptor(_, prop) {
-      target ?? (target = getter());
-      return Reflect.getOwnPropertyDescriptor(target, prop);
+      target2 ?? (target2 = getter());
+      return Reflect.getOwnPropertyDescriptor(target2, prop);
     },
     defineProperty(_, prop, descriptor) {
-      target ?? (target = getter());
-      return Reflect.defineProperty(target, prop, descriptor);
+      target2 ?? (target2 = getter());
+      return Reflect.defineProperty(target2, prop, descriptor);
     }
   });
 }
@@ -14880,20 +15688,20 @@ var BIGINT_FORMAT_RANGES = {
   int64: [/* @__PURE__ */ BigInt("-9223372036854775808"), /* @__PURE__ */ BigInt("9223372036854775807")],
   uint64: [/* @__PURE__ */ BigInt(0), /* @__PURE__ */ BigInt("18446744073709551615")]
 };
-function pick(schema3, mask) {
-  const currDef = schema3._zod.def;
+function pick(schema4, mask) {
+  const currDef = schema4._zod.def;
   const checks = currDef.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
     throw new Error(".pick() cannot be used on object schemas containing refinements");
   }
   const newShape = {};
-  mirrorShape(newShape, schema3, maskedKeys(schema3, mask));
-  return clone(schema3, mergeDefs(currDef, { shape: newShape, checks: [] }));
+  mirrorShape(newShape, schema4, maskedKeys(schema4, mask));
+  return clone(schema4, mergeDefs(currDef, { shape: newShape, checks: [] }));
 }
 __name(pick, "pick");
-function maskedKeys(schema3, mask) {
-  const raw = sourceShape(schema3);
+function maskedKeys(schema4, mask) {
+  const raw = sourceShape(schema4);
   const keys = [];
   for (const key4 of Reflect.ownKeys(mask)) {
     if (!Object.getOwnPropertyDescriptor(raw, key4)?.enumerable) {
@@ -14905,48 +15713,48 @@ function maskedKeys(schema3, mask) {
   return keys;
 }
 __name(maskedKeys, "maskedKeys");
-function omit(schema3, mask) {
-  const currDef = schema3._zod.def;
+function omit(schema4, mask) {
+  const currDef = schema4._zod.def;
   const checks = currDef.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
     throw new Error(".omit() cannot be used on object schemas containing refinements");
   }
-  const omitted = new Set(maskedKeys(schema3, mask));
+  const omitted = new Set(maskedKeys(schema4, mask));
   const newShape = {};
-  mirrorShape(newShape, schema3, Reflect.ownKeys(sourceShape(schema3)).filter((key4) => !omitted.has(key4)));
-  return clone(schema3, mergeDefs(currDef, { shape: newShape, checks: [] }));
+  mirrorShape(newShape, schema4, Reflect.ownKeys(sourceShape(schema4)).filter((key4) => !omitted.has(key4)));
+  return clone(schema4, mergeDefs(currDef, { shape: newShape, checks: [] }));
 }
 __name(omit, "omit");
-function extend(schema3, shape) {
+function extend(schema4, shape) {
   if (!isPlainObject(shape)) {
     throw new Error("Invalid input to extend: expected a plain object");
   }
-  const checks = schema3._zod.def.checks;
+  const checks = schema4._zod.def.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
-    const existingShape = sourceShape(schema3);
+    const existingShape = sourceShape(schema4);
     for (const key4 of Reflect.ownKeys(shape)) {
       if (Object.getOwnPropertyDescriptor(existingShape, key4) !== void 0) {
         throw new Error("Cannot overwrite keys on object schemas containing refinements. Use `.safeExtend()` instead.");
       }
     }
   }
-  return clone(schema3, mergeDefs(schema3._zod.def, { shape: extended(schema3, shape) }));
+  return clone(schema4, mergeDefs(schema4._zod.def, { shape: extended(schema4, shape) }));
 }
 __name(extend, "extend");
-function extended(schema3, shape) {
+function extended(schema4, shape) {
   const newShape = {};
-  mirrorShape(newShape, schema3, Reflect.ownKeys(sourceShape(schema3)));
+  mirrorShape(newShape, schema4, Reflect.ownKeys(sourceShape(schema4)));
   mirrorProps(newShape, shape);
   return newShape;
 }
 __name(extended, "extended");
-function safeExtend(schema3, shape) {
+function safeExtend(schema4, shape) {
   if (!isPlainObject(shape)) {
     throw new Error("Invalid input to safeExtend: expected a plain object");
   }
-  return clone(schema3, mergeDefs(schema3._zod.def, { shape: extended(schema3, shape) }));
+  return clone(schema4, mergeDefs(schema4._zod.def, { shape: extended(schema4, shape) }));
 }
 __name(safeExtend, "safeExtend");
 function merge(a, b) {
@@ -14969,27 +15777,27 @@ function merge(a, b) {
   return clone(a, def);
 }
 __name(merge, "merge");
-function partial(Class2, schema3, mask, name = "partial") {
-  const currDef = schema3._zod.def;
+function partial(Class2, schema4, mask, name = "partial") {
+  const currDef = schema4._zod.def;
   const checks = currDef.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
     throw new Error(`.${name}() cannot be used on object schemas containing refinements`);
   }
-  const selected = mask ? new Set(maskedKeys(schema3, mask)) : void 0;
+  const selected = mask ? new Set(maskedKeys(schema4, mask)) : void 0;
   const newShape = {};
-  mirrorShape(newShape, schema3, Reflect.ownKeys(sourceShape(schema3)), Class2 && ((value, key4) => selected && !selected.has(key4) ? value : new Class2({ type: "optional", innerType: value })));
-  return clone(schema3, mergeDefs(schema3._zod.def, { shape: newShape, checks: [] }));
+  mirrorShape(newShape, schema4, Reflect.ownKeys(sourceShape(schema4)), Class2 && ((value, key4) => selected && !selected.has(key4) ? value : new Class2({ type: "optional", innerType: value })));
+  return clone(schema4, mergeDefs(schema4._zod.def, { shape: newShape, checks: [] }));
 }
 __name(partial, "partial");
-function required(Class2, schema3, mask) {
-  const selected = mask ? new Set(maskedKeys(schema3, mask)) : void 0;
+function required(Class2, schema4, mask) {
+  const selected = mask ? new Set(maskedKeys(schema4, mask)) : void 0;
   const newShape = {};
-  mirrorShape(newShape, schema3, Reflect.ownKeys(sourceShape(schema3)), (value, key4) => (
+  mirrorShape(newShape, schema4, Reflect.ownKeys(sourceShape(schema4)), (value, key4) => (
     // overwrite with non-optional
     selected && !selected.has(key4) ? value : new Class2({ type: "nonoptional", innerType: value })
   ));
-  return clone(schema3, mergeDefs(schema3._zod.def, { shape: newShape }));
+  return clone(schema4, mergeDefs(schema4._zod.def, { shape: newShape }));
 }
 __name(required, "required");
 function aborted(x, startIndex = 0) {
@@ -15148,17 +15956,17 @@ function cleanEnum(obj) {
 __name(cleanEnum, "cleanEnum");
 function base64ToUint8Array(base642) {
   const binaryString = atob(base642);
-  const bytes = new Uint8Array(binaryString.length);
+  const bytes2 = new Uint8Array(binaryString.length);
   for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
+    bytes2[i] = binaryString.charCodeAt(i);
   }
-  return bytes;
+  return bytes2;
 }
 __name(base64ToUint8Array, "base64ToUint8Array");
-function uint8ArrayToBase64(bytes) {
+function uint8ArrayToBase64(bytes2) {
   let binaryString = "";
-  for (let i = 0; i < bytes.length; i++) {
-    binaryString += String.fromCharCode(bytes[i]);
+  for (let i = 0; i < bytes2.length; i++) {
+    binaryString += String.fromCharCode(bytes2[i]);
   }
   return btoa(binaryString);
 }
@@ -15169,8 +15977,8 @@ function base64urlToUint8Array(base64url2) {
   return base64ToUint8Array(base642 + padding);
 }
 __name(base64urlToUint8Array, "base64urlToUint8Array");
-function uint8ArrayToBase64url(bytes) {
-  return uint8ArrayToBase64(bytes).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+function uint8ArrayToBase64url(bytes2) {
+  return uint8ArrayToBase64(bytes2).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
 }
 __name(uint8ArrayToBase64url, "uint8ArrayToBase64url");
 function hexToUint8Array(hex) {
@@ -15178,15 +15986,15 @@ function hexToUint8Array(hex) {
   if (cleanHex.length % 2 !== 0) {
     throw new Error("Invalid hex string length");
   }
-  const bytes = new Uint8Array(cleanHex.length / 2);
+  const bytes2 = new Uint8Array(cleanHex.length / 2);
   for (let i = 0; i < cleanHex.length; i += 2) {
-    bytes[i / 2] = Number.parseInt(cleanHex.slice(i, i + 2), 16);
+    bytes2[i / 2] = Number.parseInt(cleanHex.slice(i, i + 2), 16);
   }
-  return bytes;
+  return bytes2;
 }
 __name(hexToUint8Array, "hexToUint8Array");
-function uint8ArrayToHex(bytes) {
-  return Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join("");
+function uint8ArrayToHex(bytes2) {
+  return Array.from(bytes2).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 __name(uint8ArrayToHex, "uint8ArrayToHex");
 var Class = class {
@@ -15375,10 +16183,10 @@ function $constructor(name, initializer3, proto, params) {
       let up = own2;
       while (up && up !== ctorProto)
         up = Object.getPrototypeOf(up);
-      const target = up ?? own2;
-      if (!initialized.has(target)) {
-        initialized.add(target);
-        members(target, protoMembers);
+      const target2 = up ?? own2;
+      if (!initialized.has(target2)) {
+        initialized.add(target2);
+        members(target2, protoMembers);
       }
     }
     const proto2 = _.prototype;
@@ -15578,9 +16386,9 @@ function finalizeParams(callee, params) {
 }
 __name(finalizeParams, "finalizeParams");
 var _parse = /* @__PURE__ */ __name((_Err) => {
-  const fn = /* @__PURE__ */ __name((schema3, value, _ctx, _params) => {
+  const fn = /* @__PURE__ */ __name((schema4, value, _ctx, _params) => {
     const ctx = _ctx ? { ..._ctx, async: false } : { async: false };
-    const result = schema3._zod.run({ value, issues: [] }, ctx);
+    const result = schema4._zod.run({ value, issues: [] }, ctx);
     if (result instanceof Promise) {
       throw new $ZodAsyncError();
     }
@@ -15594,9 +16402,9 @@ var _parse = /* @__PURE__ */ __name((_Err) => {
   return fn;
 }, "_parse");
 var _parseAsync = /* @__PURE__ */ __name((_Err) => {
-  const fn = /* @__PURE__ */ __name(async (schema3, value, _ctx, params) => {
+  const fn = /* @__PURE__ */ __name(async (schema4, value, _ctx, params) => {
     const ctx = _ctx ? { ..._ctx, async: true } : { async: true };
-    let result = schema3._zod.run({ value, issues: [] }, ctx);
+    let result = schema4._zod.run({ value, issues: [] }, ctx);
     if (result instanceof Promise)
       result = await result;
     if (result.issues.length) {
@@ -15608,9 +16416,9 @@ var _parseAsync = /* @__PURE__ */ __name((_Err) => {
   }, "fn");
   return fn;
 }, "_parseAsync");
-var _safeParse = /* @__PURE__ */ __name((_Err) => (schema3, value, _ctx) => {
+var _safeParse = /* @__PURE__ */ __name((_Err) => (schema4, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, async: false } : { async: false };
-  const result = schema3._zod.run({ value, issues: [] }, ctx);
+  const result = schema4._zod.run({ value, issues: [] }, ctx);
   if (result instanceof Promise) {
     throw new $ZodAsyncError();
   }
@@ -15637,34 +16445,34 @@ function failure(Err, issues, ctx) {
   };
 }
 __name(failure, "failure");
-var _safeParseAsync = /* @__PURE__ */ __name((_Err) => async (schema3, value, _ctx) => {
+var _safeParseAsync = /* @__PURE__ */ __name((_Err) => async (schema4, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, async: true } : { async: true };
-  let result = schema3._zod.run({ value, issues: [] }, ctx);
+  let result = schema4._zod.run({ value, issues: [] }, ctx);
   if (result instanceof Promise)
     result = await result;
   return result.issues.length ? failure(_Err, result.issues, ctx) : { success: true, data: result.value };
 }, "_safeParseAsync");
 var COMPILE_INVALID = /* @__PURE__ */ Symbol.for("zod.compile.invalid");
 var COMPILE_FALLBACK = /* @__PURE__ */ Symbol.for("zod.compile.fallback");
-var validate = /* @__PURE__ */ __name(((schema3, value, _ctx) => {
-  const validator = schema3._zod.bag.validator;
+var validate = /* @__PURE__ */ __name(((schema4, value, _ctx) => {
+  const validator = schema4._zod.bag.validator;
   if (validator !== void 0) {
     if (validator(value) !== COMPILE_INVALID)
       return true;
     if (validator.definite === true && _ctx === void 0)
       return false;
   }
-  return validateFallback(schema3, value, _ctx);
+  return validateFallback(schema4, value, _ctx);
 }), "validate");
-function validateFallback(schema3, value, _ctx) {
+function validateFallback(schema4, value, _ctx) {
   const ctx = _ctx ? { ..._ctx, async: false, abortEarly: true } : { async: false, abortEarly: true };
-  const fallbackRun = schema3._zod.bag.fallbackRun;
+  const fallbackRun = schema4._zod.bag.fallbackRun;
   let result;
   if (fallbackRun) {
     ctx[COMPILE_FALLBACK] = true;
     result = fallbackRun({ value, issues: [] }, ctx);
   } else {
-    result = schema3._zod.run({ value, issues: [] }, ctx);
+    result = schema4._zod.run({ value, issues: [] }, ctx);
   }
   if (result instanceof Promise) {
     throw new $ZodAsyncError();
@@ -15672,56 +16480,56 @@ function validateFallback(schema3, value, _ctx) {
   return result.issues.length === 0;
 }
 __name(validateFallback, "validateFallback");
-var validateAsync = /* @__PURE__ */ __name(async (schema3, value, _ctx) => {
+var validateAsync = /* @__PURE__ */ __name(async (schema4, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, async: true, abortEarly: true } : { async: true, abortEarly: true };
-  let result = schema3._zod.run({ value, issues: [] }, ctx);
+  let result = schema4._zod.run({ value, issues: [] }, ctx);
   if (result instanceof Promise)
     result = await result;
   return result.issues.length === 0;
 }, "validateAsync");
 var _encode = /* @__PURE__ */ __name((_Err) => {
   const parse5 = _parse(_Err);
-  const fn = /* @__PURE__ */ __name((schema3, value, _ctx, _params) => {
+  const fn = /* @__PURE__ */ __name((schema4, value, _ctx, _params) => {
     const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-    return parse5(schema3, value, ctx, finalizeParams(fn, _params));
+    return parse5(schema4, value, ctx, finalizeParams(fn, _params));
   }, "fn");
   return fn;
 }, "_encode");
 var _decode = /* @__PURE__ */ __name((_Err) => {
   const parse5 = _parse(_Err);
-  const fn = /* @__PURE__ */ __name((schema3, value, _ctx, _params) => {
-    return parse5(schema3, value, _ctx, finalizeParams(fn, _params));
+  const fn = /* @__PURE__ */ __name((schema4, value, _ctx, _params) => {
+    return parse5(schema4, value, _ctx, finalizeParams(fn, _params));
   }, "fn");
   return fn;
 }, "_decode");
 var _encodeAsync = /* @__PURE__ */ __name((_Err) => {
   const parseAsync3 = _parseAsync(_Err);
-  const fn = /* @__PURE__ */ __name(async (schema3, value, _ctx, _params) => {
+  const fn = /* @__PURE__ */ __name(async (schema4, value, _ctx, _params) => {
     const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-    return await parseAsync3(schema3, value, ctx, finalizeParams(fn, _params));
+    return await parseAsync3(schema4, value, ctx, finalizeParams(fn, _params));
   }, "fn");
   return fn;
 }, "_encodeAsync");
 var _decodeAsync = /* @__PURE__ */ __name((_Err) => {
   const parseAsync3 = _parseAsync(_Err);
-  const fn = /* @__PURE__ */ __name(async (schema3, value, _ctx, _params) => {
-    return await parseAsync3(schema3, value, _ctx, finalizeParams(fn, _params));
+  const fn = /* @__PURE__ */ __name(async (schema4, value, _ctx, _params) => {
+    return await parseAsync3(schema4, value, _ctx, finalizeParams(fn, _params));
   }, "fn");
   return fn;
 }, "_decodeAsync");
-var _safeEncode = /* @__PURE__ */ __name((_Err) => (schema3, value, _ctx) => {
+var _safeEncode = /* @__PURE__ */ __name((_Err) => (schema4, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-  return _safeParse(_Err)(schema3, value, ctx);
+  return _safeParse(_Err)(schema4, value, ctx);
 }, "_safeEncode");
-var _safeDecode = /* @__PURE__ */ __name((_Err) => (schema3, value, _ctx) => {
-  return _safeParse(_Err)(schema3, value, _ctx);
+var _safeDecode = /* @__PURE__ */ __name((_Err) => (schema4, value, _ctx) => {
+  return _safeParse(_Err)(schema4, value, _ctx);
 }, "_safeDecode");
-var _safeEncodeAsync = /* @__PURE__ */ __name((_Err) => async (schema3, value, _ctx) => {
+var _safeEncodeAsync = /* @__PURE__ */ __name((_Err) => async (schema4, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-  return _safeParseAsync(_Err)(schema3, value, ctx);
+  return _safeParseAsync(_Err)(schema4, value, ctx);
 }, "_safeEncodeAsync");
-var _safeDecodeAsync = /* @__PURE__ */ __name((_Err) => async (schema3, value, _ctx) => {
-  return _safeParseAsync(_Err)(schema3, value, _ctx);
+var _safeDecodeAsync = /* @__PURE__ */ __name((_Err) => async (schema4, value, _ctx) => {
+  return _safeParseAsync(_Err)(schema4, value, _ctx);
 }, "_safeDecodeAsync");
 
 // ../node_modules/zod/v4/core/regexes.js
@@ -16386,14 +17194,14 @@ function stripTabAndNewline(value) {
   return value.replace(asciiTabOrNewline, "");
 }
 __name(stripTabAndNewline, "stripTabAndNewline");
-function urlHostnameOk(url, hostname) {
+function urlHostnameOk(url2, hostname) {
   hostname.lastIndex = 0;
-  return hostname.test(url.hostname);
+  return hostname.test(url2.hostname);
 }
 __name(urlHostnameOk, "urlHostnameOk");
-function urlProtocolOk(url, protocol2) {
+function urlProtocolOk(url2, protocol2) {
   protocol2.lastIndex = 0;
-  return protocol2.test(url.protocol.endsWith(":") ? url.protocol.slice(0, -1) : url.protocol);
+  return protocol2.test(url2.protocol.endsWith(":") ? url2.protocol.slice(0, -1) : url2.protocol);
 }
 __name(urlProtocolOk, "urlProtocolOk");
 var $ZodURL = /* @__PURE__ */ $constructor("$ZodURL", (inst, def) => {
@@ -16401,8 +17209,8 @@ var $ZodURL = /* @__PURE__ */ $constructor("$ZodURL", (inst, def) => {
   inst._zod.check = (payload) => {
     try {
       const trimmed = payload.value.trim();
-      const url = validateURL(trimmed, def);
-      if (url === URL_BAD_FORMAT) {
+      const url2 = validateURL(trimmed, def);
+      if (url2 === URL_BAD_FORMAT) {
         payload.issues.push({
           code: "invalid_format",
           format: "url",
@@ -16413,7 +17221,7 @@ var $ZodURL = /* @__PURE__ */ $constructor("$ZodURL", (inst, def) => {
         });
         return;
       }
-      if (url === URL_UNPARSEABLE) {
+      if (url2 === URL_UNPARSEABLE) {
         payload.issues.push({
           code: "invalid_format",
           format: "url",
@@ -16423,11 +17231,11 @@ var $ZodURL = /* @__PURE__ */ $constructor("$ZodURL", (inst, def) => {
         });
         return;
       }
-      if (url === true) {
+      if (url2 === true) {
         payload.value = stripTabAndNewline(trimmed);
         return;
       }
-      if (def.hostname && !urlHostnameOk(url, def.hostname)) {
+      if (def.hostname && !urlHostnameOk(url2, def.hostname)) {
         payload.issues.push({
           code: "invalid_format",
           format: "url",
@@ -16438,7 +17246,7 @@ var $ZodURL = /* @__PURE__ */ $constructor("$ZodURL", (inst, def) => {
           continue: !def.abort
         });
       }
-      if (def.protocol && !urlProtocolOk(url, def.protocol)) {
+      if (def.protocol && !urlProtocolOk(url2, def.protocol)) {
         payload.issues.push({
           code: "invalid_format",
           format: "url",
@@ -16449,7 +17257,7 @@ var $ZodURL = /* @__PURE__ */ $constructor("$ZodURL", (inst, def) => {
           continue: !def.abort
         });
       }
-      payload.value = def.normalize ? url.href : stripTabAndNewline(trimmed);
+      payload.value = def.normalize ? url2.href : stripTabAndNewline(trimmed);
       return;
     } catch (_) {
       payload.issues.push({
@@ -17031,10 +17839,10 @@ var $ZodObjectJIT = /* @__PURE__ */ $constructor("$ZodObjectJIT", (inst, def) =>
       const id2 = ids[key4];
       const k = typeof key4 === "symbol" ? `syms[${syms.indexOf(key4)}]` : esc(key4);
       const isPresent = `${k} in input`;
-      const schema3 = shape[key4];
-      const optin = schema3?._zod?.optin;
+      const schema4 = shape[key4];
+      const optin = schema4?._zod?.optin;
       const isOptionalIn = optin !== void 0;
-      const isOptionalOut = schema3?._zod?.optout === "optional";
+      const isOptionalOut = schema4?._zod?.optout === "optional";
       doc.write(`const ${id2} = ${parseStr(k)};`);
       if (isOptionalIn && isOptionalOut) {
         const assign = optin === "optional" ? `${id2}_present` : `${id2}.value !== undefined || ${id2}_present`;
@@ -18278,11 +19086,11 @@ var $ZodRegistry = class {
     this._map = /* @__PURE__ */ new WeakMap();
     this._idmap = /* @__PURE__ */ new Map();
   }
-  add(schema3, ..._meta) {
+  add(schema4, ..._meta) {
     const meta2 = _meta[0];
-    this._map.set(schema3, meta2);
+    this._map.set(schema4, meta2);
     if (meta2 && typeof meta2 === "object" && "id" in meta2) {
-      this._idmap.set(meta2.id, schema3);
+      this._idmap.set(meta2.id, schema4);
     }
     return this;
   }
@@ -18291,26 +19099,26 @@ var $ZodRegistry = class {
     this._idmap = /* @__PURE__ */ new Map();
     return this;
   }
-  remove(schema3) {
-    const meta2 = this._map.get(schema3);
+  remove(schema4) {
+    const meta2 = this._map.get(schema4);
     if (meta2 && typeof meta2 === "object" && "id" in meta2) {
       this._idmap.delete(meta2.id);
     }
-    this._map.delete(schema3);
+    this._map.delete(schema4);
     return this;
   }
-  get(schema3) {
-    const p = schema3._zod.parent;
+  get(schema4) {
+    const p = schema4._zod.parent;
     if (p) {
       const pm = { ...this.get(p) ?? {} };
       delete pm.id;
-      const f = { ...pm, ...this._map.get(schema3) };
+      const f = { ...pm, ...this._map.get(schema4) };
       return Object.keys(f).length ? f : void 0;
     }
-    return this._map.get(schema3);
+    return this._map.get(schema4);
   }
-  has(schema3) {
-    return this._map.has(schema3);
+  has(schema4) {
+    return this._map.has(schema4);
   }
 };
 function registry() {
@@ -18852,24 +19660,24 @@ __name(_array, "_array");
 function _custom(Class2, fn, _params) {
   const norm = normalizeParams(_params);
   norm.abort ?? (norm.abort = true);
-  const schema3 = new Class2({
+  const schema4 = new Class2({
     type: "custom",
     check: "custom",
     fn,
     ...norm
   });
-  return schema3;
+  return schema4;
 }
 __name(_custom, "_custom");
 // @__NO_SIDE_EFFECTS__
 function _refine(Class2, fn, _params) {
-  const schema3 = new Class2({
+  const schema4 = new Class2({
     type: "custom",
     check: "custom",
     fn,
     ...normalizeParams(_params)
   });
-  return schema3;
+  return schema4;
 }
 __name(_refine, "_refine");
 // @__NO_SIDE_EFFECTS__
@@ -18907,27 +19715,27 @@ function _check(fn, params) {
 __name(_check, "_check");
 
 // ../node_modules/zod/v4/core/to-json-schema.js
-function assignProps(target, ...sources) {
+function assignProps(target2, ...sources) {
   for (const source of sources) {
     for (const key4 of Reflect.ownKeys(source)) {
       if (Object.prototype.propertyIsEnumerable.call(source, key4)) {
-        assignProp(target, key4, source[key4]);
+        assignProp(target2, key4, source[key4]);
       }
     }
   }
-  return target;
+  return target2;
 }
 __name(assignProps, "assignProps");
 function initializeContext(params) {
-  let target = params?.target ?? "draft-2020-12";
-  if (target === "draft-4")
-    target = "draft-04";
-  if (target === "draft-7")
-    target = "draft-07";
+  let target2 = params?.target ?? "draft-2020-12";
+  if (target2 === "draft-4")
+    target2 = "draft-04";
+  if (target2 === "draft-7")
+    target2 = "draft-07";
   return {
     processors: params.processors ?? {},
     metadataRegistry: params?.metadata ?? globalRegistry,
-    target,
+    target: target2,
     unrepresentable: params?.unrepresentable ?? "throw",
     override: params?.override ?? (() => {
     }),
@@ -18944,8 +19752,8 @@ function initializeContext(params) {
   };
 }
 __name(initializeContext, "initializeContext");
-function handleUnrepresentable(schema3, ctx, json2, params, message2) {
-  const result = typeof ctx.unrepresentable === "function" ? ctx.unrepresentable({ zodSchema: schema3, path: params.path, message: message2 }) : ctx.unrepresentable;
+function handleUnrepresentable(schema4, ctx, json2, params, message2) {
+  const result = typeof ctx.unrepresentable === "function" ? ctx.unrepresentable({ zodSchema: schema4, path: params.path, message: message2 }) : ctx.unrepresentable;
   if (result === "any")
     return false;
   if (result === void 0 || result === "throw")
@@ -18954,42 +19762,42 @@ function handleUnrepresentable(schema3, ctx, json2, params, message2) {
   return true;
 }
 __name(handleUnrepresentable, "handleUnrepresentable");
-function processSchema(schema3, ctx, _params = { path: [], schemaPath: [] }) {
+function processSchema(schema4, ctx, _params = { path: [], schemaPath: [] }) {
   var _a4;
-  const def = schema3._zod.def;
-  const seen = ctx.seen.get(schema3);
+  const def = schema4._zod.def;
+  const seen = ctx.seen.get(schema4);
   if (seen) {
     seen.count++;
-    const isCycle = _params.schemaPath.includes(schema3);
+    const isCycle = _params.schemaPath.includes(schema4);
     if (isCycle) {
       seen.cycle = _params.path;
     }
     return seen.schema;
   }
   const result = { schema: {}, count: 1, cycle: void 0, path: _params.path };
-  ctx.seen.set(schema3, result);
+  ctx.seen.set(schema4, result);
   ctx.sharedDefsExtractedFor = void 0;
   ctx.sharedEmitDoneFor = void 0;
-  const overrideSchema = schema3._zod.toJSONSchema?.();
+  const overrideSchema = schema4._zod.toJSONSchema?.();
   if (overrideSchema) {
     result.schema = overrideSchema;
   } else {
     const params = {
       ..._params,
-      schemaPath: [..._params.schemaPath, schema3],
+      schemaPath: [..._params.schemaPath, schema4],
       path: _params.path
     };
-    if (schema3._zod.processJSONSchema) {
-      schema3._zod.processJSONSchema(ctx, result.schema, params);
+    if (schema4._zod.processJSONSchema) {
+      schema4._zod.processJSONSchema(ctx, result.schema, params);
     } else {
       const _json = result.schema;
       const processor = ctx.processors[def.type];
       if (!processor) {
         throw new Error(`[toJSONSchema]: Non-representable type encountered: ${def.type}`);
       }
-      processor(schema3, ctx, _json, params);
+      processor(schema4, ctx, _json, params);
     }
-    const parent = schema3._zod.parent;
+    const parent = schema4._zod.parent;
     if (parent) {
       if (!result.ref)
         result.ref = parent;
@@ -18997,26 +19805,26 @@ function processSchema(schema3, ctx, _params = { path: [], schemaPath: [] }) {
       ctx.seen.get(parent).isParent = true;
     }
   }
-  const meta2 = ctx.metadataRegistry.get(schema3);
+  const meta2 = ctx.metadataRegistry.get(schema4);
   if (meta2)
     assignProps(result.schema, meta2);
-  if (ctx.io === "input" && isTransforming(schema3)) {
+  if (ctx.io === "input" && isTransforming(schema4)) {
     delete result.schema.examples;
     delete result.schema.default;
   }
   if (ctx.io === "input" && "_prefault" in result.schema)
     (_a4 = result.schema).default ?? (_a4.default = result.schema._prefault);
   delete result.schema._prefault;
-  const _result = ctx.seen.get(schema3);
+  const _result = ctx.seen.get(schema4);
   return _result.schema;
 }
 __name(processSchema, "processSchema");
-function encodeJSONPointerSegment(segment) {
-  return segment.replace(/~/g, "~0").replace(/\//g, "~1");
+function encodeJSONPointerSegment(segment2) {
+  return segment2.replace(/~/g, "~0").replace(/\//g, "~1");
 }
 __name(encodeJSONPointerSegment, "encodeJSONPointerSegment");
-function extractDefs(ctx, schema3) {
-  const root = ctx.seen.get(schema3);
+function extractDefs(ctx, schema4) {
+  const root = ctx.seen.get(schema4);
   if (!root)
     throw new Error("Unprocessed schema. This is a bug in Zod.");
   if (ctx.external && ctx.sharedDefsExtractedFor === ctx.external)
@@ -19061,11 +19869,11 @@ function extractDefs(ctx, schema3) {
     seen.def = { ...seen.schema };
     if (defId)
       seen.defId = defId;
-    const schema4 = seen.schema;
-    for (const key4 in schema4) {
-      delete schema4[key4];
+    const schema5 = seen.schema;
+    for (const key4 in schema5) {
+      delete schema5[key4];
     }
-    schema4.$ref = ref;
+    schema5.$ref = ref;
   }, "extractToDef");
   if (ctx.cycles === "throw") {
     for (const entry of ctx.seen.entries()) {
@@ -19079,13 +19887,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   }
   for (const entry of ctx.seen.entries()) {
     const seen = entry[1];
-    if (schema3 === entry[0]) {
+    if (schema4 === entry[0]) {
       extractToDef(entry);
       continue;
     }
     if (ctx.external) {
       const ext = ctx.external.registry.get(entry[0])?.id;
-      if (schema3 !== entry[0] && ext) {
+      if (schema4 !== entry[0] && ext) {
         extractToDef(entry);
         continue;
       }
@@ -19109,9 +19917,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
     ctx.sharedDefsExtractedFor = ctx.external;
 }
 __name(extractDefs, "extractDefs");
-function compactTypeUnion(schema3) {
-  const options = schema3.anyOf;
-  if (!Array.isArray(options) || options.length === 0 || schema3.type !== void 0)
+function compactTypeUnion(schema4) {
+  const options = schema4.anyOf;
+  if (!Array.isArray(options) || options.length === 0 || schema4.type !== void 0)
     return;
   const types = [];
   for (const option of options) {
@@ -19129,8 +19937,8 @@ function compactTypeUnion(schema3) {
         types.push(member);
     }
   }
-  delete schema3.anyOf;
-  schema3.type = types.length === 1 ? types[0] : types;
+  delete schema4.anyOf;
+  schema4.type = types.length === 1 ? types[0] : types;
 }
 __name(compactTypeUnion, "compactTypeUnion");
 var FOLDABLE_KEYS = /* @__PURE__ */ new Set(["type", "properties", "required", "additionalProperties"]);
@@ -19221,16 +20029,16 @@ function foldIntersection(json2) {
   assignProps(json2, folded);
 }
 __name(foldIntersection, "foldIntersection");
-function finalize(ctx, schema3) {
-  const root = ctx.seen.get(schema3);
+function finalize(ctx, schema4) {
+  const root = ctx.seen.get(schema4);
   if (!root)
     throw new Error("Unprocessed schema. This is a bug in Zod.");
   const flattenRef = /* @__PURE__ */ __name((zodSchema) => {
     const seen = ctx.seen.get(zodSchema);
     if (seen.ref === null)
       return;
-    const schema4 = seen.def ?? seen.schema;
-    const _cached = { ...schema4 };
+    const schema5 = seen.def ?? seen.schema;
+    const _cached = { ...schema5 };
     const ref = seen.ref;
     seen.ref = null;
     if (ref) {
@@ -19238,28 +20046,28 @@ function finalize(ctx, schema3) {
       const refSeen = ctx.seen.get(ref);
       const refSchema = refSeen.schema;
       if (refSchema.$ref && (ctx.target === "draft-07" || ctx.target === "draft-04" || ctx.target === "openapi-3.0")) {
-        schema4.allOf = schema4.allOf ?? [];
-        schema4.allOf.push(refSchema);
+        schema5.allOf = schema5.allOf ?? [];
+        schema5.allOf.push(refSchema);
       } else {
-        assignProps(schema4, refSchema);
+        assignProps(schema5, refSchema);
       }
-      assignProps(schema4, _cached);
+      assignProps(schema5, _cached);
       const isParentRef = zodSchema._zod.parent === ref;
       if (isParentRef) {
-        for (const key4 in schema4) {
+        for (const key4 in schema5) {
           if (key4 === "$ref" || key4 === "allOf")
             continue;
           if (!(key4 in _cached)) {
-            delete schema4[key4];
+            delete schema5[key4];
           }
         }
       }
       if (refSchema.$ref && refSeen.def) {
-        for (const key4 in schema4) {
+        for (const key4 in schema5) {
           if (key4 === "$ref" || key4 === "allOf")
             continue;
-          if (key4 in refSeen.def && JSON.stringify(schema4[key4]) === JSON.stringify(refSeen.def[key4])) {
-            delete schema4[key4];
+          if (key4 in refSeen.def && JSON.stringify(schema5[key4]) === JSON.stringify(refSeen.def[key4])) {
+            delete schema5[key4];
           }
         }
       }
@@ -19269,13 +20077,13 @@ function finalize(ctx, schema3) {
       flattenRef(parent);
       const parentSeen = ctx.seen.get(parent);
       if (parentSeen?.schema.$ref) {
-        schema4.$ref = parentSeen.schema.$ref;
+        schema5.$ref = parentSeen.schema.$ref;
         if (parentSeen.def) {
-          for (const key4 in schema4) {
+          for (const key4 in schema5) {
             if (key4 === "$ref" || key4 === "allOf")
               continue;
-            if (key4 in parentSeen.def && JSON.stringify(schema4[key4]) === JSON.stringify(parentSeen.def[key4])) {
-              delete schema4[key4];
+            if (key4 in parentSeen.def && JSON.stringify(schema5[key4]) === JSON.stringify(parentSeen.def[key4])) {
+              delete schema5[key4];
             }
           }
         }
@@ -19283,7 +20091,7 @@ function finalize(ctx, schema3) {
     }
     ctx.override({
       zodSchema,
-      jsonSchema: schema4,
+      jsonSchema: schema5,
       path: seen.path ?? []
     });
   }, "flattenRef");
@@ -19329,13 +20137,13 @@ function finalize(ctx, schema3) {
   } else {
   }
   if (ctx.external?.uri) {
-    const id2 = ctx.external.registry.get(schema3)?.id;
+    const id2 = ctx.external.registry.get(schema4)?.id;
     if (!id2)
       throw new Error("Schema is missing an `id` property");
     result.$id = ctx.external.uri(id2);
   }
   assignProps(result, root.defId ? root.schema : root.def ?? root.schema);
-  const rootMetaId = ctx.metadataRegistry.get(schema3)?.id;
+  const rootMetaId = ctx.metadataRegistry.get(schema4)?.id;
   if (rootMetaId !== void 0 && result.id === rootMetaId)
     delete result.id;
   const defs = ctx.external?.defs ?? {};
@@ -19365,10 +20173,10 @@ function finalize(ctx, schema3) {
     const finalized = JSON.parse(JSON.stringify(result));
     Object.defineProperty(finalized, "~standard", {
       value: {
-        ...schema3["~standard"],
+        ...schema4["~standard"],
         jsonSchema: {
-          input: createStandardJSONSchemaMethod(schema3, "input", ctx.processors),
-          output: createStandardJSONSchemaMethod(schema3, "output", ctx.processors)
+          input: createStandardJSONSchemaMethod(schema4, "input", ctx.processors),
+          output: createStandardJSONSchemaMethod(schema4, "output", ctx.processors)
         }
       },
       enumerable: false,
@@ -19434,18 +20242,18 @@ function isTransforming(_schema, _ctx) {
   return false;
 }
 __name(isTransforming, "isTransforming");
-var createToJSONSchemaMethod = /* @__PURE__ */ __name((schema3, processors = {}) => (params) => {
+var createToJSONSchemaMethod = /* @__PURE__ */ __name((schema4, processors = {}) => (params) => {
   const ctx = initializeContext({ ...params, processors });
-  processSchema(schema3, ctx);
-  extractDefs(ctx, schema3);
-  return finalize(ctx, schema3);
+  processSchema(schema4, ctx);
+  extractDefs(ctx, schema4);
+  return finalize(ctx, schema4);
 }, "createToJSONSchemaMethod");
-var createStandardJSONSchemaMethod = /* @__PURE__ */ __name((schema3, io, processors = {}) => (params) => {
-  const { libraryOptions, target } = params ?? {};
-  const ctx = initializeContext({ ...libraryOptions ?? {}, target, io, processors });
-  processSchema(schema3, ctx);
-  extractDefs(ctx, schema3);
-  return finalize(ctx, schema3);
+var createStandardJSONSchemaMethod = /* @__PURE__ */ __name((schema4, io, processors = {}) => (params) => {
+  const { libraryOptions, target: target2 } = params ?? {};
+  const ctx = initializeContext({ ...libraryOptions ?? {}, target: target2, io, processors });
+  processSchema(schema4, ctx);
+  extractDefs(ctx, schema4);
+  return finalize(ctx, schema4);
 }, "createStandardJSONSchemaMethod");
 
 // ../node_modules/zod/v4/core/json-schema-processors.js
@@ -19509,13 +20317,13 @@ var contributors = {
   }, "string_format"),
   mime_type: /* @__PURE__ */ __name((agg, def) => intersectMime(agg, def.mime), "mime_type")
 };
-function aggregateChecks(schema3) {
+function aggregateChecks(schema4) {
   const agg = {};
-  const def = schema3._zod.def;
-  const list = schema3._zod.traits.has("$ZodCheck") ? [schema3, ...def.checks ?? []] : def.checks ?? [];
+  const def = schema4._zod.def;
+  const list = schema4._zod.traits.has("$ZodCheck") ? [schema4, ...def.checks ?? []] : def.checks ?? [];
   for (const ch of list)
     contributors[ch._zod.def.check]?.(agg, ch._zod.def);
-  const bag = schema3._zod.bag;
+  const bag = schema4._zod.bag;
   if (bag.minimum !== void 0)
     narrowMin(agg, "minimum", bag.minimum);
   if (bag.exclusiveMinimum !== void 0)
@@ -19551,10 +20359,10 @@ var exactPatterns = /* @__PURE__ */ new Map([
   [base64urlCharset, base64url]
 ]);
 var exactPattern = /* @__PURE__ */ __name((p) => exactPatterns.get(p) ?? p, "exactPattern");
-var stringProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, _params) => {
+var stringProcessor = /* @__PURE__ */ __name((schema4, ctx, _json, _params) => {
   const json2 = _json;
   json2.type = "string";
-  const { minimum, maximum, format, patterns, contentEncoding, laxFormat } = aggregateChecks(schema3);
+  const { minimum, maximum, format, patterns, contentEncoding, laxFormat } = aggregateChecks(schema4);
   if (typeof minimum === "number")
     json2.minLength = minimum;
   if (typeof maximum === "number")
@@ -19583,9 +20391,9 @@ var stringProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, _params) => {
     }
   }
 }, "stringProcessor");
-var numberProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
+var numberProcessor = /* @__PURE__ */ __name((schema4, ctx, _json, params) => {
   const json2 = _json;
-  const { minimum, maximum, multipleOf, exclusiveMaximum, exclusiveMinimum, isInt } = aggregateChecks(schema3);
+  const { minimum, maximum, multipleOf, exclusiveMaximum, exclusiveMinimum, isInt } = aggregateChecks(schema4);
   json2.type = isInt ? "integer" : "number";
   const exMin = typeof exclusiveMinimum === "number" && exclusiveMinimum >= (minimum ?? Number.NEGATIVE_INFINITY);
   const exMax = typeof exclusiveMaximum === "number" && exclusiveMaximum <= (maximum ?? Number.POSITIVE_INFINITY);
@@ -19616,7 +20424,7 @@ var numberProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
       if (Number.isFinite(divisor) && divisor !== 0)
         divisors.add(Math.abs(divisor));
       else
-        handleUnrepresentable(schema3, ctx, json2, params, `A multipleOf divisor of ${divisor} cannot be represented in JSON Schema`);
+        handleUnrepresentable(schema4, ctx, json2, params, `A multipleOf divisor of ${divisor} cannot be represented in JSON Schema`);
     }
     const [first, ...rest] = divisors;
     if (first !== void 0)
@@ -19642,8 +20450,8 @@ var neverProcessor = /* @__PURE__ */ __name((_schema, _ctx, json2, _params) => {
 }, "neverProcessor");
 var unknownProcessor = /* @__PURE__ */ __name((_schema, _ctx, _json, _params) => {
 }, "unknownProcessor");
-var enumProcessor = /* @__PURE__ */ __name((schema3, _ctx, json2, _params) => {
-  const def = schema3._zod.def;
+var enumProcessor = /* @__PURE__ */ __name((schema4, _ctx, json2, _params) => {
+  const def = schema4._zod.def;
   const values = getEnumValues(def.entries);
   if (values.length === 0) {
     json2.not = {};
@@ -19655,8 +20463,8 @@ var enumProcessor = /* @__PURE__ */ __name((schema3, _ctx, json2, _params) => {
     json2.type = "string";
   json2.enum = values;
 }, "enumProcessor");
-var literalProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
-  const def = schema3._zod.def;
+var literalProcessor = /* @__PURE__ */ __name((schema4, ctx, json2, params) => {
+  const def = schema4._zod.def;
   if (def.values.length === 0) {
     json2.not = {};
     return;
@@ -19664,10 +20472,10 @@ var literalProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
   const vals = [];
   for (const val of def.values) {
     if (val === void 0) {
-      if (handleUnrepresentable(schema3, ctx, json2, params, "Literal `undefined` cannot be represented in JSON Schema"))
+      if (handleUnrepresentable(schema4, ctx, json2, params, "Literal `undefined` cannot be represented in JSON Schema"))
         return;
     } else if (typeof val === "bigint") {
-      if (handleUnrepresentable(schema3, ctx, json2, params, "BigInt literals cannot be represented in JSON Schema"))
+      if (handleUnrepresentable(schema4, ctx, json2, params, "BigInt literals cannot be represented in JSON Schema"))
         return;
       vals.push(Number(val));
     } else {
@@ -19695,16 +20503,16 @@ var literalProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
     json2.enum = vals;
   }
 }, "literalProcessor");
-var customProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
-  handleUnrepresentable(schema3, ctx, json2, params, "Custom types cannot be represented in JSON Schema");
+var customProcessor = /* @__PURE__ */ __name((schema4, ctx, json2, params) => {
+  handleUnrepresentable(schema4, ctx, json2, params, "Custom types cannot be represented in JSON Schema");
 }, "customProcessor");
-var transformProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
-  handleUnrepresentable(schema3, ctx, json2, params, "Transforms cannot be represented in JSON Schema");
+var transformProcessor = /* @__PURE__ */ __name((schema4, ctx, json2, params) => {
+  handleUnrepresentable(schema4, ctx, json2, params, "Transforms cannot be represented in JSON Schema");
 }, "transformProcessor");
-var arrayProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
+var arrayProcessor = /* @__PURE__ */ __name((schema4, ctx, _json, params) => {
   const json2 = _json;
-  const def = schema3._zod.def;
-  const { minimum, maximum } = aggregateChecks(schema3);
+  const def = schema4._zod.def;
+  const { minimum, maximum } = aggregateChecks(schema4);
   if (typeof minimum === "number")
     json2.minItems = minimum;
   if (typeof maximum === "number")
@@ -19715,23 +20523,23 @@ var arrayProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
     path: [...params.path, "items"]
   });
 }, "arrayProcessor");
-function inputOptin(schema3) {
-  const def = schema3._zod.def;
+function inputOptin(schema4) {
+  const def = schema4._zod.def;
   if (def.type === "pipe" && def.in._zod.traits.has("$ZodTransform")) {
     return inputOptin(def.out);
   }
   if (def.type === "catch") {
     return inputOptin(def.innerType);
   }
-  return schema3._zod.optin;
+  return schema4._zod.optin;
 }
 __name(inputOptin, "inputOptin");
-var objectProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
+var objectProcessor = /* @__PURE__ */ __name((schema4, ctx, _json, params) => {
   const json2 = _json;
-  const def = schema3._zod.def;
+  const def = schema4._zod.def;
   const shape = def.shape;
   const symbolKeys = Object.getOwnPropertySymbols(shape);
-  if (symbolKeys.length && handleUnrepresentable(schema3, ctx, json2, params, "Symbol keys cannot be represented in JSON Schema")) {
+  if (symbolKeys.length && handleUnrepresentable(schema4, ctx, json2, params, "Symbol keys cannot be represented in JSON Schema")) {
     return;
   }
   json2.type = "object";
@@ -19764,8 +20572,8 @@ var objectProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
     });
   }
 }, "objectProcessor");
-var unionProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
-  const def = schema3._zod.def;
+var unionProcessor = /* @__PURE__ */ __name((schema4, ctx, json2, params) => {
+  const def = schema4._zod.def;
   const isExclusive = def.inclusive === false;
   const options = def.options.map((x, i) => processSchema(x, ctx, {
     ...params,
@@ -19777,8 +20585,8 @@ var unionProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
     json2.anyOf = options;
   }
 }, "unionProcessor");
-var intersectionProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
-  const def = schema3._zod.def;
+var intersectionProcessor = /* @__PURE__ */ __name((schema4, ctx, json2, params) => {
+  const def = schema4._zod.def;
   const a = processSchema(def.left, ctx, {
     ...params,
     path: [...params.path, "allOf", 0]
@@ -19860,9 +20668,9 @@ function rewriteKeyNames(ctx) {
   }
 }
 __name(rewriteKeyNames, "rewriteKeyNames");
-var recordProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
+var recordProcessor = /* @__PURE__ */ __name((schema4, ctx, _json, params) => {
   const json2 = _json;
-  const def = schema3._zod.def;
+  const def = schema4._zod.def;
   json2.type = "object";
   const keyType = def.keyType;
   const patterns = aggregateChecks(keyType).patterns;
@@ -19887,7 +20695,7 @@ var recordProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
         pendingRecords.set(ctx, pending);
         ctx.deferred.push(() => rewriteKeyNames(ctx));
       }
-      pending.push(schema3);
+      pending.push(schema4);
     }
     json2.additionalProperties = processSchema(def.valueType, ctx, {
       ...params,
@@ -19903,10 +20711,10 @@ var recordProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
     }
   }
 }, "recordProcessor");
-var nullableProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
-  const def = schema3._zod.def;
+var nullableProcessor = /* @__PURE__ */ __name((schema4, ctx, json2, params) => {
+  const def = schema4._zod.def;
   const inner = processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema3);
+  const seen = ctx.seen.get(schema4);
   if (ctx.target === "openapi-3.0") {
     seen.ref = def.innerType;
     json2.nullable = true;
@@ -19914,14 +20722,14 @@ var nullableProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => 
     json2.anyOf = [inner, { type: "null" }];
   }
 }, "nullableProcessor");
-var nonoptionalProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
-  const def = schema3._zod.def;
+var nonoptionalProcessor = /* @__PURE__ */ __name((schema4, ctx, _json, params) => {
+  const def = schema4._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema3);
+  const seen = ctx.seen.get(schema4);
   seen.ref = def.innerType;
 }, "nonoptionalProcessor");
 var UNREPRESENTABLE_DEFAULT = /* @__PURE__ */ Symbol();
-function serializeDefaultValue(value, schema3, ctx, json2, params) {
+function serializeDefaultValue(value, schema4, ctx, json2, params) {
   let unrepresentable = false;
   const serialized = JSON.stringify(value, (_, val) => {
     if (typeof val !== "bigint")
@@ -19931,91 +20739,91 @@ function serializeDefaultValue(value, schema3, ctx, json2, params) {
   });
   if (!unrepresentable)
     return JSON.parse(serialized);
-  handleUnrepresentable(schema3, ctx, json2, params, "BigInt defaults cannot be represented in JSON Schema");
+  handleUnrepresentable(schema4, ctx, json2, params, "BigInt defaults cannot be represented in JSON Schema");
   return UNREPRESENTABLE_DEFAULT;
 }
 __name(serializeDefaultValue, "serializeDefaultValue");
-var defaultProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
-  const def = schema3._zod.def;
+var defaultProcessor = /* @__PURE__ */ __name((schema4, ctx, json2, params) => {
+  const def = schema4._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema3);
+  const seen = ctx.seen.get(schema4);
   seen.ref = def.innerType;
-  const value = serializeDefaultValue(def.defaultValue, schema3, ctx, json2, params);
+  const value = serializeDefaultValue(def.defaultValue, schema4, ctx, json2, params);
   if (value !== UNREPRESENTABLE_DEFAULT)
     json2.default = value;
 }, "defaultProcessor");
-var prefaultProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
-  const def = schema3._zod.def;
+var prefaultProcessor = /* @__PURE__ */ __name((schema4, ctx, json2, params) => {
+  const def = schema4._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema3);
+  const seen = ctx.seen.get(schema4);
   seen.ref = def.innerType;
   if (ctx.io !== "input")
     return;
-  const value = serializeDefaultValue(def.defaultValue, schema3, ctx, json2, params);
+  const value = serializeDefaultValue(def.defaultValue, schema4, ctx, json2, params);
   if (value !== UNREPRESENTABLE_DEFAULT)
     json2._prefault = value;
 }, "prefaultProcessor");
-var catchProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
-  const def = schema3._zod.def;
+var catchProcessor = /* @__PURE__ */ __name((schema4, ctx, json2, params) => {
+  const def = schema4._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema3);
+  const seen = ctx.seen.get(schema4);
   seen.ref = def.innerType;
   let catchValue;
   try {
     catchValue = def.catchValue(void 0);
   } catch {
-    handleUnrepresentable(schema3, ctx, json2, params, "Dynamic catch values are not supported in JSON Schema");
+    handleUnrepresentable(schema4, ctx, json2, params, "Dynamic catch values are not supported in JSON Schema");
     return;
   }
   json2.default = catchValue;
 }, "catchProcessor");
-var pipeProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
-  const def = schema3._zod.def;
+var pipeProcessor = /* @__PURE__ */ __name((schema4, ctx, _json, params) => {
+  const def = schema4._zod.def;
   const inIsTransform = def.in._zod.traits.has("$ZodTransform");
   const innerType = ctx.io === "input" ? inIsTransform ? def.out : def.in : def.out;
   processSchema(innerType, ctx, params);
-  const seen = ctx.seen.get(schema3);
+  const seen = ctx.seen.get(schema4);
   seen.ref = innerType;
 }, "pipeProcessor");
-var readonlyProcessor = /* @__PURE__ */ __name((schema3, ctx, json2, params) => {
-  const def = schema3._zod.def;
+var readonlyProcessor = /* @__PURE__ */ __name((schema4, ctx, json2, params) => {
+  const def = schema4._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema3);
+  const seen = ctx.seen.get(schema4);
   seen.ref = def.innerType;
   json2.readOnly = true;
 }, "readonlyProcessor");
-var optionalProcessor = /* @__PURE__ */ __name((schema3, ctx, _json, params) => {
-  const def = schema3._zod.def;
+var optionalProcessor = /* @__PURE__ */ __name((schema4, ctx, _json, params) => {
+  const def = schema4._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema3);
+  const seen = ctx.seen.get(schema4);
   seen.ref = def.innerType;
 }, "optionalProcessor");
 
 // ../node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-compat.js
 function isZ4Schema(s) {
-  const schema3 = s;
-  return !!schema3._zod;
+  const schema4 = s;
+  return !!schema4._zod;
 }
 __name(isZ4Schema, "isZ4Schema");
-function safeParse2(schema3, data2) {
-  if (isZ4Schema(schema3)) {
-    const result2 = safeParse(schema3, data2);
+function safeParse2(schema4, data2) {
+  if (isZ4Schema(schema4)) {
+    const result2 = safeParse(schema4, data2);
     return result2;
   }
-  const v3Schema = schema3;
+  const v3Schema = schema4;
   const result = v3Schema.safeParse(data2);
   return result;
 }
 __name(safeParse2, "safeParse");
-function getObjectShape(schema3) {
-  if (!schema3)
+function getObjectShape(schema4) {
+  if (!schema4)
     return void 0;
   let rawShape2;
-  if (isZ4Schema(schema3)) {
-    const v4Schema = schema3;
+  if (isZ4Schema(schema4)) {
+    const v4Schema = schema4;
     rawShape2 = v4Schema._zod?.def?.shape;
   } else {
-    const v3Schema = schema3;
+    const v3Schema = schema4;
     rawShape2 = v3Schema.shape;
   }
   if (!rawShape2)
@@ -20030,9 +20838,9 @@ function getObjectShape(schema3) {
   return rawShape2;
 }
 __name(getObjectShape, "getObjectShape");
-function getLiteralValue(schema3) {
-  if (isZ4Schema(schema3)) {
-    const v4Schema = schema3;
+function getLiteralValue(schema4) {
+  if (isZ4Schema(schema4)) {
+    const v4Schema = schema4;
     const def2 = v4Schema._zod?.def;
     if (def2) {
       if (def2.value !== void 0)
@@ -20042,7 +20850,7 @@ function getLiteralValue(schema3) {
       }
     }
   }
-  const v3Schema = schema3;
+  const v3Schema = schema4;
   const def = v3Schema._def;
   if (def) {
     if (def.value !== void 0)
@@ -20051,7 +20859,7 @@ function getLiteralValue(schema3) {
       return def.values[0];
     }
   }
-  const directValue = schema3.value;
+  const directValue = schema4.value;
   if (directValue !== void 0)
     return directValue;
   return void 0;
@@ -20203,8 +21011,8 @@ var ZodType = /* @__PURE__ */ $constructor("ZodType", (inst, def) => {
   catch(params) {
     return _catch(this, params);
   },
-  pipe(target) {
-    return pipe(this, target);
+  pipe(target2) {
+    return pipe(this, target2);
   },
   readonly() {
     return readonly(this);
@@ -21085,11 +21893,11 @@ function superRefine(fn, params) {
   return _superRefine(fn, params);
 }
 __name(superRefine, "superRefine");
-function preprocess(fn, schema3) {
+function preprocess(fn, schema4) {
   return new ZodPreprocess({
     type: "pipe",
     in: transform(fn),
-    out: schema3
+    out: schema4
   });
 }
 __name(preprocess, "preprocess");
@@ -22660,8 +23468,8 @@ __name(isTerminal, "isTerminal");
 var ALPHA_NUMERIC = new Set("ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz0123456789");
 
 // ../node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-json-schema-compat.js
-function getMethodLiteral(schema3) {
-  const shape = getObjectShape(schema3);
+function getMethodLiteral(schema4) {
+  const shape = getObjectShape(schema4);
   const methodSchema = shape?.method;
   if (!methodSchema) {
     throw new Error("Schema is missing a method literal");
@@ -22673,8 +23481,8 @@ function getMethodLiteral(schema3) {
   return value;
 }
 __name(getMethodLiteral, "getMethodLiteral");
-function parseWithCompat(schema3, data2) {
-  const result = safeParse2(schema3, data2);
+function parseWithCompat(schema4, data2) {
+  const result = safeParse2(schema4, data2);
   if (!result.success) {
     throw result.error;
   }
@@ -23715,8 +24523,8 @@ var AjvJsonSchemaValidator = class {
    * @param schema - Standard JSON Schema object
    * @returns A validator function that validates input data
    */
-  getValidator(schema3) {
-    const ajvValidator = "$id" in schema3 && typeof schema3.$id === "string" ? this._ajv.getSchema(schema3.$id) ?? this._ajv.compile(schema3) : this._ajv.compile(schema3);
+  getValidator(schema4) {
+    const ajvValidator = "$id" in schema4 && typeof schema4.$id === "string" ? this._ajv.getSchema(schema4.$id) ?? this._ajv.compile(schema4) : this._ajv.compile(schema4);
     return (input) => {
       const valid2 = ajvValidator(input);
       if (valid2) {
@@ -24415,7 +25223,7 @@ async function readRequestBody(request, maxBytes2 = DEFAULT_MAX_REQUEST_BODY_SIZ
   const reader = request.body.getReader();
   const decoder2 = new TextDecoder();
   let received = 0;
-  let text2 = "";
+  let text3 = "";
   try {
     for (; ; ) {
       const { done, value } = await reader.read();
@@ -24426,12 +25234,12 @@ async function readRequestBody(request, maxBytes2 = DEFAULT_MAX_REQUEST_BODY_SIZ
       if (received > maxBytes2) {
         return { tooLarge: true };
       }
-      text2 += decoder2.decode(value, { stream: true });
+      text3 += decoder2.decode(value, { stream: true });
     }
   } finally {
     reader.releaseLock();
   }
-  return { tooLarge: false, text: text2 + decoder2.decode() };
+  return { tooLarge: false, text: text3 + decoder2.decode() };
 }
 __name(readRequestBody, "readRequestBody");
 
@@ -25198,20 +26006,20 @@ data:
 var kinds = ["development", "browser"];
 var actions = new Map(kinds.flatMap((kind) => [...profiles[kind].tools, ...profiles[kind].optional ?? []].map((name) => [name, kind])));
 var deviceId = { type: "string", description: "Exact ID returned by list_devices." };
-var schema2 = /* @__PURE__ */ __name((properties, required2 = Object.keys(properties)) => ({ type: "object", properties, required: required2, additionalProperties: false }), "schema");
+var schema3 = /* @__PURE__ */ __name((properties, required2 = Object.keys(properties)) => ({ type: "object", properties, required: required2, additionalProperties: false }), "schema");
 var argumentsSchema = { type: "object", additionalProperties: true };
 var tools = [
-  { name: "list_devices", title: "\u5217\u51FA\u8BBE\u5907", description: "List active devices in this Nodrelay deployment.", inputSchema: schema2({}), annotations: { readOnlyHint: true } },
+  { name: "list_devices", title: "\u5217\u51FA\u8BBE\u5907", description: "List active devices in this Nodrelay deployment.", inputSchema: schema3({}), annotations: { readOnlyHint: true } },
   ...profiles.development.tools.map((name) => ({
     name,
     description: name === "open_workspace" ? "Open a folder on the specified device. On folder-enabled devices, pass arguments: {} for projects, or {path: ...} for an existing folder. Use device_tools for the installed schema." : `Run ${name} on the specified device. Use device_tools for its arguments.`,
-    inputSchema: schema2({ deviceId, arguments: argumentsSchema })
+    inputSchema: schema3({ deviceId, arguments: argumentsSchema })
   })),
   {
     name: "device_tools",
     title: "\u67E5\u627E\u5DE5\u5177",
     description: "Find capabilities by purpose on the selected device. For local apps, browser tasks, CLIs or Skills use source=installed first; supply the user\u2019s keyword and English synonyms in keywords. A skill result points to its current SKILL.md: read it on the same device before using the existing terminal. CLI/Skill entries are guidance, not call_device_tool targets. For MCP schemas use profile, serviceId or source=mcp.",
-    inputSchema: schema2({
+    inputSchema: schema3({
       deviceId,
       query: { type: "string" },
       profile: { type: "string", enum: kinds },
@@ -25225,7 +26033,7 @@ var tools = [
     name: "call_device_tool",
     title: "\u8C03\u7528\u5DE5\u5177",
     description: "Call a tool from device_tools. Use its exact device, serviceId, name and arguments.",
-    inputSchema: schema2({ deviceId, serviceId: { type: "string" }, name: { type: "string" }, arguments: argumentsSchema })
+    inputSchema: schema3({ deviceId, serviceId: { type: "string" }, name: { type: "string" }, arguments: argumentsSchema })
   }
 ];
 var data = /* @__PURE__ */ __name((value) => ({ content: [{ type: "text", text: JSON.stringify(value) }] }), "data");
@@ -25246,7 +26054,15 @@ async function gatewayMcp(request, devices, local) {
       const query = (args.query ?? "").toLowerCase();
       const terms = [query, ...args.keywords ?? []].filter((q) => q.trim());
       if (args.source === "installed" && (!terms.length || args.serviceId || args.profile)) throw invalid2();
-      const indexed = args.source !== "mcp" && terms.length && !args.serviceId && !args.profile ? local.installed(args.deviceId, terms, request.signal) : void 0;
+      const indexed = args.source !== "mcp" && terms.length && !args.serviceId && !args.profile ? local.installed(args.deviceId, terms, request.signal).then((result) => ({
+        ...result,
+        matches: result.matches.map((match) => ({ ...match, use: {
+          deviceId: args.deviceId,
+          workspace: "Reuse workspaceId on this device or open_workspace on an authorized project.",
+          ...result.workspacePath && { workspacePath: result.workspacePath },
+          ...match.kind === "skill" ? { tool: "read", path: match.path, then: "Follow this guide in the same workspace. Use exec_command for its CLI, not a generic REPL." } : { tool: "exec_command", executable: match.path }
+        } }))
+      })) : void 0;
       if (args.source === "installed") return data(await indexed);
       const builtins = args.profile ? [args.profile] : kinds;
       const sources = builtins.filter((id2) => !args.serviceId || id2 === args.serviceId);
@@ -25261,11 +26077,16 @@ async function gatewayMcp(request, devices, local) {
       }), !args.profile && !kinds.includes(args.serviceId) ? local.search(args.deviceId, query, args.serviceId, request.signal).catch(() => [{ error: "\u672C\u673A MCP \u76EE\u5F55\u6682\u4E0D\u53EF\u7528" }]) : []]);
       if (indexed) {
         const { matches: matches6, indexing, warnings } = await indexed;
-        groups.push(matches6);
+        groups.unshift(matches6);
         if (indexing) groups.push([{ source: "installed", indexing: true }]);
         groups.push(warnings.map((error2) => ({ source: "installed", error: error2 })));
       }
-      return data(groups.flat());
+      const rows = groups.flat().sort((a, b) => Number("error" in a || "indexing" in a) - Number("error" in b || "indexing" in b));
+      const response2 = data(rows);
+      if ((args.profile || args.serviceId) && !rows.some((row) => row.name)) {
+        response2.content.push({ type: "text", text: "Only this MCP catalogue was checked. For a local application or CLI, search device_tools on the same device with a task keyword in query and no profile or serviceId." });
+      }
+      return response2;
     }
     if (!args.arguments || typeof args.arguments !== "object" || Array.isArray(args.arguments)) throw invalid2();
     const indirect = params.name === "call_device_tool";
@@ -25336,13 +26157,13 @@ async function limitedBody(request) {
   if (!request.body) throw new Error("Expected request body");
   const reader = request.body.getReader();
   const decoder2 = new TextDecoder("utf-8", { fatal: true });
-  let value = "", bytes = 0;
+  let value = "", bytes2 = 0;
   try {
     while (true) {
       const { done, value: chunk } = await reader.read();
       if (done) return value + decoder2.decode();
-      bytes += chunk.length;
-      if (bytes > 1e4) throw new Error("Request body too large");
+      bytes2 += chunk.length;
+      if (bytes2 > 1e4) throw new Error("Request body too large");
       value += decoder2.decode(chunk, { stream: true });
     }
   } finally {
@@ -25375,24 +26196,24 @@ var html = /* @__PURE__ */ __name((body, status, nonce) => assetResponse(
 function createWorker({ verifyAdmin = accessAdmin, deviceProvider, upgradeProvider } = {}) {
   return {
     async fetch(request, env, execution) {
-      const url = new URL(request.url);
-      if (env.MCP_ACCESS_AUD && url.origin === env.MCP_ORIGIN && url.protocol === "https:") {
-        if (url.pathname !== "/mcp") return json({ error: "Unknown route" }, 404);
+      const url2 = new URL(request.url);
+      if (env.MCP_ACCESS_AUD && url2.origin === env.MCP_ORIGIN && url2.protocol === "https:") {
+        if (url2.pathname !== "/mcp") return json({ error: "Unknown route" }, 404);
         if (env.MCP_ACCESS_AUD === env.ACCESS_AUD || !await verifyAdmin(request, env, env.MCP_ACCESS_AUD)) {
           return json({ error: "Nodrelay MCP login required" }, 403);
         }
-        if (request.headers.has("Origin") && request.headers.get("Origin") !== url.origin) return json({ error: "Invalid origin" }, 403);
+        if (request.headers.has("Origin") && request.headers.get("Origin") !== url2.origin) return json({ error: "Invalid origin" }, 403);
         const devices = (deviceProvider ?? createDevices)(env);
         return gatewayMcp(request, devices, localServicePolicy(env.TICKETS, devices));
       }
-      if (url.origin !== env.APP_ORIGIN || url.protocol !== "https:") return json({ error: "Unknown origin" }, 404);
-      const { pathname } = url;
+      if (url2.origin !== env.APP_ORIGIN || url2.protocol !== "https:") return json({ error: "Unknown origin" }, 404);
+      const { pathname } = url2;
       const provisioner = Boolean(env.PROVISIONER_TOKEN) !== Boolean(env.PROVISIONER_OAUTH);
       const managed = Boolean(env.FLEET_SPEC && provisioner && env.RELEASE_CATALOG);
       if (env.FLEET_SPEC && !managed) return json({ error: "Managed deployment bindings missing" }, 503);
       const installPlatform = managed && Object.keys(operatingSystems).find((platform) => pathname === installPath(platform));
       if (installPlatform) {
-        if (request.method === "GET" && url.search === "?i" && enrollmentIsEnabled(env)) {
+        if (request.method === "GET" && url2.search === "?i" && enrollmentIsEnabled(env)) {
           return assetResponse("text/plain", deviceInstallEntry(env.APP_ORIGIN, installPlatform));
         }
         if (request.method === "POST") {
@@ -25413,7 +26234,7 @@ function createWorker({ verifyAdmin = accessAdmin, deviceProvider, upgradeProvid
             return json({ error: "Installer temporarily unavailable. Retry the same command." }, 503);
           }
         }
-        if (url.searchParams.has("manifest") || url.searchParams.has("v")) {
+        if (url2.searchParams.has("manifest") || url2.searchParams.has("v")) {
           if (!enrollmentIsEnabled(env)) return json({ error: "Approved installer unavailable" }, 404);
           try {
             return await resolveEnrollmentBootstrap(request, { origin: env.APP_ORIGIN, ...enrollmentContext(env) });
@@ -25421,8 +26242,8 @@ function createWorker({ verifyAdmin = accessAdmin, deviceProvider, upgradeProvid
             return json({ error: "Approved installer unavailable" }, 404);
           }
         }
-        const [version3] = url.searchParams.getAll("version");
-        if (request.method !== "GET" || !version3 || [...url.searchParams].length !== 1) {
+        const [version3] = url2.searchParams.getAll("version");
+        if (request.method !== "GET" || !version3 || [...url2.searchParams].length !== 1) {
           return json({ error: "Installer version unavailable. Generate a new connection command." }, 404);
         }
         try {
@@ -25430,7 +26251,7 @@ function createWorker({ verifyAdmin = accessAdmin, deviceProvider, upgradeProvid
           if (!group || version3 !== group.version) {
             return json({ error: "Installer version unavailable. Generate a new connection command." }, 404);
           }
-          return assetResponse("text/plain", bootstrapInstaller(url.origin, installPlatform, group));
+          return assetResponse("text/plain", bootstrapInstaller(url2.origin, installPlatform, group));
         } catch {
           return json({ error: "Installer catalog temporarily unavailable. Contact the management console administrator." }, 503);
         }
@@ -25439,11 +26260,11 @@ function createWorker({ verifyAdmin = accessAdmin, deviceProvider, upgradeProvid
       const activate = managed && pathname === activatePath;
       const mediaType = request.headers.get("Content-Type")?.split(";", 1)[0].trim().toLowerCase();
       if (!redeem && !activate && !await verifyAdmin(request, env)) return json({ error: "Administrator login required" }, 403);
-      if (managed && !redeem) return manage(request, env, url, { limitedBody, html, json, assetResponse, provider: deviceProvider, upgradeProvider, execution });
+      if (managed && !redeem) return manage(request, env, url2, { limitedBody, html, json, assetResponse, provider: deviceProvider, upgradeProvider, execution });
       if (request.method === "GET" && pathname === "/") return html(page);
       if (request.method === "GET" && pathname === "/admin/fleet.css") return assetResponse("text/css", pageStyles);
       if (request.method !== "POST") return json({ error: "Unknown route" }, 404);
-      if (!redeem && request.headers.get("Origin") !== url.origin) return json({ error: "Invalid origin" }, 403);
+      if (!redeem && request.headers.get("Origin") !== url2.origin) return json({ error: "Invalid origin" }, 403);
       try {
         if (redeem) {
           if (mediaType !== "application/json") return json({ error: "Expected JSON" }, 415);
@@ -25488,7 +26309,7 @@ function createWorker({ verifyAdmin = accessAdmin, deviceProvider, upgradeProvid
         }
         const issued = await issueTicket(env.TICKETS, env.TICKET_KEY, credentials);
         if (!issued) return formError("This device already has an unclaimed ticket", "\u8FD9\u53F0\u8BBE\u5907\u5DF2\u6709\u672A\u9886\u53D6\u7684\u7968\u636E", 409);
-        const command = `npm run enroll -- ${url.origin} .fleet-${credentials.deviceId}`;
+        const command = `npm run enroll -- ${url2.origin} .fleet-${credentials.deviceId}`;
         const nonce = crypto.randomUUID();
         return html(consolePage("\u4E00\u6B21\u6027\u5B89\u88C5\u7968\u636E", `<p>\u5728\u76EE\u6807\u8BBE\u5907\u7684\u9879\u76EE\u76EE\u5F55\u6267\u884C\u547D\u4EE4\uFF0C\u518D\u6309\u7EC8\u7AEF\u63D0\u793A\u7C98\u8D34\u7968\u636E\u3002</p>
           <section class="sheet"><strong>${credentials.deviceId}</strong><pre id="ticket-command" class="ticket-command">${command}</pre><button data-copy="ticket-command">\u590D\u5236\u5B89\u88C5\u547D\u4EE4</button>
@@ -25512,6 +26333,29 @@ export {
   createWorker,
   worker_default as default
 };
+/*! Official launcher icon: ProxyShard/ShardBrowser v2.1.6, src-tauri/icons/128x128.png.
+MIT License
+
+Copyright (c) 2026 ShardBrowser
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 /*! Bundled license information:
 
 content-type/index.js:
