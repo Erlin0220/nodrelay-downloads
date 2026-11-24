@@ -14263,6 +14263,7 @@ var marketStyles = `
 .install-methods input:checked+span{color:var(--text);background:var(--surface);box-shadow:0 1px 4px #10251a24;font-weight:600}.install-methods input:focus-visible+span{outline:2px solid var(--active)}
 .agent-install{display:none}.market-installbox:has([value=agent]:checked) .direct-install{display:none}.market-installbox:has([value=agent]:checked) .agent-install{display:grid;gap:9px}
 .agent-install label,.agent-install [role=status]{color:var(--secondary);font-size:13px}.agent-install [role=status]:empty{display:none}
+.agent-path{font-size:13px;color:var(--secondary)}.agent-path code{display:block;color:var(--text);overflow-wrap:anywhere}
 .agent-install textarea{width:100%;box-sizing:border-box;resize:vertical;border:1px solid var(--line);border-radius:8px;background:var(--inset);color:var(--text);font:13px/1.6 ui-monospace,monospace;padding:10px;overflow-wrap:anywhere}
 @media(max-width:1180px){.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.workspace main.market{width:calc(100% - 30px);margin:12px auto 40px}.market-hero{padding:24px 4px 15px}.market-columns{display:flex;flex-direction:column}.market-panel{width:100%}.market-installbox{order:-1}}
@@ -14271,6 +14272,54 @@ var marketStyles = `
 
 // ../cloud/shardbrowser-icon.mjs
 var shardBrowserIcon = "data:image/png;base64,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";
+
+// ../cloud/agent-install.mjs
+function agentCliEntry(item, format, windows) {
+  const dir = ".local/share/agent-tools/" + item.id + "/" + item.version + "/";
+  if (format === "cli-bundle") return dir + "bin/" + item.cli + (windows ? ".cmd" : "");
+  if (format === "cli-wheel") return dir + (windows ? "venv/Scripts/" : "venv/bin/") + item.cli + (windows ? ".exe" : "");
+  if (format === "cli-binary") return dir + item.cli + (windows ? ".exe" : "");
+}
+__name(agentCliEntry, "agentCliEntry");
+async function agentInstallGuide(item, device, origin, target2, detected) {
+  const digest2 = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(origin));
+  const fingerprint = Array.from(new Uint8Array(digest2).slice(0, 6), (b) => b.toString(16).padStart(2, "0")).join("");
+  const os = { macos: "darwin", windows: "win32", linux: "linux" }[device.platform];
+  const assets2 = Object.entries(item.assets).filter(([k]) => k === "any" || (target2 ? k === target2 : !os || k.startsWith(os + "-")));
+  if (!assets2.length) return;
+  const repo = "https://github.com/" + item.repo, tag2 = "v" + item.version;
+  const doc = {
+    "colbymchenry/codegraph": "site/src/content/docs/getting-started/installation.md",
+    "github/spec-kit": "docs/installation.md",
+    "alibaba/open-code-review": "pages/src/content/docs/zh/installation.md"
+  }[item.repo] ?? "README.md";
+  const markdown = repo + "/blob/" + tag2 + "/" + doc;
+  const raw = "https://raw.githubusercontent.com/" + item.repo + "/" + tag2 + "/" + doc;
+  const windows = target2 ? target2.startsWith("win32-") : os === "win32";
+  const format = assets2[0][1].format;
+  const command = item.cli && agentCliEntry(item, format, windows);
+  if (item.cli && !command) return;
+  const location = command ? "~/" + command : item.kind === "MCP" ? "~/.local/share/agent-tools/" + item.id + "/" + item.version + "/" : windows ? "~/Applications/" + item.id + "/" + item.version + "/" : "~/Applications/";
+  const steps = [
+    "\u8BF7\u7528\u4F60\u5DF2\u6709\u7684\u672C\u673A\u6216\u8FDC\u7A0B\u7EC8\u7AEF\uFF0C\u5728\u8BBE\u5907 " + (device.displayName ?? device.id) + "\uFF08" + device.id + "\uFF09\u5B89\u88C5 " + item.name + " v" + item.version + "\u3002",
+    "GitHub \u4ED3\u5E93\uFF1A" + repo + "\n\u5148\u8BFB\u5B98\u65B9\u5B89\u88C5\u8BF4\u660E\uFF08Markdown\uFF0C" + tag2 + "\uFF09\uFF1A" + raw + "\n" + (command ? "\u9884\u671F\u547D\u4EE4\u8DEF\u5F84" : "\u5B89\u88C5\u76EE\u5F55") + "\uFF1A" + location + "\uFF08~ \u662F\u76EE\u6807\u7528\u6237\u7684\u4E3B\u76EE\u5F55\uFF09\u3002",
+    "\u5148\u53EA\u8BFB\u6838\u5BF9\u76EE\u6807\u7528\u6237\u4E3B\u76EE\u5F55\u4E0B .devspace-fleet/" + fingerprint + "/service.private.json \u7684 deviceId \u548C manager \u662F\u5426\u5206\u522B\u662F " + device.id + " \u548C " + origin + "\u3002\u65E0\u6CD5\u8BBF\u95EE\u76EE\u6807\u7EC8\u7AEF\u6216\u8EAB\u4EFD\u4E0D\u7B26\u5C31\u505C\u4E0B\uFF0C\u4E0D\u5728\u5176\u4ED6\u673A\u5668\u5B89\u88C5\u3002",
+    "\u5148\u68C0\u67E5\u5DF2\u6709\u5B89\u88C5" + (item.cli ? "\uFF08\u547D\u4EE4 " + item.cli + "\uFF09" : "") + (detected ? "\uFF0C\u5305\u62EC\u5DF2\u53D1\u73B0\u7684\u8DEF\u5F84 " + detected : "") + "\u3002\u6838\u5B9E\u4E3A\u540C\u4E00\u53D1\u5E03\u8005\u3001\u540C\u4E00\u7248\u672C\u5C31\u76F4\u63A5\u62A5\u544A\u8DEF\u5F84\uFF0C\u4E0D\u91CD\u88C5\u3002\u4E0D\u8981\u8986\u76D6\u5176\u4ED6\u7248\u672C\u6216\u540C\u540D\u7A0B\u5E8F\u3002",
+    "\u53EA\u6309\u672C\u6587\u6307\u5B9A\u7684\u7248\u672C\u548C\u4F4D\u7F6E\u5B89\u88C5\uFF1B\u8DF3\u8FC7\u5B98\u65B9\u6307\u5357\u91CC\u7684\u9879\u76EE\u521D\u59CB\u5316\u3001\u5BBF\u4E3B\u914D\u7F6E\u548C\u6388\u6743\u6B65\u9AA4\u3002\u6309\u76EE\u6807\u7CFB\u7EDF\u548C CPU \u9009\u62E9\u4E0B\u9762\u7684\u53D1\u5E03\u5305\uFF0C\u4E0B\u8F7D\u540E\u5148\u6821\u9A8C SHA-256\u3002\u4E0D\u5339\u914D\u6216\u6CA1\u6709\u5BF9\u5E94\u5305\u5C31\u505C\u6B62\u3002"
+  ];
+  for (const [k, a] of assets2) {
+    const source = a.format === "cli-wheel" ? "https://files.pythonhosted.org/packages/" + a.pypiPath + "/" + a.file : repo + "/releases/download/" + tag2 + "/" + a.file;
+    steps.push(k + " \xB7 " + source + "\nSHA-256: " + a.sha256);
+  }
+  if (item.cli) {
+    const setup = { "cli-bundle": "\u4FDD\u7559\u5F52\u6863\u5185 bin \u548C\u4F9D\u8D56\u7684\u76F8\u5BF9\u5E03\u5C40\uFF0C\u53BB\u6389\u5916\u5C42\u5305\u76EE\u5F55\u3002", "cli-binary": "\u5C06\u5DF2\u6821\u9A8C\u7684\u6587\u4EF6\u5B89\u88C5\u4E3A\u76EE\u6807\u547D\u4EE4\uFF0C\u5E76\u8BBE\u7F6E\u53EF\u6267\u884C\u6743\u9650\u3002", "cli-wheel": "\u7528 uv \u65B0\u5EFA\u72EC\u7ACB venv\uFF08Python \u22653.11\uFF09\uFF0C\u628A\u5DF2\u6821\u9A8C\u7684 wheel \u5B89\u88C5\u5230\u8BE5\u73AF\u5883\uFF0C\u4F9D\u8D56\u53D6\u81EA\u5B98\u65B9 PyPI\u3002" }[format];
+    steps.push(setup + "\u6838\u5BF9\u5B89\u88C5\u7248\u672C\u548C\u53EF\u6267\u884C\u5165\u53E3\uFF0C\u62A5\u544A\u5B9E\u9645\u7248\u672C\u548C\u7EDD\u5BF9\u8DEF\u5F84\uFF1B\u4E0D\u521D\u59CB\u5316\u9879\u76EE\u3001\u4E0D\u914D\u7F6E\u6216\u8C03\u7528\u6A21\u578B\u3002");
+  } else if (item.kind === "MCP") {
+    steps.push("\u6309\u53D1\u5E03\u8005\u8BF4\u660E\u5B89\u88C5\u6B64 stdio MCP\uFF0C\u5E76\u62A5\u544A\u5B9E\u9645\u7248\u672C\u3001\u542F\u52A8\u7A0B\u5E8F\u4E0E\u53C2\u6570\uFF1B\u4E0D\u6539\u5176\u4ED6\u5BBF\u4E3B\u914D\u7F6E\uFF0C\u4E0D\u8C03\u7528\u4E1A\u52A1\u5DE5\u5177\u3002");
+  } else steps.push("\u6309\u53D1\u5E03\u8005\u8BF4\u660E\u5B89\u88C5\u5230\u8BE5\u7528\u6237\u7684\u5E94\u7528\u76EE\u5F55\u3002\u6838\u5BF9\u7248\u672C\u5E76\u62A5\u544A\u5B89\u88C5\u4F4D\u7F6E\uFF0C\u4E0D\u542F\u52A8\u5E94\u7528\u3002");
+  return { prompt: steps.join("\n\n"), repo, markdown, location };
+}
+__name(agentInstallGuide, "agentInstallGuide");
 
 // ../cloud/tool-market.mjs
 var url = "/admin/market";
@@ -14454,10 +14503,10 @@ async function renderMarket(devices, upgrade, request, feed = baseline, sync = f
   const view = { category, q, item, deviceId: selected?.id };
   const candidates = marketItems2.filter((row) => (!q || [row.name, row.repo, row.description, row.cli, categories[categoryOf(row)]].join(" ").toLowerCase().includes(q.toLowerCase())) && (category === "all" || category === "installed" || category === categoryOf(row)));
   const ids = item ? [item] : category === "installed" || ["unknown", "open-unknown"].includes(params.get("notice")) ? void 0 : candidates.map((row) => row.id);
-  let status, protocol2, warning = "";
+  let status, protocol2, deviceTarget, warning = "";
   if (selected) {
     try {
-      if (!ids || ids.length) ({ items: status, catalogProtocol: protocol2 } = await rpc(devices, selected.id, "market-status", void 0, request.signal, feed.revision, ids));
+      if (!ids || ids.length) ({ items: status, catalogProtocol: protocol2, target: deviceTarget } = await rpc(devices, selected.id, "market-status", void 0, request.signal, feed.revision, ids));
     } catch {
       warning = "\u65E0\u6CD5\u8BFB\u53D6\u8BBE\u5907\u72B6\u6001\u3002\u8BF7\u68C0\u67E5\u8FDE\u63A5\u53CA\u5BA2\u6237\u7AEF\u7248\u672C\u3002";
     }
@@ -14467,7 +14516,7 @@ async function renderMarket(devices, upgrade, request, feed = baseline, sync = f
   const agent = item && params.get("mode") === "agent";
   const picker = '<form class="market-select" action="' + url + '">' + hidden({ ...view, deviceId: void 0 }) + (item ? '<input type="hidden" id="market-mode" name="mode" value="agent"' + (agent ? "" : " disabled") + ">" : "") + '<label for="mk-device">\u76EE\u6807\u8BBE\u5907</label><select id="mk-device" name="deviceId"><option value="">\u9009\u62E9\u8BBE\u5907</option>' + available.map((d) => '<option value="' + escapeHtml(d.id) + '"' + (selected === d ? " selected" : "") + ">" + escapeHtml(d.displayName ?? d.id) + "</option>").join("") + "</select><noscript><button>\u67E5\u770B</button></noscript></form>";
   const href = /* @__PURE__ */ __name((change) => escapeHtml(target({ ...view, ...change })), "href");
-  const labels = { installed: "\u5DF2\u5B89\u88C5", available: "\u672A\u5B89\u88C5", unsupported: "\u8BBE\u5907\u4E0D\u652F\u6301", failed: "\u5B89\u88C5\u5931\u8D25", withdrawn: "\u7248\u672C\u5DF2\u64A4\u56DE", "installed-withdrawn": "\u5DF2\u5B89\u88C5\u7248\u672C\u5DF2\u64A4\u56DE", "upgrade-required": "\u9700\u5347\u7EA7\u5BA2\u6237\u7AEF" };
+  const labels = { installed: "\u7531\u8BFA\u8054\u5B89\u88C5", detected: "\u8BBE\u5907\u4E0A\u5DF2\u68C0\u6D4B\u5230", available: "\u672A\u7531\u8BFA\u8054\u5B89\u88C5", unsupported: "\u8BBE\u5907\u4E0D\u652F\u6301", failed: "\u5B89\u88C5\u5931\u8D25", withdrawn: "\u7248\u672C\u5DF2\u64A4\u56DE", "installed-withdrawn": "\u5DF2\u5B89\u88C5\u7248\u672C\u5DF2\u64A4\u56DE", "upgrade-required": "\u9700\u5347\u7EA7\u5BA2\u6237\u7AEF" };
   function controls(entry) {
     const current = status?.find((row) => row.id === entry.id);
     const withdrawn = feed.withdrawn.find((w) => w.id === entry.id && w.version === (current?.version ?? entry.version));
@@ -14475,7 +14524,7 @@ async function renderMarket(devices, upgrade, request, feed = baseline, sync = f
     const label3 = state2 === "installing" ? current.step : labels[state2] ?? (selected ? "\u72B6\u6001\u672A\u786E\u8BA4" : "\u672A\u9009\u8BBE\u5907");
     const open2 = state2 === "installed" && categoryOf(entry) === "app";
     let action = "";
-    if (open2 || state2 === "available" || state2 === "failed") {
+    if (open2 || state2 === "available" || state2 === "failed" || state2 === "detected") {
       const path = open2 ? "open" : "install", name = open2 ? "\u6253\u5F00\u5B98\u65B9\u5E94\u7528" : state2 === "failed" ? "\u91CD\u8BD5\u5B89\u88C5" : "\u4E00\u952E\u5B89\u88C5";
       action = '<form method="post" action="' + url + "/" + path + "?" + escapeHtml(new URLSearchParams(fields(view)).toString()) + '">' + hidden({ item: entry.id, deviceId: selected.id, ...!open2 && { revision: String(feed.revision) } }) + '<button class="button ' + (open2 ? "" : "primary") + '" aria-label="' + name + "\uFF1A" + escapeHtml(entry.name) + '">' + name + "</button></form>";
     } else if (state2 === "installed" && entry.cli) {
@@ -14484,6 +14533,7 @@ async function renderMarket(devices, upgrade, request, feed = baseline, sync = f
     else if (!selected && available.length) action = '<a class="button" href="#mk-device">\u9009\u62E9\u8BBE\u5907</a>';
     return {
       state: state2,
+      command: current?.command,
       label: '<span class="market-state" data-state="' + escapeHtml(state2 ?? "unknown") + '"' + (state2 === "installing" ? ' data-pending="' + escapeHtml(entry.id) + '"' : "") + ">" + escapeHtml(label3) + "</span>",
       action,
       failure: ["withdrawn", "installed-withdrawn"].includes(state2) ? '<p class="market-notice">' + escapeHtml(withdrawn?.reason ?? current.reason) + "</p>" : state2 === "failed" ? '<p class="market-notice">' + escapeHtml(current.step) + "\uFF1A" + escapeHtml(current.reason) + "</p>" : ""
@@ -14495,22 +14545,22 @@ async function renderMarket(devices, upgrade, request, feed = baseline, sync = f
   if (detail) {
     const entry = detail, c = controls(entry);
     let install = picker + c.label + c.failure + c.action;
-    if (["available", "failed"].includes(c.state)) {
-      const destination = new URL(target({ item: entry.id, deviceId: selected.id }), request.url);
-      const form = new URLSearchParams({ item: entry.id, deviceId: selected.id, revision: String(feed.revision) });
-      const prompt = "\u8BF7\u5728\u8BFA\u8054\u8BBE\u5907 " + selected.id + " \u4E0A\u5B89\u88C5\u300C" + entry.name + "\u300Dv" + entry.version + "\u3002\n" + destination.href + "\n\n\u7528\u5DF2\u6388\u6743\u7684\u7BA1\u7406\u53F0\u4F1A\u8BDD\u6838\u5BF9\u8BBE\u5907\u3001\u7248\u672C\u548C\u72B6\u6001\uFF1B\u9700\u8981\u767B\u5F55\u65F6\u4EA4\u7ED9\u6211\u3002\u4EC5\u5728\u9875\u9762\u5141\u8BB8\u5B89\u88C5\u4E14\u8868\u5355\u5339\u914D\u65F6\uFF0C\u540C\u6E90\u63D0\u4EA4\u4E00\u6B21\uFF1A\nPOST /admin/market/install\napplication/x-www-form-urlencoded\n" + form + "\n\u4E5F\u53EF\u4EE5\u7528\u8BE5\u9875\u9762\u7684\u5B89\u88C5\u6309\u94AE\uFF0C\u4E24\u79CD\u65B9\u5F0F\u53EA\u9009\u4E00\u79CD\u3002\u5B89\u88C5\u4E2D\u6216\u8BF7\u6C42\u7ED3\u679C\u4E0D\u660E\u65F6\uFF0C\u56DE\u539F\u9875\u6838\u5BF9\uFF0C\u4E0D\u91CD\u590D\u63D0\u4EA4\u3002\n" + (entry.cli ? "\u5B89\u88C5\u5B8C\u6210\u540E\u62A5\u544A\u6240\u9009\u8BBE\u5907\u4E0A\u7684\u547D\u4EE4\u8DEF\u5F84\uFF0C\u4E0D\u521D\u59CB\u5316\u9879\u76EE\u6216\u8C03\u7528\u6A21\u578B\u3002" : entry.kind === "MCP" ? "\u5B89\u88C5\u5B8C\u6210\u540E\u6253\u5F00\u300C\u672C\u673A MCP \u670D\u52A1\u300D\uFF0C\u62A5\u544A\u670D\u52A1\u548C\u5DE5\u5177\u540D\u79F0\u3002" : "\u786E\u8BA4\u300C\u5DF2\u5B89\u88C5\u300D\u5373\u53EF\uFF0C\u4E0D\u542F\u52A8\u684C\u9762\u5E94\u7528\u3002");
+    const guide = ["available", "failed", "detected"].includes(c.state) && await agentInstallGuide(entry, selected, new URL(request.url).origin, deviceTarget, c.command);
+    if (guide) {
       const toggle = '<fieldset class="install-methods"><legend>\u5B89\u88C5\u65B9\u5F0F</legend><label><input type="radio" name="install-mode" value="direct"' + (agent ? "" : " checked") + '><span>\u4E00\u952E\u5B89\u88C5</span></label><label><input type="radio" name="install-mode" value="agent"' + (agent ? " checked" : "") + "><span>Agent \u5B89\u88C5</span></label></fieldset>";
-      install = picker + c.label + c.failure + toggle + '<div class="direct-install">' + c.action + '</div><div class="agent-install"><label for="agent-prompt">\u53D1\u7ED9\u4F60\u7684 Agent</label><textarea id="agent-prompt" rows="6" readonly>' + escapeHtml(prompt) + '</textarea><button class="button primary" id="copy-agent-prompt" type="button">\u590D\u5236\u5B89\u88C5\u6307\u4EE4</button><span id="copy-agent-status" role="status"></span></div>';
+      const instruction = '<div class="market-sources"><a href="' + escapeHtml(guide.repo) + '" target="_blank" rel="noreferrer">GitHub \u4ED3\u5E93</a><a href="' + escapeHtml(guide.markdown) + '" target="_blank" rel="noreferrer">\u5B98\u65B9\u5B89\u88C5\u8BF4\u660E \u2197</a></div><div class="agent-path">' + (entry.cli ? "\u9884\u671F\u547D\u4EE4\u8DEF\u5F84" : "\u5B89\u88C5\u76EE\u5F55") + "<code>" + escapeHtml(guide.location) + '</code></div><label for="agent-prompt">\u53D1\u7ED9\u80FD\u8BBF\u95EE\u8FD9\u53F0\u8BBE\u5907\u7EC8\u7AEF\u7684 Agent</label><textarea id="agent-prompt" rows="6" readonly>' + escapeHtml(guide.prompt) + '</textarea><button class="button primary" id="copy-agent-prompt" type="button">\u590D\u5236\u5B89\u88C5\u6307\u4EE4</button><span id="copy-agent-status" role="status"></span>';
+      const existing = c.state === "detected" ? '<label>\u68C0\u6D4B\u5230\u7684\u547D\u4EE4\uFF08\u7248\u672C\u672A\u6838\u5B9E\uFF09<input readonly aria-label="\u547D\u4EE4\u8DEF\u5F84" value="' + escapeHtml(c.command) + '"></label>' : "";
+      install = picker + c.label + c.failure + existing + toggle + '<div class="direct-install">' + c.action + '</div><div class="agent-install">' + instruction + "</div>";
     }
     top = '<a class="market-back" href="' + href({ item: void 0 }) + '">\u2039 \u8FD4\u56DE\u5DE5\u5177\u5E02\u573A</a><header class="market-detail"><div class="market-info">' + icon(item) + "<div><h1>" + escapeHtml(entry.name) + '</h1><div class="market-meta">' + escapeHtml(entry.repo.split("/")[0]) + " \xB7 v" + escapeHtml(entry.version) + " \xB7 " + categories[categoryOf(entry)] + '</div></div></div><p class="market-summary">' + escapeHtml(entry.description) + "</p></header>";
     body = '<div class="market-columns"><section class="market-panel"><h2>\u529F\u80FD</h2><ul class="market-info-list">' + entry.features.map((s) => "<li>" + escapeHtml(s) + "</li>").join("") + '</ul><div class="market-sources"><a href="https://github.com/' + entry.repo + "/releases/tag/v" + escapeHtml(entry.version) + '" rel="noreferrer" target="_blank">\u53D1\u5E03\u8005\u53D1\u884C\u9875</a>' + (entry.registry ? '<a href="' + registryRecord(entry) + '" rel="noreferrer" target="_blank">MCP Registry</a>' : "") + '</div></section><section class="market-panel market-installbox"><h2>\u8BBE\u5907\u5B89\u88C5</h2>' + install + "</section></div>";
   } else {
-    const found = category === "installed" ? candidates.filter((row) => status?.some((s) => s.id === row.id && ["installed", "installed-withdrawn"].includes(s.state))) : candidates;
+    const found = category === "installed" ? candidates.filter((row) => status?.some((s) => s.id === row.id && ["installed", "installed-withdrawn", "detected"].includes(s.state))) : candidates;
     top = '<header class="market-hero"><span class="market-overline">NODRELAY MARKET</span><h1>\u5DE5\u5177\u5E02\u573A</h1><form class="market-search">' + hidden({ ...view, q: void 0 }) + '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><input aria-label="\u641C\u7D22\u5DE5\u5177" name="q" type="search" placeholder="\u641C\u7D22\u5DE5\u5177\u3001\u7528\u9014\u6216\u53D1\u5E03\u8005" value="' + escapeHtml(q ?? "") + '"><button>\u641C\u7D22</button></form><nav aria-label="\u5E02\u573A\u5206\u7C7B" class="market-filters">' + Object.entries(categories).map(([id2, label3]) => '<a href="' + href({ category: id2 }) + '"' + (category === id2 ? ' aria-current="page"' : "") + ">" + label3 + "</a>").join("") + "</nav></header>";
     const removed = category === "installed" ? (status ?? []).filter((row) => row.unlisted && (!q || row.unlisted.name.toLowerCase().includes(q.toLowerCase()))) : [];
     let cards = found.map((entry) => {
       const c = controls(entry);
-      const actions2 = ["available", "failed"].includes(c.state) ? '<div class="market-actions"><a href="' + href({ item: entry.id, mode: "agent" }) + '">Agent \u5B89\u88C5</a>' + c.action + "</div>" : c.action;
+      const actions2 = c.state === "detected" ? '<a class="button" href="' + href({ item: entry.id }) + '">\u67E5\u770B\u547D\u4EE4</a>' : ["available", "failed"].includes(c.state) ? '<div class="market-actions"><a href="' + href({ item: entry.id, mode: "agent" }) + '">Agent \u5B89\u88C5</a>' + c.action + "</div>" : c.action;
       return '<article class="market-card"><a class="market-cover" href="' + href({ item: entry.id }) + '"><div class="market-person">' + icon(entry.id) + "<div><h3>" + escapeHtml(entry.name) + '</h3><div class="market-meta">' + escapeHtml(entry.repo.split("/")[0]) + "</div></div></div><p>" + escapeHtml(entry.description) + '</p><div class="market-pills"><span class="market-pill">' + categories[categoryOf(entry)] + '</span><span class="market-pill">v' + escapeHtml(entry.version) + "</span></div></a>" + c.failure + '<footer class="market-foot">' + c.label + actions2 + "</footer></article>";
     }).join("");
     for (const row of removed) {
