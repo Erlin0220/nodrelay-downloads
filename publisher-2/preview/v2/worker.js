@@ -11124,8 +11124,9 @@ var consoleUpgradeScript = String.raw`
     upgrade.setAttribute('title', recovery ? '有未完成的升级，查看状态' : available ? '一键升级到 v' + feed.nextVersion : '检查管理台更新');
   }
   async function readUpgradeHeader() {
-    const status = upgrade.dataset;
-    if (!status.phase) return;
+    const status = upgrade.dataset.phase === 'loading'
+      ? await requestJson('/admin/upgrade/status').catch(() => null) : upgrade.dataset;
+    if (!status?.phase || upgradeStatusRequest) return;
     showUpgradeHeader(null, status);
     if (activePhases.has(status.phase) || (status.phase === 'idle' && !status.currentVersion)) return;
     const release = await requestJson('/admin/upgrade/check').catch(() => null);
@@ -12160,7 +12161,12 @@ var desktopStyles = `
   .device-context { color:var(--secondary); font-size:13px; margin-bottom:9px; }
   .device-tool-tabs { display:flex; gap:24px; margin-bottom:18px; border-bottom:1px solid var(--line); }
   .device-tool-tabs a { display:flex; align-items:center; gap:6px; padding:8px 2px; color:var(--secondary); text-decoration:none; border-bottom:2px solid transparent; }
-  .device-tool-tabs a[aria-current] { border-color:var(--active); color:var(--active); font-weight:650; }
+  .device-tool-tabs a[aria-selected="true"] { border-color:var(--active); color:var(--active); font-weight:650; }
+  .device-tool-tabs small:empty { display:none; }
+  .service-page .scan-note:empty { display:none; }
+  .scan-note.tools-loading { display:flex; align-items:center; gap:8px; padding:12px 0; color:var(--secondary); background:none; }
+  .tools-loading::before { content:''; width:14px; height:14px; border-radius:50%; border:2px solid var(--line); border-top-color:var(--active); animation:upgrade-spin .8s linear infinite; }
+  @media(prefers-reduced-motion:reduce){.tools-loading::before{animation:none}}
   .device-tool-tabs small { font:550 12px ui-monospace,monospace; border-radius:6px; padding:3px 6px; background:var(--selected); }
   .cli-search { display:flex; gap:8px; margin:18px 0; align-items:center; }
   .cli-search .search { flex:1; min-width:0; max-width:34em; }
@@ -14643,32 +14649,16 @@ var assets = {
   "/admin/local-cli.js": ["text/javascript", `
 const form = document.querySelector('.cli-search'), query = form.elements.q;
 const scope = document.querySelector('.cli-scope'), results = document.querySelector('#cli-results');
-const refresh = document.querySelector('#scan-again');
-let snapshot, request, latest = 0;
-async function show(url, push, fresh = false) {
-  const turn = ++latest;
-  const note = document.querySelector('#cli-feedback');
-  if (fresh) snapshot = undefined;
-  if (!snapshot) {
-    note.textContent = '\u6B63\u5728\u8BFB\u53D6 CLI\u2026';
-    try {
-      request ??= fetch(refresh.href, {headers:{Accept:'application/json'},redirect:'error',cache:'no-store'})
-        .then(r => { if (!r.ok) throw Error(); return r.json(); }).finally(() => { request = undefined; });
-      const data = await request;
-      if (turn !== latest) return;
-      snapshot = data;
-    } catch {
-      if (turn === latest) note.textContent = '\u672A\u80FD\u8BFB\u53D6 CLI\uFF0C\u8BF7\u5237\u65B0\u91CD\u8BD5\u3002';
-      return;
-    }
-  }
-  const {commands,complete,indexing,warnings} = snapshot;
-  const text = (url.searchParams.get('q') ?? '').trim();
+const refresh = document.querySelector('#cli-refresh'), note = document.querySelector('#cli-feedback');
+const tabs = [...document.querySelectorAll('.device-tool-tabs [role=tab]')];
+let snapshot, reading = false, filter = query.value;
+function renderCli() {
+  if (!snapshot) return;
+  const {commands,complete} = snapshot;
+  const text = filter;
   const needle = text.toLowerCase();
   const matches = commands.filter(c => c.name.toLowerCase().includes(needle) || c.path.toLowerCase().includes(needle));
-  const clean = new URL(url); clean.searchParams.delete('q');
-  query.value = text;
-  const clear = form.querySelector('a'); clear.hidden = !text; clear.href = clean;
+  form.querySelector('a').hidden = !text;
   scope.textContent = text ? '\u641C\u7D22\u7ED3\u679C' : '\u5DF2\u8BC6\u522B\u7684 CLI';
   const dl = document.createElement('dl'); dl.className = 'cli-list';
   for (const c of matches) {
@@ -14681,22 +14671,62 @@ async function show(url, push, fresh = false) {
     const empty = document.createElement('p'); empty.className='empty';
     empty.textContent = text ? '\u6CA1\u6709\u5339\u914D\u7684 CLI' : '\u672A\u53D1\u73B0\u672C\u673A CLI'; results.append(empty);
   }
-  note.textContent = [indexing ? '\u6B63\u5728\u8BC6\u522B CLI\u2026' : '',...warnings].filter(Boolean).join(' ');
-  document.querySelector('#cli-total').textContent = complete ? matches.length : '\u2014';
-  refresh.href = url;
-  if (push && url.href !== location.href) history.pushState(null,'',url);
-  if (!complete || indexing) snapshot = undefined;
+  document.querySelector('#cli-total').textContent = complete ? commands.length : '\u2014';
 }
-form.addEventListener('submit', e => {
-  e.preventDefault(); const url = new URL(location.href);
-  if (query.value.trim()) url.searchParams.set('q',query.value.trim()); else url.searchParams.delete('q');
-  void show(url,true);
-});
-for (const link of [form.querySelector('a'),refresh]) link.addEventListener('click', e => {
-  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-  e.preventDefault(); void show(new URL(link.href),true,link === refresh);
-});
-window.addEventListener('popstate', () => show(new URL(location.href),false));
+async function loadCli() {
+  if (reading) return;
+  reading = true; note.classList.add('tools-loading'); note.textContent = '\u6B63\u5728\u8BFB\u53D6 CLI\u2026';
+  try {
+    const response = await fetch(refresh.href, {headers:{Accept:'application/json'},redirect:'error',cache:'no-store'});
+    if (!response.ok) throw Error();
+    const data = await response.json();
+    if (!data.complete && !data.commands.length && snapshot?.commands.length) {
+      note.textContent = [...data.warnings, '\u663E\u793A\u4E0A\u6B21\u7ED3\u679C\u3002'].join(' ');
+    } else {
+      snapshot = data; renderCli();
+      note.textContent = [data.indexing ? '\u6B63\u5728\u8BC6\u522B CLI\u2026' : '',...data.warnings].filter(Boolean).join(' ');
+    }
+  } catch { note.textContent = snapshot ? '\u5237\u65B0\u5931\u8D25\uFF0C\u663E\u793A\u4E0A\u6B21\u7ED3\u679C\u3002' : '\u672A\u80FD\u8BFB\u53D6 CLI\uFF0C\u8BF7\u5237\u65B0\u91CD\u8BD5\u3002'; }
+  finally { reading = false; note.classList.remove('tools-loading'); }
+}
+function selectTab(url, push) {
+  const cli = url.searchParams.get('view') === 'cli';
+  if (cli) {
+    const q = url.searchParams.get('q') ?? '';
+    if (filter !== q) { filter = query.value = q; renderCli(); }
+  }
+  tabs.forEach(tab => {
+    const selected = (tab.id === 'cli-tab') === cli;
+    tab.setAttribute('aria-selected',String(selected)); tab.tabIndex = selected ? 0 : -1;
+    document.getElementById(tab.getAttribute('aria-controls')).hidden = !selected;
+  });
+  refresh.hidden = !cli; document.querySelector('#scan-again').hidden = cli;
+  if (push && url.href !== location.href) history.pushState(null,'',url);
+}
+for (const tab of tabs) {
+  tab.onclick = e => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault(); const url = new URL(tab.href);
+    if (tab.id === 'cli-tab' && filter) url.searchParams.set('q',filter);
+    selectTab(url,true);
+  };
+  tab.onkeydown = e => {
+    if (['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) {
+      e.preventDefault();
+      (e.key === 'Home' ? tabs[0] : e.key === 'End' ? tabs[1] : tabs.find(t => t !== tab)).focus();
+    } else if (e.key === ' ') { e.preventDefault(); tab.click(); }
+  };
+}
+function search(text) {
+  const url = new URL(refresh.href);
+  if (text) url.searchParams.set('q',text);
+  selectTab(url,true);
+}
+form.onsubmit = e => { e.preventDefault(); search(query.value.trim()); };
+form.querySelector('a').onclick = e => { e.preventDefault(); query.value = ''; search(''); };
+refresh.onclick = e => { e.preventDefault(); void loadCli(); };
+window.addEventListener('popstate', () => selectTab(new URL(location.href),false));
+void loadCli();
 `],
   "/admin/local-mcp.js": ["text/javascript", `
 const list = document.querySelector('#local-list');
@@ -14788,6 +14818,7 @@ async function refresh(manual = false) {
   pending = false;
   const controller = reading = new AbortController();
   list.setAttribute('aria-busy', 'true');
+  document.querySelector('#scan-message').classList.add('tools-loading');
   document.querySelector('#scan-message').textContent = '\u6B63\u5728\u68C0\u6D4B\u2026';
   try {
     const response = await fetch(document.querySelector('#scan-again').href, { headers:{Accept:'application/json'}, cache: 'no-store', redirect: 'error', signal: controller.signal });
@@ -14798,7 +14829,7 @@ async function refresh(manual = false) {
     pending = next.hasAttribute('data-pending');
     if (!submitting && next.innerHTML !== list.innerHTML) {
       const focus = document.activeElement;
-      const focused = focus.closest('form')?.elements.id.value;
+      const focused = list.contains(focus) && focus.closest('form')?.elements.id.value;
       const catalogFocus = focus.dataset.catalog;
       const titleFocus = focus.closest('.service-title')?.closest('article').querySelector('[data-catalog]').dataset.catalog;
       list.replaceChildren(...next.childNodes);
@@ -14807,6 +14838,10 @@ async function refresh(manual = false) {
       if (titleFocus) list.querySelector('[data-catalog="' + CSS.escape(titleFocus) + '"]')?.closest('article').querySelector('.service-title').focus();
     }
     document.querySelector('#service-total').textContent = next.dataset.total;
+    if (location.hash.startsWith('#market-') && !list.closest('section').hidden && !manual && list.dataset.initial !== 'done') {
+      document.getElementById(location.hash.slice(1))?.scrollIntoView();
+    }
+    list.dataset.initial = 'done';
     if (sheet.open) {
       if (list.querySelector('[data-catalog="' + CSS.escape(expanded.id) + '"]:not(:disabled)')) void readCatalog(expanded, manual);
       else sheet.close();
@@ -14815,7 +14850,7 @@ async function refresh(manual = false) {
   } catch {
     if (!controller.signal.aborted) document.querySelector('#scan-message').textContent = '\u68C0\u6D4B\u5931\u8D25\uFF0C\u8BF7\u91CD\u8BD5\u3002';
   } finally {
-    if (reading === controller) { reading = null; list.removeAttribute('aria-busy'); schedule(); }
+    if (reading === controller) { reading = null; list.removeAttribute('aria-busy'); document.querySelector('#scan-message').classList.remove('tools-loading'); schedule(); }
   }
 }
 document.querySelector('#scan-again').addEventListener('click', e => { e.preventDefault(); refresh(true); });
@@ -14861,7 +14896,7 @@ list.addEventListener('submit', async event => {
 document.addEventListener('submit', event => { if (!event.defaultPrevented) { submitting = true; reading?.abort(); clearTimeout(timer); } });
 document.addEventListener('visibilitychange', () => { if (document.hidden) { clearTimeout(timer); reading?.abort(); } else refresh(); });
 window.addEventListener('pageshow', event => { submitting = false; if (event.persisted) refresh(); });
-schedule();
+void refresh();
 `],
   "/admin/console.css": ["text/css", consoleStyles],
   "/admin/console-logo.png": ["image/png", consoleLogo],
@@ -15021,27 +15056,20 @@ async function manage(request, env, url2, { limitedBody: limitedBody2, html: htm
         const cliUrl = base + "&amp;view=cli";
         const nonce = crypto.randomUUID();
         const name = escapeHtml(device.displayName ?? id2);
-        const upgradeState = !wantsJson && upgradeProvider(env).status().catch(() => ({ phase: "unknown" }));
-        const render = /* @__PURE__ */ __name(async (body, total) => {
-          const upgrade = await upgradeState;
+        if (!wantsJson) {
           return html2(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${name} \xB7 \u672C\u673A\u5DE5\u5177 \xB7 Nodrelay</title><style nonce="${nonce}">${consoleStyles}</style><script nonce="${nonce}">${restoreConsoleTheme}<\/script></head>
-          <body>${consoleShell("devices", name, ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`)}<main class="service-page"><div class="device-context">${name}</div><div class="page-intro"><h1>\u672C\u673A\u5DE5\u5177</h1><a class="button" id="scan-again" href="${cli ? cliUrl + (query ? "&amp;q=" + encodeURIComponent(query) : "") : base}">${cli ? "\u5237\u65B0" : "\u91CD\u65B0\u68C0\u6D4B"}</a></div>
-          <nav class="device-tool-tabs" aria-label="\u672C\u673A\u5DE5\u5177\u5206\u7C7B"><a href="${base}"${cli ? "" : ' aria-current="page"'}>MCP \u670D\u52A1${cli ? "" : ' <small id="service-total">' + total + "</small>"}</a><a href="${cliUrl}"${cli ? ' aria-current="page"' : ""}>CLI${cli ? ' <small id="cli-total">' + total + "</small>" : ""}</a></nav>
-          ${body}${upgradeDialog}<script nonce="${nonce}">${consoleUpgradeScript}<\/script><script src="/admin/local-${cli ? "cli" : "mcp"}.js" defer><\/script></body></html>`, 200, nonce);
-        }, "render");
+          <body>${consoleShell("devices", name, ' data-phase="loading"')}<main class="service-page"><div class="device-context">${name}</div><div class="page-intro"><h1>\u672C\u673A\u5DE5\u5177</h1><a class="button" id="scan-again" href="${base}"${cli ? " hidden" : ""}>\u91CD\u65B0\u68C0\u6D4B</a><a class="button" id="cli-refresh" href="${cliUrl}"${cli ? "" : " hidden"}>\u5237\u65B0</a></div>
+          <nav class="device-tool-tabs" role="tablist" aria-label="\u672C\u673A\u5DE5\u5177\u5206\u7C7B"><a id="mcp-tab" role="tab" href="${base}" aria-controls="mcp-panel" aria-selected="${!cli}" tabindex="${cli ? -1 : 0}">MCP \u670D\u52A1 <small id="service-total"></small></a><a id="cli-tab" role="tab" href="${cliUrl}" aria-controls="cli-panel" aria-selected="${cli}" tabindex="${cli ? 0 : -1}">CLI <small id="cli-total"></small></a></nav>
+          <section role="tabpanel" id="mcp-panel" aria-labelledby="mcp-tab"${cli ? " hidden" : ""}><p id="scan-message" class="scan-note tools-loading" role="status">\u6B63\u5728\u8BFB\u53D6 MCP \u670D\u52A1\u2026</p><div id="local-list" data-device="${escapeHtml(id2)}" aria-busy="true"></div></section>
+          <section role="tabpanel" id="cli-panel" aria-labelledby="cli-tab"${cli ? "" : " hidden"}><form class="cli-search"><input type="hidden" name="deviceId" value="${escapeHtml(id2)}"><input type="hidden" name="view" value="cli"><label class="search"><input type="search" name="q" value="${escapeHtml(query)}" placeholder="\u641C\u7D22 CLI \u540D\u79F0\u6216\u8DEF\u5F84" aria-label="\u641C\u7D22 CLI \u540D\u79F0\u6216\u8DEF\u5F84"></label><button class="button">\u641C\u7D22</button><a class="button quiet" href="${cliUrl}" hidden>\u6E05\u9664</a></form>
+          <strong class="cli-scope">\u5DF2\u8BC6\u522B\u7684 CLI</strong><p id="cli-feedback" class="scan-note tools-loading" role="status">\u6B63\u5728\u8BFB\u53D6 CLI\u2026</p><div id="cli-results"></div></section></main></div>
+          <dialog id="service-sheet" aria-labelledby="sheet-name"><header><strong>\u670D\u52A1\u8BE6\u60C5</strong><button class="sheet-close" aria-label="\u5173\u95ED\u8BE6\u60C5" autofocus><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></svg></button></header><div class="sheet-scroll"><div class="sheet-identity"><span class="sheet-tile"></span><div><h2 id="sheet-name"></h2><span class="sheet-source"></span></div></div><section class="sheet-catalog"><h3>\u5DE5\u5177\u76EE\u5F55</h3><div class="tool-detail" aria-live="polite"></div></section></div></dialog>
+          ${upgradeDialog}<script nonce="${nonce}">${consoleUpgradeScript}<\/script><script type="module" src="/admin/local-mcp.js"><\/script><script type="module" src="/admin/local-cli.js"><\/script></body></html>`, 200, nonce);
+        }
         if (cli) {
           const { commands, complete: complete2, indexing, warnings: warnings2 } = await local.cliList(id2, request.signal);
           commands.sort((a, b) => a.name.localeCompare(b.name));
-          if (wantsJson) return json2({ commands, complete: complete2, indexing, warnings: warnings2 });
-          const needle = query.toLowerCase();
-          const matches6 = commands.filter((c) => c.name.toLowerCase().includes(needle) || c.path.toLowerCase().includes(needle));
-          return await render(`<section aria-label="\u547D\u4EE4\u884C\u5DE5\u5177"><form class="cli-search" method="get">
-            <input type="hidden" name="deviceId" value="${escapeHtml(id2)}"><input type="hidden" name="view" value="cli">
-            <label class="search"><input type="search" name="q" value="${escapeHtml(query)}" placeholder="\u641C\u7D22 CLI \u540D\u79F0\u6216\u8DEF\u5F84" aria-label="\u641C\u7D22 CLI \u540D\u79F0\u6216\u8DEF\u5F84"></label>
-            <button class="button">\u641C\u7D22</button><a class="button quiet" href="${cliUrl}"${query ? "" : " hidden"}>\u6E05\u9664</a></form>
-            <strong class="cli-scope">${query ? "\u641C\u7D22\u7ED3\u679C" : "\u5DF2\u8BC6\u522B\u7684 CLI"}</strong>
-            <p class="scan-note" role="status" id="cli-feedback">${[indexing ? "\u6B63\u5728\u8BC6\u522B CLI\u2026" : "", ...warnings2].filter(Boolean).map(escapeHtml).join(" ")}</p><div id="cli-results">
-            ${matches6.length ? '<dl class="cli-list">' + matches6.map((c) => "<div><dt>" + escapeHtml(c.name) + "</dt><dd>" + escapeHtml(c.path) + "</dd></div>").join("") + "</dl>" : complete2 ? '<p class="empty">' + (query ? "\u6CA1\u6709\u5339\u914D\u7684 CLI" : "\u672A\u53D1\u73B0\u672C\u673A CLI") + "</p>" : ""}</div></section></main></div>`, complete2 ? matches6.length : "\u2014");
+          return json2({ commands, complete: complete2, indexing, warnings: warnings2 });
         }
         const { services, warnings, complete, pending } = await local.inventory(id2, request.signal);
         const rows = services.sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id)).map((s) => {
@@ -15054,9 +15082,7 @@ async function manage(request, env, url2, { limitedBody: limitedBody2, html: htm
         }).join("");
         const list = `<div id="local-list" data-device="${escapeHtml(id2)}" data-total="${complete ? services.length : "\u2014"}"${pending ? " data-pending" : ""}>${warnings.map((w) => '<p class="scan-note" role="status">' + escapeHtml(w) + "</p>").join("")}
           <div class="service-grid">${rows || (complete ? '<p class="empty">\u672A\u53D1\u73B0\u672C\u673A MCP \u670D\u52A1</p>' : "")}</div></div>`;
-        if (wantsJson) return json2({ list });
-        return await render(`<section aria-label="MCP \u670D\u52A1"><p id="scan-message" class="scan-note" role="status"></p>${list}</section>
-          </main></div><dialog id="service-sheet" aria-labelledby="sheet-name"><header><strong>\u670D\u52A1\u8BE6\u60C5</strong><button class="sheet-close" aria-label="\u5173\u95ED\u8BE6\u60C5" autofocus><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></svg></button></header><div class="sheet-scroll"><div class="sheet-identity"><span class="sheet-tile"></span><div><h2 id="sheet-name"></h2><span class="sheet-source"></span></div></div><section class="sheet-catalog"><h3>\u5DE5\u5177\u76EE\u5F55</h3><div class="tool-detail" aria-live="polite"></div></section></div></dialog>`, complete ? services.length : "\u2014");
+        return json2({ list });
       }
       if (url2.pathname === "/admin/client-callbacks") return json2(await devices.clientCallbacks());
       if (url2.pathname === "/admin/upgrade/check") return json2(await upgradeProvider(env).check());
