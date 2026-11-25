@@ -1,0 +1,76 @@
+name: Verify v0.1.5 native downloads
+on:
+  push:
+    branches: ['codex/verify-v0.1.5']
+permissions: {}
+jobs:
+  smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-2025
+            asset: devspace-fleet-0.1.5-windows-x64.zip
+            digest: b61c10fa5a69cc3933b0f5263dda87b7be61432128a52c296db10ab228bb8a67
+          - os: ubuntu-22.04
+            asset: devspace-fleet-0.1.5-linux-x64.tgz
+            digest: 2d95b6c2221b9fb0442d0787f70bf1a67dbe89684fce7cac35e33ff7429e252d
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check public archive and native runtime
+        timeout-minutes: 5
+        shell: pwsh
+        env:
+          ASSET: ${{ matrix.asset }}
+          DIGEST: ${{ matrix.digest }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $true
+          $url = "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5/$env:ASSET"
+          curl --fail --silent --show-error --location --output $env:ASSET $url
+          if ((Get-FileHash -Algorithm SHA256 $env:ASSET).Hash -ne $env:DIGEST) { throw 'Archive checksum mismatch' }
+          mkdir payload
+          tar -xf $env:ASSET -C payload
+          $suffix = if ($IsWindows) { '.exe' } else { '' }
+          $node = (Resolve-Path "payload/bin/node$suffix").Path
+          & "payload/bin/cloudflared$suffix" --version
+          & $node --check payload/fleet/src/device-runner.mjs
+          cd payload/personal
+          @'
+          const assert = require('node:assert/strict');
+          const db = new (require('better-sqlite3'))(':memory:');
+          assert.equal(db.prepare('select 42 as n').get().n,42);
+          db.close();
+          const win = process.platform === 'win32';
+          const pty = require('node-pty').spawn(win ? 'cmd.exe' : '/bin/echo',win ? ['/d','/c','echo NODRELAY_PTY_OK'] : ['NODRELAY_PTY_OK']);
+          let output = '';
+          pty.onData(data => output += data);
+          pty.onExit(({exitCode}) => { if(win) pty.kill(); assert.equal(exitCode,0); assert.match(output,/NODRELAY_PTY_OK/); console.log('Native terminal and SQLite OK'); });
+          '@ | & $node -
+          if ($IsLinux) { & ./node_modules/@anthropic-ai/claude-agent-sdk-linux-x64/claude --version }
+      - name: Exercise verified ZIP bootstrap on Windows PowerShell 5.1
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $installer = 'install-devspace-fleet-0.1.5-windows-x64.ps1'
+          curl --fail --silent --show-error --location --output $installer "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5/$installer"
+          if ((Get-FileHash $installer).Hash -ne '08647fbcca4bac3a7fa50392eb345fbfd044e5603db117f009761bea75db3111') { throw 'Installer digest mismatch' }
+          $env:TEST_INSTALLER = (Resolve-Path $installer).Path
+          $env:USERPROFILE = (New-Item -Type Directory -Path (Join-Path $env:RUNNER_TEMP 'empty test profile')).FullName
+          $code = @'
+          [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
+          $env:PSModulePath = [IO.Path]::Combine($PSHOME, 'Modules')
+          function Read-Host($Prompt) { if ($Prompt -like 'Management*') { return 'https://qa.invalid' }; return 'qa-device' }
+          & $env:TEST_INSTALLER -Repair
+          '@
+          $code | Set-Content -Encoding utf8BOM qa-repair.ps1
+          @'
+          const {spawnSync}=require('node:child_process');
+          const result=spawnSync('powershell.exe',['-NoProfile','-NonInteractive','-OutputFormat','Text','-File','qa-repair.ps1'],{encoding:'utf8'});
+          const output=result.stdout+'\n'+result.stderr;console.log(output);
+          if(result.status===0 || !output.includes('Same-version repair requires') || !output.includes('解压完成')) process.exit(1);
+          '@ | & ./payload/bin/node.exe -
+          if ($LASTEXITCODE -ne 0) { throw 'The signed installer did not reach repair preflight' }
+          if (Get-ChildItem -Force $env:USERPROFILE -Filter '.nodrelay-install-*') { throw 'Leaked extraction directory' }
+          Write-Host 'Verified installer extracted the signed package and stopped before enrollment in an empty profile.'
