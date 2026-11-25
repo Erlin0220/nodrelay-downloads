@@ -1,0 +1,35 @@
+{
+  "schema": 2,
+  "product": "nodrelay-management",
+  "channel": "stable",
+  "version": "0.1.5",
+  "minimumVersion": "0.1.5",
+  "issuedAt": "2026-11-25T07:21:54.521Z",
+  "expiresAt": "2026-12-25T07:21:54.521Z",
+  "workerBundle": "worker.js",
+  "workerSha256": "328400c9f1262d90f9dd974b3a7a9d6a91365827e7d5fa7d72c69a276fa53ac3",
+  "enrollment": {
+    "protocol": "intent-v1",
+    "releases": {
+      "windows-x64": {
+        "url": "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5/devspace-fleet-0.1.5-windows-x64.zip",
+        "sha256": "b61c10fa5a69cc3933b0f5263dda87b7be61432128a52c296db10ab228bb8a67",
+        "version": "0.1.5",
+        "browser": false
+      },
+      "macos-arm64": {
+        "url": "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5/devspace-fleet-0.1.5-macos-arm64.tgz",
+        "sha256": "f808dab1bf16fb8f68f2583baaa5aafd976af6db414d30dd50fd36cb7f6f6fa8",
+        "version": "0.1.5",
+        "browser": false
+      },
+      "linux-x64": {
+        "url": "https://github.com/Erlin0220/nodrelay-downloads/releases/download/v0.1.5/devspace-fleet-0.1.5-linux-x64.tgz",
+        "sha256": "2d95b6c2221b9fb0442d0787f70bf1a67dbe89684fce7cac35e33ff7429e252d",
+        "version": "0.1.5",
+        "browser": false
+      }
+    },
+    "storage": "nodrelay-d1-pins-v1"
+  }
+}
