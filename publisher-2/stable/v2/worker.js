@@ -31,9 +31,9 @@ var __toESM = (mod, isNodeMode, target2) => (target2 = mod != null ? __create(__
 ));
 var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __freeze(raw || cooked.slice()) }));
 
-// ../node_modules/ajv/dist/compile/codegen/code.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/codegen/code.js
 var require_code = __commonJS({
-  "../node_modules/ajv/dist/compile/codegen/code.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/codegen/code.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.regexpCode = exports.getEsmExportName = exports.getProperty = exports.safeStringify = exports.stringify = exports.strConcat = exports.addCodeArg = exports.str = exports._ = exports.nil = exports._Code = exports.Name = exports.IDENTIFIER = exports._CodeOrName = void 0;
@@ -206,9 +206,9 @@ var require_code = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/codegen/scope.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/codegen/scope.js
 var require_scope = __commonJS({
-  "../node_modules/ajv/dist/compile/codegen/scope.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/codegen/scope.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ValueScope = exports.ValueScopeName = exports.Scope = exports.varKinds = exports.UsedValueState = void 0;
@@ -363,9 +363,9 @@ var require_scope = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/codegen/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/codegen/index.js
 var require_codegen = __commonJS({
-  "../node_modules/ajv/dist/compile/codegen/index.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/codegen/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.or = exports.and = exports.not = exports.CodeGen = exports.operators = exports.varKinds = exports.ValueScopeName = exports.ValueScope = exports.Scope = exports.Name = exports.regexpCode = exports.stringify = exports.getProperty = exports.nil = exports.strConcat = exports.str = exports._ = void 0;
@@ -1163,9 +1163,9 @@ var require_codegen = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/util.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/util.js
 var require_util = __commonJS({
-  "../node_modules/ajv/dist/compile/util.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/util.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.checkStrictMode = exports.getErrorPath = exports.Type = exports.useFunc = exports.setEvaluated = exports.evaluatedPropsToName = exports.mergeEvaluated = exports.eachItem = exports.unescapeJsonPointer = exports.escapeJsonPointer = exports.escapeFragment = exports.unescapeFragment = exports.schemaRefOrVal = exports.schemaHasRulesButRef = exports.schemaHasRules = exports.checkUnknownRules = exports.alwaysValidSchema = exports.toHash = void 0;
@@ -1347,9 +1347,9 @@ var require_util = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/names.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/names.js
 var require_names = __commonJS({
-  "../node_modules/ajv/dist/compile/names.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/names.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -1386,9 +1386,9 @@ var require_names = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/errors.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/errors.js
 var require_errors = __commonJS({
-  "../node_modules/ajv/dist/compile/errors.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/errors.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.extendErrors = exports.resetErrorsCount = exports.reportExtraError = exports.reportError = exports.keyword$DataError = exports.keywordError = void 0;
@@ -1519,9 +1519,9 @@ var require_errors = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/validate/boolSchema.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/boolSchema.js
 var require_boolSchema = __commonJS({
-  "../node_modules/ajv/dist/compile/validate/boolSchema.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/boolSchema.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.boolOrEmptySchema = exports.topBoolOrEmptySchema = void 0;
@@ -1573,9 +1573,9 @@ var require_boolSchema = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/rules.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/rules.js
 var require_rules = __commonJS({
-  "../node_modules/ajv/dist/compile/rules.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/rules.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getRules = exports.isJSONType = void 0;
@@ -1606,9 +1606,9 @@ var require_rules = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/validate/applicability.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/applicability.js
 var require_applicability = __commonJS({
-  "../node_modules/ajv/dist/compile/validate/applicability.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/applicability.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.shouldUseRule = exports.shouldUseGroup = exports.schemaHasRulesForType = void 0;
@@ -1632,9 +1632,9 @@ var require_applicability = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/validate/dataType.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/dataType.js
 var require_dataType = __commonJS({
-  "../node_modules/ajv/dist/compile/validate/dataType.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/dataType.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.reportTypeError = exports.checkDataTypes = exports.checkDataType = exports.coerceAndCheckDataType = exports.getJSONTypes = exports.getSchemaTypes = exports.DataType = void 0;
@@ -1828,9 +1828,9 @@ var require_dataType = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/validate/defaults.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/defaults.js
 var require_defaults = __commonJS({
-  "../node_modules/ajv/dist/compile/validate/defaults.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/defaults.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.assignDefaults = void 0;
@@ -1867,9 +1867,9 @@ var require_defaults = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/code.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/code.js
 var require_code2 = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/code.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/code.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.validateUnion = exports.validateArray = exports.usePattern = exports.callValidateCode = exports.schemaProperties = exports.allSchemaProperties = exports.noPropertyInData = exports.propertyInData = exports.isOwnProperty = exports.hasPropFunc = exports.reportMissingProp = exports.checkMissingProp = exports.checkReportMissingProp = void 0;
@@ -2014,9 +2014,9 @@ var require_code2 = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/validate/keyword.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/keyword.js
 var require_keyword = __commonJS({
-  "../node_modules/ajv/dist/compile/validate/keyword.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/keyword.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.validateKeywordUsage = exports.validSchemaType = exports.funcKeywordCode = exports.macroKeywordCode = void 0;
@@ -2145,9 +2145,9 @@ var require_keyword = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/validate/subschema.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/subschema.js
 var require_subschema = __commonJS({
-  "../node_modules/ajv/dist/compile/validate/subschema.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/subschema.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.extendSubschemaMode = exports.extendSubschemaData = exports.getSubschema = void 0;
@@ -2232,9 +2232,9 @@ var require_subschema = __commonJS({
   }
 });
 
-// ../node_modules/fast-deep-equal/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/fast-deep-equal/index.js
 var require_fast_deep_equal = __commonJS({
-  "../node_modules/fast-deep-equal/index.js"(exports, module) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/fast-deep-equal/index.js"(exports, module) {
     "use strict";
     module.exports = /* @__PURE__ */ __name(function equal(a, b) {
       if (a === b) return true;
@@ -2267,9 +2267,9 @@ var require_fast_deep_equal = __commonJS({
   }
 });
 
-// ../node_modules/json-schema-traverse/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/json-schema-traverse/index.js
 var require_json_schema_traverse = __commonJS({
-  "../node_modules/json-schema-traverse/index.js"(exports, module) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/json-schema-traverse/index.js"(exports, module) {
     "use strict";
     var traverse = module.exports = function(schema4, opts, cb) {
       if (typeof opts == "function") {
@@ -2357,9 +2357,9 @@ var require_json_schema_traverse = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/resolve.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/resolve.js
 var require_resolve = __commonJS({
-  "../node_modules/ajv/dist/compile/resolve.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/resolve.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getSchemaRefs = exports.resolveUrl = exports.normalizeId = exports._getFullPath = exports.getFullPath = exports.inlineRef = void 0;
@@ -2525,9 +2525,9 @@ var require_resolve = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/validate/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/index.js
 var require_validate = __commonJS({
-  "../node_modules/ajv/dist/compile/validate/index.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/validate/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getData = exports.KeywordCxt = exports.validateFunctionCode = void 0;
@@ -3072,9 +3072,9 @@ var require_validate = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/runtime/validation_error.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/runtime/validation_error.js
 var require_validation_error = __commonJS({
-  "../node_modules/ajv/dist/runtime/validation_error.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/runtime/validation_error.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ValidationError = class extends Error {
@@ -3091,9 +3091,9 @@ var require_validation_error = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/ref_error.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/ref_error.js
 var require_ref_error = __commonJS({
-  "../node_modules/ajv/dist/compile/ref_error.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/ref_error.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var resolve_1 = require_resolve();
@@ -3111,9 +3111,9 @@ var require_ref_error = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/compile/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/index.js
 var require_compile = __commonJS({
-  "../node_modules/ajv/dist/compile/index.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/compile/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.resolveSchema = exports.getCompilingSchema = exports.resolveRef = exports.compileSchema = exports.SchemaEnv = void 0;
@@ -3346,9 +3346,9 @@ var require_compile = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/refs/data.json
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/refs/data.json
 var require_data = __commonJS({
-  "../node_modules/ajv/dist/refs/data.json"(exports, module) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/refs/data.json"(exports, module) {
     module.exports = {
       $id: "https://raw.githubusercontent.com/ajv-validator/ajv/master/lib/refs/data.json#",
       description: "Meta-schema for $data reference (JSON AnySchema extension proposal)",
@@ -3365,9 +3365,9 @@ var require_data = __commonJS({
   }
 });
 
-// ../node_modules/fast-uri/lib/utils.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/fast-uri/lib/utils.js
 var require_utils = __commonJS({
-  "../node_modules/fast-uri/lib/utils.js"(exports, module) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/fast-uri/lib/utils.js"(exports, module) {
     "use strict";
     var isUUID = RegExp.prototype.test.bind(/^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/iu);
     var isIPv4 = RegExp.prototype.test.bind(/^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)$/u);
@@ -3920,9 +3920,9 @@ var require_utils = __commonJS({
   }
 });
 
-// ../node_modules/fast-uri/lib/schemes.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/fast-uri/lib/schemes.js
 var require_schemes = __commonJS({
-  "../node_modules/fast-uri/lib/schemes.js"(exports, module) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/fast-uri/lib/schemes.js"(exports, module) {
     "use strict";
     var { isUUID } = require_utils();
     var URN_REG = /^([\da-z][\d\-a-z]{0,31}):((?:[\w!$'()*+,\-./:;=@]|%[\da-f]{2})+)$/iu;
@@ -4142,9 +4142,9 @@ var require_schemes = __commonJS({
   }
 });
 
-// ../node_modules/fast-uri/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/fast-uri/index.js
 var require_fast_uri = __commonJS({
-  "../node_modules/fast-uri/index.js"(exports, module) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/fast-uri/index.js"(exports, module) {
     "use strict";
     var { normalizeIPv6, removeDotSegments, removeDotSegmentsRelative, recomposeAuthority, normalizePercentEncoding, normalizePathEncoding, serializePathEncoding, normalizeQueryFragmentEncoding, encodeQuery, encodeFragment, reescapeHostDelimiters, isIPv4, nonSimpleDomain } = require_utils();
     var { SCHEMES, getSchemeHandler } = require_schemes();
@@ -4590,9 +4590,9 @@ var require_fast_uri = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/runtime/uri.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/runtime/uri.js
 var require_uri = __commonJS({
-  "../node_modules/ajv/dist/runtime/uri.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/runtime/uri.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var uri = require_fast_uri();
@@ -4601,9 +4601,9 @@ var require_uri = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/core.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/core.js
 var require_core = __commonJS({
-  "../node_modules/ajv/dist/core.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/core.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CodeGen = exports.Name = exports.nil = exports.stringify = exports.str = exports._ = exports.KeywordCxt = void 0;
@@ -5234,9 +5234,9 @@ var require_core = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/core/id.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/core/id.js
 var require_id = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/core/id.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/core/id.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var def = {
@@ -5249,9 +5249,9 @@ var require_id = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/core/ref.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/core/ref.js
 var require_ref = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/core/ref.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/core/ref.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.callRef = exports.getValidate = void 0;
@@ -5380,9 +5380,9 @@ var require_ref = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/core/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/core/index.js
 var require_core2 = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/core/index.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/core/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var id_1 = require_id();
@@ -5401,9 +5401,9 @@ var require_core2 = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/validation/limitNumber.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/limitNumber.js
 var require_limitNumber = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/validation/limitNumber.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/limitNumber.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -5433,9 +5433,9 @@ var require_limitNumber = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/validation/multipleOf.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/multipleOf.js
 var require_multipleOf = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/validation/multipleOf.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/multipleOf.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -5461,9 +5461,9 @@ var require_multipleOf = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/runtime/ucs2length.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/runtime/ucs2length.js
 var require_ucs2length = __commonJS({
-  "../node_modules/ajv/dist/runtime/ucs2length.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/runtime/ucs2length.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function ucs2length(str) {
@@ -5488,9 +5488,9 @@ var require_ucs2length = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/validation/limitLength.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/limitLength.js
 var require_limitLength = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/validation/limitLength.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/limitLength.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -5520,9 +5520,9 @@ var require_limitLength = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/validation/pattern.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/pattern.js
 var require_pattern = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/validation/pattern.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/pattern.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var code_1 = require_code2();
@@ -5557,9 +5557,9 @@ var require_pattern = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/validation/limitProperties.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/limitProperties.js
 var require_limitProperties = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/validation/limitProperties.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/limitProperties.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -5586,9 +5586,9 @@ var require_limitProperties = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/validation/required.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/required.js
 var require_required = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/validation/required.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/required.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var code_1 = require_code2();
@@ -5672,9 +5672,9 @@ var require_required = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/validation/limitItems.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/limitItems.js
 var require_limitItems = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/validation/limitItems.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/limitItems.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -5701,9 +5701,9 @@ var require_limitItems = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/runtime/equal.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/runtime/equal.js
 var require_equal = __commonJS({
-  "../node_modules/ajv/dist/runtime/equal.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/runtime/equal.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var equal = require_fast_deep_equal();
@@ -5712,9 +5712,9 @@ var require_equal = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/validation/uniqueItems.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/uniqueItems.js
 var require_uniqueItems = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/validation/uniqueItems.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/uniqueItems.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var dataType_1 = require_dataType();
@@ -5783,9 +5783,9 @@ var require_uniqueItems = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/validation/const.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/const.js
 var require_const = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/validation/const.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/const.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -5812,9 +5812,9 @@ var require_const = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/validation/enum.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/enum.js
 var require_enum = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/validation/enum.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/enum.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -5863,9 +5863,9 @@ var require_enum = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/validation/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/index.js
 var require_validation = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/validation/index.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/validation/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var limitNumber_1 = require_limitNumber();
@@ -5901,9 +5901,9 @@ var require_validation = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/additionalItems.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/additionalItems.js
 var require_additionalItems = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/additionalItems.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/additionalItems.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.validateAdditionalItems = void 0;
@@ -5956,9 +5956,9 @@ var require_additionalItems = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/items.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/items.js
 var require_items = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/items.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/items.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.validateTuple = void 0;
@@ -6015,9 +6015,9 @@ var require_items = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/prefixItems.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/prefixItems.js
 var require_prefixItems = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/prefixItems.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/prefixItems.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var items_1 = require_items();
@@ -6032,9 +6032,9 @@ var require_prefixItems = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/items2020.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/items2020.js
 var require_items2020 = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/items2020.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/items2020.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -6067,9 +6067,9 @@ var require_items2020 = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/contains.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/contains.js
 var require_contains = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/contains.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/contains.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -6164,9 +6164,9 @@ var require_contains = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/dependencies.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/dependencies.js
 var require_dependencies = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/dependencies.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/dependencies.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.validateSchemaDeps = exports.validatePropertyDeps = exports.error = void 0;
@@ -6261,9 +6261,9 @@ var require_dependencies = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/propertyNames.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/propertyNames.js
 var require_propertyNames = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/propertyNames.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/propertyNames.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -6304,9 +6304,9 @@ var require_propertyNames = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/additionalProperties.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/additionalProperties.js
 var require_additionalProperties = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/additionalProperties.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/additionalProperties.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var code_1 = require_code2();
@@ -6415,9 +6415,9 @@ var require_additionalProperties = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/properties.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/properties.js
 var require_properties = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/properties.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/properties.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var validate_1 = require_validate();
@@ -6475,9 +6475,9 @@ var require_properties = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/patternProperties.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/patternProperties.js
 var require_patternProperties = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/patternProperties.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/patternProperties.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var code_1 = require_code2();
@@ -6552,9 +6552,9 @@ var require_patternProperties = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/not.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/not.js
 var require_not = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/not.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/not.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var util_1 = require_util();
@@ -6583,9 +6583,9 @@ var require_not = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/anyOf.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/anyOf.js
 var require_anyOf = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/anyOf.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/anyOf.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var code_1 = require_code2();
@@ -6600,9 +6600,9 @@ var require_anyOf = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/oneOf.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/oneOf.js
 var require_oneOf = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/oneOf.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/oneOf.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -6659,9 +6659,9 @@ var require_oneOf = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/allOf.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/allOf.js
 var require_allOf = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/allOf.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/allOf.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var util_1 = require_util();
@@ -6686,9 +6686,9 @@ var require_allOf = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/if.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/if.js
 var require_if = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/if.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/if.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -6758,9 +6758,9 @@ var require_if = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/thenElse.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/thenElse.js
 var require_thenElse = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/thenElse.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/thenElse.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var util_1 = require_util();
@@ -6776,9 +6776,9 @@ var require_thenElse = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/applicator/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/index.js
 var require_applicator = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/applicator/index.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/applicator/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var additionalItems_1 = require_additionalItems();
@@ -6825,9 +6825,9 @@ var require_applicator = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/format/format.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/format/format.js
 var require_format = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/format/format.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/format/format.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -6923,9 +6923,9 @@ var require_format = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/format/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/format/index.js
 var require_format2 = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/format/index.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/format/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var format_1 = require_format();
@@ -6934,9 +6934,9 @@ var require_format2 = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/metadata.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/metadata.js
 var require_metadata = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/metadata.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/metadata.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.contentVocabulary = exports.metadataVocabulary = void 0;
@@ -6957,9 +6957,9 @@ var require_metadata = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/draft7.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/draft7.js
 var require_draft7 = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/draft7.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/draft7.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var core_1 = require_core2();
@@ -6979,9 +6979,9 @@ var require_draft7 = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/discriminator/types.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/discriminator/types.js
 var require_types = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/discriminator/types.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/discriminator/types.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DiscrError = void 0;
@@ -6993,9 +6993,9 @@ var require_types = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/vocabularies/discriminator/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/discriminator/index.js
 var require_discriminator = __commonJS({
-  "../node_modules/ajv/dist/vocabularies/discriminator/index.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/vocabularies/discriminator/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var codegen_1 = require_codegen();
@@ -7104,9 +7104,9 @@ var require_discriminator = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/refs/json-schema-draft-07.json
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/refs/json-schema-draft-07.json
 var require_json_schema_draft_07 = __commonJS({
-  "../node_modules/ajv/dist/refs/json-schema-draft-07.json"(exports, module) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/refs/json-schema-draft-07.json"(exports, module) {
     module.exports = {
       $schema: "http://json-schema.org/draft-07/schema#",
       $id: "http://json-schema.org/draft-07/schema#",
@@ -7261,9 +7261,9 @@ var require_json_schema_draft_07 = __commonJS({
   }
 });
 
-// ../node_modules/ajv/dist/ajv.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/ajv.js
 var require_ajv = __commonJS({
-  "../node_modules/ajv/dist/ajv.js"(exports, module) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv/dist/ajv.js"(exports, module) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.MissingRefError = exports.ValidationError = exports.CodeGen = exports.Name = exports.nil = exports.stringify = exports.str = exports._ = exports.KeywordCxt = exports.Ajv = void 0;
@@ -7334,9 +7334,9 @@ var require_ajv = __commonJS({
   }
 });
 
-// ../node_modules/ajv-formats/dist/formats.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv-formats/dist/formats.js
 var require_formats = __commonJS({
-  "../node_modules/ajv-formats/dist/formats.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv-formats/dist/formats.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.formatNames = exports.fastFormats = exports.fullFormats = void 0;
@@ -7553,9 +7553,9 @@ var require_formats = __commonJS({
   }
 });
 
-// ../node_modules/ajv-formats/dist/limit.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv-formats/dist/limit.js
 var require_limit = __commonJS({
-  "../node_modules/ajv-formats/dist/limit.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv-formats/dist/limit.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.formatLimitDefinition = void 0;
@@ -7628,9 +7628,9 @@ var require_limit = __commonJS({
   }
 });
 
-// ../node_modules/ajv-formats/dist/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv-formats/dist/index.js
 var require_dist = __commonJS({
-  "../node_modules/ajv-formats/dist/index.js"(exports, module) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/ajv-formats/dist/index.js"(exports, module) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var formats_1 = require_formats();
@@ -7671,9 +7671,9 @@ var require_dist = __commonJS({
   }
 });
 
-// ../node_modules/content-type/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/content-type/index.js
 var require_content_type = __commonJS({
-  "../node_modules/content-type/index.js"(exports) {
+  "../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/content-type/index.js"(exports) {
     "use strict";
     var PARAM_REGEXP = /; *([!#$%&'*+.^_`|~0-9A-Za-z-]+) *= *("(?:[\u000b\u0020\u0021\u0023-\u005b\u005d-\u007e\u0080-\u00ff]|\\[\u000b\u0020-\u00ff])*"|[!#$%&'*+.^_`|~0-9A-Za-z-]+) */g;
     var TEXT_REGEXP = /^[\u000b\u0020-\u007e\u0080-\u00ff]+$/;
@@ -7807,11 +7807,11 @@ function hostedInstallers(releases) {
     }));
     const available = Object.values(assets2);
     if (!available.length) continue;
-    const { version: version3, browser: browser2 } = available[0];
-    if (available.some((asset) => asset.version !== version3 || asset.browser !== browser2)) {
+    const { version: version3, browser } = available[0];
+    if (available.some((asset) => asset.version !== version3 || asset.browser !== browser)) {
       throw new Error(`Hosted ${operatingSystems[platform].label} installers must share the same version and capabilities`);
     }
-    groups[platform] = { version: version3, browser: browser2, assets: assets2 };
+    groups[platform] = { version: version3, browser, assets: assets2 };
   }
   return groups;
 }
@@ -8065,17 +8065,17 @@ __name(canonicalOrigin, "canonicalOrigin");
 function trustedGroup(os, group) {
   if (!validOS(os) || !record(group) || !matches(versionPattern, group.version) || group.browser !== void 0 && typeof group.browser !== "boolean" || !record(group.assets) || Object.keys(group.assets).length === 0) throw new Error("Invalid approved installer group");
   const { version: version3 } = group;
-  const browser2 = group.browser === true;
+  const browser = group.browser === true;
   const assets2 = /* @__PURE__ */ Object.create(null);
   for (const arch of Object.keys(group.assets).sort()) {
     const entry = group.assets[arch];
     const url2 = typeof entry?.url === "string" && URL.parse(entry.url);
-    if (!operatingSystems[os].architectures.includes(arch) || !matches(hashPattern, entry?.sha256) || !url2 || url2.protocol !== "https:" || url2.username || url2.password || url2.search || url2.hash || entry.version !== void 0 && entry.version !== version3 || entry.browser !== void 0 && entry.browser !== browser2) {
+    if (!operatingSystems[os].architectures.includes(arch) || !matches(hashPattern, entry?.sha256) || !url2 || url2.protocol !== "https:" || url2.username || url2.password || url2.search || url2.hash || entry.version !== void 0 && entry.version !== version3 || entry.browser !== void 0 && entry.browser !== browser) {
       throw new Error("Invalid approved installer asset");
     }
     assets2[arch] = Object.freeze({ sha256: entry.sha256, url: url2.href });
   }
-  return Object.freeze({ version: version3, browser: browser2, assets: Object.freeze(assets2) });
+  return Object.freeze({ version: version3, browser, assets: Object.freeze(assets2) });
 }
 __name(trustedGroup, "trustedGroup");
 var canonical = /* @__PURE__ */ __name((os, group) => JSON.stringify(["enrollment-bootstrap-v1", os, trustedGroup(os, group)]), "canonical");
@@ -8143,7 +8143,7 @@ async function resolveEnrollmentBootstrap(request, { origin, lookupApproved, ren
 }
 __name(resolveEnrollmentBootstrap, "resolveEnrollmentBootstrap");
 
-// ../node_modules/jose/dist/webapi/lib/buffer_utils.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/lib/buffer_utils.js
 var encoder2 = new TextEncoder();
 var decoder = new TextDecoder();
 var strictDecoder = new TextDecoder("utf-8", { fatal: true });
@@ -8198,7 +8198,7 @@ function decodeBase64(encoded, url2 = false) {
 }
 __name(decodeBase64, "decodeBase64");
 
-// ../node_modules/jose/dist/webapi/util/errors.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/util/errors.js
 var JOSEError = class extends Error {
   static {
     __name(this, "JOSEError");
@@ -8313,7 +8313,7 @@ var JWSSignatureVerificationFailed = class extends JOSEError {
   }
 };
 
-// ../node_modules/jose/dist/webapi/util/base64url.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/util/base64url.js
 var base64url_exports = {};
 __export(base64url_exports, {
   decode: () => decode,
@@ -8333,7 +8333,7 @@ function encode2(input) {
 }
 __name(encode2, "encode");
 
-// ../node_modules/jose/dist/webapi/lib/validate.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/lib/validate.js
 function isObject(input) {
   if (typeof input != "object" || input === null || Object.prototype.toString.call(input) !== "[object Object]")
     return false;
@@ -8422,7 +8422,7 @@ function validateB64(protectedHeader, extensions) {
 }
 __name(validateB64, "validateB64");
 
-// ../node_modules/jose/dist/webapi/lib/key.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/lib/key.js
 var tag = /* @__PURE__ */ __name((key4) => key4[Symbol.toStringTag], "tag");
 var jwkMatchesOp = /* @__PURE__ */ __name((entry, key4, usage2) => {
   const { alg } = entry;
@@ -8563,7 +8563,7 @@ async function rawKey(key4, expected, usage2, extractable = false) {
 }
 __name(rawKey, "rawKey");
 
-// ../node_modules/jose/dist/webapi/lib/key_descriptor.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/lib/key_descriptor.js
 function table(entries) {
   const out = { __proto__: null };
   for (const alg in entries)
@@ -8572,7 +8572,7 @@ function table(entries) {
 }
 __name(table, "table");
 
-// ../node_modules/jose/dist/webapi/lib/jws_algorithms.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/lib/jws_algorithms.js
 var sig = [["verify"], ["sign"]];
 function hmac(bits) {
   const subtle = { name: "HMAC", hash: `SHA-${bits}` };
@@ -8648,7 +8648,7 @@ function jwsAlgorithm(alg) {
 }
 __name(jwsAlgorithm, "jwsAlgorithm");
 
-// ../node_modules/jose/dist/webapi/lib/jws_verify.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/lib/jws_verify.js
 function prepareVerify(options) {
   return [options && validateAlgorithms("algorithms", options.algorithms), options?.crit];
 }
@@ -8708,7 +8708,7 @@ async function verifyCompact(jws, shared, key4) {
 }
 __name(verifyCompact, "verifyCompact");
 
-// ../node_modules/jose/dist/webapi/lib/jwt_claims_set.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/lib/jwt_claims_set.js
 var epoch = /* @__PURE__ */ __name((date3) => Math.floor(date3.getTime() / 1e3), "epoch");
 var multipliers = {
   s: 1,
@@ -8801,7 +8801,7 @@ function validateClaimsSet(protectedHeader, claimsSetBytes, options = {}) {
 }
 __name(validateClaimsSet, "validateClaimsSet");
 
-// ../node_modules/jose/dist/webapi/jwt/verify.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/jwt/verify.js
 async function jwtVerify(jwt, key4, options) {
   const [verified, b64] = await verifyCompact(jwt, prepareVerify(options), key4);
   if (!b64)
@@ -8811,7 +8811,7 @@ async function jwtVerify(jwt, key4, options) {
 }
 __name(jwtVerify, "jwtVerify");
 
-// ../node_modules/jose/dist/webapi/jwks/local.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/jwks/local.js
 function isUsableJWK(jwk, entry, alg, kid) {
   const { kty, key_ops: keyOps, ext, kid: jwkKid, alg: jwkAlg, use, crv } = jwk;
   return (ext === void 0 || typeof ext == "boolean") && (keyOps === void 0 || Array.isArray(keyOps) && keyOps.every((operation, index) => typeof operation == "string" && keyOps.indexOf(operation) === index) && keyOps.includes("verify")) && entry.kty.includes(kty) && (kid === void 0 || typeof kid == "string" && kid === jwkKid) && (jwkAlg === void 0 ? kty !== "AKP" : alg === jwkAlg) && (use === void 0 || use === "sig") && (!entry.crv || crv === entry.crv);
@@ -8869,7 +8869,7 @@ function createLocalJWKSet(jwks) {
 }
 __name(createLocalJWKSet, "createLocalJWKSet");
 
-// ../node_modules/jose/dist/webapi/jwks/remote.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/jose/dist/webapi/jwks/remote.js
 function isCloudflareWorkers() {
   return typeof WebSocketPair < "u" || typeof navigator < "u" && true || typeof EdgeRuntime < "u" && EdgeRuntime === "vercel";
 }
@@ -8975,12 +8975,12 @@ var parse = new TextDecoder();
 var tokenPattern2 = /^[A-Za-z0-9_-]{43}$/;
 var devicePattern2 = /^[a-z][a-z0-9-]{0,23}$/;
 var devicePort = /* @__PURE__ */ __name((value) => Number.isInteger(value) && value >= 1024 && value <= 65535, "devicePort");
-function validateDevicePorts(ports, browser2) {
-  const expected = browser2 ? ["browser", "development"] : ["development"];
+function validateDevicePorts(ports, browser) {
+  const expected = browser ? ["browser", "development"] : ["development"];
   if (ports === null || typeof ports !== "object" || Array.isArray(ports) || JSON.stringify(Object.keys(ports).sort()) !== JSON.stringify(expected) || !expected.every((key4) => devicePort(ports[key4])) || new Set(expected.map((key4) => ports[key4])).size !== expected.length) {
     throw new Error("Invalid device ports");
   }
-  return browser2 ? { development: ports.development, browser: ports.browser } : { development: ports.development };
+  return browser ? { development: ports.development, browser: ports.browser } : { development: ports.development };
 }
 __name(validateDevicePorts, "validateDevicePorts");
 function validateCredentials(credentials) {
@@ -9304,13 +9304,13 @@ function snapshotRelease(platform, release) {
   const [os, fixed] = platformParts(platform);
   if (!os || !record2(release) || !matches2(versionPattern2, release.version) || release.browser !== void 0 && typeof release.browser !== "boolean") throw new Error("Invalid pinned release");
   const { version: version3 } = release;
-  const browser2 = release.browser === true;
+  const browser = release.browser === true;
   const source = fixed ? { [fixed]: release } : release.assets;
   if (!record2(source) || !Object.keys(source).length) throw new Error("Missing pinned installer assets");
   const assets2 = {};
   for (const architecture of Object.keys(source).sort()) {
     const asset = source[architecture];
-    if (!operatingSystems[os].architectures.includes(architecture) || !record2(asset) || !matches2(hashPattern2, asset.sha256) || asset.version !== void 0 && asset.version !== version3 || asset.browser !== void 0 && asset.browser !== browser2) throw new Error("Invalid pinned installer asset");
+    if (!operatingSystems[os].architectures.includes(architecture) || !record2(asset) || !matches2(hashPattern2, asset.sha256) || asset.version !== void 0 && asset.version !== version3 || asset.browser !== void 0 && asset.browser !== browser) throw new Error("Invalid pinned installer asset");
     const { sha256: sha2563, url: url2, localFile } = asset;
     if (url2 === void 0 === (localFile === void 0)) throw new Error("Invalid pinned installer location");
     if (url2 !== void 0) {
@@ -9324,7 +9324,7 @@ function snapshotRelease(platform, release) {
       assets2[architecture] = { sha256: sha2563, localFile };
     }
   }
-  return { platform, version: version3, browser: browser2, assets: assets2 };
+  return { platform, version: version3, browser, assets: assets2 };
 }
 __name(snapshotRelease, "snapshotRelease");
 function publicIntent(row) {
@@ -9408,16 +9408,16 @@ async function decryptEnrollmentIntent(secret, row) {
   return { ...intent, code };
 }
 __name(decryptEnrollmentIntent, "decryptEnrollmentIntent");
-async function claimEnrollmentIntent(db, { code, recoveryProof, deviceId: deviceId2, platform, architecture, version: version3, sha256: sha2563, browser: browser2 } = {}) {
+async function claimEnrollmentIntent(db, { code, recoveryProof, deviceId: deviceId2, platform, architecture, version: version3, sha256: sha2563, browser } = {}) {
   const [, fixed] = platformParts(platform);
-  if (!matches2(tokenPattern2, code) || !matches2(tokenPattern2, recoveryProof) || recoveryProof === code || !matches2(devicePattern2, deviceId2) || typeof architecture !== "string" || fixed && fixed !== architecture || !matches2(versionPattern2, version3) || !matches2(hashPattern2, sha2563) || typeof browser2 !== "boolean") return;
+  if (!matches2(tokenPattern2, code) || !matches2(tokenPattern2, recoveryProof) || recoveryProof === code || !matches2(devicePattern2, deviceId2) || typeof architecture !== "string" || fixed && fixed !== architecture || !matches2(versionPattern2, version3) || !matches2(hashPattern2, sha2563) || typeof browser !== "boolean") return;
   const [codeDigest, recoveryDigest] = await Promise.all([digest(code), digest("enrollment-claim-recovery-v1:" + recoveryProof)]);
   const row = await db.prepare(`SELECT id, device_id, snapshot, state, created_at, resolved_at FROM enrollment_intents
     WHERE code_digest = ? AND device_id = ? AND state IN ('pending', 'claimed')`).bind(codeDigest, deviceId2).first();
   if (!row) return;
   const [os] = platformParts(platform);
   const release = publicIntent(row).releases[os];
-  if (!release || release.platform !== platform || release.version !== version3 || release.browser !== browser2 || !Object.hasOwn(release.assets, architecture) || release.assets[architecture].sha256 !== sha2563) return;
+  if (!release || release.platform !== platform || release.version !== version3 || release.browser !== browser || !Object.hasOwn(release.assets, architecture) || release.assets[architecture].sha256 !== sha2563) return;
   const claimedSnapshot = JSON.stringify(release);
   if (row.state === "pending") {
     const claimed = await db.prepare(`UPDATE enrollment_intents
@@ -12518,7 +12518,7 @@ var sections = {
 };
 function consoleShell(section, detail = "", upgradeAttributes = "") {
   const [name, href] = sections[section];
-  return `<aside class="rail"><div class="brand"><img src="${consoleLogoUrl}" alt="">Nodrelay<button hidden id="open-upgrade" type="button" class="button upgrade-launch" aria-label="\u5347\u7EA7" aria-haspopup="dialog" aria-controls="upgrade-dialog"${upgradeAttributes}><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16V8m-4 4 4-4 4 4"/></svg></button></div><nav aria-label="\u4E3B\u5BFC\u822A">${Object.entries(sections).map(([key4, [title, link, path]]) => `<a href="${link}"${key4 === section ? ' aria-current="page"' : ""}><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="${path}"/></svg>${title}</a>`).join("")}</nav></aside><div class="workspace"><header class="crumb">\u7BA1\u7406\u53F0 <span aria-hidden="true">/</span> ${detail ? `<a href="${href}">${name}</a> <span aria-hidden="true">/</span> ${detail}` : name}</header>`;
+  return `<aside class="rail"><div class="brand"><img src="${consoleLogoUrl}" alt="">Nodrelay<button hidden id="open-upgrade" type="button" class="button upgrade-launch" aria-label="\u5347\u7EA7" aria-haspopup="dialog" aria-controls="upgrade-dialog"${upgradeAttributes}><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16V8m-4 4 4-4 4 4"/></svg></button></div><nav aria-label="\u4E3B\u5BFC\u822A">${Object.entries(sections).map(([key4, [title, link, path]]) => `<a href="${link}" data-nav="${key4}"${key4 === section ? ' aria-current="page"' : ""}><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="${path}"/></svg>${title}</a>`).join("")}</nav></aside><div class="workspace"><header class="crumb">\u7BA1\u7406\u53F0 <span aria-hidden="true">/</span> ${detail ? `<a href="${href}">${name}</a> <span aria-hidden="true">/</span> ${detail}` : name}</header>`;
 }
 __name(consoleShell, "consoleShell");
 var upgradeDialog = `<dialog id="upgrade-dialog" aria-labelledby="upgrade-title" aria-describedby="upgrade-description">
@@ -12538,7 +12538,7 @@ var upgradeDialog = `<dialog id="upgrade-dialog" aria-labelledby="upgrade-title"
   </form>
 </dialog>`;
 var _a;
-var consoleTemplate = String.raw(_a || (_a = __template(['<!doctype html>\n<html lang="zh-CN">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>@@TITLE@@ \xB7 Nodrelay</title>\n<style nonce="@@NONCE@@">', '</style>\n<link rel="icon" type="image/png" href="', '">\n</head>\n<body>\n<svg class="sr-only" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">\n  <symbol id="moon" viewBox="0 0 24 24"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008"></path></symbol>\n  <symbol id="sun" viewBox="0 0 24 24"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path></symbol>\n  <symbol id="monitor" viewBox="0 0 24 24"><path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10"></path><path d="M7 20h10"></path><path d="M9 16v4"></path><path d="M15 16v4"></path></symbol>\n  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"></path></symbol>\n  <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></symbol>\n  <symbol id="pause" viewBox="0 0 24 24"><path d="M9 5v14m6-14v14"/></symbol>\n  <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></symbol>\n  <symbol id="copy" viewBox="0 0 24 24"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></symbol>\n  <symbol id="link" viewBox="0 0 24 24"><path d="M9 15l6 -6"></path><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"></path><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path></symbol>\n  <symbol id="search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></symbol>\n  <symbol id="close" viewBox="0 0 24 24"><path d="M18 6l-12 12"></path><path d="M6 6l12 12"></path></symbol>\n  <symbol id="risk" viewBox="0 0 24 24"><path d="M12 9v4"></path><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0"></path><path d="M12 16h.01"></path></symbol>\n</svg>\n@@SHELL@@\n<main>\n<section @@SETTINGS_HIDDEN@@>\n  <div class="page-intro"><div><h1>\u7BA1\u7406\u53F0\u8BBE\u7F6E</h1><p>\u7BA1\u7406\u5F53\u524D\u7248\u672C\u4E0E\u63A7\u5236\u53F0\u5916\u89C2\u3002</p></div></div>\n  <div class="table-wrap settings-row"><div><strong>\u7BA1\u7406\u53F0\u7248\u672C</strong>\n    <span id="brand-version" class="brand-version" hidden></span>\n  </div><button class="button" id="check-update" type="button">\u68C0\u67E5\u66F4\u65B0</button></div>\n  <div class="table-wrap appearance"><h2>\u5916\u89C2</h2><p>\u9009\u62E9\u7BA1\u7406\u53F0\u4F7F\u7528\u7684\u4E3B\u9898\u3002</p><div class="theme-options" role="group" aria-label="\u5916\u89C2\u4E3B\u9898">\n    ', '\n  </div>\n</div></section>\n<section @@DEVICES_HIDDEN@@ class="page-intro">\n    <div><h1 id="devices-title">\u8BBE\u5907\u7BA1\u7406</h1><p>\u67E5\u770B\u8BBE\u5907\u7684\u6CE8\u518C\u72B6\u6001\uFF0C\u7BA1\u7406\u672C\u673A\u670D\u52A1\u4E0E\u63A5\u5165\u6743\u9650\u3002</p></div>\n    <button class="button primary" type="button" id="add"@@ADD_DISABLED@@><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u8BBE\u5907</button>\n  </section>\n  <section @@GATEWAY_HIDDEN@@><div class="page-intro"><div><h1>MCP \u7F51\u5173</h1><p>\u7BA1\u7406 Agent \u7684\u8FDE\u63A5\u7AEF\u70B9\u4E0E\u5BA2\u6237\u7AEF\u56DE\u8C03\u3002</p></div></div>\n  <section class="portal" aria-label="ChatGPT \u8FDE\u63A5\u5730\u5740">\n      <svg class="wire" viewBox="0 0 180 115" fill="none" stroke="#69a386" stroke-width="1.5" aria-hidden="true"><path d="M8 22h45l27 35h45m-117 36h45l27-36m46 0h45"/><circle cx="10" cy="22" r="7"/><circle cx="10" cy="93" r="7"/><rect x="106" y="39" width="37" height="37" rx="9" fill="#245542"/><path d="m117 58 6 6 10-14"/><circle cx="168" cy="57" r="5"/></svg>\n      <small>MCP ENDPOINT</small><h2>\u7F51\u5173\u8FDE\u63A5\u5730\u5740</h2>\n      <div class="portal-value">\n        <code id="address" tabindex="-1">@@PORTAL@@</code>\n        <button class="button" type="button" id="copy-address"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5730\u5740</span></button>\n      </div>\n      <span class="sr-only" id="copy-feedback" role="status"></span>\n  </section>\n  <div class="table-wrap settings-row"><div><strong>\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</strong><p>\u67E5\u770B\u9884\u7F6E\u89C4\u5219\uFF0C\u767B\u8BB0\u5176\u4ED6\u5BA2\u6237\u7AEF\u7684\u6388\u6743\u56DE\u8C03\u3002</p></div><button class="button" type="button" id="open-callbacks" aria-haspopup="dialog">\u914D\u7F6E\u56DE\u8C03</button></div></section>\n\n  <section @@DEVICES_HIDDEN@@ class="devices" aria-labelledby="devices-title">\n    <div class="summary-cards">', '</div>\n    <div class="table-wrap fleet-table">\n    <div class="toolbar">\n      <div class="filters" role="group" aria-label="\u6309\u63A5\u5165\u72B6\u6001\u7B5B\u9009">\n        <button type="button" data-filter="all" aria-pressed="true">\u5168\u90E8 <span class="count">@@COUNT_ALL@@</span></button>\n        <button type="button" data-filter="active" aria-pressed="false">\u5DF2\u6CE8\u518C <span class="count">@@COUNT_ACTIVE@@</span></button>\n        <button type="button" data-filter="pending" aria-pressed="false">\u5F85\u63A5\u5165 <span class="count">@@COUNT_PENDING@@</span></button>\n        <button type="button" data-filter="disabled" aria-pressed="false">\u505C\u7528 <span class="count">@@COUNT_DISABLED@@</span></button>\n      </div>\n      <label class="search">\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <span class="sr-only">\u641C\u7D22\u8BBE\u5907\u540D\u79F0\u6216 ID</span>\n        <input type="search" id="device-search" placeholder="\u641C\u7D22\u8BBE\u5907\u540D\u79F0\u6216 ID" autocomplete="off">\n      </label>\n    </div>\n      <table role="table" aria-labelledby="devices-title">\n        <thead role="rowgroup"><tr role="row"><th scope="col">\u8BBE\u5907\u540D\u79F0 / ID</th><th scope="col">\u6CE8\u518C\u72B6\u6001</th><th class="platform-col" scope="col">\u64CD\u4F5C\u7CFB\u7EDF</th><th scope="col">\u64CD\u4F5C</th></tr></thead>\n        <tbody role="rowgroup">@@ROWS@@</tbody>\n      </table>\n      <div class="empty" id="empty" hidden>\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <strong role="status">\u672A\u627E\u5230\u5339\u914D\u7684\u8BBE\u5907</strong>\n        <p>\u8BD5\u8BD5\u5176\u4ED6\u8BBE\u5907\u540D\u79F0\uFF0C\u6216\u6E05\u9664\u7B5B\u9009\u3002</p>\n        <button class="button" type="button" id="clear-filters">\u6E05\u9664\u7B5B\u9009</button>\n      </div>\n    </div>\n    <p class="note" role="status" id="device-list-feedback"></p>\n  </section>\n</main></div>\n\n<dialog id="add-dialog" aria-labelledby="add-title" data-any-system="@@ANY_SYSTEM@@" data-browser-consent="@@BROWSER_CONSENT@@">\n  <header class="dialog-head">\n    <h2 id="add-title">\u6DFB\u52A0\u8BBE\u5907</h2>\n    <button type="submit" form="close-add" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <form id="add-device-form" method="post" action="/admin/devices/reserve">\n    <div class="dialog-body">\n      <label>\u8BBE\u5907\u540D\u79F0 <input name="name" required autofocus placeholder="\u4F8B\u5982\uFF1A\u529E\u516C\u5BA4 Mac" autocomplete="off" aria-describedby="name-hint"></label>\n      <p class="field-hint" id="name-hint">\u6700\u591A 20 \u4E2A\u5B57\uFF0C\u53EF\u7A0D\u540E\u5B89\u88C5\u3002</p>\n      <p class="feedback" id="add-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button primary" type="submit" id="save-device">\u6DFB\u52A0\u5E76\u5B89\u88C5</button><button class="button" type="submit" id="save-for-later">\u7A0D\u540E\u5B89\u88C5</button></div>\n  </form>\n  <form id="setup-device-form" method="post" action="/admin/devices" hidden>\n    <div class="dialog-body">\n      <p><strong id="setup-device-target"></strong> \xB7 <span id="setup-device-hint">\u9009\u62E9\u76EE\u6807\u8BBE\u5907\u7684\u64CD\u4F5C\u7CFB\u7EDF\u3002</span></p>\n      <input type="hidden" name="deviceId">\n      <fieldset class="platform-tabs"><legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend>@@PLATFORMS@@</fieldset>\n      <label id="browser-consent" hidden><span><input id="confirm-browser" name="browserConsent" type="checkbox" value="1" disabled> \u6B64\u5B89\u88C5\u5305\u5305\u542B\u6D4F\u89C8\u5668\u5DE5\u5177\uFF0C\u6211\u786E\u8BA4\u5141\u8BB8\u4F7F\u7528\u3002</span></label>\n      <p class="feedback" id="setup-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button" type="submit" form="close-add">\u5173\u95ED</button><button class="button primary" type="submit" id="issue-command">\u751F\u6210\u5B89\u88C5\u547D\u4EE4</button></div>\n  </form>\n  <section class="dialog-body device-command" id="device-command-result" aria-labelledby="add-title" hidden>\n    <p id="device-command-target"></p>\n    <fieldset class="platform-tabs" id="device-command-systems" hidden><legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend></fieldset>\n    <div id="command-content" hidden>\n      <textarea id="device-command" aria-label="\u5B89\u88C5\u547D\u4EE4" readonly rows="3" wrap="soft" spellcheck="false"></textarea>\n      <button class="button primary" type="button" id="copy-device-command"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5B89\u88C5\u547D\u4EE4</span></button>\n    </div>\n    <p id="device-command-feedback" role="status" hidden></p>\n    <p id="device-command-expiration" class="field-hint"></p>\n    <p id="device-enrollment-progress" class="feedback" role="status" tabindex="-1"></p>\n  </section>\n  <form id="close-add" method="dialog"></form>\n</dialog>\n\n<dialog id="device-dialog" aria-labelledby="device-dialog-title">\n  <span class="risk-mark" id="risk-mark" hidden><svg class="icon" aria-hidden="true"><use href="#risk"></use></svg></span>\n  <header class="dialog-head">\n    <h2 id="device-dialog-title"></h2>\n    <button type="submit" form="close-detail" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="device-summary"></p>\n    <dl class="detail" id="device-details">\n      <dt>\u6700\u540E\u68C0\u67E5</dt><dd id="checked-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u6CE8\u518C</dt><dd id="registration-detail"></dd>\n      <dt>Cloudflare Tunnel</dt><dd id="tunnel-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u5F00\u53D1\u5DE5\u5177\u76EE\u5F55</dt><dd id="mcp-detail">\u672A\u67E5\u8BE2</dd>\n      <dt id="browser-label" hidden>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd id="browser-detail" hidden></dd>\n      <dt id="release-label" hidden>\u5B89\u88C5\u5305\u7248\u672C</dt><dd id="release-detail" hidden></dd>\n      <dt id="client-label" hidden>\u5BA2\u6237\u7AEF</dt><dd id="client-detail" hidden></dd>\n      <dt id="revocation-label" hidden>\u64A4\u9500</dt><dd id="revocation-detail" hidden></dd>\n    </dl>\n    <p class="feedback" id="device-feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-detail" method="dialog">\n    <button class="button" id="detail-dismiss">\u5173\u95ED</button>\n    <button class="button" id="detail-recheck" type="button" hidden>\u91CD\u65B0\u68C0\u67E5</button>\n    <button class="button danger" id="detail-confirm" type="button" disabled hidden></button>\n  </form>\n</dialog>\n\n<dialog id="callback-dialog" aria-labelledby="callback-title">\n  <header class="dialog-head">\n    <h2 id="callback-title">\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</h2>\n    <button type="submit" form="close-callbacks" class="dialog-close" aria-label="\u5173\u95ED\u56DE\u8C03\u914D\u7F6E"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div id="callback-overview">\n    <div class="dialog-body callback-body">\n      <div class="callback-current">\n        <div><strong>\u5BA2\u6237\u7AEF\u6CE8\u518C</strong><p id="callback-summary"></p></div>\n        <span class="callback-tag" id="callback-state" hidden></span>\n      </div>\n      <p id="callback-feedback" role="status" tabindex="-1" hidden></p>\n      <button id="retry-callback-read" class="button" type="button" hidden>\u91CD\u65B0\u8BFB\u53D6</button>\n      <section class="callback-section" id="callback-configured" aria-labelledby="callback-configured-title" hidden>\n        <h3 id="callback-configured-title">\u5DF2\u8BBE\u56DE\u8C03\u5730\u5740</h3>\n        <ul id="callback-configured-list" class="callback-clients"></ul>\n      </section>\n      <section class="callback-section" id="callback-presets">\n        <details><summary>\u67E5\u770B\u9884\u7F6E\u56DE\u8C03\u89C4\u5219</summary>\n        <ul class="callback-clients">\n          <li class="callback-client" data-preset-name="ChatGPT">\n            <strong class="callback-identity">ChatGPT</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u56FA\u5B9A\u56DE\u8C03\uFF08\u9002\u7528\u65F6\uFF09</span><code data-callback-address>https://chatgpt.com/connector_platform_oauth_redirect</code></div>\n              <div class="callback-uri"><span>\u6309\u8FDE\u63A5\u5206\u914D \xB7 \u6A21\u677F</span><code data-callback-address="https://chatgpt.com/connector/oauth/*">https://chatgpt.com/connector/oauth/{callback_id}</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="Claude">\n            <strong class="callback-identity">Claude</strong>\n            <div class="callback-uri"><span>\u81EA\u5B9A\u4E49\u8FDE\u63A5\u5668</span><code data-callback-address>https://claude.ai/api/mcp/auth_callback</code></div>\n          </li>\n          <li class="callback-client" data-preset-name="Cursor">\n            <strong class="callback-identity">Cursor</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875\u4E0E Agents</span><code data-callback-address>https://www.cursor.com/agents/mcp/oauth/callback</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://localhost:8787/callback</code></div>\n              <div class="callback-uri"><span>\u539F\u751F\u534F\u8BAE</span><code data-callback-address>cursor://anysphere.cursor-mcp/oauth/callback</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="VS Code">\n            <strong class="callback-identity">VS Code</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875</span><code data-callback-address>https://vscode.dev/redirect</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://127.0.0.1:33418/</code></div>\n            </div>\n          </li>\n        </ul></details>\n        <ul class="callback-clients"><li class="callback-client">\n            <div class="callback-identity"><strong>WorkBuddy</strong><span class="callback-tag" id="workbuddy-state" data-tone="pending">\u5F85\u914D\u7F6E</span></div>\n            <div class="callback-unset"><button class="button" type="button" id="add-workbuddy" data-client="WorkBuddy" disabled>\u586B\u5199 WorkBuddy \u56DE\u8C03</button></div>\n          </li>\n        </ul>\n      </section>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="submit" form="close-callbacks">\u5173\u95ED</button>\n      <button class="button primary" type="button" id="add-client" disabled><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u5176\u4ED6\u5BA2\u6237\u7AEF</button>\n    </div>\n  </div>\n  <form id="callback-form" novalidate hidden>\n    <div class="dialog-body callback-body">\n      <label for="callback-name">\u5BA2\u6237\u7AEF\u540D\u79F0</label>\n      <input id="callback-name" name="clientName" type="text" autocomplete="off" maxlength="64" required aria-describedby="callback-name-error">\n      <p id="callback-name-error" class="field-error" role="alert" hidden></p>\n      <label for="callback-url">\u56DE\u8C03\u5730\u5740</label>\n      <input id="callback-url" name="redirectUri" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="2048" placeholder="https://client.example/oauth/callback" required aria-describedby="callback-url-hint callback-url-error">\n      <p id="callback-url-hint" class="field-hint">\u586B\u5199\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u5B8C\u6574 URL\uFF0C\u4E0D\u542B\u6388\u6743\u7801\u6216\u5BC6\u94A5\u3002</p>\n      <p id="callback-url-error" class="field-error" role="alert" hidden></p>\n      <p id="callback-save-error" class="field-error" role="alert" hidden></p>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="button" id="cancel-callback">\u53D6\u6D88</button>\n      <button class="button primary" id="save-callback" type="submit">\u4FDD\u5B58</button>\n    </div>\n  </form>\n  <form id="close-callbacks" method="dialog"></form>\n</dialog>\n\n', '\n<script nonce="@@NONCE@@">@@SCRIPT@@<\/script>\n</body>\n</html>\n'])), consoleStyles, consoleLogoUrl, [["light", "\u6D45\u8272"], ["dark", "\u6DF1\u8272"], ["system", "\u8DDF\u968F\u7CFB\u7EDF"]].map(([v, n]) => `<button type="button" data-theme-option="${v}" aria-pressed="${v === "system"}"><span class="minipic" aria-hidden="true"><i></i><i></i></span>${n}</button>`).join(""), [["active", "\u5DF2\u6CE8\u518C", "monitor", "ACTIVE"], ["pending", "\u5F85\u63A5\u5165", "clock", "PENDING"], ["disabled", "\u5DF2\u505C\u7528", "pause", "DISABLED"]].map(([v, n, icon2, token]) => `<button type="button" data-filter="${v}" aria-pressed="false"><span>${n}<strong class="count">@@COUNT_${token}@@</strong></span><svg class="icon" aria-hidden="true"><use href="#${icon2}"></use></svg></button>`).join(""), upgradeDialog);
+var consoleTemplate = String.raw(_a || (_a = __template(['<!doctype html>\n<html lang="zh-CN">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>@@TITLE@@ \xB7 Nodrelay</title>\n<style nonce="@@NONCE@@">', '@@MARKET_CSS@@</style>\n<link rel="icon" type="image/png" href="', '">\n</head>\n<body>\n<svg class="sr-only" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">\n  <symbol id="moon" viewBox="0 0 24 24"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008"></path></symbol>\n  <symbol id="sun" viewBox="0 0 24 24"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path></symbol>\n  <symbol id="monitor" viewBox="0 0 24 24"><path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10"></path><path d="M7 20h10"></path><path d="M9 16v4"></path><path d="M15 16v4"></path></symbol>\n  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12l5 5l10 -10"></path></symbol>\n  <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></symbol>\n  <symbol id="pause" viewBox="0 0 24 24"><path d="M9 5v14m6-14v14"/></symbol>\n  <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></symbol>\n  <symbol id="copy" viewBox="0 0 24 24"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></symbol>\n  <symbol id="link" viewBox="0 0 24 24"><path d="M9 15l6 -6"></path><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"></path><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path></symbol>\n  <symbol id="search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></symbol>\n  <symbol id="close" viewBox="0 0 24 24"><path d="M18 6l-12 12"></path><path d="M6 6l12 12"></path></symbol>\n  <symbol id="risk" viewBox="0 0 24 24"><path d="M12 9v4"></path><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0"></path><path d="M12 16h.01"></path></symbol>\n</svg>\n@@SHELL@@\n<main id="console-home" @@HOME_HIDDEN@@>\n<section data-section="settings" @@SETTINGS_HIDDEN@@>\n  <div class="page-intro"><div><h1>\u7BA1\u7406\u53F0\u8BBE\u7F6E</h1><p>\u7BA1\u7406\u5F53\u524D\u7248\u672C\u4E0E\u63A7\u5236\u53F0\u5916\u89C2\u3002</p></div></div>\n  <div class="table-wrap settings-row"><div><strong>\u7BA1\u7406\u53F0\u7248\u672C</strong>\n    <span id="brand-version" class="brand-version" hidden></span>\n  </div><button class="button" id="check-update" type="button">\u68C0\u67E5\u66F4\u65B0</button></div>\n  <div class="table-wrap appearance"><h2>\u5916\u89C2</h2><p>\u9009\u62E9\u7BA1\u7406\u53F0\u4F7F\u7528\u7684\u4E3B\u9898\u3002</p><div class="theme-options" role="group" aria-label="\u5916\u89C2\u4E3B\u9898">\n    ', '\n  </div>\n</div></section>\n<section data-section="devices" @@DEVICES_HIDDEN@@ class="page-intro">\n    <div><h1 id="devices-title">\u8BBE\u5907\u7BA1\u7406</h1><p>\u67E5\u770B\u8BBE\u5907\u7684\u6CE8\u518C\u72B6\u6001\uFF0C\u7BA1\u7406\u672C\u673A\u670D\u52A1\u4E0E\u63A5\u5165\u6743\u9650\u3002</p></div>\n    <button class="button primary" type="button" id="add"@@ADD_DISABLED@@><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u8BBE\u5907</button>\n  </section>\n  <section data-section="gateway" @@GATEWAY_HIDDEN@@><div class="page-intro"><div><h1>MCP \u7F51\u5173</h1><p>\u7BA1\u7406 Agent \u7684\u8FDE\u63A5\u7AEF\u70B9\u4E0E\u5BA2\u6237\u7AEF\u56DE\u8C03\u3002</p></div></div>\n  <section class="portal" aria-label="ChatGPT \u8FDE\u63A5\u5730\u5740">\n      <svg class="wire" viewBox="0 0 180 115" fill="none" stroke="#69a386" stroke-width="1.5" aria-hidden="true"><path d="M8 22h45l27 35h45m-117 36h45l27-36m46 0h45"/><circle cx="10" cy="22" r="7"/><circle cx="10" cy="93" r="7"/><rect x="106" y="39" width="37" height="37" rx="9" fill="#245542"/><path d="m117 58 6 6 10-14"/><circle cx="168" cy="57" r="5"/></svg>\n      <small>MCP ENDPOINT</small><h2>\u7F51\u5173\u8FDE\u63A5\u5730\u5740</h2>\n      <div class="portal-value">\n        <code id="address" tabindex="-1">@@PORTAL@@</code>\n        <button class="button" type="button" id="copy-address"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5730\u5740</span></button>\n      </div>\n      <span class="sr-only" id="copy-feedback" role="status"></span>\n  </section>\n  <div class="table-wrap settings-row"><div><strong>\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</strong><p>\u67E5\u770B\u9884\u7F6E\u89C4\u5219\uFF0C\u767B\u8BB0\u5176\u4ED6\u5BA2\u6237\u7AEF\u7684\u6388\u6743\u56DE\u8C03\u3002</p></div><button class="button" type="button" id="open-callbacks" aria-haspopup="dialog">\u914D\u7F6E\u56DE\u8C03</button></div></section>\n\n  <section data-section="devices" @@DEVICES_HIDDEN@@ class="devices" aria-labelledby="devices-title">\n    <div class="summary-cards">', '</div>\n    <div class="table-wrap fleet-table">\n    <div class="toolbar">\n      <div class="filters" role="group" aria-label="\u6309\u63A5\u5165\u72B6\u6001\u7B5B\u9009">\n        <button type="button" data-filter="all" aria-pressed="true">\u5168\u90E8 <span class="count">@@COUNT_ALL@@</span></button>\n        <button type="button" data-filter="active" aria-pressed="false">\u5DF2\u6CE8\u518C <span class="count">@@COUNT_ACTIVE@@</span></button>\n        <button type="button" data-filter="pending" aria-pressed="false">\u5F85\u63A5\u5165 <span class="count">@@COUNT_PENDING@@</span></button>\n        <button type="button" data-filter="disabled" aria-pressed="false">\u505C\u7528 <span class="count">@@COUNT_DISABLED@@</span></button>\n      </div>\n      <label class="search">\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <span class="sr-only">\u641C\u7D22\u8BBE\u5907\u540D\u79F0\u6216 ID</span>\n        <input type="search" id="device-search" placeholder="\u641C\u7D22\u8BBE\u5907\u540D\u79F0\u6216 ID" autocomplete="off">\n      </label>\n    </div>\n      <table role="table" aria-labelledby="devices-title">\n        <thead role="rowgroup"><tr role="row"><th scope="col">\u8BBE\u5907\u540D\u79F0 / ID</th><th scope="col">\u6CE8\u518C\u72B6\u6001</th><th class="platform-col" scope="col">\u64CD\u4F5C\u7CFB\u7EDF</th><th scope="col">\u64CD\u4F5C</th></tr></thead>\n        <tbody role="rowgroup">@@ROWS@@</tbody>\n      </table>\n      <div class="empty" id="empty" hidden>\n        <svg class="icon" aria-hidden="true"><use href="#search"></use></svg>\n        <strong role="status">\u672A\u627E\u5230\u5339\u914D\u7684\u8BBE\u5907</strong>\n        <p>\u8BD5\u8BD5\u5176\u4ED6\u8BBE\u5907\u540D\u79F0\uFF0C\u6216\u6E05\u9664\u7B5B\u9009\u3002</p>\n        <button class="button" type="button" id="clear-filters">\u6E05\u9664\u7B5B\u9009</button>\n      </div>\n    </div>\n    <p class="note" role="status" id="device-list-feedback"></p>\n  </section>\n</main><div id="console-subview" @@SUBVIEW_HIDDEN@@>@@PANEL@@</div></div>\n\n<dialog id="add-dialog" aria-labelledby="add-title" data-any-system="@@ANY_SYSTEM@@" data-browser-consent="@@BROWSER_CONSENT@@">\n  <header class="dialog-head">\n    <h2 id="add-title">\u6DFB\u52A0\u8BBE\u5907</h2>\n    <button type="submit" form="close-add" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <form id="add-device-form" method="post" action="/admin/devices/reserve">\n    <div class="dialog-body">\n      <label>\u8BBE\u5907\u540D\u79F0 <input name="name" required autofocus placeholder="\u4F8B\u5982\uFF1A\u529E\u516C\u5BA4 Mac" autocomplete="off" aria-describedby="name-hint"></label>\n      <p class="field-hint" id="name-hint">\u6700\u591A 20 \u4E2A\u5B57\uFF0C\u53EF\u7A0D\u540E\u5B89\u88C5\u3002</p>\n      <p class="feedback" id="add-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button primary" type="submit" id="save-device">\u6DFB\u52A0\u5E76\u5B89\u88C5</button><button class="button" type="submit" id="save-for-later">\u7A0D\u540E\u5B89\u88C5</button></div>\n  </form>\n  <form id="setup-device-form" method="post" action="/admin/devices" hidden>\n    <div class="dialog-body">\n      <p><strong id="setup-device-target"></strong> \xB7 <span id="setup-device-hint">\u9009\u62E9\u76EE\u6807\u8BBE\u5907\u7684\u64CD\u4F5C\u7CFB\u7EDF\u3002</span></p>\n      <input type="hidden" name="deviceId">\n      <fieldset class="platform-tabs"><legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend>@@PLATFORMS@@</fieldset>\n      <label id="browser-consent" hidden><span><input id="confirm-browser" name="browserConsent" type="checkbox" value="1" disabled> \u6B64\u5B89\u88C5\u5305\u5305\u542B\u6D4F\u89C8\u5668\u5DE5\u5177\uFF0C\u6211\u786E\u8BA4\u5141\u8BB8\u4F7F\u7528\u3002</span></label>\n      <p class="feedback" id="setup-feedback" role="status" hidden></p>\n    </div>\n    <div class="dialog-actions"><button class="button" type="submit" form="close-add">\u5173\u95ED</button><button class="button primary" type="submit" id="issue-command">\u751F\u6210\u5B89\u88C5\u547D\u4EE4</button></div>\n  </form>\n  <section class="dialog-body device-command" id="device-command-result" aria-labelledby="add-title" hidden>\n    <p id="device-command-target"></p>\n    <fieldset class="platform-tabs" id="device-command-systems" hidden><legend class="sr-only">\u76EE\u6807\u7CFB\u7EDF</legend></fieldset>\n    <div id="command-content" hidden>\n      <textarea id="device-command" aria-label="\u5B89\u88C5\u547D\u4EE4" readonly rows="3" wrap="soft" spellcheck="false"></textarea>\n      <button class="button primary" type="button" id="copy-device-command"><svg class="icon" aria-hidden="true"><use href="#copy"></use></svg><span>\u590D\u5236\u5B89\u88C5\u547D\u4EE4</span></button>\n    </div>\n    <p id="device-command-feedback" role="status" hidden></p>\n    <p id="device-command-expiration" class="field-hint"></p>\n    <p id="device-enrollment-progress" class="feedback" role="status" tabindex="-1"></p>\n  </section>\n  <form id="close-add" method="dialog"></form>\n</dialog>\n\n<dialog id="device-dialog" aria-labelledby="device-dialog-title">\n  <span class="risk-mark" id="risk-mark" hidden><svg class="icon" aria-hidden="true"><use href="#risk"></use></svg></span>\n  <header class="dialog-head">\n    <h2 id="device-dialog-title"></h2>\n    <button type="submit" form="close-detail" class="dialog-close" aria-label="\u5173\u95ED\u5F39\u5C42"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div class="dialog-body">\n    <p id="device-summary"></p>\n    <dl class="detail" id="device-details">\n      <dt>\u6700\u540E\u68C0\u67E5</dt><dd id="checked-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u6CE8\u518C</dt><dd id="registration-detail"></dd>\n      <dt>Cloudflare Tunnel</dt><dd id="tunnel-detail">\u672A\u67E5\u8BE2</dd>\n      <dt>\u5F00\u53D1\u5DE5\u5177\u76EE\u5F55</dt><dd id="mcp-detail">\u672A\u67E5\u8BE2</dd>\n      <dt id="browser-label" hidden>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd id="browser-detail" hidden></dd>\n      <dt id="release-label" hidden>\u5B89\u88C5\u5305\u7248\u672C</dt><dd id="release-detail" hidden></dd>\n      <dt id="client-label" hidden>\u5BA2\u6237\u7AEF</dt><dd id="client-detail" hidden></dd>\n      <dt id="revocation-label" hidden>\u64A4\u9500</dt><dd id="revocation-detail" hidden></dd>\n    </dl>\n    <p class="feedback" id="device-feedback" role="status"></p>\n  </div>\n  <form class="dialog-actions" id="close-detail" method="dialog">\n    <button class="button" id="detail-dismiss">\u5173\u95ED</button>\n    <button class="button" id="detail-recheck" type="button" hidden>\u91CD\u65B0\u68C0\u67E5</button>\n    <button class="button danger" id="detail-confirm" type="button" disabled hidden></button>\n  </form>\n</dialog>\n\n<dialog id="callback-dialog" aria-labelledby="callback-title">\n  <header class="dialog-head">\n    <h2 id="callback-title">\u5BA2\u6237\u7AEF\u56DE\u8C03\u914D\u7F6E</h2>\n    <button type="submit" form="close-callbacks" class="dialog-close" aria-label="\u5173\u95ED\u56DE\u8C03\u914D\u7F6E"><svg class="icon" aria-hidden="true"><use href="#close"></use></svg></button>\n  </header>\n  <div id="callback-overview">\n    <div class="dialog-body callback-body">\n      <div class="callback-current">\n        <div><strong>\u5BA2\u6237\u7AEF\u6CE8\u518C</strong><p id="callback-summary"></p></div>\n        <span class="callback-tag" id="callback-state" hidden></span>\n      </div>\n      <p id="callback-feedback" role="status" tabindex="-1" hidden></p>\n      <button id="retry-callback-read" class="button" type="button" hidden>\u91CD\u65B0\u8BFB\u53D6</button>\n      <section class="callback-section" id="callback-configured" aria-labelledby="callback-configured-title" hidden>\n        <h3 id="callback-configured-title">\u5DF2\u8BBE\u56DE\u8C03\u5730\u5740</h3>\n        <ul id="callback-configured-list" class="callback-clients"></ul>\n      </section>\n      <section class="callback-section" id="callback-presets">\n        <details><summary>\u67E5\u770B\u9884\u7F6E\u56DE\u8C03\u89C4\u5219</summary>\n        <ul class="callback-clients">\n          <li class="callback-client" data-preset-name="ChatGPT">\n            <strong class="callback-identity">ChatGPT</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u56FA\u5B9A\u56DE\u8C03\uFF08\u9002\u7528\u65F6\uFF09</span><code data-callback-address>https://chatgpt.com/connector_platform_oauth_redirect</code></div>\n              <div class="callback-uri"><span>\u6309\u8FDE\u63A5\u5206\u914D \xB7 \u6A21\u677F</span><code data-callback-address="https://chatgpt.com/connector/oauth/*">https://chatgpt.com/connector/oauth/{callback_id}</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="Claude">\n            <strong class="callback-identity">Claude</strong>\n            <div class="callback-uri"><span>\u81EA\u5B9A\u4E49\u8FDE\u63A5\u5668</span><code data-callback-address>https://claude.ai/api/mcp/auth_callback</code></div>\n          </li>\n          <li class="callback-client" data-preset-name="Cursor">\n            <strong class="callback-identity">Cursor</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875\u4E0E Agents</span><code data-callback-address>https://www.cursor.com/agents/mcp/oauth/callback</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://localhost:8787/callback</code></div>\n              <div class="callback-uri"><span>\u539F\u751F\u534F\u8BAE</span><code data-callback-address>cursor://anysphere.cursor-mcp/oauth/callback</code></div>\n            </div>\n          </li>\n          <li class="callback-client" data-preset-name="VS Code">\n            <strong class="callback-identity">VS Code</strong>\n            <div class="callback-uris">\n              <div class="callback-uri"><span>\u7F51\u9875</span><code data-callback-address>https://vscode.dev/redirect</code></div>\n              <div class="callback-uri"><span>\u684C\u9762</span><code data-callback-address>http://127.0.0.1:33418/</code></div>\n            </div>\n          </li>\n        </ul></details>\n        <ul class="callback-clients"><li class="callback-client">\n            <div class="callback-identity"><strong>WorkBuddy</strong><span class="callback-tag" id="workbuddy-state" data-tone="pending">\u5F85\u914D\u7F6E</span></div>\n            <div class="callback-unset"><button class="button" type="button" id="add-workbuddy" data-client="WorkBuddy" disabled>\u586B\u5199 WorkBuddy \u56DE\u8C03</button></div>\n          </li>\n        </ul>\n      </section>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="submit" form="close-callbacks">\u5173\u95ED</button>\n      <button class="button primary" type="button" id="add-client" disabled><svg class="icon" aria-hidden="true"><use href="#plus"></use></svg>\u6DFB\u52A0\u5176\u4ED6\u5BA2\u6237\u7AEF</button>\n    </div>\n  </div>\n  <form id="callback-form" novalidate hidden>\n    <div class="dialog-body callback-body">\n      <label for="callback-name">\u5BA2\u6237\u7AEF\u540D\u79F0</label>\n      <input id="callback-name" name="clientName" type="text" autocomplete="off" maxlength="64" required aria-describedby="callback-name-error">\n      <p id="callback-name-error" class="field-error" role="alert" hidden></p>\n      <label for="callback-url">\u56DE\u8C03\u5730\u5740</label>\n      <input id="callback-url" name="redirectUri" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="2048" placeholder="https://client.example/oauth/callback" required aria-describedby="callback-url-hint callback-url-error">\n      <p id="callback-url-hint" class="field-hint">\u586B\u5199\u5BA2\u6237\u7AEF\u63D0\u4F9B\u7684\u5B8C\u6574 URL\uFF0C\u4E0D\u542B\u6388\u6743\u7801\u6216\u5BC6\u94A5\u3002</p>\n      <p id="callback-url-error" class="field-error" role="alert" hidden></p>\n      <p id="callback-save-error" class="field-error" role="alert" hidden></p>\n    </div>\n    <div class="dialog-actions">\n      <button class="button" type="button" id="cancel-callback">\u53D6\u6D88</button>\n      <button class="button primary" id="save-callback" type="submit">\u4FDD\u5B58</button>\n    </div>\n  </form>\n  <form id="close-callbacks" method="dialog"></form>\n</dialog>\n\n', '\n<script nonce="@@NONCE@@">@@SCRIPT@@<\/script>\n</body>\n</html>\n'])), consoleStyles, consoleLogoUrl, [["light", "\u6D45\u8272"], ["dark", "\u6DF1\u8272"], ["system", "\u8DDF\u968F\u7CFB\u7EDF"]].map(([v, n]) => `<button type="button" data-theme-option="${v}" aria-pressed="${v === "system"}"><span class="minipic" aria-hidden="true"><i></i><i></i></span>${n}</button>`).join(""), [["active", "\u5DF2\u6CE8\u518C", "monitor", "ACTIVE"], ["pending", "\u5F85\u63A5\u5165", "clock", "PENDING"], ["disabled", "\u5DF2\u505C\u7528", "pause", "DISABLED"]].map(([v, n, icon2, token]) => `<button type="button" data-filter="${v}" aria-pressed="false"><span>${n}<strong class="count">@@COUNT_${token}@@</strong></span><svg class="icon" aria-hidden="true"><use href="#${icon2}"></use></svg></button>`).join(""), upgradeDialog);
 
 // ../cloud/upgrade-feed-migration.mjs
 var legacyPreviewFeed = "https://raw.githubusercontent.com/Erlin0220/nodrelay-downloads/refs/heads/macos-preview/updates/";
@@ -14280,57 +14280,6 @@ async function refreshMarket(db, request = fetch) {
 }
 __name(refreshMarket, "refreshMarket");
 
-// ../cloud/market-styles.mjs
-var marketStyles = `
-.workspace main.market {width:min(1160px,calc(100% - 64px));margin:26px auto 68px}
-.market a{text-decoration:none}.market .muted,.market-meta,.market-notice{color:var(--secondary)}
-.market-hero{isolation:isolate;position:relative;text-align:center;padding:38px 12px 26px;overflow:hidden}
-.market-hero:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle,color-mix(in srgb,var(--active) 30%, transparent) 1px,transparent 1.5px) 0 0/10px 10px;mask-image:radial-gradient(ellipse 64% 84% at 50% 2%,black,transparent)}
-.market-overline{display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border:1px solid var(--line);border-radius:20px;background:var(--surface);font:600 10px/1.5 ui-monospace,monospace;letter-spacing:1.5px;color:var(--active)}
-.market-overline:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-.market-hero h1{font-size:clamp(38px,4.8vw,64px);line-height:1.12;letter-spacing:-.07em;margin:13px 0 23px}
-.market-search{display:flex;align-items:center;gap:12px;width:min(530px,100%);margin:auto;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:0 15px;box-shadow:0 6px 20px #14251a09}
-.market-search:focus-within{outline:2px solid var(--active)}.market-search input{flex:1;min-width:0;padding:13px 0;border:0;background:none;color:var(--text);font:inherit;outline:0}
-.market-search svg{flex:none;color:var(--secondary)}.market-search button{border:0;background:none;color:var(--secondary);padding:6px}
-.market-filters,.market-tools,.market-person,.market-foot,.market-state,.market-select,.market-pills,.market-info,.market-sources{display:flex;align-items:center;gap:10px}
-.market-filters{justify-content:center;flex-wrap:wrap;gap:6px;margin:18px 0 0}.market-filters a{border-radius:30px;padding:5px 13px;border:1px solid var(--line);background:var(--surface);color:var(--secondary);font-size:13px}
-.market-filters a[aria-current]{background:var(--text);border-color:var(--text);color:var(--surface)}
-.market-tools{justify-content:space-between;align-items:center;flex-wrap:wrap;margin:20px 0 14px}.market-tools h2,.market-panel h2{margin:0;font-size:22px;letter-spacing:-.7px}
-.market-tools h2 small{font:500 13px ui-monospace,monospace;color:var(--secondary);margin-left:7px}.market-select{font-size:13px;color:var(--secondary);flex-wrap:wrap}
-.market-select select{max-width:100%;background:var(--surface);color:var(--text);border:1px solid var(--line);padding:7px 10px;border-radius:8px;font:inherit}
-.market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.market-card{min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:14px;display:flex;flex-direction:column;overflow:hidden}
-.market-card:hover{border-color:color-mix(in srgb,var(--active) 45%,var(--line));box-shadow:0 6px 20px #152b2010}
-.market-cover{display:block;color:inherit;padding:20px 18px 16px;flex:1}.market-cover:hover h3{text-decoration:underline;text-underline-offset:4px}
-.market-icon{display:inline-grid;place-items:center;flex:none;width:46px;height:46px;border-radius:12px;background:#e5eef8;color:#326088}.market-icon svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.market-icon.time{color:#876137;background:#f7ecd8}.market-icon.shardbrowser{background:#13171f}.market-icon img{width:100%;height:100%;object-fit:contain;border-radius:inherit}
-.market-icon.spec-kit{background:#e8e5f5;color:#625986}.market-icon.open-code-review{background:#dceee4;color:#35674b}
-.market-person>div{min-width:0}.market-person h3{font-size:18px;letter-spacing:-.5px;margin:0;overflow-wrap:anywhere}.market-meta{font-size:12px;margin:3px 0 0}
-.market-cover p,.market-summary{font-size:14px;line-height:1.65;color:var(--secondary);margin:18px 0}.market-pills{gap:6px;flex-wrap:wrap}.market-pill{font:500 11px/1.5 ui-monospace,monospace;border:1px solid var(--line);padding:2px 7px;border-radius:20px;color:var(--secondary)}
-.market-foot{border-top:1px solid var(--line);background:color-mix(in srgb,var(--inset) 45%,var(--surface));min-height:54px;padding:9px 16px;justify-content:space-between;flex-wrap:wrap}
-.market-foot form,.market-panel form{margin:0}.market-state{font-size:12px;color:var(--secondary);gap:6px}.market-state:before{content:"";width:6px;height:6px;background:currentColor;border-radius:50%}
-.market-state[data-state=installed]{color:var(--active)}.market-state[data-state=failed]{color:light-dark(#993c30,#ffb5a8)}.market .button{font-size:13px;min-height:32px;line-height:1.35}.market-empty{padding:32px 14px;text-align:center;color:var(--secondary);border:1px dashed var(--line);border-radius:12px}
-.market-notice:empty{display:none}.market-notice{margin:10px 0}.market-back,.market-sources a{font-size:13px;color:var(--active)}
-.market-detail{padding:32px 0 25px;border-bottom:1px solid var(--line)}.market-detail .market-icon{width:64px;height:64px;border-radius:16px}.market-detail .market-icon svg{width:36px;height:36px}
-.market-detail h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.055em;margin:0;line-height:1.12}.market-detail .market-info{align-items:flex-start;gap:16px}.market-summary{font-size:16px;margin-bottom:0}
-.market-columns{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(255px,1fr);gap:26px;align-items:start;margin-top:25px}.market-panel{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:22px;min-width:0}.market-panel h2{font-size:18px;margin-bottom:15px}
-.market-info-list{margin:0 0 17px;padding:0;list-style:none}.market-info-list li{padding:9px 0;border-bottom:1px solid var(--rule);font-size:14px}.market-sources{flex-wrap:wrap}.market-sources a{text-decoration:underline;text-underline-offset:3px}
-.market-installbox .market-select{display:grid}.market-installbox .market-state{margin:14px 0}.market-installbox button,.market-installbox .button{width:100%}.market-installbox select{width:100%}
-.market-installbox label:has(input[readonly]){display:grid;gap:6px;color:var(--secondary);font-size:13px}.market-installbox input[readonly]{width:100%;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--inset);color:var(--text);font:13px ui-monospace,monospace}
-.market-actions{display:flex;align-items:center;gap:12px}.market-actions>a{font-size:13px;color:var(--secondary)}.market-actions>a:hover{color:var(--active);text-decoration:underline}
-.install-methods{display:flex;position:relative;gap:3px;border:0;margin:0 0 12px;padding:3px;border-radius:9px;background:var(--inset)}
-.install-methods legend,.install-methods input{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}
-.install-methods label{flex:1;margin:0;text-align:center;cursor:pointer}.install-methods span{display:block;border-radius:7px;padding:7px;color:var(--secondary);font-size:13px}
-.install-methods input:checked+span{color:var(--text);background:var(--surface);box-shadow:0 1px 4px #10251a24;font-weight:600}.install-methods input:focus-visible+span{outline:2px solid var(--active)}
-.agent-install{display:none}.market-installbox:has([value=agent]:checked) .direct-install{display:none}.market-installbox:has([value=agent]:checked) .agent-install{display:grid;gap:9px}
-.agent-install label,.agent-install [role=status]{color:var(--secondary);font-size:13px}.agent-install [role=status]:empty{display:none}
-.agent-path{font-size:13px;color:var(--secondary)}.agent-path code{display:block;color:var(--text);overflow-wrap:anywhere}
-.agent-install textarea{width:100%;box-sizing:border-box;resize:vertical;border:1px solid var(--line);border-radius:8px;background:var(--inset);color:var(--text);font:13px/1.6 ui-monospace,monospace;padding:10px;overflow-wrap:anywhere}
-@media(max-width:1180px){.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:760px){.workspace main.market{width:calc(100% - 30px);margin:12px auto 40px}.market-hero{padding:24px 4px 15px}.market-columns{display:flex;flex-direction:column}.market-panel{width:100%}.market-installbox{order:-1}}
-@media(max-width:560px){.market-grid{grid-template-columns:1fr}.market-tools h2{font-size:20px}.market-cover{padding:16px}.market-hero h1{font-size:38px}.market-card .market-cover p{margin:12px 0}.market-select{gap:5px}.market-filters a{padding:5px 10px}}
-`;
-
 // ../cloud/shardbrowser-icon.mjs
 var shardBrowserIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAISklEQVR42u1dXXLTSBCeaZunJbXmBOs9AbnBmhPEFFC1T0ScIL4B4QRkTxAnT1tFKMwJECfAPgHhBIQiPCXWbI9sFkj0M5LmX90vUEWQY32fpvv7eno0ZBS9jiHdAiIABRGAgghAQQSgIAJQEAEoiAAURAAKIgAFEYCCCEBBBKAgAlBEGtCHL/kkEbt/J2JMcN8OHjvwWZa9wb9uwOdiscMHz+ZzfkHQ92AF+AV8GYJPL0X2LknEiKCPnACPEzH5BfzvHBBsV5JArg4Ef09qgCIS4OpAJAitBshzuli/xKVcPt0X+MsfnZ0OXpT9/KOna1FzyQsAePBqzpe0AngeMm/nOX0DvowRonv4JLlOKv7bquay8prvtumCCOBzfGPraXFO5wcV/y1VuPRI5OmgkkhEAPcVPX9els9LvxyIZYPrH/eRBBByRX/j3wtisGxIst6RIIwVIFvPapArJEBe3HH2pSkJHu9joUkE8COkhSsY36sRdqVpgAuxbCETZ4/218dEAA/iKstmtYAxfr9C6aatPliwpA8kCCEF7Cv8zLi02QOQtv7knATXb2K2jsFv4ycvyJRu/hUrVgN3Getm8kTePwC/LdtKja9UCG47f6uu1nGsJACfpV+Vxr/taVf6+ksd/YMYSeAtAdCdS5qla/5XhSGU6moifc2yjzE1kcBX6adY/N1qFjENhhBT6B/EQgIvCXDd8On/sQroM4T6QgIvCYBdvoN2aYNpNYTUSBC2dQwhS79bIHOm3xCqJUHY/QMIWvoVFGmlVXoXQyjiJhL4tuOnifQriktThpACCXAH0gERoNsu3pmGi0wqDKFPhr/CUWj9A/Bpy1cb6VeQCCas2w6hrhVsUE0kbwhwqePpr+kMcmBLSzImGBKAR9JvX9OlRmWdQc4gtfiFEtxY8sF36xg8kn5jXddbs/Wk1BCyPH/ge//ACwJkQtvT/70i361oGr0nEnhEgNxO/bHXn+mZdqmyaI0YQipNpA8+WscQhfRr0BkUAK6mgMY+9g8gDunHlLeK79iQggE1kSAG6Veytuw6NISCGUeDSKRfUWU5cWoIBTKO5owAjxIx1Sn9vDSEAmgiuVsBhPHGybhcesHSo5lHpyQAZ1u+NEu/ovjKWOFnnM3tS8HaTqIj6xgcTfsc2vgcnmVVhtBb5tc2KCf9A3Ak/fYs3dVJRR2wYMy7vXDWSWCdAJcsa73lS2e8mg/njuWgF+NoYH+/Pzuwdy/LHcHtNrEZ8zEsjqNBTNKvabyec5kGTnw9ycwGCSAy6Xczapf416eDxHcSmDzmFmKTfjcq/XOllcBzElwZ7CSCTwc9GKCAst7PSQDw0MvC0GATiduSfnKo0nb1fwfgz3/n/Jy12KGExeq0/mga66H9YEuweMbfyPLy/74N+N8l4tnpcLoDcA8ni5/l6UHvbKE342hWVgAcmPhou/rn+KTotnxzFbOZO5CE/sMlEyQxt16G3wTID3pA1lq+P/9gTp8Zn2LCaWRMFfJpvB8qCcwT4On1wmYulUs/Lt8T280tuRPZRd2AAB5WHZjtlADyxlxtij9bscK8PXH9RpBtqpji3Z2iHfm7BRbMX58MnnlHAMz9R4xZs36Vwd+okvUeZ3yMd0CeOj7igp0L9A0ABiudVfb2tTUyTUyMpoqWJOCRSD8l8DcHT62fKxhS53jWwEKOlJ8d87c6V8RrhitDJqa1fQpLJOAmp33kRgcfwM9TkcA2a1snEl82hUv54g4MWkvLogdEymO8RxOdqQKJu7zL4YFqGjRGADkX13XWXyFOEPxZ1ZfdqpA3ulYieYPxj5RzONGZKjRLTGUVxAOWfidbD9/lKnTBZKoQIt2BwVtdxacGiXmB9+aeMwJg8TdnJrd8+wF+UapIMc0s0K59r2t1aCUx0bXEWmDkhAAWpJ+f4FsqJFUkJoL6Ar2BQycEePx0fYiy6nnPwbdSSJZIzEYuKDew/H82JP3CBd9SIencCDIIQC348jUv8k0fLLwwUkg6IYAh6VcLfr6VWrCExRAGCkkrBDAk/foFvqVC0ggBdEs/lVZn5OBbKSS5Rt//M4EfXiEJvh30QOAz5d3CsuhFGfihyzgZ92nLVx34+Uojspd9B7/k5j3cDrrYXQF0nfGnAr4ckiDwm09CV8WQeXDGnyr4FrqLIb/54cJ6DaDjjD8CX0sp/+Uug7l1AnQ944/A7w689ErucNht6yByJ9IPf3HgYkbgt4pVLv8AFjrmHobWpV8OPkyqtCuBf+MpR/NHvvtwwAapLgOoMwFanfGnAL6sK75uLOVRn59yXJoX8ik33Q8YdtiUMDYBftZP8D/lh1ci4PIoW5sdwWH7gx44gd9xgokBX8iXWLjcE8CNb/ki8H9+yvPOnu2nXOsK0OiMv56Dn59FCDwdMljoLt6crACNpn36Cf5qm8vTNr689yuA8hl/SuDL7WPY2AkZfPye+E7iVB46aUKieUcAxTP+Vgh+Ug8+Pw5ZouW7dDw7c9goARSlX+2cXnDg/2TE/MYGC1+KN+sE4Nk6EdUlQzTgb94sxlMbRkwwBKgZSwodfGdGTEg1wKeSqdUgwffFiAknBQA7wiLwZVPw5SvVs4wd+WTEhCLRvPMBtgcoylpASjecZIHDSvAdb94MwYgJigBNwhH4WnvllAJ8Bz8CIyY6AlgA31qvnAjgA/iRGzHRECA/E1AT+CTRwlwB9smI6TcBRm0kGj3l8RDgpGYVICMmZgLIAxsvs/X4/yNQSaKxXhpBm0MO2YiMmJ47gRQ9dgIpiAAURAAKIgAFEYCCCEBBBKAgAlAQASiIABREAAoiAAURgIIIQOFB/AdyYnvZE0nKsAAAAABJRU5ErkJggg==";
 
@@ -14388,7 +14337,7 @@ __name(agentInstallGuide, "agentInstallGuide");
 var url = "/admin/market";
 var categories = { all: "\u5168\u90E8", mcp: "MCP \u5DE5\u5177", cli: "\u547D\u4EE4\u884C\u5DE5\u5177", app: "\u684C\u9762\u5E94\u7528", installed: "\u5DF2\u5B89\u88C5" };
 var categoryOf = /* @__PURE__ */ __name((entry) => entry.cli ? "cli" : entry.kind === "MCP" ? "mcp" : "app", "categoryOf");
-var browser = `
+var marketClient = `function mountMarket(signal, { hydrate=false, checkCatalog=false, navigate, catalogChecked, reload }) {
 const results=document.querySelector('#market-results');
 const address=new URL(location.href);
 let follow=address.searchParams.get('follow');
@@ -14400,19 +14349,20 @@ if(!address.searchParams.has('deviceId')&&!devicePicker.value){
   let saved;
   try{saved=localStorage.getItem('nodrelay-market-device');}catch{}
   if(saved&&Array.from(devicePicker.options).some(option=>option.value===saved)){
-    address.searchParams.set('deviceId',saved);location.replace(address);
+    address.searchParams.set('deviceId',saved);navigate(address,true);return;
   }
 }
 let timer, reading;
 function schedule(){
   clearTimeout(timer);
-  if(document.hidden||reading)return;
+  if(signal.aborted||document.hidden||reading)return;
   const destination=follow&&results.querySelector('[data-service-link="'+CSS.escape(follow)+'"]');
-  if(destination){follow=null;location.replace(destination.href);return;}
+  if(destination){follow=null;navigate(new URL(destination.href),true);return;}
   if(results.querySelector('[data-pending]'))timer=setTimeout(poll,2500);
 }
-async function poll(restore=false,url=location.href,push=false){
+async function poll(restore=false){
   if(reading||document.hidden)return;
+  hydrate=false;
   const controller=reading=new AbortController();
   let resume=true;
   try{
@@ -14430,36 +14380,34 @@ async function poll(restore=false,url=location.href,push=false){
         return;
       }
     }
-    const response=await fetch(url,options);
+    const response=await fetch(location.href,options);
     if(!response.ok)throw new Error();
     const {fragment,header,revision}=await response.json();
     controller.signal.throwIfAborted();
-    if(revision!==Number(results.dataset.revision)){location.assign(url);return;}
-    if(header&&restore){
-      const searchFocused=document.activeElement.closest('.market-search');
-      document.querySelector('.market-hero').outerHTML=header;
-      if(searchFocused)document.querySelector('.market-search input[type=search]').focus({preventScroll:true});
+    if(revision!==Number(results.dataset.revision)){reload();return;}
+    if(header&&restore&&document.querySelector('.market-hero')){
+      const hero=document.querySelector('.market-hero'), input=hero.querySelector('input[type=search]');
+      const value=input.value, focused=document.activeElement===input, start=input.selectionStart, end=input.selectionEnd;
+      hero.outerHTML=header;
+      const next=document.querySelector('.market-search input[type=search]');next.value=value;
+      if(focused){next.focus({preventScroll:true});next.setSelectionRange(start,end);}
     }
     const focused=document.activeElement===results.querySelector('#mk-device');
     results.innerHTML=fragment;
     if(focused)results.querySelector('#mk-device').focus({preventScroll:true});
-    if(push)history.pushState(null,'',url);
     document.querySelector('#market-feedback').textContent='';
   }catch{
-    if(!controller.signal.aborted){document.querySelector('#market-feedback').textContent='\u672A\u80FD\u6838\u5BF9\u8FDB\u5EA6\uFF0C\u8BF7\u5237\u65B0\u67E5\u770B\u3002';resume=false;}
+    if(!controller.signal.aborted){
+      for(const label of results.querySelectorAll('[data-reading]'))label.textContent=label.classList.contains('market-empty')?'\u5B89\u88C5\u8BB0\u5F55\u672A\u80FD\u52A0\u8F7D\u3002':'\u72B6\u6001\u672A\u786E\u8BA4';
+      const feedback=document.querySelector('#market-feedback'),retry=document.createElement('button');
+      retry.type='button';retry.className='button';retry.textContent='\u91CD\u8BD5';
+      retry.onclick=()=>{retry.disabled=true;void poll(true);};
+      feedback.replaceChildren('\u672A\u80FD\u8BFB\u53D6\u8BBE\u5907\u72B6\u6001\u3002 ',retry);resume=false;
+    }
   }finally{if(reading===controller){reading=undefined;if(resume)schedule();}}
 }
-function filter(url,push){
-  reading?.abort();reading=undefined;clearTimeout(timer);follow=null;interacting=true;
-  void poll(true,url,push);
-}
-document.addEventListener('click',event=>{
-  const link=event.target.closest('.market-filters a');
-  if(!link||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
-  event.preventDefault();filter(link.href,true);
-});
-window.addEventListener('popstate',()=>{if(document.querySelector('.market-hero'))filter(location.href,false);});
-document.addEventListener('change',e=>{if(e.target.id==='mk-device'){
+const market=results.closest('main');
+market.addEventListener('change',e=>{if(e.target.id==='mk-device'){
   follow=null;try{localStorage.setItem('nodrelay-market-device',e.target.value);}catch{}
   e.target.form.requestSubmit();
 }else if(e.target.name==='install-mode'){
@@ -14476,25 +14424,28 @@ results.addEventListener('click',async event=>{
   try{await navigator.clipboard.writeText(prompt.value);feedback.textContent='\u5DF2\u590D\u5236';}
   catch{prompt.focus();prompt.select();feedback.textContent='\u5DF2\u9009\u4E2D\u6307\u4EE4\uFF0C\u8BF7\u624B\u52A8\u590D\u5236\u3002';}
 });
-document.addEventListener('click',e=>{if(e.target.closest('a,button,select,input'))follow=null;});
-document.addEventListener('submit',e=>{
+market.addEventListener('click',e=>{if(e.target.closest('a,button,select,input')){follow=null;interacting=true;}});
+market.addEventListener('submit',e=>{
   follow=null;
-  if(e.target.matches('.market-search')){
-    e.preventDefault();const url=new URL(e.target.action);url.search=new URLSearchParams(new FormData(e.target));filter(url,true);return;
-  }
   if(e.target.method==='post'&&e.submitter){e.submitter.disabled=true;e.submitter.textContent=e.target.action.includes('/install?')?'\u6B63\u5728\u6838\u5BF9\u5B89\u88C5\u2026':'\u6B63\u5728\u6253\u5F00\u2026';}
 });
-window.addEventListener('pagehide',()=>{follow=null;interacting=true;clearTimeout(timer);reading?.abort();reading=undefined;});
-window.addEventListener('pageshow',e=>{if(e.persisted)void poll(true);});
-document.addEventListener('visibilitychange',()=>{if(document.hidden)follow=null;schedule();});schedule();
-document.addEventListener('input',()=>{interacting=true;},{once:true});
-document.addEventListener('submit',()=>{interacting=true;},{once:true});
-if(!follow&&!results.querySelector('[data-pending]')&&results.dataset.sync==='true'){
-  fetch('/admin/market/catalog',{redirect:'error',cache:'no-store'}).then(async response=>{
+function stop(){follow=null;interacting=true;clearTimeout(timer);reading?.abort();reading=undefined;}
+signal.addEventListener('abort',stop,{once:true});
+window.addEventListener('pagehide',stop,{signal});
+window.addEventListener('pageshow',e=>{if(e.persisted)void poll(true);},{signal});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)follow=null;if(hydrate&&!document.hidden)void poll(true);else schedule();},{signal});schedule();
+market.addEventListener('input',()=>{interacting=true;},{once:true});
+market.addEventListener('submit',()=>{interacting=true;},{once:true});
+if(hydrate)void poll(true);
+if(!follow&&!results.querySelector('[data-pending]')&&checkCatalog){
+  fetch('/admin/market/catalog',{redirect:'error',cache:'no-store',signal}).then(async response=>{
     if(!response.ok)throw Error();
     const {revision}=await response.json();
-    if(revision>Number(results.dataset.revision)&&!interacting&&!document.hidden)location.replace(location.href);
-  }).catch(()=>{document.querySelector('#market-feedback').textContent='\u76EE\u5F55\u672A\u80FD\u66F4\u65B0\uFF0C\u6B63\u5728\u663E\u793A\u5DF2\u4FDD\u5B58\u7684\u5DE5\u5177\u3002';});
+    signal.throwIfAborted();
+    if(revision<=Number(results.dataset.revision))catalogChecked();
+    else if(!interacting&&!document.hidden){catalogChecked();reload();}
+  }).catch(()=>{if(!signal.aborted)document.querySelector('#market-feedback').textContent='\u76EE\u5F55\u672A\u80FD\u66F4\u65B0\uFF0C\u6B63\u5728\u663E\u793A\u5DF2\u4FDD\u5B58\u7684\u5DE5\u5177\u3002';});
+}
 }`;
 async function rpc(devices, deviceId2, action, id2, signal, revision, ids) {
   const reply = await devices.gatewayRequest(deviceId2, "development", "tools/call", { name: localRpc, arguments: { action, id: id2, revision, ids } }, signal);
@@ -14558,16 +14509,16 @@ function icon(id2) {
   return '<span class="market-icon ' + escapeHtml(id2) + '" aria-hidden="true">' + (id2 === "shardbrowser" ? '<img src="' + shardBrowserIcon + '" alt="">' : '<svg viewBox="0 0 24 24">' + (Object.hasOwn(icons, id2) ? icons[id2] : '<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8m-4-4v8"/>') + "</svg>") + "</span>";
 }
 __name(icon, "icon");
-async function renderMarket(devices, upgrade, request, feed = baseline, sync = false) {
+async function renderMarket(devices, request, feed = baseline, { rows, directoryOnly = false } = {}) {
   const marketItems2 = feed.items;
   const params = new URL(request.url).searchParams, { item, category, q } = context(params, marketItems2);
-  const available = (await devices.list()).filter((d) => d.status === "active");
+  const available = (rows ?? await devices.list()).filter((d) => d.status === "active");
   const selected = params.has("deviceId") ? available.find((d) => d.id === params.get("deviceId")) : available.length === 1 ? available[0] : void 0;
   const view = { category, q, item, deviceId: selected?.id };
   const candidates = marketItems2.filter((row) => (!q || [row.name, row.repo, row.description, row.cli, categories[categoryOf(row)]].join(" ").toLowerCase().includes(q.toLowerCase())) && (category === "all" || category === "installed" || category === categoryOf(row)));
   const ids = item ? [item] : category === "installed" || ["unknown", "open-unknown"].includes(params.get("notice")) ? void 0 : candidates.map((row) => row.id);
   let status, protocol2, deviceTarget, warning = "";
-  if (selected) {
+  if (selected && !directoryOnly) {
     try {
       if (!ids || ids.length) ({ items: status, catalogProtocol: protocol2, target: deviceTarget } = await rpc(devices, selected.id, "market-status", void 0, request.signal, feed.revision, ids));
     } catch {
@@ -14584,7 +14535,7 @@ async function renderMarket(devices, upgrade, request, feed = baseline, sync = f
     const current = status?.find((row) => row.id === entry.id);
     const withdrawn = feed.withdrawn.find((w) => w.id === entry.id && w.version === (current?.version ?? entry.version));
     const state2 = withdrawn ? ["installed", "installed-withdrawn"].includes(current?.state) ? "installed-withdrawn" : "withdrawn" : status && protocol2 !== 1 ? "upgrade-required" : current?.state;
-    const label3 = state2 === "installing" ? current.step : labels[state2] ?? (selected ? "\u72B6\u6001\u672A\u786E\u8BA4" : "\u672A\u9009\u8BBE\u5907");
+    const label3 = state2 === "installing" ? current.step : labels[state2] ?? (selected ? directoryOnly ? "\u6B63\u5728\u8BFB\u53D6\u8BBE\u5907\u72B6\u6001\u2026" : "\u72B6\u6001\u672A\u786E\u8BA4" : "\u672A\u9009\u8BBE\u5907");
     const open2 = state2 === "installed" && categoryOf(entry) === "app";
     let action = "";
     if (open2 || state2 === "available" || state2 === "failed" || state2 === "detected") {
@@ -14597,13 +14548,13 @@ async function renderMarket(devices, upgrade, request, feed = baseline, sync = f
     return {
       state: state2,
       command: current?.command,
-      label: '<span class="market-state" data-state="' + escapeHtml(state2 ?? "unknown") + '"' + (state2 === "installing" ? ' data-pending="' + escapeHtml(entry.id) + '"' : "") + ">" + escapeHtml(label3) + "</span>",
+      label: '<span class="market-state" data-state="' + escapeHtml(state2 ?? "unknown") + '"' + (directoryOnly && selected && !state2 ? " data-reading" : "") + (state2 === "installing" ? ' data-pending="' + escapeHtml(entry.id) + '"' : "") + ">" + escapeHtml(label3) + "</span>",
       action,
       failure: ["withdrawn", "installed-withdrawn"].includes(state2) ? '<p class="market-notice">' + escapeHtml(withdrawn?.reason ?? current.reason) + "</p>" : state2 === "failed" ? '<p class="market-notice">' + escapeHtml(current.step) + "\uFF1A" + escapeHtml(current.reason) + "</p>" : ""
     };
   }
   __name(controls, "controls");
-  const detail = marketItems2.find((row) => row.id === item), nonce = crypto.randomUUID();
+  const detail = marketItems2.find((row) => row.id === item);
   let top = "", body = "";
   if (detail) {
     const entry = detail, c = controls(entry);
@@ -14632,21 +14583,198 @@ async function renderMarket(devices, upgrade, request, feed = baseline, sync = f
       cards += '<article class="market-card"><div class="market-cover"><h3>' + escapeHtml(row.unlisted.name) + "</h3><p>" + escapeHtml(note) + '</p></div><footer class="market-foot"><span>\u5DF2\u5B89\u88C5 \xB7 v' + escapeHtml(row.version) + "</span>" + link + "</footer></article>";
     }
     const known = category !== "installed" || Boolean(status);
-    const empty = !known ? "\u9009\u62E9\u5DF2\u8FDE\u63A5\u7684\u8BBE\u5907\u67E5\u770B\u5B89\u88C5\u8BB0\u5F55\u3002" : q ? "\u6CA1\u6709\u5339\u914D\u7684\u5DE5\u5177\u3002" : category === "installed" ? "\u8FD9\u53F0\u8BBE\u5907\u8FD8\u6CA1\u6709\u5B89\u88C5\u5E02\u573A\u5DE5\u5177\u3002" : category === "mcp" ? "\u6682\u65E0\u6536\u5F55\u7684 MCP \u5DE5\u5177\u3002" : category === "app" ? "\u6682\u65E0\u6536\u5F55\u7684\u684C\u9762\u5E94\u7528\u3002" : "\u6682\u65E0\u6536\u5F55\u7684\u5DE5\u5177\u3002";
-    body = '<div class="market-tools"><h2>' + (q ? "\u641C\u7D22\u7ED3\u679C" : category === "all" ? "\u7CBE\u9009\u5DE5\u5177" : categories[category]) + (known ? "<small>" + (found.length + removed.length) + "</small>" : "") + "</h2>" + picker + "</div>" + (cards ? '<div class="market-grid">' + cards + "</div>" : '<p class="market-empty">' + empty + "</p>");
+    const empty = !known ? selected ? directoryOnly ? "\u6B63\u5728\u8BFB\u53D6\u5B89\u88C5\u8BB0\u5F55\u2026" : "\u5B89\u88C5\u8BB0\u5F55\u672A\u80FD\u52A0\u8F7D\u3002" : "\u9009\u62E9\u5DF2\u8FDE\u63A5\u7684\u8BBE\u5907\u67E5\u770B\u5B89\u88C5\u8BB0\u5F55\u3002" : q ? "\u6CA1\u6709\u5339\u914D\u7684\u5DE5\u5177\u3002" : category === "installed" ? "\u8FD9\u53F0\u8BBE\u5907\u8FD8\u6CA1\u6709\u5B89\u88C5\u5E02\u573A\u5DE5\u5177\u3002" : category === "mcp" ? "\u6682\u65E0\u6536\u5F55\u7684 MCP \u5DE5\u5177\u3002" : category === "app" ? "\u6682\u65E0\u6536\u5F55\u7684\u684C\u9762\u5E94\u7528\u3002" : "\u6682\u65E0\u6536\u5F55\u7684\u5DE5\u5177\u3002";
+    body = '<div class="market-tools"><h2>' + (q ? "\u641C\u7D22\u7ED3\u679C" : category === "all" ? "\u7CBE\u9009\u5DE5\u5177" : categories[category]) + (known ? "<small>" + (found.length + removed.length) + "</small>" : "") + "</h2>" + picker + "</div>" + (cards ? '<div class="market-grid">' + cards + "</div>" : '<p class="market-empty"' + (!known && directoryOnly && selected ? " data-reading" : "") + ">" + empty + "</p>");
     if (category === "installed") {
       for (const row of status ?? []) if (row.state === "installing") body += '<span hidden data-pending="' + escapeHtml(row.id) + '"></span>';
     }
   }
   const fragment = `<p role="status" class="market-notice">${escapeHtml(warning)}</p>${body}`;
-  if (upgrade === null) return { fragment, header: detail ? void 0 : top, revision: feed.revision };
-  return { nonce, body: `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${detail ? escapeHtml(detail.name) + " \xB7 " : ""}\u5DE5\u5177\u5E02\u573A \xB7 Nodrelay</title><style nonce="${nonce}">${consoleStyles}${marketStyles}</style><script nonce="${nonce}">${restoreConsoleTheme}<\/script></head><body>${consoleShell("market", detail ? escapeHtml(detail.name) : "", ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`)}<main class="market">${top}<div id="market-results" data-sync="${sync}" data-revision="${feed.revision}">${fragment}</div><p id="market-feedback" role="status"></p></main></div>${upgradeDialog}<script nonce="${nonce}">${browser}<\/script><script nonce="${nonce}">${consoleUpgradeScript}<\/script></body></html>` };
+  return { fragment, header: top, revision: feed.revision, title: detail?.name ?? "\u5DE5\u5177\u5E02\u573A" };
 }
 __name(renderMarket, "renderMarket");
+
+// ../cloud/console-navigation.mjs
+var consoleNavigation = String.raw`
+{
+  const home = document.querySelector('#console-home');
+  const sub = document.querySelector('#console-subview');
+  const links = [...document.querySelectorAll('.rail nav a')];
+  const crumb = document.querySelector('.crumb');
+  let lifetime, directory, localDevice, marketChecked = false;
+
+  function heading(section, detail) {
+    const active = links.find(a => a.dataset.nav === section);
+    for (const link of links) {
+      if (link === active) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current');
+    }
+    crumb.replaceChildren('管理台 / ');
+    if (detail) {
+      const parent = document.createElement('a');
+      parent.href = active.href; parent.textContent = active.textContent; crumb.append(parent,' / ',detail);
+    } else crumb.append(active.textContent);
+    document.title = (detail || (section === 'devices' ? '设备管理' : active.textContent)) + ' · Nodrelay';
+  }
+  function pending(label) {
+    sub.innerHTML = '<main><div class="page-intro"><h1></h1></div><p class="scan-note tools-loading" role="status">正在加载…</p></main>';
+    sub.querySelector('h1').textContent = label;
+  }
+  function startMarket(signal, hydrate) {
+    mountMarket(signal,{hydrate,checkCatalog:!marketChecked,navigate:go,
+      catalogChecked:()=>{marketChecked=true;},
+      reload:()=>{directory=undefined;void show(new URL(location.href),true);}});
+  }
+  function showMarket(page, signal, cached=false) {
+    sub.innerHTML = '<main class="market">' + page.header + '<div id="market-results">' + page.fragment +
+      '</div><p id="market-feedback" role="status"></p></main>';
+    const results = sub.querySelector('#market-results');
+    results.dataset.revision = page.revision;
+    heading('market',page.title === '工具市场' ? '' : page.title);
+    startMarket(signal,cached || Boolean(sub.querySelector('#mk-device').value));
+  }
+  async function startLocal(signal,url) {
+    const [mcp,cli]=await Promise.all([import('/admin/local-mcp.js'),import('/admin/local-cli.js')]);
+    signal.throwIfAborted();
+    localDevice=url.searchParams.get('deviceId');
+    mcp.mount(signal);cli.mount(signal);
+  }
+  function failed(url) {
+    pending(url.pathname==='/admin/market' ? '工具市场' : '本机工具');
+    const msg=sub.querySelector('[role=status]'); msg.classList.remove('tools-loading'); msg.textContent='页面未能加载。 ';
+    const retry=document.createElement('button'); retry.className='button';retry.textContent='重试';
+    retry.onclick=()=>void show(url,true);msg.append(retry);
+    const reopen=document.createElement('a');reopen.href=url;reopen.textContent='重新打开页面';msg.append(' ',reopen);
+  }
+  async function show(url, force=false) {
+    const market = url.pathname === '/admin/market', local = url.pathname === '/admin/local-mcp';
+    const device = local && url.searchParams.get('deviceId');
+    if (device && device === localDevice && !force) return; // MCP/CLI tabs own their history.
+    localDevice = undefined;
+    lifetime?.abort();
+    lifetime = new AbortController();
+    const signal = lifetime.signal;
+    const view = url.searchParams.get('view');
+    const section = market ? 'market' : !local && ['gateway','settings'].includes(view) ? view : 'devices';
+    const wasDevices = !home.hidden && !home.querySelector('.devices').hidden;
+    heading(section, local ? '本机工具' : '');
+    home.hidden = market || local; sub.hidden = !home.hidden;
+    for (const el of home.querySelectorAll('[data-section]')) el.hidden = home.hidden || el.dataset.section !== section;
+    if (!home.hidden) {
+      sub.replaceChildren();
+      if (section === 'devices' && !wasDevices) void refreshDeviceList();
+      return;
+    }
+    const key = url.pathname + url.search;
+    if (market && directory?.key === key && !force) {
+      showMarket(directory.page,signal,true);
+      return;
+    }
+    pending(market ? '工具市场' : '本机工具');
+    try {
+      const response = await fetch(url,{redirect:'error',cache:'no-store',signal,headers:market
+        ? {Accept:'application/json','X-Nodrelay-View':'directory'} : {'X-Nodrelay-View':'local'}});
+      if (!response.ok) throw Error();
+      const page = await response.json();
+      signal.throwIfAborted();
+      if (market) {
+        // Cache only a browsing snapshot, never a device's installation actions.
+        if ([...url.searchParams.keys()].every(k=>k==='deviceId')) directory = {key,page};
+        showMarket(page,signal);
+      } else {
+        sub.innerHTML=page.panel;
+        heading('devices',page.title);
+        await startLocal(signal,url);
+      }
+    } catch {
+      if (signal.aborted) return;
+      failed(url);
+    }
+  }
+  function go(url, replace=false) {
+    if(url.href !== location.href) history[replace?'replaceState':'pushState'](null,'',url);
+    window.scrollTo(0,0);void show(url);
+  }
+  document.addEventListener('click',event=>{
+    const a=event.target.closest('a[href]');
+    if(!a || event.defaultPrevented || event.button!==0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
+      a.target || a.hasAttribute('download') || a.getAttribute('href').startsWith('#'))return;
+    const url=new URL(a.href);
+    if(url.origin!==location.origin || !['/','/admin/market','/admin/local-mcp'].includes(url.pathname) ||
+      !a.closest('.rail nav,.crumb,.devices,.market'))return;
+    event.preventDefault();go(url);
+  });
+  sub.addEventListener('submit',e=>{
+    if(!e.target.matches('.market-select,.market-search'))return;
+    e.preventDefault();const url=new URL('/admin/market',location.origin);
+    url.search=new URLSearchParams(new FormData(e.target));go(url);
+  });
+  window.addEventListener('popstate',()=>void show(new URL(location.href)));
+  if(!sub.hidden){
+    lifetime=new AbortController();
+    if(sub.querySelector('.market'))startMarket(lifetime.signal,false);
+    else {
+      const signal=lifetime.signal,url=new URL(location.href);
+      void startLocal(signal,url).catch(()=>{if(!signal.aborted)failed(url);});
+    }
+  }
+}
+`;
+
+// ../cloud/market-styles.mjs
+var marketStyles = `
+.workspace main.market {width:min(1160px,calc(100% - 64px));margin:26px auto 68px}
+.market a{text-decoration:none}.market .muted,.market-meta,.market-notice{color:var(--secondary)}
+.market-hero{isolation:isolate;position:relative;text-align:center;padding:38px 12px 26px;overflow:hidden}
+.market-hero:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle,color-mix(in srgb,var(--active) 30%, transparent) 1px,transparent 1.5px) 0 0/10px 10px;mask-image:radial-gradient(ellipse 64% 84% at 50% 2%,black,transparent)}
+.market-overline{display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border:1px solid var(--line);border-radius:20px;background:var(--surface);font:600 10px/1.5 ui-monospace,monospace;letter-spacing:1.5px;color:var(--active)}
+.market-overline:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.market-hero h1{font-size:clamp(38px,4.8vw,64px);line-height:1.12;letter-spacing:-.07em;margin:13px 0 23px}
+.market-search{display:flex;align-items:center;gap:12px;width:min(530px,100%);margin:auto;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:0 15px;box-shadow:0 6px 20px #14251a09}
+.market-search:focus-within{outline:2px solid var(--active)}.market-search input{flex:1;min-width:0;padding:13px 0;border:0;background:none;color:var(--text);font:inherit;outline:0}
+.market-search svg{flex:none;color:var(--secondary)}.market-search button{border:0;background:none;color:var(--secondary);padding:6px}
+.market-filters,.market-tools,.market-person,.market-foot,.market-state,.market-select,.market-pills,.market-info,.market-sources{display:flex;align-items:center;gap:10px}
+.market-filters{justify-content:center;flex-wrap:wrap;gap:6px;margin:18px 0 0}.market-filters a{border-radius:30px;padding:5px 13px;border:1px solid var(--line);background:var(--surface);color:var(--secondary);font-size:13px}
+.market-filters a[aria-current]{background:var(--text);border-color:var(--text);color:var(--surface)}
+.market-tools{justify-content:space-between;align-items:center;flex-wrap:wrap;margin:20px 0 14px}.market-tools h2,.market-panel h2{margin:0;font-size:22px;letter-spacing:-.7px}
+.market-tools h2 small{font:500 13px ui-monospace,monospace;color:var(--secondary);margin-left:7px}.market-select{font-size:13px;color:var(--secondary);flex-wrap:wrap}
+.market-select select{max-width:100%;background:var(--surface);color:var(--text);border:1px solid var(--line);padding:7px 10px;border-radius:8px;font:inherit}
+.market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.market-card{min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:14px;display:flex;flex-direction:column;overflow:hidden}
+.market-card:hover{border-color:color-mix(in srgb,var(--active) 45%,var(--line));box-shadow:0 6px 20px #152b2010}
+.market-cover{display:block;color:inherit;padding:20px 18px 16px;flex:1}.market-cover:hover h3{text-decoration:underline;text-underline-offset:4px}
+.market-icon{display:inline-grid;place-items:center;flex:none;width:46px;height:46px;border-radius:12px;background:#e5eef8;color:#326088}.market-icon svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.market-icon.time{color:#876137;background:#f7ecd8}.market-icon.shardbrowser{background:#13171f}.market-icon img{width:100%;height:100%;object-fit:contain;border-radius:inherit}
+.market-icon.spec-kit{background:#e8e5f5;color:#625986}.market-icon.open-code-review{background:#dceee4;color:#35674b}
+.market-person>div{min-width:0}.market-person h3{font-size:18px;letter-spacing:-.5px;margin:0;overflow-wrap:anywhere}.market-meta{font-size:12px;margin:3px 0 0}
+.market-cover p,.market-summary{font-size:14px;line-height:1.65;color:var(--secondary);margin:18px 0}.market-pills{gap:6px;flex-wrap:wrap}.market-pill{font:500 11px/1.5 ui-monospace,monospace;border:1px solid var(--line);padding:2px 7px;border-radius:20px;color:var(--secondary)}
+.market-foot{border-top:1px solid var(--line);background:color-mix(in srgb,var(--inset) 45%,var(--surface));min-height:54px;padding:9px 16px;justify-content:space-between;flex-wrap:wrap}
+.market-foot form,.market-panel form{margin:0}.market-state{font-size:12px;color:var(--secondary);gap:6px}.market-state:before{content:"";width:6px;height:6px;background:currentColor;border-radius:50%}
+.market-state[data-state=installed]{color:var(--active)}.market-state[data-state=failed]{color:light-dark(#993c30,#ffb5a8)}.market .button{font-size:13px;min-height:32px;line-height:1.35}.market-empty{padding:32px 14px;text-align:center;color:var(--secondary);border:1px dashed var(--line);border-radius:12px}
+.market-notice:empty{display:none}.market-notice{margin:10px 0}.market-back,.market-sources a{font-size:13px;color:var(--active)}
+.market-detail{padding:32px 0 25px;border-bottom:1px solid var(--line)}.market-detail .market-icon{width:64px;height:64px;border-radius:16px}.market-detail .market-icon svg{width:36px;height:36px}
+.market-detail h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.055em;margin:0;line-height:1.12}.market-detail .market-info{align-items:flex-start;gap:16px}.market-summary{font-size:16px;margin-bottom:0}
+.market-columns{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(255px,1fr);gap:26px;align-items:start;margin-top:25px}.market-panel{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:22px;min-width:0}.market-panel h2{font-size:18px;margin-bottom:15px}
+.market-info-list{margin:0 0 17px;padding:0;list-style:none}.market-info-list li{padding:9px 0;border-bottom:1px solid var(--rule);font-size:14px}.market-sources{flex-wrap:wrap}.market-sources a{text-decoration:underline;text-underline-offset:3px}
+.market-installbox .market-select{display:grid}.market-installbox .market-state{margin:14px 0}.market-installbox button,.market-installbox .button{width:100%}.market-installbox select{width:100%}
+.market-installbox label:has(input[readonly]){display:grid;gap:6px;color:var(--secondary);font-size:13px}.market-installbox input[readonly]{width:100%;padding:9px;border:1px solid var(--line);border-radius:7px;background:var(--inset);color:var(--text);font:13px ui-monospace,monospace}
+.market-actions{display:flex;align-items:center;gap:12px}.market-actions>a{font-size:13px;color:var(--secondary)}.market-actions>a:hover{color:var(--active);text-decoration:underline}
+.install-methods{display:flex;position:relative;gap:3px;border:0;margin:0 0 12px;padding:3px;border-radius:9px;background:var(--inset)}
+.install-methods legend,.install-methods input{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}
+.install-methods label{flex:1;margin:0;text-align:center;cursor:pointer}.install-methods span{display:block;border-radius:7px;padding:7px;color:var(--secondary);font-size:13px}
+.install-methods input:checked+span{color:var(--text);background:var(--surface);box-shadow:0 1px 4px #10251a24;font-weight:600}.install-methods input:focus-visible+span{outline:2px solid var(--active)}
+.agent-install{display:none}.market-installbox:has([value=agent]:checked) .direct-install{display:none}.market-installbox:has([value=agent]:checked) .agent-install{display:grid;gap:9px}
+.agent-install label,.agent-install [role=status]{color:var(--secondary);font-size:13px}.agent-install [role=status]:empty{display:none}
+.agent-path{font-size:13px;color:var(--secondary)}.agent-path code{display:block;color:var(--text);overflow-wrap:anywhere}
+.agent-install textarea{width:100%;box-sizing:border-box;resize:vertical;border:1px solid var(--line);border-radius:8px;background:var(--inset);color:var(--text);font:13px/1.6 ui-monospace,monospace;padding:10px;overflow-wrap:anywhere}
+@media(max-width:1180px){.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.workspace main.market{width:calc(100% - 30px);margin:12px auto 40px}.market-hero{padding:24px 4px 15px}.market-columns{display:flex;flex-direction:column}.market-panel{width:100%}.market-installbox{order:-1}}
+@media(max-width:560px){.market-grid{grid-template-columns:1fr}.market-tools h2{font-size:20px}.market-cover{padding:16px}.market-hero h1{font-size:38px}.market-card .market-cover p{margin:12px 0}.market-select{gap:5px}.market-filters a{padding:5px 10px}}
+`;
 
 // ../cloud/management.mjs
 var assets = {
   "/admin/local-cli.js": ["text/javascript", `
+export function mount(life) {
 const form = document.querySelector('.cli-search'), query = form.elements.q;
 const scope = document.querySelector('.cli-scope'), results = document.querySelector('#cli-results');
 const refresh = document.querySelector('#cli-refresh'), note = document.querySelector('#cli-feedback');
@@ -14677,9 +14805,10 @@ async function loadCli() {
   if (reading) return;
   reading = true; note.classList.add('tools-loading'); note.textContent = '\u6B63\u5728\u8BFB\u53D6 CLI\u2026';
   try {
-    const response = await fetch(refresh.href, {headers:{Accept:'application/json'},redirect:'error',cache:'no-store'});
+    const response = await fetch(refresh.href, {headers:{Accept:'application/json'},redirect:'error',cache:'no-store',signal:life});
     if (!response.ok) throw Error();
     const data = await response.json();
+    life.throwIfAborted();
     if (!data.complete && !data.commands.length && snapshot?.commands.length) {
       note.textContent = [...data.warnings, '\u663E\u793A\u4E0A\u6B21\u7ED3\u679C\u3002'].join(' ');
     } else {
@@ -14725,10 +14854,12 @@ function search(text) {
 form.onsubmit = e => { e.preventDefault(); search(query.value.trim()); };
 form.querySelector('a').onclick = e => { e.preventDefault(); query.value = ''; search(''); };
 refresh.onclick = e => { e.preventDefault(); void loadCli(); };
-window.addEventListener('popstate', () => selectTab(new URL(location.href),false));
+window.addEventListener('popstate', () => selectTab(new URL(location.href),false),{signal:life});
 void loadCli();
+}
 `],
   "/admin/local-mcp.js": ["text/javascript", `
+export function mount(life) {
 const list = document.querySelector('#local-list');
 const sheet = document.querySelector('#service-sheet');
 const catalog = sheet.querySelector('.tool-detail');
@@ -14801,17 +14932,18 @@ async function readCatalog(detail, manual = false) {
     }
   }
 }
-window.addEventListener('pagehide', () => { if (sheet.open) { expanded.controller.abort(); sheet.close(); } });
+window.addEventListener('pagehide', () => { if (sheet.open) { expanded.controller.abort(); sheet.close(); } },{signal:life});
 try { const preference = localStorage.getItem('nodrelay-theme'); if (['dark','light'].includes(preference)) document.documentElement.dataset.theme = preference; } catch {}
 let timer, reading, submitting = false;
 let saving = 0, scanQueued = false;
 let pending = list.hasAttribute('data-pending');
+life.addEventListener('abort',()=>{clearTimeout(timer);reading?.abort();expanded?.controller.abort();},{once:true});
 function schedule() {
   clearTimeout(timer);
-  if (pending && !document.hidden && !submitting && !saving) timer = setTimeout(refresh, 60000);
+  if (!life.aborted && pending && !document.hidden && !submitting && !saving) timer = setTimeout(refresh, 60000);
 }
 async function refresh(manual = false) {
-  if ((reading && !reading.signal.aborted) || submitting || document.hidden) return;
+  if (life.aborted || (reading && !reading.signal.aborted) || submitting || document.hidden) return;
   if (saving) { scanQueued = true; return; }
   scanQueued = false;
   clearTimeout(timer);
@@ -14850,7 +14982,7 @@ async function refresh(manual = false) {
   } catch {
     if (!controller.signal.aborted) document.querySelector('#scan-message').textContent = '\u68C0\u6D4B\u5931\u8D25\uFF0C\u8BF7\u91CD\u8BD5\u3002';
   } finally {
-    if (reading === controller) { reading = null; list.removeAttribute('aria-busy'); document.querySelector('#scan-message').classList.remove('tools-loading'); schedule(); }
+    if (!life.aborted && reading === controller) { reading = null; list.removeAttribute('aria-busy'); document.querySelector('#scan-message').classList.remove('tools-loading'); schedule(); }
   }
 }
 document.querySelector('#scan-again').addEventListener('click', e => { e.preventDefault(); refresh(true); });
@@ -14893,10 +15025,11 @@ list.addEventListener('submit', async event => {
     if (!--saving) { if (scanQueued) void refresh(true); else schedule(); }
   }
 });
-document.addEventListener('submit', event => { if (!event.defaultPrevented) { submitting = true; reading?.abort(); clearTimeout(timer); } });
-document.addEventListener('visibilitychange', () => { if (document.hidden) { clearTimeout(timer); reading?.abort(); } else refresh(); });
-window.addEventListener('pageshow', event => { submitting = false; if (event.persisted) refresh(); });
+document.addEventListener('submit', event => { if (!event.defaultPrevented) { submitting = true; reading?.abort(); clearTimeout(timer); } },{signal:life});
+document.addEventListener('visibilitychange', () => { if (document.hidden) { clearTimeout(timer); reading?.abort(); } else refresh(); },{signal:life});
+window.addEventListener('pageshow', event => { submitting = false; if (event.persisted) refresh(); },{signal:life});
 void refresh();
+}
 `],
   "/admin/console.css": ["text/css", consoleStyles],
   "/admin/console-logo.png": ["image/png", consoleLogo],
@@ -14993,19 +15126,22 @@ function deviceList(devices, options, intents) {
   } };
 }
 __name(deviceList, "deviceList");
-function devicePage({ rows, counts }, options, { portalHostname }, intents, nonce, upgrade, view) {
-  const section = ["gateway", "settings"].includes(view) ? view : "devices";
+function devicePage({ rows, counts }, options, { portalHostname }, intents, nonce, upgrade, section, panel = "", detail = "") {
   const portal = /^[a-z0-9.-]+$/.test(portalHostname ?? "") ? "https://" + portalHostname : "";
   const selected = options.findIndex((option) => option.enabled);
-  const platforms = options.map(({ value, text: text3, enabled, browser: browser2 }, index) => `<label${enabled ? "" : ' title="\u5F53\u524D\u65E0\u53EF\u7528\u5B89\u88C5\u5305"'}><input class="sr-only" type="radio" name="platform" value="${escapeHtml(value)}"${browser2 === true ? ' data-browser="true"' : ""}${enabled ? "" : " disabled"}${index === selected ? " checked" : ""}><span>${escapeHtml(text3)}</span></label>`).join("\n");
+  const platforms = options.map(({ value, text: text3, enabled, browser }, index) => `<label${enabled ? "" : ' title="\u5F53\u524D\u65E0\u53EF\u7528\u5B89\u88C5\u5305"'}><input class="sr-only" type="radio" name="platform" value="${escapeHtml(value)}"${browser === true ? ' data-browser="true"' : ""}${enabled ? "" : " disabled"}${index === selected ? " checked" : ""}><span>${escapeHtml(text3)}</span></label>`).join("\n");
   const values = {
-    TITLE: { devices: "\u8BBE\u5907\u7BA1\u7406", gateway: "MCP \u7F51\u5173", settings: "\u7BA1\u7406\u53F0\u8BBE\u7F6E" }[section],
-    SHELL: consoleShell(section, "", ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`),
+    TITLE: escapeHtml(detail || { devices: "\u8BBE\u5907\u7BA1\u7406", gateway: "MCP \u7F51\u5173", settings: "\u7BA1\u7406\u53F0\u8BBE\u7F6E", market: "\u5DE5\u5177\u5E02\u573A" }[section]),
+    SHELL: consoleShell(section, escapeHtml(detail), ` data-phase="${escapeHtml(upgrade.phase)}" data-current-version="${escapeHtml(upgrade.currentVersion ?? "")}"`),
+    HOME_HIDDEN: panel ? "hidden" : "",
+    SUBVIEW_HIDDEN: panel ? "" : "hidden",
+    PANEL: panel,
     DEVICES_HIDDEN: section === "devices" ? "" : "hidden",
     SETTINGS_HIDDEN: section === "settings" ? "" : "hidden",
     GATEWAY_HIDDEN: section === "gateway" ? "" : "hidden",
     NONCE: nonce,
-    SCRIPT: consoleScript,
+    SCRIPT: consoleScript + "\n" + marketClient + "\n" + consoleNavigation,
+    MARKET_CSS: marketStyles,
     // Enrollment-intent consoles issue one command for every hosted system.
     ANY_SYSTEM: intents ? "true" : "false",
     BROWSER_CONSENT: options.some((option) => option.browser === true) ? "true" : "false",
@@ -15027,13 +15163,39 @@ async function manage(request, env, url2, { limitedBody: limitedBody2, html: htm
   const local = localServicePolicy(env.TICKETS, devices);
   const getIntents = /* @__PURE__ */ __name(() => enrollmentContext(env), "getIntents");
   const wantsJson = request.headers.get("Accept")?.split(",").some((value) => value.split(";", 1)[0].trim() === "application/json");
+  async function consoleList(rows, intents, options) {
+    const existing = new Map(rows.map((row) => [row.id, row]));
+    if (intents) for (const pending of await intents.list()) {
+      const established = existing.get(pending.id);
+      if (!established || established.status === "draft" || established.status === "pending" && pending.status === "installing") {
+        existing.set(pending.id, { ...established, ...pending });
+      }
+    }
+    return deviceList([...existing.values()].sort((a, b) => (a.displayName ?? a.id).localeCompare(b.displayName ?? b.id) || a.id.localeCompare(b.id)), options, Boolean(intents));
+  }
+  __name(consoleList, "consoleList");
+  async function consoleDocument(section, rows, subview) {
+    const intents = getIntents(), options = platformOptions(intents?.releases ?? devices.releases);
+    const [list, upgrade, page2] = await Promise.all([
+      rows.then((data2) => consoleList(data2, intents, options)),
+      upgradeProvider(env).status().catch(() => ({ phase: "unknown" })),
+      subview
+    ]);
+    const nonce = crypto.randomUUID();
+    return html2(devicePage(list, options, JSON.parse(env.FLEET_SPEC), Boolean(intents), nonce, upgrade, section, page2?.panel, page2?.detail), 200, nonce);
+  }
+  __name(consoleDocument, "consoleDocument");
   try {
     if (request.method === "GET") {
       if (Object.hasOwn(assets, url2.pathname)) return assetResponse2(...assets[url2.pathname]);
       if (url2.pathname === "/admin/market") {
-        const [feed, upgrade] = await Promise.all([cachedMarket(env.TICKETS), wantsJson ? null : upgradeProvider(env).status().catch(() => ({ phase: "unknown" }))]);
-        const page2 = await renderMarket(devices, upgrade, request, feed, true);
-        return wantsJson ? json2(page2) : html2(page2.body, 200, page2.nonce);
+        const rows = devices.list();
+        const page2 = Promise.all([cachedMarket(env.TICKETS), rows]).then(([feed, rows2]) => renderMarket(devices, request, feed, { rows: rows2, directoryOnly: wantsJson && request.headers.get("X-Nodrelay-View") === "directory" }));
+        if (wantsJson) return json2(await page2);
+        return await consoleDocument("market", rows, page2.then(({ title, header, fragment, revision }) => ({
+          detail: title === "\u5DE5\u5177\u5E02\u573A" ? "" : title,
+          panel: '<main class="market">' + header + '<div id="market-results" data-revision="' + revision + '">' + fragment + '</div><p id="market-feedback" role="status"></p></main>'
+        })));
       }
       if (url2.pathname === "/admin/market/progress") {
         const device = url2.searchParams.get("deviceId"), ids = url2.searchParams.getAll("id");
@@ -15048,23 +15210,24 @@ async function manage(request, env, url2, { limitedBody: limitedBody2, html: htm
       }
       if (url2.pathname === "/admin/local-mcp") {
         const id2 = url2.searchParams.get("deviceId");
-        const device = (await devices.list(id2)).find((d) => d.id === id2 && d.status === "active");
+        const partial2 = request.headers.get("X-Nodrelay-View") === "local";
+        const devicesOnFile = devices.list(wantsJson || partial2 ? id2 : void 0);
+        const device = (await devicesOnFile).find((d) => d.id === id2 && d.status === "active");
         if (!device) return html2(consolePage("\u8BBE\u5907\u4E0D\u53EF\u7528", back), 404);
         const cli = url2.searchParams.get("view") === "cli";
         const query = cli ? (url2.searchParams.get("q") ?? "").trim() : "";
         const base = "?deviceId=" + encodeURIComponent(id2);
         const cliUrl = base + "&amp;view=cli";
-        const nonce = crypto.randomUUID();
         const name = escapeHtml(device.displayName ?? id2);
         if (!wantsJson) {
-          return html2(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${name} \xB7 \u672C\u673A\u5DE5\u5177 \xB7 Nodrelay</title><style nonce="${nonce}">${consoleStyles}</style><script nonce="${nonce}">${restoreConsoleTheme}<\/script></head>
-          <body>${consoleShell("devices", name, ' data-phase="loading"')}<main class="service-page"><div class="device-context">${name}</div><div class="page-intro"><h1>\u672C\u673A\u5DE5\u5177</h1><a class="button" id="scan-again" href="${base}"${cli ? " hidden" : ""}>\u91CD\u65B0\u68C0\u6D4B</a><a class="button" id="cli-refresh" href="${cliUrl}"${cli ? "" : " hidden"}>\u5237\u65B0</a></div>
+          const panel = `<main class="service-page"><div class="device-context">${name}</div><div class="page-intro"><h1>\u672C\u673A\u5DE5\u5177</h1><a class="button" id="scan-again" href="${base}"${cli ? " hidden" : ""}>\u91CD\u65B0\u68C0\u6D4B</a><a class="button" id="cli-refresh" href="${cliUrl}"${cli ? "" : " hidden"}>\u5237\u65B0</a></div>
           <nav class="device-tool-tabs" role="tablist" aria-label="\u672C\u673A\u5DE5\u5177\u5206\u7C7B"><a id="mcp-tab" role="tab" href="${base}" aria-controls="mcp-panel" aria-selected="${!cli}" tabindex="${cli ? -1 : 0}">MCP \u670D\u52A1 <small id="service-total"></small></a><a id="cli-tab" role="tab" href="${cliUrl}" aria-controls="cli-panel" aria-selected="${cli}" tabindex="${cli ? 0 : -1}">CLI <small id="cli-total"></small></a></nav>
           <section role="tabpanel" id="mcp-panel" aria-labelledby="mcp-tab"${cli ? " hidden" : ""}><p id="scan-message" class="scan-note tools-loading" role="status">\u6B63\u5728\u8BFB\u53D6 MCP \u670D\u52A1\u2026</p><div id="local-list" data-device="${escapeHtml(id2)}" aria-busy="true"></div></section>
           <section role="tabpanel" id="cli-panel" aria-labelledby="cli-tab"${cli ? "" : " hidden"}><form class="cli-search"><input type="hidden" name="deviceId" value="${escapeHtml(id2)}"><input type="hidden" name="view" value="cli"><label class="search"><input type="search" name="q" value="${escapeHtml(query)}" placeholder="\u641C\u7D22 CLI \u540D\u79F0\u6216\u8DEF\u5F84" aria-label="\u641C\u7D22 CLI \u540D\u79F0\u6216\u8DEF\u5F84"></label><button class="button">\u641C\u7D22</button><a class="button quiet" href="${cliUrl}" hidden>\u6E05\u9664</a></form>
-          <strong class="cli-scope">\u5DF2\u8BC6\u522B\u7684 CLI</strong><p id="cli-feedback" class="scan-note tools-loading" role="status">\u6B63\u5728\u8BFB\u53D6 CLI\u2026</p><div id="cli-results"></div></section></main></div>
-          <dialog id="service-sheet" aria-labelledby="sheet-name"><header><strong>\u670D\u52A1\u8BE6\u60C5</strong><button class="sheet-close" aria-label="\u5173\u95ED\u8BE6\u60C5" autofocus><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></svg></button></header><div class="sheet-scroll"><div class="sheet-identity"><span class="sheet-tile"></span><div><h2 id="sheet-name"></h2><span class="sheet-source"></span></div></div><section class="sheet-catalog"><h3>\u5DE5\u5177\u76EE\u5F55</h3><div class="tool-detail" aria-live="polite"></div></section></div></dialog>
-          ${upgradeDialog}<script nonce="${nonce}">${consoleUpgradeScript}<\/script><script type="module" src="/admin/local-mcp.js"><\/script><script type="module" src="/admin/local-cli.js"><\/script></body></html>`, 200, nonce);
+          <strong class="cli-scope">\u5DF2\u8BC6\u522B\u7684 CLI</strong><p id="cli-feedback" class="scan-note tools-loading" role="status">\u6B63\u5728\u8BFB\u53D6 CLI\u2026</p><div id="cli-results"></div></section></main>
+          <dialog id="service-sheet" aria-labelledby="sheet-name"><header><strong>\u670D\u52A1\u8BE6\u60C5</strong><button class="sheet-close" aria-label="\u5173\u95ED\u8BE6\u60C5" autofocus><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></svg></button></header><div class="sheet-scroll"><div class="sheet-identity"><span class="sheet-tile"></span><div><h2 id="sheet-name"></h2><span class="sheet-source"></span></div></div><section class="sheet-catalog"><h3>\u5DE5\u5177\u76EE\u5F55</h3><div class="tool-detail" aria-live="polite"></div></section></div></dialog>`;
+          if (partial2) return json2({ panel, title: device.displayName ?? id2 });
+          return await consoleDocument("devices", devicesOnFile, { panel, detail: device.displayName ?? id2 });
         }
         if (cli) {
           const { commands, complete: complete2, indexing, warnings: warnings2 } = await local.cliList(id2, request.signal);
@@ -15108,35 +15271,20 @@ async function manage(request, env, url2, { limitedBody: limitedBody2, html: htm
         }
         return status ? json2(status) : json2({ error: "Device unavailable" }, 404);
       }
-      if (url2.pathname === "/" || url2.pathname === "/admin/devices") {
+      if (url2.pathname === "/") {
+        const view = url2.searchParams.get("view");
+        return await consoleDocument(["gateway", "settings"].includes(view) ? view : "devices", devices.list());
+      }
+      if (url2.pathname === "/admin/devices") {
         const intents = getIntents();
-        const [devicesOnFile, upgrade] = await Promise.all([
-          devices.list(),
-          url2.pathname === "/" ? upgradeProvider(env).status().catch(() => ({ phase: "unknown" })) : void 0
-        ]);
-        const existing = new Map(devicesOnFile.map((row) => [row.id, row]));
-        if (intents) {
-          for (const pending of await intents.list()) {
-            const established = existing.get(pending.id);
-            if (!established || established.status === "draft" || established.status === "pending" && pending.status === "installing") {
-              existing.set(pending.id, { ...established, ...pending });
-            }
-          }
-        }
-        const rows = [...existing.values()].sort((left, right) => (left.displayName ?? left.id).localeCompare(right.displayName ?? right.id) || left.id.localeCompare(right.id));
-        const options = platformOptions(intents?.releases ?? devices.releases);
-        const list = deviceList(rows, options, Boolean(intents));
-        if (url2.pathname === "/admin/devices") {
-          const body = new TextEncoder().encode(JSON.stringify(list));
-          const tag2 = 'W/"' + base64url_exports.encode(new Uint8Array(await crypto.subtle.digest("SHA-256", body))) + '"';
-          const unchanged = request.headers.get("If-None-Match")?.split(",").some((value) => {
-            const candidate = value.trim();
-            return candidate === "*" || candidate === tag2 || candidate === tag2.slice(2);
-          });
-          return assetResponse2("application/json", unchanged ? null : body, unchanged ? 304 : 200, { ETag: tag2 });
-        }
-        const nonce = crypto.randomUUID();
-        return html2(devicePage(list, options, JSON.parse(env.FLEET_SPEC), Boolean(intents), nonce, upgrade, url2.searchParams.get("view")), 200, nonce);
+        const list = await consoleList(await devices.list(), intents, platformOptions(intents?.releases ?? devices.releases));
+        const body = new TextEncoder().encode(JSON.stringify(list));
+        const tag2 = 'W/"' + base64url_exports.encode(new Uint8Array(await crypto.subtle.digest("SHA-256", body))) + '"';
+        const unchanged = request.headers.get("If-None-Match")?.split(",").some((value) => {
+          const candidate = value.trim();
+          return candidate === "*" || candidate === tag2 || candidate === tag2.slice(2);
+        });
+        return assetResponse2("application/json", unchanged ? null : body, unchanged ? 304 : 200, { ETag: tag2 });
       }
     }
     if (request.method !== "POST") return json2({ error: "Unknown route" }, 404);
@@ -15270,13 +15418,13 @@ async function manage(request, env, url2, { limitedBody: limitedBody2, html: htm
         const result = await devices.status(input.deviceId);
         if (wantsJson) return json2(result);
         const development = result.mcpProfiles?.development ?? result.mcp;
-        const browser2 = result.mcpProfiles?.browser;
+        const browser = result.mcpProfiles?.browser;
         return html2(consolePage("\u8BBE\u5907\u72B6\u6001", `<p><strong>${escapeHtml(result.deviceId)}</strong></p><dl>
           <dt>\u6700\u540E\u68C0\u67E5\uFF08UTC\uFF09</dt><dd>${escapeHtml(new Date(result.checkedAt * 1e3).toISOString())}</dd>
           <dt>\u6CE8\u518C</dt><dd>${escapeHtml(state[result.registration] ?? result.registration)}</dd>
           <dt>Cloudflare Tunnel</dt><dd>${escapeHtml(result.tunnel === "check_failed" ? "\u65E0\u6CD5\u67E5\u8BE2" + (result.tunnelDiagnostic?.httpStatus ? " \xB7 HTTP " + result.tunnelDiagnostic.httpStatus : "") : result.tunnel)}</dd>
           <dt>\u5F00\u53D1\u5DE5\u5177\u76EE\u5F55</dt><dd>${escapeHtml(mcpState[development] ?? development)}</dd>
-          ${browser2 ? `<dt>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd>${escapeHtml(mcpState[browser2] ?? browser2)}</dd>` : ""}
+          ${browser ? `<dt>\u6D4F\u89C8\u5668\u5DE5\u5177\u76EE\u5F55</dt><dd>${escapeHtml(mcpState[browser] ?? browser)}</dd>` : ""}
           ${result.release ? `<dt>\u5B89\u88C5\u5305\u7248\u672C</dt><dd>${escapeHtml(result.release)}</dd>` : ""}
           ${result.revocation ? `<dt>\u64A4\u9500</dt><dd>${result.revocation === "complete" ? "\u5DF2\u5B8C\u6210" : "\u5C1A\u672A\u5B8C\u6210\uFF0C\u8BF7\u91CD\u8BD5\u505C\u7528"}</dd>` : ""}
           </dl>${back}`));
@@ -15324,7 +15472,7 @@ async function manage(request, env, url2, { limitedBody: limitedBody2, html: htm
 }
 __name(manage, "manage");
 
-// ../node_modules/zod/v4/core/util.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/util.js
 var util_exports = {};
 __export(util_exports, {
   BIGINT_FORMAT_RANGES: () => BIGINT_FORMAT_RANGES,
@@ -16262,7 +16410,7 @@ function constantCatch(value) {
 }
 __name(constantCatch, "constantCatch");
 
-// ../node_modules/zod/v4/core/core.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/core.js
 var _a2;
 var _zodDesc = { value: void 0, enumerable: false };
 var _E = "captureStackTrace" in Error ? Error : null;
@@ -16395,7 +16543,7 @@ function config(newConfig) {
 }
 __name(config, "config");
 
-// ../node_modules/zod/v4/core/errors.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/errors.js
 function _getMessage() {
   const internals = this._zod;
   internals.message ?? (internals.message = JSON.stringify(internals.def, jsonStringifyReplacer, 2));
@@ -16515,7 +16663,7 @@ function formatError(error2, mapper = (issue2) => issue2.message) {
 }
 __name(formatError, "formatError");
 
-// ../node_modules/zod/v4/core/parse.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/parse.js
 function finalizeParams(callee, params) {
   return { callee: params?.callee ?? callee, Err: params?.Err };
 }
@@ -16667,7 +16815,7 @@ var _safeDecodeAsync = /* @__PURE__ */ __name((_Err) => async (schema4, value, _
   return _safeParseAsync(_Err)(schema4, value, _ctx);
 }, "_safeDecodeAsync");
 
-// ../node_modules/zod/v4/core/regexes.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/regexes.js
 var cuid = /^[cC][0-9a-z]{6,}$/;
 var cuid2 = /^[0-9a-z]+$/;
 var ulid = /^[0-7][0-9A-HJKMNP-TV-Za-hjkmnp-tv-z]{25}$/;
@@ -16732,7 +16880,7 @@ var _null = /^null$/i;
 var lowercase = /^[^A-Z]*$/;
 var uppercase = /^[^a-z]*$/;
 
-// ../node_modules/zod/v4/core/checks.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/checks.js
 var $ZodCheck = /* @__PURE__ */ $constructor("$ZodCheck", (inst, def) => {
   var _a4;
   inst._zod ?? (inst._zod = {});
@@ -17052,7 +17200,7 @@ var $ZodCheckOverwrite = /* @__PURE__ */ $constructor("$ZodCheckOverwrite", (ins
   };
 });
 
-// ../node_modules/zod/v4/core/doc.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/doc.js
 var Doc = class {
   static {
     __name(this, "Doc");
@@ -17096,14 +17244,14 @@ ${content.join("\n")}
   }
 };
 
-// ../node_modules/zod/v4/core/versions.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/versions.js
 var version2 = {
   major: 4,
   minor: 6,
   patch: 7
 };
 
-// ../node_modules/zod/v4/core/schemas.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/schemas.js
 var $ZodType = /* @__PURE__ */ $constructor("$ZodType", (inst, def) => {
   var _a4;
   inst ?? (inst = {});
@@ -18799,7 +18947,7 @@ function handleRefineResult(result, payload, input, inst) {
 }
 __name(handleRefineResult, "handleRefineResult");
 
-// ../node_modules/zod/v4/core/memoizer.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/memoizer.js
 var $ZodCyclicError = class extends Error {
   static {
     __name(this, "$ZodCyclicError");
@@ -19083,7 +19231,7 @@ function isBackEdge(ctx, value) {
 }
 __name(isBackEdge, "isBackEdge");
 
-// ../node_modules/zod/v4/locales/en.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/locales/en.js
 var error = /* @__PURE__ */ __name(() => {
   const Sizable = {
     string: { unit: "characters", verb: "to have" },
@@ -19211,7 +19359,7 @@ function en_default() {
 }
 __name(en_default, "default");
 
-// ../node_modules/zod/v4/core/registries.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/registries.js
 var _a3;
 var $ZodRegistry = class {
   static {
@@ -19263,7 +19411,7 @@ __name(registry, "registry");
 (_a3 = globalThis).__zod_globalRegistry ?? (_a3.__zod_globalRegistry = registry());
 var globalRegistry = globalThis.__zod_globalRegistry;
 
-// ../node_modules/zod/v4/core/api.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/api.js
 function snapshotChecks(def) {
   if (def.checks)
     def.checks = [...def.checks];
@@ -19849,7 +19997,7 @@ function _check(fn, params) {
 }
 __name(_check, "_check");
 
-// ../node_modules/zod/v4/core/to-json-schema.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/to-json-schema.js
 function assignProps(target2, ...sources) {
   for (const source of sources) {
     for (const key4 of Reflect.ownKeys(source)) {
@@ -20391,7 +20539,7 @@ var createStandardJSONSchemaMethod = /* @__PURE__ */ __name((schema4, io, proces
   return finalize(ctx, schema4);
 }, "createStandardJSONSchemaMethod");
 
-// ../node_modules/zod/v4/core/json-schema-processors.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/core/json-schema-processors.js
 var narrowMin = /* @__PURE__ */ __name((agg, key4, value) => {
   if (agg[key4] === void 0 || value > agg[key4])
     agg[key4] = value;
@@ -20934,7 +21082,7 @@ var optionalProcessor = /* @__PURE__ */ __name((schema4, ctx, _json, params) => 
   seen.ref = def.innerType;
 }, "optionalProcessor");
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-compat.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-compat.js
 function isZ4Schema(s) {
   const schema4 = s;
   return !!schema4._zod;
@@ -21001,7 +21149,7 @@ function getLiteralValue(schema4) {
 }
 __name(getLiteralValue, "getLiteralValue");
 
-// ../node_modules/zod/v4/classic/errors.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/classic/errors.js
 var _installedErrorProtos = /* @__PURE__ */ new WeakSet([Object.prototype, Error.prototype]);
 function _lazyMethod(proto, key4, make) {
   Object.defineProperty(proto, key4, {
@@ -21047,7 +21195,7 @@ var ZodRealError = /* @__PURE__ */ $constructor("ZodError", initializer2, void 0
   Parent: Error
 });
 
-// ../node_modules/zod/v4/classic/parse.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/classic/parse.js
 var parse4 = /* @__PURE__ */ _parse(ZodRealError);
 var parseAsync2 = /* @__PURE__ */ _parseAsync(ZodRealError);
 var safeParse3 = /* @__PURE__ */ _safeParse(ZodRealError);
@@ -21061,7 +21209,7 @@ var safeDecode2 = /* @__PURE__ */ _safeDecode(ZodRealError);
 var safeEncodeAsync2 = /* @__PURE__ */ _safeEncodeAsync(ZodRealError);
 var safeDecodeAsync2 = /* @__PURE__ */ _safeDecodeAsync(ZodRealError);
 
-// ../node_modules/zod/v4/classic/schemas.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/classic/schemas.js
 function _ensureDefaultLocale() {
   if (!globalConfig.localeError)
     config(en_default());
@@ -22037,7 +22185,7 @@ function preprocess(fn, schema4) {
 }
 __name(preprocess, "preprocess");
 
-// ../node_modules/zod/v4/classic/iso.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod/v4/classic/iso.js
 var iso_exports = {};
 __export(iso_exports, {
   ZodISODate: () => ZodISODate,
@@ -22066,7 +22214,7 @@ function duration3(params) {
 }
 __name(duration3, "duration");
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/types.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/types.js
 var LATEST_PROTOCOL_VERSION = "2025-11-25";
 var DEFAULT_NEGOTIATED_PROTOCOL_VERSION = "2025-03-26";
 var SUPPORTED_PROTOCOL_VERSIONS = [LATEST_PROTOCOL_VERSION, "2025-06-18", "2025-03-26", "2024-11-05", "2024-10-07"];
@@ -23593,16 +23741,16 @@ var UrlElicitationRequiredError = class extends McpError {
   }
 };
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/interfaces.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/interfaces.js
 function isTerminal(status) {
   return status === "completed" || status === "failed" || status === "cancelled";
 }
 __name(isTerminal, "isTerminal");
 
-// ../node_modules/zod-to-json-schema/dist/esm/parsers/string.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/zod-to-json-schema/dist/esm/parsers/string.js
 var ALPHA_NUMERIC = new Set("ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz0123456789");
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-json-schema-compat.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-json-schema-compat.js
 function getMethodLiteral(schema4) {
   const shape = getObjectShape(schema4);
   const methodSchema = shape?.method;
@@ -23625,7 +23773,7 @@ function parseWithCompat(schema4, data2) {
 }
 __name(parseWithCompat, "parseWithCompat");
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/shared/protocol.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/shared/protocol.js
 var DEFAULT_REQUEST_TIMEOUT_MSEC = 6e4;
 var Protocol = class {
   static {
@@ -24607,7 +24755,7 @@ function mergeCapabilities(base, additional) {
 }
 __name(mergeCapabilities, "mergeCapabilities");
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/validation/ajv-provider.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/validation/ajv-provider.js
 var import_ajv = __toESM(require_ajv(), 1);
 var import_ajv_formats = __toESM(require_dist(), 1);
 function createDefaultAjvInstance() {
@@ -24679,7 +24827,7 @@ var AjvJsonSchemaValidator = class {
   }
 };
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/server.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/server.js
 var ExperimentalServerTasks = class {
   static {
     __name(this, "ExperimentalServerTasks");
@@ -24895,7 +25043,7 @@ var ExperimentalServerTasks = class {
   }
 };
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/helpers.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/helpers.js
 function assertToolsCallTaskCapability(requests, method, entityName) {
   if (!requests) {
     throw new Error(`${entityName} does not support task creation (required for ${method})`);
@@ -24932,7 +25080,7 @@ function assertClientRequestTaskCapability(requests, method, entityName) {
 }
 __name(assertClientRequestTaskCapability, "assertClientRequestTaskCapability");
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/server/index.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/server/index.js
 var Server = class extends Protocol {
   static {
     __name(this, "Server");
@@ -25306,7 +25454,7 @@ var Server = class extends Protocol {
   }
 };
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/shared/mediaType.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/shared/mediaType.js
 var import_content_type = __toESM(require_content_type(), 1);
 function mediaTypeEssence(header) {
   if (!header) {
@@ -25331,7 +25479,7 @@ function isJsonContentType(header) {
 }
 __name(isJsonContentType, "isJsonContentType");
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/server/requestBody.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/server/requestBody.js
 var DEFAULT_MAX_REQUEST_BODY_SIZE = 4 * 1024 * 1024;
 var MAX_BATCH_SIZE = 100;
 function requestBodyTooLargeMessage(maxBytes2) {
@@ -25378,7 +25526,7 @@ async function readRequestBody(request, maxBytes2 = DEFAULT_MAX_REQUEST_BODY_SIZ
 }
 __name(readRequestBody, "readRequestBody");
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/server/sseKeepAlive.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/server/sseKeepAlive.js
 var DEFAULT_SSE_KEEP_ALIVE_MS = 15e3;
 var MAX_TIMER_DELAY_MS = 2 ** 31 - 1;
 function armSseKeepAlive(intervalMs, onTick) {
@@ -25391,7 +25539,7 @@ function armSseKeepAlive(intervalMs, onTick) {
 }
 __name(armSseKeepAlive, "armSseKeepAlive");
 
-// ../node_modules/@modelcontextprotocol/sdk/dist/esm/server/webStandardStreamableHttp.js
+// ../../../../../Volumes/KIOXIA-500G/project/nodrelay-codex/node_modules/@modelcontextprotocol/sdk/dist/esm/server/webStandardStreamableHttp.js
 var WebStandardStreamableHTTPServerTransport = class {
   static {
     __name(this, "WebStandardStreamableHTTPServerTransport");
